@@ -1,0 +1,244 @@
+/* LLM Configuration Panel Styling */
+
+.llm-config-panel {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+}
+
+/* Role Cards */
+.role-card {
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.role-card:hover {
+  box-shadow: 0 0 20px rgba(34, 211, 238, 0.15);
+}
+
+/* Dropdown Button Styles */
+.llm-dropdown-btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  background: linear-gradient(135deg, #0891b2 0%, #06b6d4 100%);
+  color: white;
+  border: none;
+  border-radius: 0.375rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 8px rgba(6, 182, 212, 0.3);
+}
+
+.llm-dropdown-btn:hover {
+  background: linear-gradient(135deg, #0e7490 0%, #0891b2 100%);
+  box-shadow: 0 4px 12px rgba(6, 182, 212, 0.4);
+  transform: translateY(-1px);
+}
+
+.llm-dropdown-btn:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 4px rgba(6, 182, 212, 0.3);
+}
+
+/* Dropdown Menu */
+.llm-dropdown-menu {
+  position: absolute;
+  right: 0;
+  top: 100%;
+  margin-top: 0.5rem;
+  width: 12rem;
+  background: #0f1114;
+  border: 1px solid rgba(34, 211, 238, 0.5);
+  border-radius: 0.375rem;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5);
+  z-index: 50;
+  max-height: 16rem;
+  overflow-y: auto;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-8px) scaleY(0.95);
+  transform-origin: top right;
+  transition: all 0.2s ease;
+}
+
+.llm-dropdown-btn:hover ~ .llm-dropdown-menu,
+.llm-dropdown-menu:hover {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0) scaleY(1);
+}
+
+/* Dropdown Items */
+.llm-dropdown-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  width: 100%;
+  text-align: left;
+  padding: 0.5rem 1rem;
+  background: transparent;
+  border: none;
+  color: #d1d5db;
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border-left: 2px solid transparent;
+}
+
+.llm-dropdown-item:hover {
+  background: rgba(6, 182, 212, 0.2);
+  color: #06d4dd;
+}
+
+.llm-dropdown-item.active {
+  background: rgba(6, 182, 212, 0.4);
+  color: #22d3ee;
+  border-left-color: #06b6d4;
+  font-weight: 500;
+}
+
+.llm-dropdown-item .provider-icon {
+  font-size: 0.75rem;
+  opacity: 0.7;
+}
+
+.llm-dropdown-item .checkmark {
+  margin-right: 0.25rem;
+  color: #34d399;
+  font-weight: bold;
+}
+
+/* Current Assignment Badge */
+.llm-assignment-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 0.75rem;
+  background: rgba(16, 185, 129, 0.3);
+  border: 1px solid rgba(16, 185, 129, 0.5);
+  border-radius: 0.375rem;
+  color: #4ade80;
+  font-size: 0.875rem;
+  font-weight: 500;
+  animation: slideInDown 0.3s ease;
+}
+
+.llm-assignment-badge .checkmark {
+  color: #10b981;
+  font-weight: bold;
+  margin-right: 0.25rem;
+}
+
+/* Unassign Button */
+.llm-unassign-btn {
+  padding: 0.25rem 0.75rem;
+  background: rgba(239, 68, 68, 0.4);
+  color: #fca5a5;
+  border: none;
+  border-radius: 0.375rem;
+  font-size: 0.75rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.llm-unassign-btn:hover {
+  background: rgba(239, 68, 68, 0.6);
+  color: #fecaca;
+  transform: scale(1.05);
+}
+
+/* Not Assigned State */
+.llm-not-assigned {
+  color: #6b7280;
+  font-size: 0.75rem;
+  font-style: italic;
+  padding: 0.25rem 0.5rem;
+}
+
+/* Animations */
+@keyframes slideInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Scrollbar Styling for Dropdown */
+.llm-dropdown-menu::-webkit-scrollbar {
+  width: 6px;
+}
+
+.llm-dropdown-menu::-webkit-scrollbar-track {
+  background: rgba(34, 211, 238, 0.1);
+  border-radius: 3px;
+}
+
+.llm-dropdown-menu::-webkit-scrollbar-thumb {
+  background: rgba(34, 211, 238, 0.3);
+  border-radius: 3px;
+}
+
+.llm-dropdown-menu::-webkit-scrollbar-thumb:hover {
+  background: rgba(34, 211, 238, 0.5);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .llm-dropdown-menu {
+    width: 10rem;
+    font-size: 0.8rem;
+  }
+
+  .llm-dropdown-item {
+    padding: 0.4rem 0.75rem;
+  }
+
+  .llm-dropdown-btn {
+    padding: 0.4rem 0.75rem;
+    font-size: 0.8rem;
+  }
+}
+
+/* Accessibility */
+.llm-dropdown-btn:focus {
+  outline: 2px solid #06b6d4;
+  outline-offset: 2px;
+}
+
+.llm-dropdown-item:focus {
+  outline: 2px solid #06b6d4;
+  outline-offset: -2px;
+}
+
+/* Dark Mode Adjustments */
+@media (prefers-color-scheme: dark) {
+  .llm-dropdown-menu {
+    background: #0f1114;
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.8);
+  }
+
+  .llm-dropdown-item {
+    color: #d1d5db;
+  }
+
+  .llm-dropdown-item:hover {
+    background: rgba(6, 182, 212, 0.2);
+    color: #06d4dd;
+  }
+}

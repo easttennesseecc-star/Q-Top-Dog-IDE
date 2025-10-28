@@ -325,62 +325,93 @@ export default function LLMConfigPanel() {
         <div className="space-y-4">
           <h3 className="text-lg font-semibold mb-3 text-cyan-300">🎯 Assign Models to Roles</h3>
           <div className="text-sm text-gray-400 mb-4 p-2 bg-blue-900/20 border border-blue-600/30 rounded">
-            💡 Click on any role's dropdown to instantly change which LLM it uses. Changes apply immediately!
+            💡 Click the dropdown button next to any role to instantly change which LLM it uses. Changes apply immediately!
           </div>
           
           {roles && Object.entries(roles).map(([roleId, role]) => (
-            <div key={roleId} className="p-4 bg-[#1e2128] border border-cyan-600/30 rounded">
-              <div className="space-y-3">
-                <div>
-                  <div className="font-semibold text-cyan-200">{role.name}</div>
+            <div key={roleId} className="p-4 bg-[#1e2128] border border-cyan-600/30 rounded hover:border-cyan-500/60 transition-colors">
+              <div className="flex items-start justify-between">
+                <div className="flex-1">
+                  <div className="font-semibold text-cyan-200 text-lg">{role.name}</div>
                   <div className="text-sm text-gray-400 mt-1">{role.description}</div>
-                </div>
-
-                <div className="space-y-2">
-                  <label className="text-xs font-semibold text-gray-300 block">Assign LLM Model:</label>
-                  <select
-                    value={role.current_model || ''}
-                    onChange={(e) => {
-                      setSelectedRole(roleId);
-                      setSelectedModel(e.target.value);
-                      // Auto-assign when changed
-                      setTimeout(() => {
-                        handleQuickAssign(roleId, e.target.value);
-                      }, 100);
-                    }}
-                    className="w-full px-3 py-2 bg-[#0f1114] border border-cyan-600/30 rounded text-white text-sm hover:border-cyan-500 transition-colors"
-                  >
-                    <option value="">-- Choose a model --</option>
-                    {providers && Object.entries(providers).map(([id, provider]) => (
-                      <option key={id} value={id}>
-                        {provider.name} {provider.type === 'cloud' ? '☁️' : '🖥️'}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-
-                {role.current_model && (
-                  <div className="flex items-center justify-between pt-2 border-t border-cyan-600/20">
-                    <div className="text-xs text-green-300">
-                      ✓ Currently assigned: <strong>{providers?.[role.current_model]?.name || role.current_model}</strong>
+                  
+                  {role.recommendations && (
+                    <div className="text-xs text-gray-500 mt-2 pt-2 border-t border-cyan-600/20">
+                      💡 <strong>Recommended:</strong> {role.recommendations.join(', ')}
                     </div>
+                  )}
+                </div>
+
+                {/* Visual Assignment Section */}
+                <div className="ml-4 flex flex-col items-end gap-2 min-w-max">
+                  {role.current_model ? (
+                    <div className="flex items-center gap-2 bg-green-900/30 px-3 py-2 rounded border border-green-600/50">
+                      <span className="text-green-400 text-sm">✓</span>
+                      <span className="text-green-300 font-medium text-sm">
+                        {providers?.[role.current_model]?.name || role.current_model}
+                      </span>
+                    </div>
+                  ) : (
+                    <div className="text-gray-500 text-xs px-2 py-1 italic">Not assigned</div>
+                  )}
+                  
+                  {/* Dropdown Button */}
+                  <div className="relative group">
+                    <button className="px-4 py-2 bg-cyan-700 hover:bg-cyan-600 text-white text-sm rounded font-medium flex items-center gap-2 transition-colors">
+                      <span>Change LLM</span>
+                      <span>▼</span>
+                    </button>
+                    
+                    {/* Dropdown Menu */}
+                    <div className="absolute right-0 mt-1 w-48 bg-[#0f1114] border border-cyan-600/50 rounded shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all z-50 max-h-64 overflow-y-auto">
+                      {providers && Object.entries(providers).length > 0 ? (
+                        Object.entries(providers)
+                          .sort(([_, a], [__, b]) => (a.type === 'cloud' ? -1 : 1))
+                          .map(([providerId, provider]) => (
+                            <button
+                              key={providerId}
+                              onClick={() => {
+                                setSelectedRole(roleId);
+                                setSelectedModel(providerId);
+                                handleQuickAssign(roleId, providerId);
+                              }}
+                              className={`w-full text-left px-4 py-2 text-sm transition-colors ${
+                                role.current_model === providerId
+                                  ? 'bg-cyan-700/40 text-cyan-300 border-l-2 border-cyan-400'
+                                  : 'text-gray-300 hover:bg-cyan-700/20 hover:text-cyan-300'
+                              }`}
+                            >
+                              <div className="flex items-center gap-2">
+                                {role.current_model === providerId && <span>✓</span>}
+                                <span>{provider.name}</span>
+                                <span className="text-xs text-gray-500">
+                                  {provider.type === 'cloud' ? '☁️' : '🖥️'}
+                                </span>
+                              </div>
+                            </button>
+                          ))
+                      ) : (
+                        <div className="px-4 py-3 text-xs text-gray-500 text-center">
+                          No providers configured yet.<br />Go to Setup tab.
+                        </div>
+                      )}
+                    </div>
+                  </div>
+
+                  {/* Clear Button */}
+                  {role.current_model && (
                     <button
                       onClick={() => {
                         setSelectedRole(roleId);
                         setSelectedModel('');
+                        handleQuickAssign(roleId, '');
                       }}
-                      className="text-xs bg-red-700/40 text-red-300 px-2 py-1 rounded hover:bg-red-700/60"
+                      className="px-3 py-1 text-xs bg-red-700/40 text-red-300 hover:bg-red-700/60 rounded transition-colors"
                     >
-                      Clear
+                      Unassign
                     </button>
-                  </div>
-                )}
-
-                {role.recommendations && (
-                  <div className="text-xs text-gray-400 pt-2 border-t border-cyan-600/20">
-                    💡 Recommended: {role.recommendations.join(', ')}
-                  </div>
-                )}
+                  )}
+                </div>
               </div>
             </div>
           ))}
