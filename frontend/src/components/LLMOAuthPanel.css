@@ -1,0 +1,448 @@
+/*
+ * LLM OAuth Panel Styling
+ * Q-IDE - Intelligent Development Environment
+ * Copyright (c) 2025 Quellum Technologies. All rights reserved.
+ * Licensed under the MIT License
+ * 
+ * Professional OAuth sign-in UI with:
+ * - Responsive grid layout for provider cards
+ * - Smooth animations and transitions
+ * - Status indicators (authenticated, loading, etc.)
+ * - Message notifications (success, error, info)
+ */
+
+.llm-oauth-panel {
+  padding: 30px;
+  max-width: 1200px;
+  margin: 0 auto;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
+}
+
+/* Header */
+.oauth-header {
+  margin-bottom: 40px;
+  text-align: center;
+}
+
+.oauth-header h2 {
+  font-size: 32px;
+  font-weight: 700;
+  margin: 0 0 10px 0;
+  color: #1f2937;
+}
+
+.oauth-header p {
+  font-size: 16px;
+  color: #666;
+  margin: 0;
+}
+
+/* Messages */
+.oauth-message {
+  padding: 16px 20px;
+  border-radius: 12px;
+  margin-bottom: 25px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 15px;
+  font-weight: 500;
+  animation: slideDown 0.3s ease-out;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.oauth-message-success {
+  background: #ECFDF5;
+  color: #065F46;
+  border-left: 4px solid #10B981;
+}
+
+.oauth-message-error {
+  background: #FEF2F2;
+  color: #7F1D1D;
+  border-left: 4px solid #EF4444;
+}
+
+.oauth-message-info {
+  background: #EFF6FF;
+  color: #1E40AF;
+  border-left: 4px solid #3B82F6;
+}
+
+.oauth-message-close {
+  background: none;
+  border: none;
+  font-size: 18px;
+  cursor: pointer;
+  padding: 0;
+  color: inherit;
+  opacity: 0.6;
+  transition: opacity 0.2s;
+}
+
+.oauth-message-close:hover {
+  opacity: 1;
+}
+
+/* Loading State */
+.oauth-loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 300px;
+  gap: 20px;
+}
+
+.oauth-loading p {
+  font-size: 16px;
+  color: #666;
+}
+
+.spinner {
+  width: 50px;
+  height: 50px;
+  border: 4px solid #e5e7eb;
+  border-top-color: #667eea;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+.spinner-small {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  border: 2px solid #ffffff66;
+  border-top-color: #ffffff;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+  margin-right: 8px;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Grid Layout */
+.oauth-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 25px;
+  margin-bottom: 40px;
+}
+
+/* OAuth Card */
+.oauth-card {
+  background: white;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 24px;
+  transition: all 0.3s ease;
+  border-left: 4px solid #667eea;
+  position: relative;
+  overflow: hidden;
+}
+
+.oauth-card:hover:not(.authenticated) {
+  box-shadow: 0 10px 25px rgba(102, 126, 234, 0.15);
+  transform: translateY(-4px);
+}
+
+.oauth-card.authenticated {
+  background: linear-gradient(135deg, #F0F9FF 0%, #F0FDF4 100%);
+  border-color: #10B981;
+}
+
+.oauth-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, transparent, rgba(102, 126, 234, 0.3), transparent);
+  animation: shimmer 2s infinite;
+}
+
+@keyframes shimmer {
+  0%, 100% { opacity: 0; }
+  50% { opacity: 1; }
+}
+
+/* Card Header */
+.oauth-card-header {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 20px;
+  align-items: flex-start;
+}
+
+.oauth-icon {
+  flex-shrink: 0;
+  line-height: 1;
+}
+
+.oauth-card-title {
+  flex: 1;
+}
+
+.oauth-card-title h3 {
+  font-size: 18px;
+  font-weight: 700;
+  margin: 0 0 6px 0;
+  color: #1f2937;
+}
+
+.oauth-card-title p {
+  font-size: 13px;
+  color: #999;
+  margin: 0;
+}
+
+/* Badge */
+.oauth-badge {
+  display: inline-block;
+  background: #10B981;
+  color: white;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+/* Card Authenticated State */
+.oauth-card-authenticated {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.oauth-user-info {
+  background: rgba(255, 255, 255, 0.7);
+  padding: 16px;
+  border-radius: 8px;
+  font-size: 13px;
+}
+
+.oauth-user-info p {
+  margin: 0 0 8px 0;
+  color: #555;
+}
+
+.oauth-user-info p:last-child {
+  margin-bottom: 0;
+}
+
+.oauth-user-info strong {
+  color: #333;
+  font-weight: 600;
+}
+
+/* Buttons */
+.oauth-btn {
+  padding: 12px 20px;
+  border: none;
+  border-radius: 8px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+}
+
+.oauth-btn-signin {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border: 2px solid transparent;
+}
+
+.oauth-btn-signin:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
+}
+
+.oauth-btn-signin:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.oauth-btn-signin:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.oauth-btn-logout {
+  background: #f3f4f6;
+  color: #374151;
+  border: 1px solid #e5e7eb;
+}
+
+.oauth-btn-logout:hover:not(:disabled) {
+  background: #e5e7eb;
+  border-color: #d1d5db;
+}
+
+.oauth-btn-logout:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Info Box */
+.oauth-info-box {
+  background: linear-gradient(135deg, #EFF6FF 0%, #F3F4F6 100%);
+  border: 1px solid #BFDBFE;
+  border-radius: 12px;
+  padding: 24px;
+  margin-top: 30px;
+}
+
+.oauth-info-box h4 {
+  font-size: 16px;
+  font-weight: 700;
+  margin: 0 0 16px 0;
+  color: #1e40af;
+}
+
+.oauth-info-box ol {
+  margin: 0;
+  padding-left: 20px;
+}
+
+.oauth-info-box li {
+  margin-bottom: 10px;
+  color: #333;
+  font-size: 14px;
+}
+
+.oauth-info-box li:last-of-type {
+  margin-bottom: 0;
+}
+
+.oauth-info-box p {
+  margin: 0;
+  color: #666;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .llm-oauth-panel {
+    padding: 20px;
+  }
+
+  .oauth-header h2 {
+    font-size: 24px;
+  }
+
+  .oauth-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .oauth-card-header {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .oauth-badge {
+    margin-top: 8px;
+  }
+}
+
+@media (max-width: 480px) {
+  .llm-oauth-panel {
+    padding: 15px;
+  }
+
+  .oauth-header h2 {
+    font-size: 20px;
+  }
+
+  .oauth-card {
+    padding: 16px;
+  }
+
+  .oauth-info-box {
+    padding: 16px;
+  }
+
+  .oauth-btn {
+    font-size: 14px;
+    padding: 10px 16px;
+  }
+}
+
+/* Dark Mode Support */
+@media (prefers-color-scheme: dark) {
+  .llm-oauth-panel {
+    color: #e5e7eb;
+  }
+
+  .oauth-header h2 {
+    color: #f3f4f6;
+  }
+
+  .oauth-header p {
+    color: #d1d5db;
+  }
+
+  .oauth-card {
+    background: #1f2937;
+    border-color: #374151;
+  }
+
+  .oauth-card-title h3 {
+    color: #f3f4f6;
+  }
+
+  .oauth-card-title p {
+    color: #9ca3af;
+  }
+
+  .oauth-user-info {
+    background: rgba(0, 0, 0, 0.2);
+    color: #d1d5db;
+  }
+
+  .oauth-user-info strong {
+    color: #f3f4f6;
+  }
+
+  .oauth-btn-logout {
+    background: #374151;
+    color: #f3f4f6;
+    border-color: #4b5563;
+  }
+
+  .oauth-btn-logout:hover:not(:disabled) {
+    background: #4b5563;
+    border-color: #6b7280;
+  }
+
+  .oauth-info-box {
+    background: linear-gradient(135deg, #374151 0%, #1f2937 100%);
+    border-color: #4b5563;
+  }
+
+  .oauth-info-box h4 {
+    color: #60a5fa;
+  }
+
+  .oauth-info-box li,
+  .oauth-info-box p {
+    color: #d1d5db;
+  }
+}

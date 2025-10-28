@@ -1,0 +1,32 @@
+name: kubec CI
+
+on:
+  push:
+    paths:
+      - 'tools/kubec/**'
+  pull_request:
+    paths:
+      - 'tools/kubec/**'
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+      - name: Install dependencies
+        run: |
+          cd tools/kubec
+          npm ci
+      - name: Run basic CLI test
+        run: |
+          cd tools/kubec
+          node ./test/test-basic.js
+      - name: Run server tests
+        run: |
+          cd tools/kubec
+          node ./test/test-server.js
+

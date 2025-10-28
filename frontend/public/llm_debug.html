@@ -1,0 +1,78 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>LLM Pool Debug</title>
+    <style>
+      body { font-family: Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial; background:#0f172a; color:#e6eef8; padding:24px; }
+      .card { background:#111827; border:1px solid #1f2937; padding:16px; border-radius:8px; margin-bottom:12px; }
+      .ok { color:#34d399; }
+      .bad { color:#fb7185; }
+      pre { background:#0b1220; padding:8px; border-radius:6px; overflow:auto; }
+      h1 { margin:0 0 8px 0; font-size:18px; }
+      small { color:#9ca3af; }
+      .muted { color:#9ca3af; }
+      .btn { background:#06b6d4; color:#042c3b; border:none; padding:8px 10px; border-radius:6px; cursor:pointer; }
+    </style>
+  </head>
+  <body>
+    <h1>Local LLMs (debug view)</h1>
+    <p class="muted">This page shows the local LLMs the backend detected and any models intentionally excluded as "critical". The backend will not use excluded models for tasks unless you explicitly opt in (not recommended).</p>
+
+    <div style="margin-top:12px; display:flex; gap:12px; align-items:flex-start;">
+      <div style="flex:1;">
+        <div class="card">
+          <strong>Available LLMs</strong>
+          <div id="available">Loading…</div>
+        </div>
+        <div class="card">
+          <strong>Excluded (critical) LLMs</strong>
+          <div id="excluded">Loading…</div>
+        </div>
+      </div>
+      <div style="width:320px;">
+        <div class="card">
+          <strong>How to use</strong>
+          <ol>
+            <li class="muted">Start the backend: <code>python -m backend.main</code> (or your usual method).</li>
+            <li class="muted">In dev, the frontend proxy forwards <code>/api</code> to the backend. If you run the frontend dev server, open <code>/llm_debug.html</code> from the Vite server root (normally <code>http://localhost:5173/llm_debug.html</code>).</li>
+            <li class="muted">This page fetches <code>/llm_pool</code> from the backend and visualizes it.</li>
+          </ol>
+        </div>
+        <div class="card">
+          <strong>Actions</strong>
+          <div style="margin-top:8px; display:flex; gap:8px;">
+            <button id="refresh" class="btn">Refresh</button>
+          </div>
+        </div>
+        <div class="card muted">
+          Warning: critical models are intentionally excluded from the available list. The app will not call them.
+        </div>
+      </div>
+    </div>
+
+    <script>
+      async function load() {
+        try {
+          const res = await fetch('/llm_pool');
+          if (!res.ok) throw new Error('HTTP ' + res.status);
+          const data = await res.json();
+          const available = data.available || [];
+          const excluded = data.excluded || [];
+
+          const av = document.getElementById('available');
+          const ex = document.getElementById('excluded');
+          av.innerHTML = available.length ? available.map(a => `<div style="margin-top:6px;"><strong class="ok">${escapeHtml(a.name||a.title||'unnamed')}</strong><div class="muted">${escapeHtml(JSON.stringify(a, null, 2))}</div></div>`).join('') : '<div class="muted">No available local LLMs detected.</div>';
+          ex.innerHTML = excluded.length ? excluded.map(a => `<div style="margin-top:6px;"><strong class="bad">${escapeHtml(a.name||a.title||'unnamed')}</strong><div class="muted">${escapeHtml(JSON.stringify(a, null, 2))}</div></div>`).join('') : '<div class="muted">No excluded critical models found.</div>';
+        } catch (err) {
+          document.getElementById('available').innerHTML = '<div class="bad">Failed to fetch /llm_pool: ' + escapeHtml(err.message) + '</div>';
+          document.getElementById('excluded').innerHTML = '<div class="bad">Failed to fetch /llm_pool: ' + escapeHtml(err.message) + '</div>';
+        }
+      }
+      function escapeHtml(s){ return String(s).replace(/[&<>\"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;' }[c])); }
+      document.getElementById('refresh').addEventListener('click', load);
+      load();
+    </script>
+  </body>
+</html>

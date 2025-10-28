@@ -1,0 +1,8 @@
+{
+  "name": "llm-scan",
+  "version": "0.0.1",
+  "scripts": {
+    "scan": "node ./scan.js"
+  },
+  "license": "MIT"
+}

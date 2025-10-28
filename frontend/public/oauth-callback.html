@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>OAuth Callback</title>
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      margin: 0;
+      background: linear-gradient(135deg, #0f172a 0%, #23272e 100%);
+      color: #e6eef8;
+    }
+    .container {
+      text-align: center;
+      max-width: 400px;
+    }
+    .spinner {
+      border: 4px solid rgba(255, 255, 255, 0.1);
+      border-radius: 50%;
+      border-top: 4px solid #00d9ff;
+      width: 40px;
+      height: 40px;
+      animation: spin 1s linear infinite;
+      margin: 0 auto 20px;
+    }
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    .status {
+      font-size: 16px;
+      margin-top: 20px;
+      line-height: 1.6;
+    }
+    .success {
+      color: #00ff00;
+    }
+    .error {
+      color: #ff4444;
+      font-size: 18px;
+      margin-top: 20px;
+    }
+    .details {
+      margin-top: 20px;
+      font-size: 12px;
+      opacity: 0.7;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div id="spinner" class="spinner"></div>
+    <p id="status" class="status">Processing authentication...</p>
+    <div id="error" class="error"></div>
+    <div id="details" class="details"></div>
+  </div>
+
+  <script>
+    (async () => {
+      try {
+        // Get parameters from URL
+        // Backend redirects with: oauth-callback.html?status=success&session_id=...&provider=...
+        const params = new URLSearchParams(window.location.search);
+        const status = params.get('status');
+        const sessionId = params.get('session_id');
+        const provider = params.get('provider');
+        const message = params.get('message');
+        const email = params.get('email');
+        const name = params.get('name');
+        const username = params.get('username');
+
+        const statusDiv = document.getElementById('status');
+        const errorDiv = document.getElementById('error');
+        const detailsDiv = document.getElementById('details');
+        const spinnerDiv = document.getElementById('spinner');
+
+        if (status === 'success') {
+          spinnerDiv.style.display = 'none';
+          statusDiv.classList.add('success');
+          statusDiv.textContent = `✓ Successfully signed in with ${provider}!`;
+          
+          // Build details message
+          let details = `Provider: ${provider}`;
+          if (email) details += `<br>Email: ${decodeURIComponent(email)}`;
+          if (name) details += `<br>Name: ${decodeURIComponent(name)}`;
+          if (username) details += `<br>Username: ${decodeURIComponent(username)}`;
+          detailsDiv.innerHTML = details;
+
+          // Post success to parent window
+          if (window.opener) {
+            window.opener.postMessage(
+              {
+                type: `${provider}-signin-success`,
+                provider,
+                session_id: sessionId,
+                email: email ? decodeURIComponent(email) : null,
+                name: name ? decodeURIComponent(name) : null,
+                username: username ? decodeURIComponent(username) : null,
+              },
+              '*'
+            );
+          }
+
+          // Close after 2 seconds
+          setTimeout(() => window.close(), 2000);
+        } else if (status === 'error') {
+          spinnerDiv.style.display = 'none';
+          statusDiv.textContent = '';
+          const errorMsg = message ? decodeURIComponent(message) : 'Unknown error occurred';
+          errorDiv.textContent = `❌ Authentication failed: ${errorMsg}`;
+          detailsDiv.innerHTML = `Provider: ${provider}<br>Please try again or contact support.`;
+
+          // Post error to parent window
+          if (window.opener) {
+            window.opener.postMessage(
+              {
+                type: `${provider}-signin-error`,
+                provider,
+                error: errorMsg,
+              },
+              '*'
+            );
+          }
+
+          // Close after 5 seconds
+          setTimeout(() => window.close(), 5000);
+        } else {
+          throw new Error('Invalid callback parameters');
+        }
+      } catch (err) {
+        document.getElementById('spinner').style.display = 'none';
+        document.getElementById('status').textContent = '';
+        document.getElementById('error').textContent = `Error: ${err instanceof Error ? err.message : String(err)}`;
+        document.getElementById('details').textContent = 'Please try again or contact support.';
+
+        // Post error to parent window
+        if (window.opener) {
+          window.opener.postMessage(
+            {
+              type: 'oauth-error',
+              error: err instanceof Error ? err.message : String(err),
+            },
+            '*'
+          );
+        }
+
+        setTimeout(() => window.close(), 5000);
+      }
+    })();
+  </script>
+</body>
+</html>
+

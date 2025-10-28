@@ -1,0 +1,67 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>TopDog Phone Link</title>
+    <style>
+      body { background:#060a12; color:#c9f7ff; font-family: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, sans-serif; }
+      .wrap { max-width: 720px; margin: 24px auto; padding: 16px; border:1px solid #0e3a4a; border-radius: 12px; background:#08111e; }
+      textarea { width:100%; height: 140px; background:#0b1424; color:#bff3ff; border:1px solid #184459; border-radius:8px; padding:8px; }
+      button { background:#1bb0d9; color:#06121a; border:none; padding:8px 12px; border-radius:8px; font-weight:700; cursor:pointer; }
+      .muted { color:#7fd7ee; font-size: 12px; }
+    </style>
+  </head>
+  <body>
+    <div class="wrap">
+      <h2>TopDog Phone Link</h2>
+      <p class="muted">Paste the Offer from your desktop, then press "Create Answer" and copy the Answer back to your desktop.</p>
+
+      <div>
+        <div><strong>Step 1 — Paste Offer from Desktop</strong></div>
+        <textarea id="offer" placeholder="Paste desktop SDP offer here"></textarea>
+      </div>
+
+      <div style="margin-top:10px;">
+        <button id="btnAnswer">Create Answer</button>
+      </div>
+
+      <div style="margin-top:10px;">
+        <div><strong>Step 2 — Copy Answer to Desktop</strong></div>
+        <textarea id="answer" placeholder="Answer will appear here"></textarea>
+      </div>
+
+      <div style="margin-top:10px;" class="muted">Status: <span id="status">Idle</span></div>
+    </div>
+
+    <script>
+      const statusEl = document.getElementById('status');
+      const offerEl = document.getElementById('offer');
+      const answerEl = document.getElementById('answer');
+      let pc;
+
+      async function init() {
+        pc = new RTCPeerConnection({ iceServers: [{ urls: ['stun:stun.l.google.com:19302'] }] });
+        const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+        for (const track of stream.getAudioTracks()) pc.addTrack(track, stream);
+        pc.oniceconnectionstatechange = () => statusEl.textContent = pc.iceConnectionState;
+      }
+
+      document.getElementById('btnAnswer').addEventListener('click', async () => {
+        try {
+          statusEl.textContent = 'Creating answer…';
+          if (!pc) await init();
+          const offer = JSON.parse(offerEl.value);
+          await pc.setRemoteDescription(offer);
+          const ans = await pc.createAnswer();
+          await pc.setLocalDescription(ans);
+          await new Promise((resolve) => setTimeout(resolve, 1200));
+          answerEl.value = JSON.stringify(pc.localDescription);
+          statusEl.textContent = 'Answer ready.';
+        } catch (e) {
+          statusEl.textContent = 'Error: ' + (e.message || e);
+        }
+      });
+    </script>
+  </body>
+</html>

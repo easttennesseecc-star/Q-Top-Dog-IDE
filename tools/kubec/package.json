@@ -1,0 +1,19 @@
+{
+  "name": "kubec",
+  "version": "0.1.0",
+  "description": "Small kubectl helper wrapper for common tasks (scaffold)",
+  "bin": {
+    "kubec": "./bin/kubec.js"
+  },
+  "scripts": {
+    "start": "node ./bin/kubec.js",
+    "test": "node ./bin/kubec.js --help",
+    "test:server": "node ./test/test-server.js"
+  },
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.18.2",
+    "node-fetch": "^2.6.7"
+  }
+}
