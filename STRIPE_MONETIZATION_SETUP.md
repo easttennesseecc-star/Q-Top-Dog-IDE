@@ -28,43 +28,47 @@ You're going to add **professional payment processing** to Q-IDE using Stripe. T
 
 ```
 FREE TIER (Forever Free)
-├─ LLM API calls: 100/month
-├─ Projects: 3
-├─ Team members: 1
-├─ Storage: 1GB
-└─ Price: $0
-
-STARTER ($29/month)
-├─ LLM API calls: 10,000/month
-├─ Projects: 25
-├─ Team members: 5
-├─ Storage: 50GB
-├─ Priority support
-└─ Price: $29/month (billed annually: $290)
-
-PROFESSIONAL ($99/month)
-├─ LLM API calls: 100,000/month
+├─ LLM API calls: Unlimited*
 ├─ Projects: Unlimited
-├─ Team members: 50
-├─ Storage: 500GB
-├─ Priority + phone support
-├─ Custom integrations
-└─ Price: $99/month (billed annually: $990)
+├─ Team members: 1
+├─ Storage: Unlimited*
+└─ Price: $0
+   (* with fair use limits to prevent abuse)
+
+PRO TIER ($12/month)
+├─ LLM API calls: Unlimited
+├─ Projects: Unlimited
+├─ Team members: Up to 10
+├─ Storage: Unlimited
+├─ Priority email support
+├─ Advanced analytics
+└─ Price: $12/month ($120/year with 2 months free)
+
+TEAMS TIER ($25/seat/month)
+├─ Everything in Pro, plus:
+├─ Team collaboration features
+├─ Advanced permissions & roles
+├─ Audit logging
+├─ Phone support
+├─ Custom branding options
+├─ Team analytics & reporting
+└─ Price: $25/seat/month (team of 5-50)
 
 ENTERPRISE (Custom)
 ├─ Unlimited everything
-├─ Dedicated support
-├─ SLA agreement
+├─ Dedicated account manager
+├─ SLA agreement (99.9% uptime)
 ├─ Custom integrations
 ├─ White-label options
-└─ Price: Custom (contact sales)
+├─ On-premise deployment option
+└─ Price: Custom (starting $500+/month)
 ```
 
 **Why This Structure?**
-- Free tier gets users comfortable
-- Starter ($29) = reasonable for individuals/small teams
-- Professional ($99) = captures serious users
-- Enterprise = high-value customers pay custom
+- Free tier: attracts massive user base (millions), monetizes via ads/sponsorships later
+- Pro ($12) = $1/month effective cost for professionals (obvious ROI)
+- Teams ($25/seat) = perfect for small/medium teams, scales linearly
+- Enterprise = handles large organizations with custom needs
 
 ---
 
@@ -113,31 +117,32 @@ heroku config:set \
 STRIPE DASHBOARD STEPS:
 
 1. Go to: https://dashboard.stripe.com/products
-2. Create product "Starter Plan"
-   ├─ Name: "Q-IDE Starter"
+
+2. Create product "Pro Plan"
+   ├─ Name: "Q-IDE Pro"
    ├─ Description: "Professional features"
    ├─ Billing: Recurring
-   ├─ Price: $29.00/month
+   ├─ Price: $12.00/month
    └─ Save
 
-3. Create product "Professional Plan"
-   ├─ Name: "Q-IDE Professional"
-   ├─ Description: "Unlimited features"
+3. Create product "Teams Plan"
+   ├─ Name: "Q-IDE Teams"
+   ├─ Description: "Team collaboration"
    ├─ Billing: Recurring
-   ├─ Price: $99.00/month
+   ├─ Price: $25.00/month per seat
    └─ Save
 
 4. Note the Price IDs:
-   ├─ Starter: price_1A2B3C...
-   └─ Professional: price_2D3E4F...
+   ├─ Pro: price_1A2B3C...
+   └─ Teams: price_2D3E4F...
 ```
 
 **Store Price IDs in Backend:**
 ```python
 # backend/config.py or environment variables
 STRIPE_PRICE_IDS = {
-    "starter": "price_1A2B3C...",
-    "professional": "price_2D3E4F...",
+    "pro": "price_1A2B3C...",
+    "teams": "price_2D3E4F...",
 }
 ```
 
@@ -284,8 +289,8 @@ import enum
 
 class SubscriptionTier(str, enum.Enum):
     FREE = "free"
-    STARTER = "starter"
-    PROFESSIONAL = "professional"
+    PRO = "pro"
+    TEAMS = "teams"
     ENTERPRISE = "enterprise"
 
 class Subscription(Base):
@@ -584,20 +589,18 @@ export function BillingPage() {
       {/* Pricing Tiers */}
       <div className="pricing-tiers">
         <PricingCard
-          name="Starter"
-          price="$29"
-          calls="10,000"
-          features={['25 projects', '5 team members', '50GB storage']}
-          isActive={subscription?.tier === 'starter'}
+          name="Pro"
+          price="$12"
+          features={['Unlimited projects', '10 team members', 'Priority support']}
+          isActive={subscription?.tier === 'pro'}
           onUpgrade={() => handleUpgrade('price_1A2B3C...')}
         />
 
         <PricingCard
-          name="Professional"
-          price="$99"
-          calls="100,000"
-          features={['Unlimited projects', '50 team members', '500GB storage']}
-          isActive={subscription?.tier === 'professional'}
+          name="Teams"
+          price="$25/seat"
+          features={['Unlimited projects', 'Advanced permissions', 'Phone support']}
+          isActive={subscription?.tier === 'teams'}
           onUpgrade={() => handleUpgrade('price_2D3E4F...')}
         />
       </div>
@@ -1058,17 +1061,17 @@ async def get_revenue_stats(db = Depends(get_db)):
     ).count()
     
     # Calculate MRR (Monthly Recurring Revenue)
-    starter_subs = db.query(Subscription).filter(
-        Subscription.tier == "starter",
+    pro_subs = db.query(Subscription).filter(
+        Subscription.tier == "pro",
         Subscription.status == "active"
     ).count()
     
-    professional_subs = db.query(Subscription).filter(
-        Subscription.tier == "professional",
+    teams_subs = db.query(Subscription).filter(
+        Subscription.tier == "teams",
         Subscription.status == "active"
     ).count()
     
-    mrr = (starter_subs * 29) + (professional_subs * 99)
+    mrr = (pro_subs * 12) + (teams_subs * 25)
     
     # Calculate churn
     thirty_days_ago = datetime.utcnow() - timedelta(days=30)
@@ -1084,8 +1087,8 @@ async def get_revenue_stats(db = Depends(get_db)):
         "active_subs": active_subs,
         "churn_rate": round(churn_rate, 2),
         "arpu": round(mrr / active_subs, 2) if active_subs > 0 else 0,
-        "starter_subs": starter_subs,
-        "professional_subs": professional_subs,
+        "pro_subs": pro_subs,
+        "teams_subs": teams_subs,
     }
 ```
 

@@ -501,22 +501,32 @@ create_billing_portal_url(user) → str
 ```python
 TIER_LIMITS = {
     "free": {
-        "api_calls_per_month": 100,
-        "projects": 3,
-        "team_members": 1,
-        "storage_gb": 1,
-    },
-    "starter": {
-        "api_calls_per_month": 10000,
-        "projects": 25,
-        "team_members": 5,
-        "storage_gb": 50,
-    },
-    "professional": {
-        "api_calls_per_month": 100000,
+        "api_calls_per_month": None,  # Unlimited with fair use
         "projects": None,  # Unlimited
-        "team_members": 50,
-        "storage_gb": 500,
+        "team_members": 1,
+        "storage_gb": None,  # Unlimited
+        "price": "$0",
+    },
+    "pro": {
+        "api_calls_per_month": None,  # Unlimited
+        "projects": None,  # Unlimited
+        "team_members": 10,
+        "storage_gb": None,  # Unlimited
+        "price": "$12/month",
+    },
+    "teams": {
+        "api_calls_per_month": None,  # Unlimited
+        "projects": None,  # Unlimited
+        "team_members": None,  # Unlimited
+        "storage_gb": None,  # Unlimited
+        "price": "$25/month per seat",
+    },
+    "enterprise": {
+        "api_calls_per_month": None,  # Unlimited
+        "projects": None,  # Unlimited
+        "team_members": None,  # Unlimited
+        "storage_gb": None,  # Unlimited
+        "price": "Custom",
     },
 }
 ```
@@ -743,7 +753,7 @@ class Subscription(Base):
     stripe_subscription_id: str
     
     # Plan
-    tier: str ("free", "starter", "professional", "enterprise")
+    tier: str ("free", "pro", "teams", "enterprise")
     status: str ("active", "trialing", "past_due", "canceled")
     
     # Billing
@@ -1991,15 +2001,15 @@ SECURITY:
 └─ GDPR compliance
 
 MONETIZATION:
-├─ Free tier: 100 API calls/month
-├─ Starter: $29/month (10K calls)
-├─ Professional: $99/month (100K calls)
+├─ Free tier: Unlimited (fair use)
+├─ Pro: $12/month (unlimited calls)
+├─ Teams: $25/month per seat (unlimited)
 └─ Enterprise: Custom
 
 REVENUE POTENTIAL:
-├─ Conservative: $15-20K Year 1
-├─ Aggressive: $50K+ Year 1
-├─ Enterprise: $100M+ TAM
+├─ Conservative: $500K - $2M Year 1
+├─ Aggressive: $5M - $15M Year 2
+├─ Enterprise TAM: $10B+ (AI IDE market)
 ```
 
 ---
