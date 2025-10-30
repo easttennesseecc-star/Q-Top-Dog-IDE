@@ -141,7 +141,7 @@ Step 1: Reference Capabilities_At_A_Glance for messaging
         └─ Segment-specific talking points
         
 Step 2: Use pricing comparison matrix for blogs/ads
-        └─ "50-70% cheaper than competitors"
+        └─ "Market-competitive pricing with superior integrated value"
         
 Step 3: Reference INVENTORY for competitive positioning
         └─ "Only IDE with 4 game engines"
@@ -225,7 +225,7 @@ Result: Compelling marketing narrative
 - **Pro ($20)**: Market competitive with Cursor, cheaper than Windsurf
 - **Teams ($40-100)**: Better value than GitHub Teams/Enterprise
 - **Enterprise ($250-300)**: On-par with GitHub Enterprise
-- **Overall**: 50-70% cheaper than competitors for same/better features
+- **Overall**: Market-competitive pricing with premium-tier features and strategic price increase planned for Year 2
 
 ### Unique Capabilities (7 exclusive features)
 1. Multi-game engine IDE (Construct 3 + Godot + Unity + Unreal)
@@ -234,7 +234,7 @@ Result: Compelling marketing narrative
 4. Built-in media synthesis (game assets, UI, video)
 5. Self-hosted option (competitors locked to cloud)
 6. Full IDE + AI + Games (others do 1-2)
-7. 50-70% cheaper than incumbents
+7. Market-competitive pricing positioned for premium tier by Year 2
 
 ---
 
@@ -274,9 +274,9 @@ FINANCIAL PROJECTIONS
 COMPETITIVE COMPARISON
 ├─ vs GitHub Copilot: Better IDE, same price, game engines
 ├─ vs Cursor: Same price, more features (games, media)
-├─ vs Windsurf: Same features, cheaper price ($20 vs $25)
+├─ vs Windsurf: Same features, market-competitive pricing ($20 vs $25)
 ├─ vs GameMaker: All engines + full IDE (vs 1 engine)
-└─ vs GitHub Teams: 50% cheaper + more features
+└─ vs GitHub Teams: Market-competitive pricing + more features, strategic Year 2 increase positioning
 ```
 
 ---

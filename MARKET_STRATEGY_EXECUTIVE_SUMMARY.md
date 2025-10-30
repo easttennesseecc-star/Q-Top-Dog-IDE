@@ -116,7 +116,7 @@ Enterprise        $250-300/seat   + private deployment    93%
 ### Tier 2: Difficult to Copy (1-2 year lead)
 1. **Product quality** - Fast, beautiful, well-documented
 2. **Community** - Game devs, indie devs, asset marketplace
-3. **Pricing** - 50-70% cheaper than incumbents
+3. **Pricing strategy** - Market-competitive now (same as GitHub Copilot), positioned for premium tier by Year 2
 
 ### Tier 3: Defensible via Speed
 - Execute before competitors can catch up
