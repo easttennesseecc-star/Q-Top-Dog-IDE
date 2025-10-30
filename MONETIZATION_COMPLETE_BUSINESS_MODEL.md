@@ -33,26 +33,44 @@ Q-IDE will generate revenue through a **freemium model** designed to maximize bo
 - **Limits**: 5 AI analyses/day, no collaboration, limited analytics
 - **ROI**: User acquisition cost = $0 (organic growth)
 
-### PRO TIER: Individual Professionals ($12/month = $120/year)
+### PRO TIER: Individual Professionals ($15/month = $180/year)
 - **Users**: 100K-2M individual developers, freelancers, technical leads
-- **Revenue**: $12-240M annually (by year 3)
+- **Revenue**: $18-360M annually (by year 3)
 - **Value**: Unlimited AI, advanced debugging, collaboration, analytics
 - **Target**: Professionals where $1/day ROI is obvious
 - **Conversion**: 2-5% of free users → Pro tier
+- **Profitability**: $15/mo - $5 infrastructure = $10 net per user
 
-### TEAMS TIER: Collaboration ($25/month per seat)
-- **Users**: 10K-1M teams (50K-2.5M total seats)
-- **Revenue**: $30-750M annually (by year 3)
-- **Value**: Team features, SSO, analytics, support
-- **Target**: Startups and dev teams (5-50 people each)
-- **Conversion**: 10-20% of Pro users → Teams tier
+### TEAMS STARTER: Small Teams ($30/month per seat)
+- **Users**: 10K-200K teams (50K-1M total seats)
+- **Revenue**: $18-180M annually (by year 3)
+- **Value**: Team features, basic analytics, team support
+- **Target**: Startups and small dev teams (5-50 people each)
+- **Conversion**: 10-15% of Pro users → Teams Starter
+- **Profitability**: $30/mo - $7 infrastructure = $23 net per user
+
+### TEAMS PRO: Growing Companies ($40/month per seat)
+- **Users**: 5K-100K teams (100K-500K total seats)
+- **Revenue**: $12-240M annually (by year 3)
+- **Value**: Advanced analytics, SSO, phone support
+- **Target**: Growing companies (20-200 people each)
+- **Conversion**: 5-10% of Teams Starter → Teams Pro
+- **Profitability**: $40/mo - $8 infrastructure = $32 net per user
+
+### TEAMS ENTERPRISE: Enterprise Teams ($50/month per seat)
+- **Users**: 1K-50K teams (50K-500K total seats)
+- **Revenue**: $6-300M annually (by year 3)
+- **Value**: Custom branding, 99.99% SLA, data residency, phone support
+- **Target**: Enterprise customers (50+ people each)
+- **Conversion**: 5-8% of Teams Pro → Teams Enterprise
+- **Profitability**: $50/mo - $9 infrastructure = $41 net per user
 
 ### ENTERPRISE TIER: Custom Solutions (Custom pricing)
 - **Users**: 50-1000 organizations
-- **Revenue**: $0.5-20M annually (by year 3)
+- **Revenue**: $0.5-50M annually (by year 3)
 - **Value**: Self-hosting, compliance, custom features, 24/7 support
 - **Target**: Fortune 500, government, healthcare
-- **ACV**: $10K-30K+ per year
+- **ACV**: $10K-100K+ per year
 
 ---
 
@@ -60,23 +78,37 @@ Q-IDE will generate revenue through a **freemium model** designed to maximize bo
 
 ### Model 1: Pro Individual Users
 ```
-100,000 Pro users × $120/year = $12M (Year 1)
-500,000 Pro users × $120/year = $60M (Year 2)
-1,500,000 Pro users × $120/year = $180M (Year 3)
+100,000 Pro users × $180/year = $18M (Year 1)
+500,000 Pro users × $180/year = $90M (Year 2)
+1,500,000 Pro users × $180/year = $270M (Year 3)
 ```
 
-### Model 2: Teams (Per-Seat Billing)
+### Model 2: Teams Starter (Per-Seat Billing)
 ```
-Year 1:  20,000 teams × 5 seats avg × $300/year = $30M
-Year 2:  100,000 teams × 5 seats avg × $300/year = $150M
-Year 3:  500,000 teams × 5 seats avg × $300/year = $750M
+Year 1:  10,000 teams × 5 seats avg × $360/year = $18M
+Year 2:  50,000 teams × 5 seats avg × $360/year = $90M
+Year 3:  200,000 teams × 5 seats avg × $360/year = $360M
 ```
 
-### Model 3: Enterprise (Custom ACV)
+### Model 3: Teams Pro (Per-Seat Billing)
 ```
-Year 1:  50-100 customers × $20K average = $1M-2M
-Year 2:  150-300 customers × $30K average = $4.5M-9M
-Year 3:  500-1000 customers × $40K average = $20M-40M
+Year 1:  2,000 teams × 50 seats avg × $480/year = $48M
+Year 2:  10,000 teams × 50 seats avg × $480/year = $240M
+Year 3:  50,000 teams × 50 seats avg × $480/year = $1.2B
+```
+
+### Model 4: Teams Enterprise (Per-Seat Billing)
+```
+Year 1:  500 teams × 100 seats avg × $600/year = $30M
+Year 2:  2,500 teams × 100 seats avg × $600/year = $150M
+Year 3:  15,000 teams × 100 seats avg × $600/year = $900M
+```
+
+### Model 5: Enterprise (Custom ACV)
+```
+Year 1:  50-100 customers × $50K average = $2.5M-5M
+Year 2:  150-300 customers × $75K average = $11M-22M
+Year 3:  500-1000 customers × $100K average = $50M-100M
 ```
 
 ### Total Revenue Projections

@@ -1,0 +1,92 @@
+name: q-ide-production
+services:
+  - name: backend-api
+    github:
+      repo: easttennesseecc-star/Q-Top-Dog-IDE
+      branch: main
+    build_command: pip install -r backend/requirements.txt
+    run_command: uvicorn backend.main:app --host 0.0.0.0 --port 8080 --workers 4
+    http_port: 8080
+    health_check:
+      http_path: /health
+      http_port: 8080
+    envs:
+      - key: ENVIRONMENT
+        value: production
+      - key: DEBUG
+        value: "false"
+      - key: LOG_LEVEL
+        value: INFO
+      - key: BACKEND_URL
+        scope: RUN_AND_BUILD_TIME
+        value: ${APP_DOMAIN}
+      - key: FRONTEND_URL
+        scope: RUN_AND_BUILD_TIME
+        value: ${APP_DOMAIN}
+      - key: DATABASE_URL
+        scope: RUN_AND_BUILD_TIME
+        value: ${DB_CONNECTION_STRING}
+      - key: STRIPE_SECRET_KEY
+        scope: RUN_TIME
+        value: ${STRIPE_SECRET_KEY}
+      - key: STRIPE_PUBLISHABLE_KEY
+        value: ${STRIPE_PUBLISHABLE_KEY}
+      - key: STRIPE_WEBHOOK_SECRET
+        scope: RUN_TIME
+        value: ${STRIPE_WEBHOOK_SECRET}
+      - key: STRIPE_PRICE_ID_PRO
+        value: ${STRIPE_PRICE_ID_PRO}
+      - key: STRIPE_PRICE_ID_TEAMS
+        value: ${STRIPE_PRICE_ID_TEAMS}
+    instance_count: 2
+    instance_size_slug: basic-s
+    resource_requests:
+      cpus: 500
+      memory_mi: 512
+
+  - name: frontend-web
+    github:
+      repo: easttennesseecc-star/Q-Top-Dog-IDE
+      branch: main
+    build_command: cd frontend && npm install && npm run build
+    source_dir: frontend/dist
+    http_port: 80
+    envs:
+      - key: VITE_API_URL
+        scope: BUILD_TIME
+        value: ${APP_DOMAIN}/api
+      - key: VITE_STRIPE_PUBLISHABLE_KEY
+        value: ${STRIPE_PUBLISHABLE_KEY}
+    instance_count: 1
+    instance_size_slug: basic-xs
+
+databases:
+  - name: q-ide-db
+    engine: PG
+    version: "15"
+    production: true
+
+static_sites:
+  - name: frontend
+    source_dir: frontend/dist
+    routes:
+      - path: /
+        match_prefix: true
+
+domains:
+  - domain: q-ide.com
+    type: PRIMARY
+  - domain: www.q-ide.com
+    type: ALIAS
+    target_domain: q-ide.com
+
+alerts:
+  - rule: CPU_UTILIZATION
+    value: 75
+    window: 5m
+  - rule: MEMORY_UTILIZATION
+    value: 85
+    window: 5m
+  - rule: RESTART_COUNT
+    value: 5
+    window: 1h

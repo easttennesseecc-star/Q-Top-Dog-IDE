@@ -1,0 +1,98 @@
+version: '3.8'
+
+services:
+  # Backend API
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: runtime
+    container_name: q-ide-backend
+    ports:
+      - "8000:8000"
+    environment:
+      ENVIRONMENT: development
+      DEBUG: "false"
+      LOG_LEVEL: INFO
+      BACKEND_URL: http://localhost:8000
+      FRONTEND_URL: http://localhost:5173
+      DATABASE_URL: postgresql://q_ide_user:q_ide_password@postgres:5432/q_ide_db
+      STRIPE_SECRET_KEY: ${STRIPE_SECRET_KEY}
+      STRIPE_PUBLISHABLE_KEY: ${STRIPE_PUBLISHABLE_KEY}
+      STRIPE_WEBHOOK_SECRET: ${STRIPE_WEBHOOK_SECRET}
+      STRIPE_PRICE_ID_PRO: ${STRIPE_PRICE_ID_PRO}
+      STRIPE_PRICE_ID_TEAMS: ${STRIPE_PRICE_ID_TEAMS}
+    depends_on:
+      postgres:
+        condition: service_healthy
+    volumes:
+      - ./logs:/app/logs
+      - ./backend:/app/backend
+    networks:
+      - q-ide-network
+    restart: unless-stopped
+
+  # PostgreSQL Database
+  postgres:
+    image: postgres:15-alpine
+    container_name: q-ide-postgres
+    environment:
+      POSTGRES_USER: q_ide_user
+      POSTGRES_PASSWORD: q_ide_password
+      POSTGRES_DB: q_ide_db
+      POSTGRES_INITDB_ARGS: "--encoding=UTF8 --locale=C"
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./database/init.sql:/docker-entrypoint-initdb.d/01-init.sql
+    networks:
+      - q-ide-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U q_ide_user -d q_ide_db"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    restart: unless-stopped
+
+  # Redis Cache (optional but recommended for production)
+  redis:
+    image: redis:7-alpine
+    container_name: q-ide-redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    networks:
+      - q-ide-network
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    restart: unless-stopped
+
+  # Nginx Reverse Proxy
+  nginx:
+    image: nginx:alpine
+    container_name: q-ide-nginx
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./nginx/ssl:/etc/nginx/ssl:ro
+      - ./frontend/dist:/usr/share/nginx/html:ro
+    depends_on:
+      - backend
+    networks:
+      - q-ide-network
+    restart: unless-stopped
+
+volumes:
+  postgres_data:
+  redis_data:
+
+networks:
+  q-ide-network:
+    driver: bridge

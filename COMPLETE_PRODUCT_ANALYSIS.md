@@ -2007,9 +2007,10 @@ MONETIZATION:
 └─ Enterprise: Custom
 
 REVENUE POTENTIAL:
-├─ Conservative: $500K - $2M Year 1
-├─ Aggressive: $5M - $15M Year 2
-├─ Enterprise TAM: $10B+ (AI IDE market)
+├─ Conservative: $27.5M - $50M Year 1
+├─ Mid-Range: $43M - $214M Year 1-2
+├─ Aggressive: $111M - $370M Year 1-2
+└─ Enterprise TAM: $300B+ (Developer tools market)
 ```
 
 ---

@@ -124,7 +124,7 @@
 
 ### Individual/Freelancer Path
 ```
-FREE ($0)                    PRO ($12/month)
+FREE ($0)                    PRO ($15/month)
 ├─ Learning code         ├─ Unlimited AI
 ├─ Hobby projects        ├─ Smart refactoring
 ├─ Small scripts          ├─ Collaboration (5 pair sessions)
@@ -133,17 +133,15 @@ FREE ($0)                    PRO ($12/month)
 │                         └─ Priority support (24h)
 ```
 
-### Team Path
+### Team Path (Scaling)
 ```
-PRO ($12/month)            TEAMS ($25/seat/month)
-├─ Professional work    ├─ Unlimited pair programming
-├─ Solo freelance       ├─ Team chat (unlimited)
-│                       ├─ Code review workflow
-│                       ├─ Team analytics
-│                       ├─ Shared debugging
-│                       ├─ SSO/SAML
-│                       ├─ Audit logs
-│                       └─ Priority support (4h)
+PRO ($15/month)            TEAMS STARTER ($30/seat)      TEAMS PRO ($40/seat)      TEAMS ENTERPRISE ($50/seat)
+├─ Solo work            ├─ 5-50 seats               ├─ 20-200 seats            ├─ 50+ seats
+├─ Basic collab         ├─ Unlimited pair prog      ├─ Unlimited pair prog     ├─ Unlimited everything
+│                       ├─ Team chat               ├─ Team chat               ├─ Custom branding
+│                       ├─ Basic analytics         ├─ Advanced analytics      ├─ Phone support
+│                       └─ Email support           ├─ Phone support           ├─ 99.99% SLA
+│                                                  └─ SSO/SAML                └─ Custom deployment
 ```
 
 ### Enterprise Path

@@ -199,10 +199,18 @@ Blocker: Database schema review
 ```
 Task: Move from .env file to secrets vault
 ├─ AWS Secrets Manager / GCP Secret Manager
-├─ Rotate API keys
+├─ Rotate Q-IDE's OWN API keys (OpenAI for backend, GitHub OAuth)
 ├─ Remove secrets from code
 ├─ Add key rotation schedule
 └─ Update docs
+
+IMPORTANT: User-provided API keys are DIFFERENT
+├─ User API keys stored in user's ~/.q-ide/llm_keys.json
+├─ User keys are encrypted using system keyring
+├─ User keys are NEVER sent to Q-IDE servers
+├─ User keys are NEVER stored in Q-IDE's vault
+├─ BYOK model: User manages their own keys
+└─ See API_KEY_RESPONSIBILITY_MODEL.md for details
 
 Estimated: 8 hours
 Blocker: None

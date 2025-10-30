@@ -1132,27 +1132,42 @@ heroku config:set \
 
 ## Revenue Projections
 
-### Conservative Scenario (Year 1)
+### Year 1-3 Financial Model
 
 ```
-Month 1-3: 10 paying customers ($290/month)
-Month 4-6: 50 paying customers ($1,450/month)
-Month 7-9: 150 paying customers ($4,350/month)
-Month 10-12: 300 paying customers ($8,700/month)
+YEAR 1:
+├─ Free users: 5M (network effects)
+├─ Pro users: 100K-250K × $120/year = $12M-$30M
+├─ Teams: 10K-50K teams × $300/year = $15M-$75M
+├─ Enterprise: 50-100 customers × $20K avg = $1M-$2M
+└─ TOTAL YEAR 1: $28M-$107M
 
-Year 1 Total Revenue: ~$15,000 - $20,000
+YEAR 2:
+├─ Free users: 15M
+├─ Pro users: 500K-1M × $120/year = $60M-$120M
+├─ Teams: 100K-200K teams × $300/year = $30M-$60M
+├─ Enterprise: 150-300 customers × $30K avg = $4.5M-$9M
+└─ TOTAL YEAR 2: $94M-$369M
+
+YEAR 3:
+├─ Free users: 30M
+├─ Pro users: 1.5M-2M × $120/year = $180M-$240M
+├─ Teams: 500K-1M teams × $300/year = $150M-$300M
+├─ Enterprise: 500-1000 customers × $40K avg = $20M-$40M
+└─ TOTAL YEAR 3: $350M-$1B+
 ```
 
-### Aggressive Scenario (Year 1)
+### Conservative vs Aggressive Scenarios
 
-```
-Month 1-3: 50 paying customers ($1,450/month)
-Month 4-6: 200 paying customers ($5,800/month)
-Month 7-9: 500 paying customers ($14,500/month)
-Month 10-12: 1,000 paying customers ($29,000/month)
+**Conservative (Product-focused, organic growth)**
+- Year 1: $30-50M (steady, word-of-mouth)
+- Year 2: $100-200M (accelerating)
+- Year 3: $300-500M (market leader)
 
-Year 1 Total Revenue: ~$50,000+
-```
+**Aggressive (Sales-driven, marketing investment)**
+- Year 1: $50-107M (funded marketing, partnerships)
+- Year 2: $200-369M (enterprise sales team)
+- Year 3: $600M-$1B (market dominance)
 
 ---
 

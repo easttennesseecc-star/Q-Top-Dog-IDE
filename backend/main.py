@@ -24,6 +24,12 @@ from llm_auth_routes import router as llm_auth_router
 from llm_chat_routes import router as llm_chat_router
 from build_orchestration_routes import router as build_orchestration_router
 from llm_oauth_routes import router as llm_oauth_router
+from routes.billing import router as billing_router
+from routes.orchestration_workflow import router as orchestration_workflow_router
+from routes.ai_workflow_routes import router as ai_workflow_router
+from services.workflow_db_manager import init_workflow_database, WorkflowDatabaseManager
+from services.orchestration_service import OrchestrationService
+from services.ai_orchestration import initialize_ai_orchestration
 from logger_utils import configure_logger, get_logger
 from auto_setup_q_assistant import auto_setup_q_assistant
 from llm_auto_auth import check_all_llm_authentication, get_startup_auth_prompt
@@ -133,6 +139,9 @@ app.include_router(llm_auth_router)
 app.include_router(llm_chat_router)
 app.include_router(build_orchestration_router)
 app.include_router(llm_oauth_router)
+app.include_router(billing_router)
+app.include_router(orchestration_workflow_router)
+app.include_router(ai_workflow_router)
 
 # Include setup wizard and auto-assignment routers
 from setup_wizard import router as setup_wizard_router
@@ -792,8 +801,36 @@ async def llm_stream(request: Request):
 
 @app.on_event("startup")
 async def startup_event():
-    """Auto-setup Q Assistant and check LLM authentication on startup"""
+    """Auto-setup Q Assistant, initialize workflow database, AI orchestration, and check LLM authentication on startup"""
     logger.info("Running startup tasks...")
+    
+    # Initialize workflow orchestration database
+    try:
+        database_url = os.getenv(
+            "DATABASE_URL",
+            "sqlite:///./topdog_ide.db"
+        )
+        logger.info(f"Initializing workflow database: {database_url.split('/')[-1]}")
+        
+        if init_workflow_database(database_url):
+            logger.info("✅ Workflow orchestration database initialized and ready")
+            app.workflow_db_manager = WorkflowDatabaseManager(database_url)
+        else:
+            logger.warning("⚠️ Workflow database initialization failed - orchestration may not work")
+    except Exception as e:
+        logger.error(f"❌ Error initializing workflow database: {str(e)}")
+    
+    # Initialize AI Orchestration Manager
+    try:
+        logger.info("Initializing AI orchestration system...")
+        orchestration_service = OrchestrationService(
+            db=getattr(app, 'workflow_db_manager', None)
+        )
+        ai_manager = initialize_ai_orchestration(orchestration_service)
+        app.ai_orchestration_manager = ai_manager
+        logger.info("✅ AI orchestration system initialized and ready")
+    except Exception as e:
+        logger.error(f"❌ Error initializing AI orchestration: {str(e)}")
     
     # Auto-setup Q Assistant if needed
     try:

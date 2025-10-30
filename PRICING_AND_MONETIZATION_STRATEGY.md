@@ -9,22 +9,25 @@
 
 ## Executive Summary
 
-Q-IDE will adopt a **freemium model** with three tiers designed to:
+Q-IDE will adopt a **freemium model** with four tiers designed to:
 
 1. **Maximize adoption** (Free tier attracts millions)
 2. **Generate revenue** (Pro tier converts power users)
-3. **Enable enterprise deals** (Custom tier for organizations)
+3. **Enable growth** (Teams tiers for scaling teams)
+4. **Enable enterprise deals** (Custom tier for organizations)
 
 ### Revenue Model
 - 💰 **Free tier** → Network effects & market penetration
-- 💰 **Pro tier ($12/month)** → Individual professionals & freelancers
-- 💰 **Teams tier ($25/month per seat)** → Small teams
-- 💰 **Enterprise (custom)** → Fortune 500 companies
+- 💰 **Pro tier ($20/month)** → Individual professionals & freelancers
+- 💰 **Teams Starter tier ($40/seat/month)** → Small teams (5-50)
+- 💰 **Teams Pro tier ($60/seat/month)** → Growing teams (50+)
+- 💰 **Teams Enterprise tier ($100/seat/month)** → Enterprise teams (100+)
+- 💰 **Enterprise ($250-300/seat)** → Fortune 500 companies
 
 ### Financial Projections (Year 1-3)
-- **Year 1**: $500K - $2M (early adopters)
-- **Year 2**: $5M - $15M (market growth)
-- **Year 3**: $50M+ (enterprise adoption)
+- **Year 1**: $27.5M - $111M (strong product adoption)
+- **Year 2**: $95M - $370M (market acceleration)
+- **Year 3**: $300M - $1.5B (market dominance)
 
 ---
 
@@ -32,12 +35,13 @@ Q-IDE will adopt a **freemium model** with three tiers designed to:
 
 ### Pricing Overview
 
-| Feature | Free | Pro | Teams | Enterprise |
-|---------|------|-----|-------|------------|
-| **Monthly Cost** | $0 | $12 | $25/seat | Custom |
-| **Yearly Cost** | $0 | $120 | $300/seat | Custom |
-| **Annual Discount** | - | 2 months free | 3 months free | Included |
-| **Target Users** | Hobbyists | Professionals | Small teams (5-50) | Organizations (50+) |
+| Feature | Free | Pro | Teams Starter | Teams Pro | Teams Enterprise | Enterprise |
+|---------|------|-----|--------|----------|----------|------------|
+| **Monthly Cost** | $0 | $20 | $40/seat | $60/seat | $100/seat | $250-300/seat |
+| **Yearly Cost** | $0 | $200 | $480/seat | $720/seat | $1,200/seat | $3,000-3,600/seat |
+| **Annual Discount** | - | 2 months free | 2 months free | 2 months free | 2 months free | 2 months free |
+| **Min Team Size** | 1 | 1 | 5 seats | 20 seats | 50 seats | 100+ |
+| **Target Users** | Hobbyists | Professionals | Small teams | Growth teams | Large teams | Organizations |
 
 ---
 
@@ -119,13 +123,14 @@ Q-IDE will adopt a **freemium model** with three tiers designed to:
 
 ---
 
-## 💎 TIER 2: PRO TIER ($12/month or $120/year)
+## 💎 TIER 2: PRO TIER ($20/month or $200/year)
 
 ### Pricing Details
-- **Monthly**: $12/month (charge per month)
-- **Yearly**: $120/year (2 months free, saves $24/year)
+- **Monthly**: $20/month (charge per month)
+- **Yearly**: $200/year (2 months free, saves $40/year)
 - **Free trial**: 14 days full access, no credit card required
 - **Target**: Individual professionals, serious developers, freelancers
+- **Profitability**: $20/mo - $5 infrastructure = $15 net per user
 
 ### What's Included (Everything from Free +)
 
@@ -240,14 +245,37 @@ Q-IDE will adopt a **freemium model** with three tiers designed to:
 
 ---
 
-## 👥 TIER 3: TEAMS TIER ($25/month per seat)
+## 👥 TIER 3-5: TEAMS TIERS ($40-$100/seat/month)
 
-### Pricing Details
-- **Per-seat pricing**: $25/month per developer (minimum 5 seats = $125/month)
-- **Yearly discount**: 3 months free ($225/seat, saves $75/seat)
+### Teams Starter Tier ($40/seat/month)
+
+**Pricing Details**
+- **Per-seat pricing**: $40/month per developer (minimum 5 seats = $200/month)
+- **Yearly discount**: 2 months free ($480/seat, saves $80/seat)
 - **Seat management**: Add/remove users anytime
 - **Admin controls**: Managed by designated team lead
 - **Target**: Small teams, startups, development departments
+- **Profitability**: $40/mo - $7 infrastructure = $33 net per user
+
+### Teams Pro Tier ($60/seat/month)
+
+**Pricing Details**
+- **Per-seat pricing**: $60/month per developer (minimum 20 seats = $1,200/month)
+- **Yearly discount**: 2 months free ($720/seat, saves $120/seat)
+- **Seat management**: Add/remove users anytime
+- **Admin controls**: Managed by designated team lead
+- **Target**: Growing teams, mid-market companies
+- **Profitability**: $60/mo - $8 infrastructure = $52 net per user
+
+### Teams Enterprise Tier ($100/seat/month)
+
+**Pricing Details**
+- **Per-seat pricing**: $100/month per developer (minimum 50 seats = $5,000/month)
+- **Yearly discount**: 2 months free ($1,200/seat, saves $200/seat)
+- **Seat management**: Add/remove users anytime
+- **Admin controls**: Managed by designated team lead
+- **Target**: Enterprise teams, large organizations
+- **Profitability**: $100/mo - $9 infrastructure = $91 net per user
 
 ### What's Included (Everything from Pro +)
 
@@ -354,14 +382,16 @@ Q-IDE will adopt a **freemium model** with three tiers designed to:
 
 ---
 
-## 🏢 TIER 4: ENTERPRISE (CUSTOM PRICING)
+## 🏢 TIER 4: ENTERPRISE ($250-300/seat/month or Custom)
 
 ### Pricing Model
-- **Custom pricing**: Based on company size, usage, requirements
-- **Typical range**: $2,500 - $50,000+/year (depends on seats)
-- **Volume discounts**: Better pricing for 100+ seats
-- **Multi-year contracts**: 3-5% discount for multi-year
-- **Target**: Fortune 500, large organizations, government agencies
+- **Per-seat pricing**: $250-300/seat/month (negotiable based on volume)
+- **Minimum commitment**: 100 seats = $25,000-30,000/month
+- **Volume discounts**: Better pricing for 500+ seats
+- **Multi-year contracts**: 5-10% discount for multi-year (3-5 years)
+- **Annual commitment**: Preferred, provides revenue predictability
+- **Custom enterprise**: Fully negotiated pricing for Fortune 500
+- **Target**: Enterprise organizations, Fortune 500, government agencies
 
 ### What's Included (Everything from Teams +)
 
@@ -472,17 +502,22 @@ Q-IDE will adopt a **freemium model** with three tiers designed to:
 
 ## 🔄 Tier Comparison: Feature Matrix
 
-| Feature Category | Free | Pro | Teams | Enterprise |
-|-----------------|------|-----|-------|------------|
-| **Seats** | 1 | 1 | 5-1000 | Unlimited |
-| **Base Cost/mo** | $0 | $12 | $25/seat | Custom |
-| **AI Analyses/day** | 5 | Unlimited | Unlimited | Unlimited |
-| **Pair Programming** | ❌ | 5 sessions | Unlimited | Unlimited |
-| **Real-time Collab** | ❌ | ✅ | ✅ | ✅ |
-| **Team Chat** | ❌ | ✅ | ✅ | ✅ |
-| **Advanced Debugging** | ❌ | ✅ | ✅ | ✅ |
-| **Analytics Dashboard** | Basic | ✅ | Team | Executive |
-| **SSO / SAML** | ❌ | ❌ | ✅ | ✅ |
+| Feature Category | Free | Pro | Teams Starter | Teams Pro | Teams Enterprise | Enterprise |
+|-----------------|------|-----|--------|----------|----------|------------|
+| **Seats** | 1 | 1 | 5-50 | 20-200 | 50+ | Unlimited |
+| **Base Cost/mo** | $0 | $15 | $30/seat | $40/seat | $50/seat | Custom |
+| **AI Analyses/day** | 5 | Unlimited | Unlimited | Unlimited | Unlimited | Unlimited |
+| **Pair Programming** | ❌ | 5 sessions | Unlimited | Unlimited | Unlimited | Unlimited |
+| **Real-time Collab** | ❌ | ✅ | ✅ | ✅ | ✅ | ✅ |
+| **Team Chat** | ❌ | ✅ | ✅ | ✅ | ✅ | ✅ |
+| **Advanced Debugging** | ❌ | ✅ | ✅ | ✅ | ✅ | ✅ |
+| **Analytics Dashboard** | Basic | ✅ | Team | Team | Executive | Executive |
+| **SSO / SAML** | ❌ | ❌ | ✅ | ✅ | ✅ | ✅ |
+| **Custom Branding** | ❌ | ❌ | ❌ | ✅ | ✅ | ✅ |
+| **Phone Support** | ❌ | ❌ | ❌ | ✅ | ✅ | ✅ |
+| **SLA Uptime** | 99% | 99.5% | 99.5% | 99.9% | 99.99% | 99.99% |
+| **Audit Logs** | ❌ | ❌ | ✅ | ✅ | ✅ | ✅ |
+| **Data Residency** | Default | Default | Default | Default | Custom | Custom |
 | **Self-hosted** | ❌ | ❌ | ❌ | ✅ |
 | **24/7 Support** | ❌ | ❌ | ❌ | ✅ |
 | **Custom Workflows** | ❌ | ✅ | ✅ | ✅ |
@@ -775,6 +810,215 @@ Smart pricing strategy:
 - No minimums on Teams tier
 - Start with 1 team member, add as you grow
 - Remove seats anytime (prorated refund)
+
+---
+
+## 🔐 LLM Model Access & API Key Model (CRITICAL)
+
+### The BYOK Model: Bring Your Own Key
+
+**Q-IDE does NOT provide API keys.** Each user/team is directly responsible for their own LLM credentials.
+
+#### How It Works
+
+```
+User brings their own key
+        ↓
+Q-IDE stores it securely in user's local config
+        ↓
+User's API key is used directly with the LLM provider
+        ↓
+User is directly billed by the provider (OpenAI, Google, etc.)
+        ↓
+Q-IDE never touches the payment or API costs
+```
+
+#### Why This Model?
+
+1. **No backend billing complexity** - We don't handle 1000s of different API keys
+2. **User in control** - You control your API spend, rate limits, usage
+3. **Direct vendor relationship** - You deal directly with OpenAI/Google/Anthropic
+4. **Transparent pricing** - No markup, no hidden fees
+5. **Privacy** - We never see your API keys (except encrypted at rest)
+6. **Compliance** - Easier security/HIPAA/SOC2 compliance
+
+---
+
+### Free Tier: Free & Open-Source Models Only
+
+**Users on Free tier get:**
+- ✅ **Ollama** (local LLMs like Llama 2, Mistral) - 100% free, on-device
+- ✅ **LLaMA models** - Open source, download once
+- ✅ **Mistral** - Free open-source models
+- ✅ **GPT4All** - Local, private, no internet needed
+
+**Free tier does NOT get:**
+- ❌ OpenAI (GPT-4, GPT-3.5-turbo)
+- ❌ Google Gemini
+- ❌ Anthropic Claude
+- ❌ Any cloud LLM requiring paid API keys
+
+**Free tier API key responsibility:**
+- No API key needed for local models
+- Download models once, use offline
+- Completely private, 100% local
+
+---
+
+### Pro & Teams Tier: BYOK (Bring Your Own Key)
+
+**Users on Pro/Teams tier can:**
+- ✅ Add their own OpenAI API key
+- ✅ Add their own Google Gemini key
+- ✅ Add their own Anthropic Claude key
+- ✅ Add their own Cohere key
+- ✅ Still use free local models (Ollama, Llama)
+
+**Pro/Teams tier API key responsibility:**
+- Each user/team manages their own API keys in Q-IDE settings
+- Each user/team directly pays their provider (separate invoice)
+- Q-IDE does not store, process, or pass through your keys
+- Q-IDE stores keys only encrypted in the user's local config directory
+
+#### How to Add Your API Key (Pro/Teams)
+
+```
+1. Open Q-IDE → Settings → LLM Configuration
+2. Click "Add LLM Provider"
+3. Choose OpenAI, Google Gemini, Claude, etc.
+4. Paste your API key
+5. Q-IDE encrypts it locally
+6. Start using immediately
+
+Your costs:
+├─ OpenAI GPT-4: $0.03 per 1K input tokens ($0.06 per 1K output)
+├─ Google Gemini: Free tier OR $0.00075 per input token
+├─ Claude 3: $0.003 per 1K input tokens ($0.015 per output)
+└─ You see usage on THEIR dashboard
+```
+
+---
+
+### Enterprise Tier: API Key + Optional Hosted LLM
+
+**Enterprises can:**
+- ✅ Use BYOK (same as Pro/Teams)
+- ✅ OR: Deploy their own LLM server (on-prem)
+- ✅ OR: Use Q-IDE's optional managed LLM service (additional cost)
+
+**Enterprise LLM options:**
+
+| Option | Cost | Privacy | Control |
+|--------|------|---------|---------|
+| **BYOK** | Your provider's cost | High | You |
+| **Self-hosted** | Infrastructure cost | Very high | You |
+| **Q-IDE Managed LLM** | Custom pricing | High | Shared |
+
+---
+
+### API Key Security & Storage
+
+#### Where Are Keys Stored?
+
+**Free Tier:**
+- No keys needed
+- Nothing stored
+
+**Pro/Teams/Enterprise:**
+- Keys stored in user's local config: `~/.q-ide/llm_keys.json`
+- Keys encrypted at rest using system keyring
+- Keys NEVER transmitted to Q-IDE servers
+- Keys NEVER logged or monitored by Q-IDE
+- Keys NEVER used for any purpose except calling the provider
+
+#### Key Handling Policy
+
+```
+WHAT Q-IDE DOES:
+✅ Encrypt keys locally in system keyring
+✅ Use keys ONLY to call provider APIs on YOUR behalf
+✅ Keep keys for duration of user session
+✅ Allow users to revoke keys anytime
+
+WHAT Q-IDE DOES NOT DO:
+❌ Send keys to our servers
+❌ Log or monitor your API usage
+❌ Store keys in plain text
+❌ Share keys with anyone
+❌ Use keys for any purpose except your requests
+❌ Charge you (you pay provider directly)
+```
+
+#### API Key Responsibility Agreement
+
+By using Q-IDE's Pro/Teams tier with your own API key:
+
+1. **You own your API key** - It's your responsibility to keep it safe
+2. **You manage your costs** - Your usage = your bill from the provider
+3. **You revoke if needed** - Delete the key from Q-IDE anytime
+4. **You understand pricing** - Read the provider's pricing carefully
+5. **Q-IDE is not responsible for** - Unexpected charges, key theft, lost keys
+
+---
+
+### Cost Scenarios
+
+#### Free Tier User
+```
+Q-IDE cost: $0
+LLM cost: $0 (using local Ollama)
+Total: $0/month
+```
+
+#### Pro Tier User (Using GPT-4)
+```
+Q-IDE cost: $12/month
+LLM cost: Depends on usage
+  ├─ Light user: ~$5-10/month
+  ├─ Medium user: ~$20-50/month
+  └─ Heavy user: ~$100+/month
+Total: $12 + LLM usage
+```
+
+#### Teams Tier (5 developers, Using GPT-4)
+```
+Q-IDE cost: $25/seat × 5 = $125/month
+LLM cost per developer: ~$20-50/month
+  └─ Total LLM: ~$100-250/month
+Total: $125 + $100-250 = $225-375/month
+```
+
+#### Enterprise (100 developers, Self-hosted LLM)
+```
+Q-IDE cost: Custom (typically $3-5K/month)
+LLM cost: $0 (self-hosted on their infrastructure)
+Total: Custom Q-IDE pricing only
+```
+
+---
+
+### Honest FAQ About API Keys
+
+**Q: "Will Q-IDE ever provide API keys?"**  
+A: No. We're a product company, not a payment processor. This keeps us focused on building great tools, not managing billing for 1000 LLM providers.
+
+**Q: "What if I lose my API key?"**  
+A: Delete it from Q-IDE, generate a new one on the provider's dashboard. Takes 2 minutes.
+
+**Q: "What if someone steals my API key?"**  
+A: They have access to your usage until you revoke it. Revoke immediately on the provider's dashboard. This is why we recommend setting spending limits.
+
+**Q: "Can I use free models AND paid models?"**  
+A: Yes! You can assign different LLMs to different roles. Use Ollama for local work, GPT-4 for complex tasks.
+
+**Q: "Does Q-IDE see my API usage?"**  
+A: No. We never see, monitor, or log your API calls. You see your usage on the provider's dashboard.
+
+**Q: "Can I share an API key with my team?"**  
+A: Not recommended (security risk), but technically yes. Better approach: each team member gets their own key, and you manage a shared budget on the provider's side.
+
+**Q: "What if the LLM provider goes down?"**  
+A: Q-IDE continues working with local models. Cloud features are unavailable until the provider recovers.
 
 ---
 

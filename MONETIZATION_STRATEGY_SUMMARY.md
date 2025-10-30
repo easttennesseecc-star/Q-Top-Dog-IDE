@@ -116,7 +116,7 @@ Perfect for students and hobbyists
 
 **Revenue Impact**: $0 direct, massive user base (network effects)
 
-### 💎 PRO TIER ($12/month = $1/day)
+### 💎 PRO TIER ($15/month = $1.25/day)
 Perfect for professionals and freelancers
 - ✅ Everything in Free
 - ✅ **Unlimited AI** analysis/refactoring/docs
@@ -126,35 +126,60 @@ Perfect for professionals and freelancers
 - ✅ 24-hour email support
 - ✅ Team chat (limited)
 
-**Revenue Impact**: 100K-1.5M users × $120/year = $12-180M
+**Revenue Impact**: 100K-1.5M users × $180/year = $18-270M
 
-### 👥 TEAMS TIER ($25/seat/month)
-Perfect for small teams and startups
+### 👥 TEAMS STARTER ($30/seat/month)
+Perfect for small teams and startups (5-50 developers)
 - ✅ Everything in Pro
 - ✅ **Unlimited pair programming** (team)
 - ✅ **Real-time collaboration** (Google Docs style)
-- ✅ **Team analytics dashboard** (velocity, metrics)
+- ✅ **Team analytics dashboard** (basic metrics)
 - ✅ **Shared debugging** (debug together)
-- ✅ **SSO/SAML** (enterprise auth)
 - ✅ **Audit logs** (track who did what)
-- ✅ 4-hour email support + Slack channel
+- ✅ 24-hour email support + Slack channel
 - ✅ Included onboarding (3 sessions)
 
-**Revenue Impact**: 10K-500K teams × 5 seats × $300/year = $30-750M
+**Minimum**: 5 seats = $150/month  
+**Revenue Impact**: 10K-200K teams × 5 seats × $360/year = $18-360M
+
+### 👥 TEAMS PRO ($40/seat/month)
+Perfect for growing companies (20-200 developers)
+- ✅ Everything in Teams Starter
+- ✅ **Advanced team analytics** (velocity, trends)
+- ✅ **SSO/SAML** (enterprise auth)
+- ✅ **Custom branding** (white-label)
+- ✅ **Phone support** (4-hour response)
+- ✅ **Priority onboarding** (5 sessions)
+
+**Minimum**: 20 seats = $800/month  
+**Revenue Impact**: 5K-100K teams × 50 seats × $480/year = $12-240M
+
+### 👥 TEAMS ENTERPRISE ($50/seat/month)
+Perfect for enterprise teams (50+ developers)
+- ✅ Everything in Teams Pro
+- ✅ **99.99% SLA uptime guarantee**
+- ✅ **Data residency** (custom regions)
+- ✅ **Dedicated account manager**
+- ✅ **Priority phone support** (1-hour)
+- ✅ **Advanced compliance** (audit ready)
+- ✅ **Custom integrations** support
+
+**Minimum**: 50 seats = $2,500/month  
+**Revenue Impact**: 1K-50K teams × 100 seats × $600/year = $6-300M
 
 ### 🏢 ENTERPRISE (Custom pricing)
 Perfect for Fortune 500 and large organizations
-- ✅ Everything in Teams
+- ✅ Everything in Teams Enterprise
 - ✅ **Self-hosted** deployment option
 - ✅ **Active Directory & SSO** (corporate auth)
 - ✅ **SOC 2 Type II**, **HIPAA**, **FedRAMP** compliance
 - ✅ **24/7 phone support**
-- ✅ **Dedicated account manager**
+- ✅ **Dedicated support team**
 - ✅ **Custom features** (built to order)
 - ✅ **Quarterly business reviews**
 - ✅ 99.99% SLA uptime guarantee
 
-**Revenue Impact**: 50-1000 customers × $20K-40K/year = $1-40M
+**Revenue Impact**: 50-1000 customers × $50K-100K/year = $50-300M
 
 ---
 
