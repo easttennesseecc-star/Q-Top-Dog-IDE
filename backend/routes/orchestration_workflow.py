@@ -9,7 +9,7 @@ Endpoints for managing AI workflow orchestration:
 - Retrieving workflow history
 """
 
-from fastapi import APIRouter, HTTPException, Depends, Body, Path, Request
+from fastapi import APIRouter, HTTPException, Depends, Body, Path, Request, Header
 from sqlalchemy.orm import Session
 from typing import Dict, Optional
 import logging
@@ -20,6 +20,7 @@ from backend.orchestration.workflow_state_machine import (
     WorkflowStateTransition,
 )
 from backend.services.orchestration_service import OrchestrationService
+from middleware.tier_validator import require_tier_access
 
 logger = logging.getLogger(__name__)
 
@@ -91,13 +92,20 @@ class WorkflowRetryRequest:
 async def start_workflow(
     project_id: str = Path(..., description="Project ID"),
     build_id: str = Body(..., description="Build ID"),
-    user_id: str = Body(..., description="User ID"),
+    user_id_body: str = Body(..., description="User ID"),
     requirements: Dict = Body(..., description="Initial requirements"),
     metadata: Optional[Dict] = Body(None, description="Optional metadata"),
     request: Request = None,
+    user_id: str = Header(None, alias="X-User-ID"),
+    tier_info = Depends(lambda: require_tier_access(
+        feature='webhooks',
+        user_id=user_id
+    ))
 ):
     """
     Start a new build workflow with database persistence.
+    
+    Tier Requirements: PRO or higher (webhooks feature)
     
     Initiates Q Assistant discovery phase to gather and analyze requirements.
     Returns workflow ID to be used for subsequent operations.

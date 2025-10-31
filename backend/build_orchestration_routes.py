@@ -3,7 +3,7 @@ Build Orchestration API Routes
 Endpoints for managing the 5-LLM build pipeline
 """
 
-from fastapi import APIRouter, HTTPException, Body, WebSocket, BackgroundTasks
+from fastapi import APIRouter, HTTPException, Body, WebSocket, BackgroundTasks, Header, Depends
 from pydantic import BaseModel
 from typing import Dict, List, Optional, Any
 import json
@@ -17,6 +17,7 @@ from llm_roles_descriptor import (
     LLMRole, get_all_roles, get_role_by_name, get_role_context
 )
 from llm_config import get_q_assistant_llm
+from middleware.tier_validator import require_tier_access
 
 router = APIRouter(prefix="/api/builds", tags=["builds"])
 
@@ -75,8 +76,18 @@ class SetReleaseInfoRequest(BaseModel):
 # ============================================================================
 
 @router.post("/create")
-async def create_project(req: CreateProjectRequest):
-    """Create a new build project"""
+async def create_project(
+    req: CreateProjectRequest,
+    user_id: str = Header(None, alias="X-User-ID"),
+    tier_info = Depends(lambda: require_tier_access(
+        feature='code_execution',
+        user_id=user_id
+    ))
+):
+    """Create a new build project
+    
+    Tier Requirements: PRO or higher (code_execution feature)
+    """
     try:
         project = orchestrator.create_project(
             req.project_id,

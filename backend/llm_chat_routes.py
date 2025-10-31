@@ -2,7 +2,7 @@
 Q Assistant Chat API Routes - Real LLM integration with streaming
 """
 
-from fastapi import APIRouter, Body, HTTPException
+from fastapi import APIRouter, Body, HTTPException, Header, Depends
 from fastapi.responses import StreamingResponse
 from pydantic import BaseModel
 import asyncio
@@ -11,6 +11,7 @@ import logging
 from typing import Optional, List, Dict, Any
 from llm_chat_service import get_q_assistant_chat_service
 from simple_q_assistant import get_simple_response
+from middleware.tier_validator import require_tier_access
 
 logger = logging.getLogger("q-ide-topdog")
 router = APIRouter(prefix="/api/chat", tags=["Q Assistant Chat"])
@@ -26,7 +27,14 @@ class ChatRequest(BaseModel):
 
 
 @router.post("/")
-async def chat_stream(request: ChatRequest = Body(...)):
+async def chat_stream(
+    request: ChatRequest = Body(...),
+    user_id: str = Header(None, alias="X-User-ID"),
+    tier_info = Depends(lambda: require_tier_access(
+        feature='code_execution',
+        user_id=user_id
+    ))
+):
     """
     Stream a response from Q Assistant's assigned LLM
     
@@ -38,6 +46,8 @@ async def chat_stream(request: ChatRequest = Body(...)):
     }
     
     Response: Server-sent events stream with chunks of the response
+    
+    Tier Requirements: PRO or higher (code_execution feature)
     """
     try:
         if not request.message or not request.message.strip():
