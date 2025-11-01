@@ -3,10 +3,12 @@ Subscription model and database schema for Stripe integration
 """
 
 from sqlalchemy import Column, String, DateTime, Integer, Enum, Boolean, Float, ForeignKey
-from sqlalchemy.orm import relationship
+from sqlalchemy.orm import relationship, declarative_base
 from datetime import datetime
 import enum
 import uuid
+
+Base = declarative_base()
 
 
 class SubscriptionTier(str, enum.Enum):
@@ -118,7 +120,7 @@ class UsageEvent(Base):
     # Usage details
     event_type = Column(String, nullable=False)  # api_call, generation, deployment, etc.
     amount = Column(Integer, default=1)
-    metadata = Column(String, nullable=True)  # JSON string for additional data
+    event_metadata = Column(String, nullable=True)  # JSON string for additional data
     
     # Timestamp
     created_at = Column(DateTime, default=datetime.utcnow, nullable=False)

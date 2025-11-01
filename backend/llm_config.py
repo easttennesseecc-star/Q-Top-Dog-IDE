@@ -220,6 +220,12 @@ def delete_api_key(provider: str) -> bool:
         return False
 
 
+def get_config_file(filename: str) -> Path:
+    """Get path to a configuration file in the config directory."""
+    config_file = CONFIG_DIR / filename
+    return config_file
+
+
 def load_role_assignments() -> Dict[str, str]:
     """Load LLM role assignments (slot -> model_name)."""
     if ROLES_FILE.exists():

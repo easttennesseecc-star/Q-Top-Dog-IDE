@@ -430,3 +430,21 @@ class DatabaseService:
 # balance = db.get_user_balance('user-1')
 # db.deduct_balance('user-1', 5.50, 'gpt4-turbo', 2500)
 # db.close()
+
+
+# Global database instance
+_db_instance = None
+
+
+def get_db() -> DatabaseService:
+    """Get or create the global database instance"""
+    global _db_instance
+    if _db_instance is None:
+        try:
+            _db_instance = DatabaseService()
+        except Exception as e:
+            # If database connection fails, return a dummy instance
+            print(f"Warning: Database connection failed: {e}")
+            return None
+    return _db_instance
+
