@@ -6,7 +6,7 @@ REST endpoints for managing persistent user notes and explanations.
 from fastapi import APIRouter, HTTPException, Query
 from pydantic import BaseModel, Field
 from typing import List, Optional, Dict, Any
-from services.user_notes_service import (
+from backend.services.user_notes_service import (
     get_notes_service,
     UserNote,
     NoteType
