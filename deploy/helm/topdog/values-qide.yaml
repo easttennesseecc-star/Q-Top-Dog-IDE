@@ -1,11 +1,20 @@
 # Overrides for deploying Top Dog (Aura) on q-ide.com and q-ide.net
 
-replicaCount: 2
+replicaCount: 1  # Start with minimum for cost savings
 
 image:
   repository: registry.digitalocean.com/topdog-registry/topdog
   tag: v1.0.7
   pullPolicy: IfNotPresent
+
+# Aggressive resource limits for cost optimization
+resources:
+  requests:
+    cpu: 100m      # Minimum CPU request for cost savings
+    memory: 128Mi  # Minimum memory request
+  limits:
+    cpu: 500m      # Cap CPU to control costs
+    memory: 512Mi  # Cap memory to control costs
 
 imagePullSecrets:
   - name: docr-secret
@@ -44,10 +53,31 @@ readinessProbe:
 
 autoscaling:
   enabled: true
-  minReplicas: 2
-  maxReplicas: 10
-  targetCPUUtilizationPercentage: 70
-  targetMemoryUtilizationPercentage: 80
+  minReplicas: 1                          # Scale down to 1 pod when idle (aggressive cost savings)
+  maxReplicas: 5                          # Cap at 5 to control costs (was 10)
+  targetCPUUtilizationPercentage: 80      # Higher threshold = fewer scale-ups
+  targetMemoryUtilizationPercentage: 85   # Higher threshold = fewer scale-ups
+  # Scale down aggressively
+  behavior:
+    scaleDown:
+      stabilizationWindowSeconds: 60      # Quick scale-down (1 minute window)
+      policies:
+      - type: Percent
+        value: 50                          # Scale down by 50% at a time
+        periodSeconds: 60
+      - type: Pods
+        value: 1                           # Or remove 1 pod at a time
+        periodSeconds: 60
+    scaleUp:
+      stabilizationWindowSeconds: 30      # Quick scale-up for responsiveness
+      policies:
+      - type: Percent
+        value: 100                         # Double pods when needed
+        periodSeconds: 30
+      - type: Pods
+        value: 2                           # Or add 2 pods at a time
+        periodSeconds: 30
+      selectPolicy: Max                    # Use the policy that scales fastest
 
 ingress:
   enabled: true

@@ -1,0 +1,14 @@
+{{- if and .Values.autoscaling.enabled (gt .Values.autoscaling.maxReplicas 1) }}
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: {{ include "topdog.fullname" . }}
+  labels:
+    {{- include "topdog.labels" . | nindent 4 }}
+spec:
+  minAvailable: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: {{ .Chart.Name }}
+      app.kubernetes.io/instance: {{ .Release.Name }}
+{{- end }}
