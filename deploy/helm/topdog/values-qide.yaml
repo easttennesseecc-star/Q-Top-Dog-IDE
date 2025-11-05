@@ -43,13 +43,17 @@ extraEnv:
 
 livenessProbe:
   path: /health
-  initialDelaySeconds: 10
+  initialDelaySeconds: 20  # Increased for app startup time
   periodSeconds: 10
+  timeoutSeconds: 5         # More time for health check response
+  failureThreshold: 3
 
 readinessProbe:
   path: /health
-  initialDelaySeconds: 5
+  initialDelaySeconds: 15  # Increased for app startup time
   periodSeconds: 10
+  timeoutSeconds: 5         # More time for health check response
+  failureThreshold: 3
 
 autoscaling:
   enabled: true
