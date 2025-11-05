@@ -40,6 +40,7 @@ from backend.routes.phone_pairing_api import router as phone_pairing_router
 from backend.routes.user_notes_routes import router as user_notes_router
 from backend.routes.build_rules_routes import router as build_rules_router
 from backend.routes.build_plan_approval_routes import router as build_plan_approval_router
+from backend.middleware.compliance_enforcer import ComplianceEnforcer, require_compliance
 from backend.services.workflow_db_manager import init_workflow_database, WorkflowDatabaseManager
 from backend.services.orchestration_service import OrchestrationService
 from backend.middleware.rules_enforcement import RulesEnforcementMiddleware
@@ -164,6 +165,19 @@ app.add_middleware(SelectiveHostMiddleware)
 
 # Rules enforcement middleware - enforces user rules for ALL AI models
 app.add_middleware(RulesEnforcementMiddleware)
+
+# Compliance enforcement middleware - HIPAA/SOC2/FEDRAMP for medical/scientific workspaces
+class ComplianceMiddleware(BaseHTTPMiddleware):
+    """Enforces compliance requirements for regulated workspaces"""
+    async def dispatch(self, request: Request, call_next):
+        try:
+            await ComplianceEnforcer.enforce_compliance(request)
+            return await call_next(request)
+        except Exception as e:
+            # Compliance violations are already HTTPExceptions
+            raise
+
+app.add_middleware(ComplianceMiddleware)
 
 # Logging middleware - must be added before other middleware
 class LoggingMiddleware(BaseHTTPMiddleware):
@@ -465,6 +479,26 @@ app.include_router(phone_pairing_router)  # Phone pairing & remote control API
 app.include_router(user_notes_router)  # User notes & explanations API
 app.include_router(build_rules_router)  # Build rules & manifest API (QR code concept)
 app.include_router(build_plan_approval_router)  # Build plan generation & approval
+
+# Compliance status endpoint for medical/scientific workspaces
+@app.get("/api/compliance/status")
+async def get_compliance_status(
+    request: Request,
+    profile: str = "default"
+):
+    """
+    Check compliance status for a workspace profile.
+    Used by frontend to show upgrade prompts for medical/scientific workspaces.
+    """
+    from backend.middleware.compliance_enforcer import WorkspaceProfile
+    
+    try:
+        workspace_profile = WorkspaceProfile(profile.lower())
+    except ValueError:
+        return {"error": f"Invalid profile: {profile}"}
+    
+    user_tier = ComplianceEnforcer.get_user_tier(request)
+    return ComplianceEnforcer.get_compliance_status(workspace_profile, user_tier)
 
 # Include setup wizard and auto-assignment routers
 from backend.setup_wizard import router as setup_wizard_router
