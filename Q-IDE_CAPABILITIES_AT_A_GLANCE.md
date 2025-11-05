@@ -1,4 +1,4 @@
-# 🎯 Q-IDE COMPLETE CAPABILITIES AT A GLANCE
+# 🎯 Top Dog COMPLETE CAPABILITIES AT A GLANCE
 
 **Quick Reference Guide - All Features & Market Position**
 
@@ -245,7 +245,7 @@ Better value with more features
 ## 💰 PRICING COMPARISON MATRIX
 
 ```
-FEATURE                     Q-IDE      GitHub    Cursor    GameMaker
+FEATURE                     Top Dog      GitHub    Cursor    GameMaker
                            Pro        Teams     Pro       Studio
 ════════════════════════════════════════════════════════════════════
 Monthly Price              $20        $21+      $20       $39-150
@@ -369,7 +369,7 @@ Game Dev:
 ├─ Professional IDE features
 ├─ AI coding help
 ├─ Asset generation
-└─ Unique to Q-IDE
+└─ Unique to Top Dog
 
 Startup Team:
 ├─ Collaborative IDE

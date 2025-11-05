@@ -122,7 +122,7 @@ Check in order:
   │   ├─ Gemini question (optional)
   │   └─ Press Enter to exit
   │
-  ├─→ 🌐 Go to Q-IDE in browser
+  ├─→ 🌐 Go to Top Dog in browser
   │
   ├─→ ⟳ Press F5 (refresh)
   │   └─ Wait 3-5 seconds
@@ -135,7 +135,7 @@ Check in order:
   │
   ├─→ 🖱️ Click checkbox to select
   │
-  └─→ 🎉 DONE! Use Q-IDE with Ollama!
+  └─→ 🎉 DONE! Use Top Dog with Ollama!
 ```
 
 ---
@@ -169,7 +169,7 @@ Check in order:
 
 ### **Before Installation:**
 - [ ] Close unnecessary programs
-- [ ] Q-IDE browser tab open
+- [ ] Top Dog browser tab open
 - [ ] Read PRE_INSTALLATION_CHECKLIST.md
 
 ### **During Installation:**
@@ -179,7 +179,7 @@ Check in order:
 - [ ] Wait for "Installation Complete!"
 
 ### **After Installation:**
-- [ ] Refresh Q-IDE (F5)
+- [ ] Refresh Top Dog (F5)
 - [ ] Look for green box
 - [ ] Select Ollama
 - [ ] Test it works
@@ -250,7 +250,7 @@ Would you want to set up Google Gemini? (Y/N):
 
 ### **After Installation:**
 ```
-✅ Q-IDE refreshes without error
+✅ Top Dog refreshes without error
 ✅ See green box "Auto-Selected Best Options"
 ✅ Ollama listed in LLM Pool
 ✅ Can select Ollama
@@ -273,7 +273,7 @@ Would you want to set up Google Gemini? (Y/N):
 | Script says "not in PATH" | Restart computer | Reinstall Ollama |
 | Model download very slow | Check internet speed | Try again later |
 | "0 available" after refresh | Wait 10 sec, refresh again | Restart computer |
-| Q-IDE won't connect | Check Ollama is running | See troubleshooting guide |
+| Top Dog won't connect | Check Ollama is running | See troubleshooting guide |
 
 ---
 
@@ -291,7 +291,7 @@ Browser opens automatically to:
 1. Sign in with Google
 2. Click "Create API Key"
 3. Copy the blue key
-4. In Q-IDE → Providers tab → Paste
+4. In Top Dog → Providers tab → Paste
 5. Now you have both Ollama + Google! 🎉
 
 ### **Why Bother?**
@@ -333,7 +333,7 @@ Browser opens automatically to:
 5. Click **[Yes]** to UAC prompt
 6. Wait ~20 minutes
 7. See "Installation Complete! 🎉"
-8. Refresh Q-IDE (F5)
+8. Refresh Top Dog (F5)
 9. Done! 🎉
 
 ---

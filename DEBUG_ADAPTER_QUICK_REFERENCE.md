@@ -1,5 +1,5 @@
 # DEBUG ADAPTER QUICK REFERENCE
-## Q-IDE DAP Implementation - Developer's Cheat Sheet
+## Top Dog DAP Implementation - Developer's Cheat Sheet
 
 ---
 

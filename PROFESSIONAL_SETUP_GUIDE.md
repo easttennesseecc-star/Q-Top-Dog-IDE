@@ -1,8 +1,8 @@
-# 🎯 Q-IDE PROFESSIONAL SETUP GUIDE
+# 🎯 Top Dog PROFESSIONAL SETUP GUIDE
 
-## Install Q-IDE Like a Professional Application
+## Install Top Dog Like a Professional Application
 
-Follow these steps to set up Q-IDE as a professional desktop application on Windows.
+Follow these steps to set up Top Dog as a professional desktop application on Windows.
 
 ---
 
@@ -22,16 +22,16 @@ This installs all dependencies (Python packages, Node packages, etc.)
 
 ## Step 2: Create Desktop Shortcut (Recommended)
 
-Create a professional desktop shortcut for Q-IDE:
+Create a professional desktop shortcut for Top Dog:
 
 ```
 Double-click: CREATE_DESKTOP_SHORTCUT.bat
 ```
 
-This adds a "Q-IDE Topdog" shortcut to your Desktop.
+This adds a "Top Dog Topdog" shortcut to your Desktop.
 
 **After this:**
-- You'll have a desktop icon for Q-IDE
+- You'll have a desktop icon for Top Dog
 - Can launch it like any professional Windows application
 - Just double-click the icon anytime
 
@@ -40,7 +40,7 @@ This adds a "Q-IDE Topdog" shortcut to your Desktop.
 ## Step 3: First Launch
 
 **Option A: Using Desktop Shortcut (Recommended)**
-- Double-click the "Q-IDE Topdog" icon on your Desktop
+- Double-click the "Top Dog Topdog" icon on your Desktop
 
 **Option B: Using Professional Launcher**
 - Double-click: `LAUNCH_Q-IDE_PROFESSIONAL.bat`
@@ -50,7 +50,7 @@ Both will:
 2. Verify system requirements
 3. Start backend server (port 8000)
 4. Start frontend server (port 1431)
-5. Open Q-IDE in your browser automatically
+5. Open Top Dog in your browser automatically
 6. Show progress bars and status updates
 
 **Time to launch:** ~20 seconds
@@ -62,7 +62,7 @@ Both will:
 ### The Professional Launcher
 ```
 ╔════════════════════════════════════════════════════════════════════════════╗
-║                    🚀 Q-IDE TOPDOG LAUNCHING                              ║
+║                    🚀 Top Dog TOPDOG LAUNCHING                              ║
 ║                   Advanced AI Development Environment                      ║
 ║                          Please wait...                                    ║
 ╚════════════════════════════════════════════════════════════════════════════╝
@@ -76,16 +76,16 @@ Verifying system requirements...
 ... (progress continues) ...
 
 [████████████████████████████████████████████████████████████████████████████] 100%
-✓ Q-IDE TOPDOG SUCCESSFULLY LAUNCHED!
+✓ Top Dog TOPDOG SUCCESSFULLY LAUNCHED!
 ```
 
 ### Browser Opens
-Then your browser automatically opens to Q-IDE:
+Then your browser automatically opens to Top Dog:
 ```
 http://127.0.0.1:1431
 ```
 
-You'll see the Q-IDE interface with the Setup Wizard.
+You'll see the Top Dog interface with the Setup Wizard.
 
 ---
 
@@ -108,11 +108,11 @@ Click the link for your chosen provider to:
 
 ### 3. Enter API Key
 
-Paste your API key into Q-IDE.
+Paste your API key into Top Dog.
 
 ### 4. System Auto-Assigns Models
 
-Q-IDE automatically:
+Top Dog automatically:
 - Discovers all available models from your provider
 - Scores them for each role (planning, coding, testing, etc.)
 - Assigns the best models
@@ -126,10 +126,10 @@ The wizard shows: *"Your AI team is ready! What do you want to build?"*
 
 ## Everyday Usage
 
-**To start Q-IDE anytime:**
-- Double-click the **"Q-IDE Topdog"** icon on your Desktop
+**To start Top Dog anytime:**
+- Double-click the **"Top Dog Topdog"** icon on your Desktop
 
-**To stop Q-IDE:**
+**To stop Top Dog:**
 - Close the two black terminal windows (Backend and Frontend)
 - Close the browser window
 
@@ -141,9 +141,9 @@ The wizard shows: *"Your AI team is ready! What do you want to build?"*
 |------|---------|-----------|
 | Desktop Shortcut | Recommended - easiest | Very Simple |
 | `LAUNCH_Q-IDE_PROFESSIONAL.bat` | Professional launcher with progress | Simple |
-| `🚀_LAUNCH_Q-IDE.bat` | Full verification launcher | Medium |
+| `🚀_LAUNCH_Top Dog.bat` | Full verification launcher | Medium |
 | `START.bat` | Original launcher | Medium |
-| `RUN_Q-IDE.bat` | Ultra-simple no-checks launcher | Very Simple |
+| `RUN_Top Dog.bat` | Ultra-simple no-checks launcher | Very Simple |
 
 **Recommended:** Use the Desktop Shortcut after running `CREATE_DESKTOP_SHORTCUT.bat`
 
@@ -193,7 +193,7 @@ taskkill /F /IM node.exe
 
 Then try launching again.
 
-### Both servers started but Q-IDE won't load
+### Both servers started but Top Dog won't load
 
 1. Try manually opening browser to: http://127.0.0.1:1431
 2. If that doesn't work, wait another 5 seconds and refresh
@@ -236,7 +236,7 @@ REM python --version >nul 2>&1
 ## Architecture Overview
 
 ```
-Q-IDE Topdog
+Top Dog Topdog
 ├── Desktop Shortcut (recommended entry point)
 ├── LAUNCH_Q-IDE_PROFESSIONAL.bat (professional launcher)
 ├── Backend Server (Python/FastAPI)
@@ -248,14 +248,14 @@ Q-IDE Topdog
 │   ├── Web interface
 │   └── Real-time chat
 └── Browser
-    └── Q-IDE UI (http://127.0.0.1:1431)
+    └── Top Dog UI (http://127.0.0.1:1431)
 ```
 
 ---
 
-## What Q-IDE Does
+## What Top Dog Does
 
-Q-IDE is an **AI-powered development IDE** that:
+Top Dog is an **AI-powered development IDE** that:
 
 1. **Plans Your App**
    - Q Assistant analyzes your requirements
@@ -283,10 +283,10 @@ Q-IDE is an **AI-powered development IDE** that:
 
 1. ✅ Run `INSTALL.bat` (if you haven't already)
 2. ✅ Run `CREATE_DESKTOP_SHORTCUT.bat` to add desktop shortcut
-3. ✅ Double-click the "Q-IDE Topdog" icon on your Desktop
+3. ✅ Double-click the "Top Dog Topdog" icon on your Desktop
 4. ✅ Complete the Setup Wizard
 5. ✅ Describe your app idea
-6. ✅ Watch Q-IDE build it!
+6. ✅ Watch Top Dog build it!
 
 ---
 
@@ -294,7 +294,7 @@ Q-IDE is an **AI-powered development IDE** that:
 
 You want to build an app for both iOS and Android products.
 
-**Q-IDE will:**
+**Top Dog will:**
 - Propose cross-platform technology (React Native, Flutter, or native)
 - Generate complete source code
 - Create test suites
@@ -311,4 +311,4 @@ For issues or questions, open an issue on GitHub or check the documentation in t
 
 ---
 
-**Ready? Double-click the "Q-IDE Topdog" icon and start building!** 🚀
+**Ready? Double-click the "Top Dog Topdog" icon and start building!** 🚀

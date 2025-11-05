@@ -1,11 +1,11 @@
-# OAuth 2.0 Setup Guide for Q-IDE
+# OAuth 2.0 Setup Guide for Top Dog
 
-Complete step-by-step guide to set up Google OAuth and GitHub OAuth for Q-IDE development and production.
+Complete step-by-step guide to set up Google OAuth and GitHub OAuth for Top Dog development and production.
 
 ## Prerequisites
 
-- Q-IDE Backend running (`python -m uvicorn backend.main:app --reload`)
-- Q-IDE Frontend running (Vite dev server on port 1431)
+- Top Dog Backend running (`python -m uvicorn backend.main:app --reload`)
+- Top Dog Frontend running (Vite dev server on port 1431)
 - OAuth app credentials from Google Cloud Console and GitHub
 - Python 3.11+
 
@@ -15,7 +15,7 @@ Complete step-by-step guide to set up Google OAuth and GitHub OAuth for Q-IDE de
 
 1. Go to [Google Cloud Console](https://console.cloud.google.com)
 2. Click **Create Project**
-3. Enter project name: `Q-IDE` (or your preference)
+3. Enter project name: `Top Dog` (or your preference)
 4. Click **Create**
 
 ### Step 2: Enable Google+ API
@@ -69,7 +69,7 @@ export BACKEND_URL="http://127.0.0.1:8000"
    python -m uvicorn backend.main:app --reload
    ```
 
-2. Open Q-IDE frontend (http://localhost:1431)
+2. Open Top Dog frontend (http://localhost:1431)
 
 3. Click **Sign In** button
 
@@ -80,7 +80,7 @@ export BACKEND_URL="http://127.0.0.1:8000"
 6. After authorizing, the OAuth callback handler will:
    - Exchange authorization code for access token
    - Fetch your Google profile
-   - Create/update user in Q-IDE
+   - Create/update user in Top Dog
    - Return to popup with success message
 
 7. Popup closes and you're signed in!
@@ -92,7 +92,7 @@ export BACKEND_URL="http://127.0.0.1:8000"
 1. Go to [GitHub Developer Settings](https://github.com/settings/developers)
 2. Click **New OAuth App** (in the left sidebar)
 3. Fill in the form:
-   - **Application name**: Q-IDE
+   - **Application name**: Top Dog
    - **Homepage URL**: `http://127.0.0.1:1431` (dev) or `https://your-domain.com` (prod)
    - **Authorization callback URL**: `http://127.0.0.1:8000/auth/github/callback` (dev)
 
@@ -126,7 +126,7 @@ export GITHUB_CLIENT_SECRET="your-client-secret"
 
 1. Restart backend to pick up new environment variables
 
-2. Open Q-IDE frontend
+2. Open Top Dog frontend
 
 3. In the Account Linking panel, click **Connect GitHub**
 

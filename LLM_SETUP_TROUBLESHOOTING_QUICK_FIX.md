@@ -1,4 +1,4 @@
-# 🔧 Q-IDE LLM Setup Troubleshooting & Quick Fix Guide
+# 🔧 Top Dog LLM Setup Troubleshooting & Quick Fix Guide
 
 **Document Type**: Critical Troubleshooting + Setup Instructions  
 **Date**: October 28, 2025  
@@ -17,7 +17,7 @@ Available LLMs: 0
 No available assistants found.
 ```
 
-**Root Cause**: Q-IDE is working correctly, but **you haven't added any API keys yet**. The system has 3 stages:
+**Root Cause**: Top Dog is working correctly, but **you haven't added any API keys yet**. The system has 3 stages:
 
 1. **Stage 1: Add API Credentials** ← YOU ARE HERE
 2. **Stage 2: Detect Available LLMs** (happens after credentials added)
@@ -60,7 +60,7 @@ Current UI Layout:
 ### Step 1: Navigate to Providers Tab
 
 ```
-In Q-IDE, look for tabs at the top of the LLM Setup panel:
+In Top Dog, look for tabs at the top of the LLM Setup panel:
 ├─ [ LLM Pool Management ]  ← You are here (shows "0 available")
 ├─ [ Providers ]            ← CLICK THIS ← YOU NEED THIS
 ├─ [ Roles ]
@@ -156,7 +156,7 @@ If you still see 0:
 3. Click "Create new secret key"
 4. Copy the key (it starts with "sk-")
    └─ WARNING: This is your ONLY chance to copy it!
-5. Paste into Q-IDE
+5. Paste into Top Dog
 6. Done!
 
 Cost:
@@ -164,7 +164,7 @@ Cost:
 ├─ After: $0.01-0.10 per request (very cheap for testing)
 └─ Total first month: Usually $0-5 (well managed)
 
-Estimated Q-IDE usage:
+Estimated Top Dog usage:
 ├─ Code generation: $0.01-0.05 per request
 ├─ 100 requests/month: $1-5/month
 └─ Very affordable for development
@@ -176,7 +176,7 @@ Estimated Q-IDE usage:
 1. Go to: https://makersuite.google.com/app/apikey
 2. Create API key (free tier available)
 3. Copy your API key
-4. Paste into Q-IDE
+4. Paste into Top Dog
 5. Done!
 
 Cost:
@@ -190,7 +190,7 @@ Cost:
 ```
 1. Go to: https://console.anthropic.com/account/keys
 2. Create new API key
-3. Copy and paste into Q-IDE
+3. Copy and paste into Top Dog
 4. Done!
 
 Cost:
@@ -207,7 +207,7 @@ If you want FREE option with NO API COSTS:
 1. Download: https://ollama.ai
 2. Install and run
 3. Download model: ollama pull llama2
-4. Q-IDE auto-detects it (no key needed!)
+4. Top Dog auto-detects it (no key needed!)
 5. Completely free, completely private
 
 Tradeoff:
@@ -240,7 +240,7 @@ If the UI isn't showing the Providers tab properly:
 If the UI is completely broken, add credentials directly:
 
 1. Open file explorer
-2. Navigate to: C:\Users\[YourUsername]\.q-ide\
+2. Navigate to: C:\Users\[YourUsername]\.Top Dog\
 3. Create file: llm_credentials.json (if doesn't exist)
 4. Add:
    {
@@ -249,12 +249,12 @@ If the UI is completely broken, add credentials directly:
      "anthropic": "sk-ant-your-key-here"
    }
 5. Save the file
-6. Restart Q-IDE
+6. Restart Top Dog
 
 Location reference:
-├─ Windows: C:\Users\[YourUsername]\.q-ide\llm_credentials.json
-├─ Mac: ~/.q-ide/llm_credentials.json
-└─ Linux: ~/.q-ide/llm_credentials.json
+├─ Windows: C:\Users\[YourUsername]\.Top Dog\llm_credentials.json
+├─ Mac: ~/.Top Dog/llm_credentials.json
+└─ Linux: ~/.Top Dog/llm_credentials.json
 ```
 
 ---
@@ -269,7 +269,7 @@ Location reference:
 3. If valid:
    ├─ Message appears: "✓ OpenAI credentials saved!"
    ├─ Page refreshes automatically
-   └─ Credentials saved to ~/.q-ide/llm_credentials.json
+   └─ Credentials saved to ~/.Top Dog/llm_credentials.json
 
 4. LLM Pool auto-discovers:
    ├─ Detects: "OpenAI GPT-4", "OpenAI GPT-3.5"
@@ -313,7 +313,7 @@ You should see:
 4. Confirmation message: "✓ Q Assistant now uses OpenAI GPT-4"
 5. Done!
 
-Now Q-IDE will use OpenAI for all Q Assistant responses.
+Now Top Dog will use OpenAI for all Q Assistant responses.
 ```
 
 ---
@@ -366,9 +366,9 @@ Possible causes:
 1. API key is invalid
    └─ Fix: Delete and re-add with correct key
 2. System didn't refresh
-   └─ Fix: Refresh page (F5) or restart Q-IDE
+   └─ Fix: Refresh page (F5) or restart Top Dog
 3. API key file permission issue
-   └─ Fix: Check ~/.q-ide/ folder permissions
+   └─ Fix: Check ~/.Top Dog/ folder permissions
 
 Solution:
 1. Click [Remove] on your provider
@@ -393,7 +393,7 @@ Possible causes:
 Solution:
 1. Get fresh API key from provider
 2. Copy (don't type)
-3. Paste into Q-IDE
+3. Paste into Top Dog
 4. Delete extra spaces if any
 5. Click [Save]
 ```
@@ -448,7 +448,7 @@ Solution:
 ```
 START HERE
     ↓
-Launch Q-IDE
+Launch Top Dog
     ↓
 Click rocket button ✅ (you did this)
     ↓
@@ -483,7 +483,7 @@ Go get API key from:
     ↓
 Copy API key
     ↓
-Paste into Q-IDE dialog
+Paste into Top Dog dialog
     ↓
 Click [Save Credentials]
     ↓
@@ -521,12 +521,12 @@ Get AI response ✅
 ### Immediate Action (5 minutes)
 
 ```
-1. ✅ You launched Q-IDE with rocket button
+1. ✅ You launched Top Dog with rocket button
 2. ⏭️ NEXT: Click "Providers" tab (not where you are now)
 3. ⏭️ NEXT: Click [Setup] next to OpenAI
 4. ⏭️ NEXT: Get API key from https://platform.openai.com/account/api-keys
    └─ Takes 2 minutes (sign up if needed)
-5. ⏭️ NEXT: Paste key into Q-IDE dialog
+5. ⏭️ NEXT: Paste key into Top Dog dialog
 6. ⏭️ NEXT: Click [Save]
 7. ⏭️ NEXT: Go to "Roles" tab
 8. ⏭️ NEXT: Assign Q Assistant to OpenAI GPT-4
@@ -562,12 +562,12 @@ If after doing all this you still have issues:
 1. Screenshot the error message you're seeing
 2. Note which step failed
 3. Document the exact API key provider you used
-4. Check: ~/.q-ide/llm_credentials.json file exists
-5. Restart Q-IDE
+4. Check: ~/.Top Dog/llm_credentials.json file exists
+5. Restart Top Dog
 6. Try again
 
 Common last resort:
-├─ Restart Q-IDE completely (close and reopen)
+├─ Restart Top Dog completely (close and reopen)
 ├─ Clear browser cache (Ctrl+Shift+Delete)
 ├─ Try different LLM provider (Google if OpenAI fails)
 └─ Try Ollama (completely local, no API needed)

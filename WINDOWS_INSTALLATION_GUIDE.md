@@ -1,12 +1,12 @@
-# Q-IDE for Windows - Installation & Usage Guide
+# Top Dog for Windows - Installation & Usage Guide
 
 ## 🚀 Quick Start (30 seconds)
 
 ### One-Click Installation
-1. **Download** the latest `Q-IDE_*.msi` installer from [Releases](https://github.com/quellum/q-ide/releases)
+1. **Download** the latest `Q-IDE_*.msi` installer from [Releases](https://github.com/quellum/Top Dog/releases)
 2. **Double-click** the MSI file
 3. **Follow** the installation wizard
-4. **Launch** Q-IDE from your Start Menu or Desktop shortcut
+4. **Launch** Top Dog from your Start Menu or Desktop shortcut
 
 That's it! ✅
 
@@ -43,8 +43,8 @@ That's it! ✅
 **Best for:** USB drives, shared computers
 
 ```powershell
-# Q-IDE runs without installation
-# Just run: Q-IDE.exe
+# Top Dog runs without installation
+# Just run: Top Dog.exe
 # No registry modifications
 # No user data stored system-wide
 ```
@@ -98,7 +98,7 @@ That's it! ✅
 ## ⚙️ Configuration
 
 ### First Launch
-1. Q-IDE opens in ~/AppData/Local/quellum/q-ide/
+1. Top Dog opens in ~/AppData/Local/quellum/Top Dog/
 2. Local database created automatically
 3. Settings stored locally (no cloud sync)
 
@@ -106,8 +106,8 @@ That's it! ✅
 If you need custom configuration:
 
 ```powershell
-# Create a .env file in the Q-IDE data folder
-# Default location: C:\Users\YourUsername\AppData\Local\quellum\q-ide\
+# Create a .env file in the Top Dog data folder
+# Default location: C:\Users\YourUsername\AppData\Local\quellum\Top Dog\
 
 # Example .env:
 BACKEND_URL=http://127.0.0.1:8000
@@ -117,7 +117,7 @@ THEME=dark
 
 ### Data Location
 ```
-C:\Users\YourUsername\AppData\Local\quellum\q-ide\
+C:\Users\YourUsername\AppData\Local\quellum\Top Dog\
 ├── app.db          # Local database
 ├── settings.json   # User settings
 └── exports/        # Exported backups
@@ -127,13 +127,13 @@ C:\Users\YourUsername\AppData\Local\quellum\q-ide\
 
 ## 🔧 Troubleshooting
 
-### Q-IDE Won't Start
+### Top Dog Won't Start
 ```powershell
 # Check if running:
-Get-Process "Q-IDE" -ErrorAction SilentlyContinue
+Get-Process "Top Dog" -ErrorAction SilentlyContinue
 
 # Kill process if stuck:
-Stop-Process -Name "Q-IDE" -Force -ErrorAction SilentlyContinue
+Stop-Process -Name "Top Dog" -Force -ErrorAction SilentlyContinue
 
 # Restart:
 # Use Start Menu shortcut
@@ -151,17 +151,17 @@ Start-Process "Q-IDE_0.1.0_x64_en-US.msi" -Verb RunAs
 ### Data Corruption
 ```powershell
 # Export your settings before wiping:
-# In Q-IDE: Settings → Export Settings
+# In Top Dog: Settings → Export Settings
 
 # Clear local data:
-Remove-Item "$env:LOCALAPPDATA\quellum\q-ide\*" -Recurse -Force
+Remove-Item "$env:LOCALAPPDATA\quellum\Top Dog\*" -Recurse -Force
 
-# Restart Q-IDE (fresh start)
+# Restart Top Dog (fresh start)
 ```
 
 ### Performance Issues
 ```powershell
-# Q-IDE using too much memory?
+# Top Dog using too much memory?
 # Check Settings → Performance → Clear Cache
 # Restart application
 ```
@@ -172,11 +172,11 @@ Remove-Item "$env:LOCALAPPDATA\quellum\q-ide\*" -Recurse -Force
 
 ### Checking for Updates
 ```
-In Q-IDE: Help → Check for Updates
+In Top Dog: Help → Check for Updates
 ```
 
 ### Manual Update
-1. Visit [Releases](https://github.com/quellum/q-ide/releases)
+1. Visit [Releases](https://github.com/quellum/Top Dog/releases)
 2. Download latest version
 3. Run installer
 4. Old version uninstalled automatically
@@ -189,7 +189,7 @@ In Q-IDE: Help → Check for Updates
 ### Method 1: Control Panel (Recommended)
 1. Open Windows Settings
 2. Apps → Apps & Features
-3. Find "Q-IDE (TopDog)"
+3. Find "Top Dog (TopDog)"
 4. Click "Uninstall"
 5. Follow the wizard
 
@@ -199,11 +199,11 @@ In Q-IDE: Help → Check for Updates
 msiexec /x "{GUID}" /qb
 
 # Or find GUID first:
-Get-WmiObject Win32_Product | Where-Object {$_.Name -like "*Q-IDE*"}
+Get-WmiObject Win32_Product | Where-Object {$_.Name -like "*Top Dog*"}
 ```
 
 ### What Gets Removed
-- ✅ Q-IDE executable and libraries
+- ✅ Top Dog executable and libraries
 - ✅ Start Menu shortcuts
 - ✅ Desktop shortcuts
 - ❌ User settings (kept for reinstall)
@@ -226,17 +226,17 @@ Found an issue? Help us improve!
    # Get system info:
    Get-ComputerInfo
    
-   # Get Q-IDE version:
+   # Get Top Dog version:
    # In-app: Help → About
    ```
 
 2. **Report on GitHub:**
-   - https://github.com/quellum/q-ide/issues
+   - https://github.com/quellum/Top Dog/issues
    - Include system info and steps to reproduce
 
 3. **Include:**
    - Windows version (e.g., Windows 11 Build 22621)
-   - Q-IDE version (e.g., v0.1.0)
+   - Top Dog version (e.g., v0.1.0)
    - Error message (if any)
    - Steps to reproduce
 
@@ -246,21 +246,21 @@ Found an issue? Help us improve!
 
 | Channel | Contact |
 |---------|---------|
-| **Issues** | [GitHub Issues](https://github.com/quellum/q-ide/issues) |
-| **Discussions** | [GitHub Discussions](https://github.com/quellum/q-ide/discussions) |
-| **Email** | support@q-ide.com |
-| **Documentation** | [Wiki](https://github.com/quellum/q-ide/wiki) |
+| **Issues** | [GitHub Issues](https://github.com/quellum/Top Dog/issues) |
+| **Discussions** | [GitHub Discussions](https://github.com/quellum/Top Dog/discussions) |
+| **Email** | support@Top Dog.com |
+| **Documentation** | [Wiki](https://github.com/quellum/Top Dog/wiki) |
 
 ---
 
 ## 🔒 Privacy & Security
 
-### What Q-IDE Collects
+### What Top Dog Collects
 - ✅ Local settings (device only)
 - ✅ Background preferences
 - ✅ User authentication (OAuth tokens - encrypted locally)
 
-### What Q-IDE Does NOT Collect
+### What Top Dog Does NOT Collect
 - ❌ Personal data or browsing history
 - ❌ System information without consent
 - ❌ Analytics or telemetry (by default)
@@ -285,22 +285,22 @@ Found an issue? Help us improve!
 
 ### Command Line Arguments
 ```powershell
-# Start Q-IDE with debug logging:
-q-ide.exe --debug
+# Start Top Dog with debug logging:
+Top Dog.exe --debug
 
 # Start with custom data folder:
-q-ide.exe --data-dir="D:\MyData\q-ide"
+Top Dog.exe --data-dir="D:\MyData\Top Dog"
 
 # Check version:
-q-ide.exe --version
+Top Dog.exe --version
 ```
 
 ### Portable Deployment
 ```powershell
 # For shared networks or USB drives:
-1. Extract Q-IDE.exe to a folder
+1. Extract Top Dog.exe to a folder
 2. Copy to USB or network share
-3. Run: .\Q-IDE.exe
+3. Run: .\Top Dog.exe
 4. No installation needed
 
 # Per-user settings stored in: .\AppData\
@@ -338,7 +338,7 @@ foreach ($computer in $computers) {
 
 ---
 
-**Enjoy Q-IDE! 🚀**
+**Enjoy Top Dog! 🚀**
 
 Built with ❤️ by [Quellum Team](https://quellum.com)
 

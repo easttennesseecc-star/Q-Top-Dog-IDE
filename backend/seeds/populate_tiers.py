@@ -12,7 +12,7 @@ from datetime import datetime
 # Add backend to path
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from database.tier_schema import TIER_CONFIGS, MembershipTierSchema
+from backend.database.tier_schema import TIER_CONFIGS, MembershipTierSchema
 
 
 def populate_tiers():

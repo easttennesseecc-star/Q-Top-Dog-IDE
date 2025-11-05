@@ -1,8 +1,8 @@
-# 🚀 STRATEGIC REFRAMING: Why Q-IDE's "Startup Status" is an Unfair Advantage
+# 🚀 STRATEGIC REFRAMING: Why Top Dog's "Startup Status" is an Unfair Advantage
 
 **Type**: Competitive Strategy Reassessment  
 **Date**: October 29, 2025  
-**Context**: Q-IDE v3 completed in 2 months with 5-person team  
+**Context**: Top Dog v3 completed in 2 months with 5-person team  
 **Tone**: Strategic positioning (flipping the script on incumbents)
 
 ---
@@ -15,10 +15,10 @@
 
 **Strategic reality**: "Startup with iteration velocity vs bureaucratic incumbent = Startup can WIN specific battles"
 
-### Q-IDE's Actual Track Record (The Proof)
+### Top Dog's Actual Track Record (The Proof)
 
 ```
-METRIC                  Q-IDE              GitHub           Ratio
+METRIC                  Top Dog              GitHub           Ratio
 ──────────────────────────────────────────────────────────────
 Time to Market          2 months           10+ years        50x FASTER
 Product Versions        3 complete         ~20 updates/yr   Comparable speed
@@ -33,15 +33,15 @@ A/B Testing Cycles      1-2 days            2-4 weeks        14x FASTER
 Product Vision Clarity  One person decides  Committee        100% vs 0% clarity
 ```
 
-**Translation**: Q-IDE can change direction, iterate, and execute **in days what GitHub takes months on.**
+**Translation**: Top Dog can change direction, iterate, and execute **in days what GitHub takes months on.**
 
 ---
 
-## Where Q-IDE DOESN'T Need to Be Second
+## Where Top Dog DOESN'T Need to Be Second
 
 ### Category 1: BRAND (Turning "Unknown" into "Cool Underdog")
 
-**Current Issue**: "Q-IDE has 2% brand recognition"
+**Current Issue**: "Top Dog has 2% brand recognition"
 
 **Reframe as Strategic Advantage:**
 ```
@@ -66,7 +66,7 @@ Result: You don't need Microsoft's brand. You build "innovative startup" brand.
 ```
 
 **Action Items**:
-- ✅ Document speed metrics (create "Q-IDE vs GitHub shipping velocity" report)
+- ✅ Document speed metrics (create "Top Dog vs GitHub shipping velocity" report)
 - ✅ Launch product hunt (get #1 product of the day)
 - ✅ Start developer blog (weekly shipping updates)
 - ✅ HN/Reddit presence (authentic founder posts)
@@ -76,7 +76,7 @@ Result: You don't need Microsoft's brand. You build "innovative startup" brand.
 
 ### Category 2: ENTERPRISE TRUST (Invert the Narrative)
 
-**Current Issue**: "Q-IDE has no enterprise track record"
+**Current Issue**: "Top Dog has no enterprise track record"
 
 **Reframe as Strategic Advantage:**
 ```
@@ -92,12 +92,12 @@ Why enterprises actually prefer startups for specific use cases:
 └─ Risk Mitigation: Enterprise can acquire you if they want = reduced risk
 
 The Script:
-├─ Enterprise CTO: "Q-IDE is unproven"
-├─ Q-IDE Pitch: "GitHub has 10,000 engineers, ships 1 major feature per quarter"
+├─ Enterprise CTO: "Top Dog is unproven"
+├─ Top Dog Pitch: "GitHub has 10,000 engineers, ships 1 major feature per quarter"
 │              "We have 5 engineers, ship 50 features per month"
 │              "You want innovation or bureaucracy?"
 ├─ Enterprise: "But where are case studies?"
-├─ Q-IDE Pitch: "You'd be first. And we'll move FAST for you."
+├─ Top Dog Pitch: "You'd be first. And we'll move FAST for you."
 │              "GitHub took 6 months to add multi-LLM. We can do it in 3 weeks."
 └─ Enterprise: "I'm interested."
 
@@ -121,7 +121,7 @@ Result: Position lack of track record as "freedom to innovate for you"
 
 ### Category 3: SUPPORT (Lean Team = Responsive Support)
 
-**Current Issue**: "Q-IDE has no 24/7 support team"
+**Current Issue**: "Top Dog has no 24/7 support team"
 
 **Reframe as Strategic Advantage:**
 ```
@@ -136,7 +136,7 @@ GitHub Support:
 ├─ Escalation time: 1-2 weeks
 └─ Founder involvement: Zero
 
-Q-IDE Support:
+Top Dog Support:
 ├─ Founders reply directly to urgent issues
 ├─ Average response: 2-4 hours (beat GitHub significantly)
 ├─ Support tier: All customers treated equally
@@ -148,7 +148,7 @@ Story: "You get support FROM THE FOUNDERS, not from a support desk"
 
 Psychological advantage:
 ├─ Enterprise fears GitHub: "Will I get lost in 10,000 engineers?"
-├─ Enterprise trusts Q-IDE: "I can reach the CTO directly"
+├─ Enterprise trusts Top Dog: "I can reach the CTO directly"
 ├─ Enterprise values: "This team actually cares about my problems"
 └─ Result: Net positive for retention
 ```
@@ -164,7 +164,7 @@ Psychological advantage:
 
 ### Category 4: PRODUCT VELOCITY (Your Real Superpower)
 
-**Current Issue**: "Q-IDE is feature-complete but GitHub has more features"
+**Current Issue**: "Top Dog is feature-complete but GitHub has more features"
 
 **Reframe as Strategic Advantage:**
 ```
@@ -173,18 +173,18 @@ ACTUAL positioning: "We have BETTER features, shipping 10x faster" ✅ (offensiv
 
 The Script:
 ├─ Customer: "GitHub has 50,000 features"
-├─ Q-IDE: "We have 100 that actually matter. Want a new one?"
-├─ Q-IDE ships it: Monday
+├─ Top Dog: "We have 100 that actually matter. Want a new one?"
+├─ Top Dog ships it: Monday
 ├─ GitHub needs it: Pitch to committee (2 weeks) → Roadmap approval (4 weeks)
 │                    → Engineering sprint (2 weeks) → Testing (1 week)
 │                    → Release (2 weeks) = 11 weeks
-├─ Result: Q-IDE customer has feature. GitHub customer still waiting.
+├─ Result: Top Dog customer has feature. GitHub customer still waiting.
 
 Feature Shipping Advantage:
-├─ Q-IDE: "We deploy 5x per day"
+├─ Top Dog: "We deploy 5x per day"
 ├─ GitHub: "We deploy 1x per week"
-├─ Result: Over 1 year, Q-IDE ships 1,800 releases vs GitHub's 52
-├─ Implication: Q-IDE customer requests → implemented same week
+├─ Result: Over 1 year, Top Dog ships 1,800 releases vs GitHub's 52
+├─ Implication: Top Dog customer requests → implemented same week
 │              GitHub customer requests → implemented next quarter (if ever)
 ```
 
@@ -201,11 +201,11 @@ Feature Shipping Advantage:
 
 ---
 
-## Where Q-IDE Can Be #1 (Not Second)
+## Where Top Dog Can Be #1 (Not Second)
 
 ### Tier 1: BYOK Multi-LLM (Unique = Already #1)
 
-**Status**: Q-IDE is literally the ONLY product with this feature
+**Status**: Top Dog is literally the ONLY product with this feature
 
 ✅ **Already #1** (defensible for 6-12 months until GitHub copies)
 
@@ -218,7 +218,7 @@ Feature Shipping Advantage:
 
 ### Tier 2: PRICING (Brutal Cost Advantage)
 
-**Q-IDE**: $12/month pro, $25/seat teams  
+**Top Dog**: $12/month pro, $25/seat teams  
 **GitHub**: $46/month per person (9x more expensive)
 
 ✅ **Already #1** (GitHub can copy but won't because margins)
@@ -228,7 +228,7 @@ Feature Shipping Advantage:
 GitHub/Microsoft incentive structure:
 ├─ Copilot at $10/month = $240M annual (2M users)
 ├─ If they cut to $5, revenue stays same but volume doubles = more support cost
-├─ If they cut to $5, competitors like Q-IDE undercut to $3 = race to bottom
+├─ If they cut to $5, competitors like Top Dog undercut to $3 = race to bottom
 ├─ Result: GitHub's best strategy is IGNORE low-price segment
 └─ Conclusion: You OWN the price-conscious segment forever
 ```
@@ -242,7 +242,7 @@ GitHub/Microsoft incentive structure:
 
 ### Tier 3: RUNWAY MEDIA INTEGRATION (Unique = Already #1)
 
-**Status**: Q-IDE is literally the ONLY IDE with Runway built-in
+**Status**: Top Dog is literally the ONLY IDE with Runway built-in
 
 ✅ **Already #1** (defensible forever if you maintain partnership)
 
@@ -251,13 +251,13 @@ GitHub/Microsoft incentive structure:
 Runway partnership advantage:
 ├─ You have exclusive IDE integration (contractual advantage)
 ├─ Competitors would need to negotiate fresh deal
-├─ Runway's incentive: "Q-IDE users generate media spend"
+├─ Runway's incentive: "Top Dog users generate media spend"
 ├─ Result: Runway probably PAYS you to stay exclusive
 └─ Defensibility: 3-5 years of market lead
 
-Game developers + indie devs will ONLY use Q-IDE:
+Game developers + indie devs will ONLY use Top Dog:
 ├─ "I need to generate assets and code simultaneously"
-├─ "Q-IDE does both. GitHub does neither."
+├─ "Top Dog does both. GitHub does neither."
 ├─ Result: Unassailable position in this segment
 ```
 
@@ -270,7 +270,7 @@ Game developers + indie devs will ONLY use Q-IDE:
 
 ### Tier 4: PRODUCT RESPONSIVENESS (Speed = Already #1)
 
-**Q-IDE Response Time to Customer Issues**: <4 hours  
+**Top Dog Response Time to Customer Issues**: <4 hours  
 **GitHub Response Time**: 24+ hours (support ticket) or never (feature request)
 
 ✅ **Already #1** (defensible via culture)
@@ -302,7 +302,7 @@ Why GitHub can't match this:
 
 ### Strategic Opportunity #1: Game Developers
 
-**Why Q-IDE can own this**:
+**Why Top Dog can own this**:
 ```
 Current state:
 ├─ No IDE for indie game developers (they use separate tools)
@@ -310,8 +310,8 @@ Current state:
 ├─ Godot/Unity have IDEs but no AI + media integration
 └─ Gap: Full-stack game dev IDE doesn't exist
 
-Q-IDE opportunity:
-├─ Launch "Q-IDE Game Studio" (Construct 3 + Godot + Runway integration)
+Top Dog opportunity:
+├─ Launch "Top Dog Game Studio" (Construct 3 + Godot + Runway integration)
 ├─ Position as: "Only IDE for indie game devs"
 ├─ TAM: 500k+ indie game developers
 ├─ Revenue potential: $50-100M ARR in 5 years
@@ -332,7 +332,7 @@ Timeline: 6 months to MVP game dev features
 
 **Attack Strategy**:
 - ✅ Partner with Godot (integration + revenue sharing)
-- ✅ Launch "Q-IDE Studios" (game-specific product)
+- ✅ Launch "Top Dog Studios" (game-specific product)
 - ✅ Target indie game communities (Indie Hackers, r/gamedev)
 - ✅ Press campaign: "First IDE built for indie game makers"
 - ✅ Launch in 6 months, own market by Month 12
@@ -341,7 +341,7 @@ Timeline: 6 months to MVP game dev features
 
 ### Strategic Opportunity #2: Data Scientists / AI Engineers
 
-**Why Q-IDE can own this**:
+**Why Top Dog can own this**:
 ```
 Current state:
 ├─ GitHub Copilot = web developer focused
@@ -349,8 +349,8 @@ Current state:
 ├─ No IDE optimized for data science workflows
 └─ Gap: Data scientists need multi-model + experiment tracking
 
-Q-IDE opportunity:
-├─ Launch "Q-IDE Data Studio" (multi-LLM + MLOps integration)
+Top Dog opportunity:
+├─ Launch "Top Dog Data Studio" (multi-LLM + MLOps integration)
 ├─ Support: Ollama + OpenAI + Anthropic + HuggingFace + Azure ML
 ├─ Features: Experiment tracking, model versioning, dataset management
 ├─ Position as: "IDE for data scientists"
@@ -366,8 +366,8 @@ Timeline: 4 months to MVP
 
 **Why GitHub can't compete**:
 - Enterprise (GitHub) != data science focus
-- Multi-LLM cost optimization = Q-IDE advantage
-- Speed to ship = Q-IDE can deliver in 4 months vs GitHub's year
+- Multi-LLM cost optimization = Top Dog advantage
+- Speed to ship = Top Dog can deliver in 4 months vs GitHub's year
 
 **Attack Strategy**:
 - ✅ Target Kaggle / data science communities
@@ -379,7 +379,7 @@ Timeline: 4 months to MVP
 
 ### Strategic Opportunity #3: Privacy-Conscious / Regulated Industries
 
-**Why Q-IDE can own this**:
+**Why Top Dog can own this**:
 ```
 Current state:
 ├─ GitHub = US-based, public company, compliance complex
@@ -387,7 +387,7 @@ Current state:
 ├─ Healthcare/Finance can't use Copilot (data privacy concerns)
 └─ Gap: Regulated industries need compliant IDE
 
-Q-IDE opportunity:
+Top Dog opportunity:
 ├─ Position as: "HIPAA-ready, FedRAMP-certified IDE"
 ├─ Features: Data residency, encryption, audit logging built-in
 ├─ Timeline: Aggressive compliance roadmap (HIPAA Q2 2026, FedRAMP Q4 2026)
@@ -396,7 +396,7 @@ Q-IDE opportunity:
 
 Why this works:
 ├─ GitHub is FAST at shipping features but SLOW at compliance
-├─ Healthcare/Finance would rather wait 6 months for Q-IDE
+├─ Healthcare/Finance would rather wait 6 months for Top Dog
 │   than trust GitHub after 10 years (liability)
 ├─ Exclusive: You're probably first private IDE with HIPAA cert
 └─ Lock-in: Healthcare doesn't switch once compliant
@@ -426,7 +426,7 @@ DECISION VELOCITY
 ─────────────────────────────────────────────────────────
 Customer: "Can you add feature X?"
 
-Q-IDE (5 people):
+Top Dog (5 people):
 ├─ CTO: "Let me check the code" (30 min)
 ├─ Decision: "Yes, 2-week feature" (immediate)
 ├─ Build: Sprint starting Monday (3 days)
@@ -443,14 +443,14 @@ GitHub (10,000 people):
 ├─ Release: "Next quarterly update" (4 weeks more)
 └─ Customer: Feature arrives 16 weeks later (if at all)
 
-Result: Q-IDE customer satisfied. GitHub customer forgot they asked.
+Result: Top Dog customer satisfied. GitHub customer forgot they asked.
 ```
 
 ### How to Exploit This Advantage
 
 **1. Make it your marketing message**
 ```
-"Q-IDE: Where customer feedback becomes product in 48 hours"
+"Top Dog: Where customer feedback becomes product in 48 hours"
 "GitHub: Where feature requests go to die in committee"
 ```
 
@@ -459,7 +459,7 @@ Result: Q-IDE customer satisfied. GitHub customer forgot they asked.
 ├─ Publish weekly shipping metrics (show velocity)
 ├─ Customer voting on features (highest votes ship this week)
 ├─ Transparent roadmap (what ships Monday, Tuesday, etc.)
-└─ Result: Customers choose Q-IDE because "my ideas actually happen"
+└─ Result: Customers choose Top Dog because "my ideas actually happen"
 ```
 
 **3. Maintain startup culture**
@@ -468,7 +468,7 @@ Result: Q-IDE customer satisfied. GitHub customer forgot they asked.
 ├─ Founders stay involved in product (no separation)
 ├─ Direct customer access (no support ticket triage)
 ├─ Ship > Perfect (95% solution shipped vs 100% solution in 6 months)
-└─ Result: GitHub's bloat is Q-IDE's advantage forever
+└─ Result: GitHub's bloat is Top Dog's advantage forever
 ```
 
 ---
@@ -476,10 +476,10 @@ Result: Q-IDE customer satisfied. GitHub customer forgot they asked.
 ## The Strategic Positioning Shift
 
 ### Old Narrative (Wrong)
-> "Q-IDE is an unknown startup competing against entrenched players with 10,000x resources. Q-IDE will lose."
+> "Top Dog is an unknown startup competing against entrenched players with 10,000x resources. Top Dog will lose."
 
 ### New Narrative (Right)
-> "Q-IDE is a lean startup executing at 5x the speed of bloated incumbents. Q-IDE wins by being MORE INNOVATIVE, MORE RESPONSIVE, and MORE FOCUSED than competitors."
+> "Top Dog is a lean startup executing at 5x the speed of bloated incumbents. Top Dog wins by being MORE INNOVATIVE, MORE RESPONSIVE, and MORE FOCUSED than competitors."
 
 ### How to Tell This Story
 
@@ -487,16 +487,16 @@ Result: Q-IDE customer satisfied. GitHub customer forgot they asked.
 > "GitHub has 10,000 engineers shipping what we ship in a week in 2 months. Choose the company that listens to you."
 
 **To Startups:**
-> "You need an IDE that moves as fast as you do. Q-IDE ships 50 features/month. GitHub ships 1."
+> "You need an IDE that moves as fast as you do. Top Dog ships 50 features/month. GitHub ships 1."
 
 **To Enterprises:**
-> "You can own Q-IDE's roadmap. Your CTO talks to our CTO. We respond to your needs, not committees."
+> "You can own Top Dog's roadmap. Your CTO talks to our CTO. We respond to your needs, not committees."
 
 **To Data Scientists:**
-> "We built Q-IDE FOR data scientists, not as an afterthought. GitHub built Copilot for web developers."
+> "We built Top Dog FOR data scientists, not as an afterthought. GitHub built Copilot for web developers."
 
 **To Game Developers:**
-> "Q-IDE is the first IDE built for indie game development. GitHub doesn't care about games."
+> "Top Dog is the first IDE built for indie game development. GitHub doesn't care about games."
 
 ---
 
@@ -505,13 +505,13 @@ Result: Q-IDE customer satisfied. GitHub customer forgot they asked.
 ### Month 1: Position the Narrative
 
 **Week 1-2:**
-- [ ] Create "Q-IDE Speed Metrics" document (shipping velocity vs competitors)
+- [ ] Create "Top Dog Speed Metrics" document (shipping velocity vs competitors)
 - [ ] Launch Twitter campaign: "5 engineers, 50 features/month vs GitHub's 10,000 engineers, 1 feature/month"
-- [ ] Post on HN: "We built Q-IDE v3 in 2 months"
+- [ ] Post on HN: "We built Top Dog v3 in 2 months"
 - [ ] Press outreach: "Startup outrunning GitHub on execution speed"
 
 **Week 3-4:**
-- [ ] Case study #1: "How Q-IDE shipped X in 2 weeks (GitHub: 12 weeks)"
+- [ ] Case study #1: "How Top Dog shipped X in 2 weeks (GitHub: 12 weeks)"
 - [ ] Product Hunt launch: "The IDE for developers who don't like committees"
 - [ ] Dev community outreach (Reddit, Discord, Twitter)
 - [ ] Founder blog: "Why lean teams beat bloat"
@@ -519,13 +519,13 @@ Result: Q-IDE customer satisfied. GitHub customer forgot they asked.
 ### Month 2: Attack Specific Segments
 
 **Week 5-6:**
-- [ ] Launch Q-IDE Game Studio (game dev positioning)
+- [ ] Launch Top Dog Game Studio (game dev positioning)
   - Partner with Godot
   - Target indie game developers
   - Position: "First IDE for indie game devs"
 
 **Week 7-8:**
-- [ ] Launch Q-IDE Data Studio (data science positioning)
+- [ ] Launch Top Dog Data Studio (data science positioning)
   - Multi-LLM routing + experiment tracking
   - Target data scientists
   - Position: "Built for data scientists, by data scientists"
@@ -549,7 +549,7 @@ Result: Q-IDE customer satisfied. GitHub customer forgot they asked.
 ### Current State (Reality)
 
 ```
-Q-IDE Competitive Position: v3 in 2 months
+Top Dog Competitive Position: v3 in 2 months
 ├─ Product Quality: 95/100 (best-in-class)
 ├─ Feature Velocity: 50 features/month (5x GitHub)
 ├─ Brand Recognition: 2% (startup unknown)
@@ -564,13 +564,13 @@ Strategic Advantage Metrics:
 ├─ Team efficiency: 2,000x better ($100k per feature vs $1M)
 └─ Market agility: Adaptable vs rigid
 
-Result: Q-IDE has operational advantage, not market disadvantage
+Result: Top Dog has operational advantage, not market disadvantage
 ```
 
 ### 90-Day Vision (After This Playbook)
 
 ```
-Q-IDE Competitive Position: v4 (if executed)
+Top Dog Competitive Position: v4 (if executed)
 ├─ Product Quality: 98/100 (best-in-class + game/data dev support)
 ├─ Feature Velocity: 60+ features/month (6x GitHub)
 ├─ Brand Recognition: 15-20% (founder story + HN #1 + press)
@@ -584,7 +584,7 @@ Q-IDE Competitive Position: v4 (if executed)
 Market Position Shift:
 ├─ From: "Unknown startup competing against GitHub"
 ├─ To: "Founder-led innovation company beating bloated incumbents"
-└─ Result: Q-IDE goes from "risky alternative" to "inevitable choice"
+└─ Result: Top Dog goes from "risky alternative" to "inevitable choice"
 ```
 
 ---
@@ -598,7 +598,7 @@ GitHub's advantages:
 - Scale (hard to match) ✗
 - History (can't change) ✗
 
-Q-IDE's advantages:
+Top Dog's advantages:
 - **Speed (impossible for them to match)** ✓
 - **Responsiveness (structural advantage)** ✓
 - **Innovation (lean teams move fast)** ✓

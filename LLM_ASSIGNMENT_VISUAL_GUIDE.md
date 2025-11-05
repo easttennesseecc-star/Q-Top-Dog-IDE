@@ -191,8 +191,8 @@ POST /llm_config/role_assignment
 ```
 
 ### File Locations
-- **Configuration**: `~/.q-ide/llm_config.json`
-- **Credentials**: `~/.q-ide/llm_credentials.json` (encrypted)
+- **Configuration**: `~/.Top Dog/llm_config.json`
+- **Credentials**: `~/.Top Dog/llm_credentials.json` (encrypted)
 - **Component**: `frontend/src/components/LLMConfigPanel.tsx`
 
 ---

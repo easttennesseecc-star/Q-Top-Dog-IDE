@@ -29,7 +29,7 @@ from typing import Dict, Optional, Tuple
 from urllib.parse import urlencode, parse_qs
 import requests
 
-from llm_config import get_config_file
+from backend.llm_config import get_config_file
 
 # OAuth Provider Configurations
 OAUTH_PROVIDERS = {

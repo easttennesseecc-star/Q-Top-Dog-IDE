@@ -1,6 +1,6 @@
-# 🔐 Q-IDE API Key Responsibility Model
+# 🔐 Top Dog API Key Responsibility Model
 
-**TL;DR**: You bring your own API keys. Q-IDE doesn't provide them, store them insecurely, or charge you for LLM usage. You pay the provider directly.
+**TL;DR**: You bring your own API keys. Top Dog doesn't provide them, store them insecurely, or charge you for LLM usage. You pay the provider directly.
 
 ---
 
@@ -23,12 +23,12 @@ Paid users can add their own keys:
 ✅ Google Gemini (you pay Google directly)
 ✅ Anthropic Claude (you pay Anthropic directly)
 ✅ Still can use free local models too
-✅ You manage all keys in Q-IDE Settings
+✅ You manage all keys in Top Dog Settings
 ```
 
-### Rule 3: Q-IDE Never Handles Your API Keys ⛔
+### Rule 3: Top Dog Never Handles Your API Keys ⛔
 ```
-What Q-IDE does NOT do:
+What Top Dog does NOT do:
 ❌ Store your keys on our servers
 ❌ Charge you for API usage
 ❌ Log or monitor your API calls
@@ -45,7 +45,7 @@ What Q-IDE does NOT do:
 │ USER EXPERIENCE                                         │
 ├─────────────────────────────────────────────────────────┤
 │                                                         │
-│ 1. User creates Q-IDE account                          │
+│ 1. User creates Top Dog account                          │
 │ 2. Chooses Free/Pro/Teams/Enterprise                   │
 │ 3. If Free: Start coding with Ollama (no key needed)   │
 │ 4. If Paid:                                            │
@@ -61,16 +61,16 @@ What Q-IDE does NOT do:
 │ BILLING RELATIONSHIPS                                   │
 ├─────────────────────────────────────────────────────────┤
 │                                                         │
-│ Q-IDE Invoice: Q-IDE Subscription ($0-25/seat/mo)     │
-│     You pay us for Q-IDE features                      │
+│ Top Dog Invoice: Top Dog Subscription ($0-25/seat/mo)     │
+│     You pay us for Top Dog features                      │
 │                                                         │
 │ OpenAI Invoice: LLM Usage ($0.03-0.06/1K tokens)      │
 │     You pay OpenAI for GPT-4 usage                     │
-│     (completely separate from Q-IDE)                   │
+│     (completely separate from Top Dog)                   │
 │                                                         │
 │ Google Invoice: LLM Usage (free tier OR $0.00075/tok)  │
 │     You pay Google for Gemini usage                    │
-│     (completely separate from Q-IDE)                   │
+│     (completely separate from Top Dog)                   │
 │                                                         │
 └─────────────────────────────────────────────────────────┘
 
@@ -78,22 +78,22 @@ What Q-IDE does NOT do:
 │ DATA FLOW: HOW YOUR API KEY IS USED                    │
 ├─────────────────────────────────────────────────────────┤
 │                                                         │
-│ Your Q-IDE App                                         │
+│ Your Top Dog App                                         │
 │       ↓                                                │
-│ Your API Key (encrypted in ~/.q-ide/llm_keys.json)    │
+│ Your API Key (encrypted in ~/.Top Dog/llm_keys.json)    │
 │       ↓                                                │
-│ When you use AI features, Q-IDE calls:                │
+│ When you use AI features, Top Dog calls:                │
 │ POST https://api.openai.com/v1/chat/completions       │
 │       ↓                                                │
 │ Using YOUR key, on YOUR behalf                        │
 │       ↓                                                │
 │ OpenAI processes your request                         │
 │       ↓                                                │
-│ Result returned to Q-IDE                              │
+│ Result returned to Top Dog                              │
 │       ↓                                                │
 │ Displayed in your editor                              │
 │                                                         │
-│ NOTE: Q-IDE never stores the response on our servers  │
+│ NOTE: Top Dog never stores the response on our servers  │
 │                                                         │
 └─────────────────────────────────────────────────────────┘
 ```
@@ -113,7 +113,7 @@ What Q-IDE does NOT do:
 **API keys required:** None ✅
 
 **Cost breakdown:**
-- Q-IDE: $0
+- Top Dog: $0
 - LLM: $0
 - Total: $0
 
@@ -121,7 +121,7 @@ What Q-IDE does NOT do:
 ```
 # Free tier user
 User: "Analyze this code"
-Q-IDE: Loads local Ollama model
+Top Dog: Loads local Ollama model
 Ollama: Analyzes code on user's machine
 User: Gets results instantly, offline
 Cost: $0
@@ -132,7 +132,7 @@ Cost: $0
 ### 💎 PRO TIER ($12/month)
 
 **What you get:**
-- Add your own API keys to Q-IDE settings
+- Add your own API keys to Top Dog settings
 - Use any model you have a key for
 - Still have access to free local models
 - Your choice of OpenAI, Google, Anthropic, or local
@@ -141,13 +141,13 @@ Cost: $0
 
 **Cost breakdown example:**
 ```
-Q-IDE Pro: $12/month
+Top Dog Pro: $12/month
 └─ Fixed cost for features
 
 OpenAI GPT-4: $20/month (example)
 ├─ Based on YOUR usage
 ├─ Billed separately by OpenAI
-└─ You manage API key in Q-IDE
+└─ You manage API key in Top Dog
 
 Total: $12 + $20 = $32/month
 ```
@@ -156,10 +156,10 @@ Total: $12 + $20 = $32/month
 ```
 # Pro tier user with OpenAI key
 User: "Refactor this function"
-Q-IDE: Uses user's OpenAI API key
+Top Dog: Uses user's OpenAI API key
 OpenAI: Generates refactored code
 User: Accepts and commits
-Cost: $0.02 added to OpenAI bill (not Q-IDE bill)
+Cost: $0.02 added to OpenAI bill (not Top Dog bill)
 ```
 
 ---
@@ -176,7 +176,7 @@ Cost: $0.02 added to OpenAI bill (not Q-IDE bill)
 
 **Cost breakdown example:**
 ```
-Q-IDE Teams: $25 × 5 developers = $125/month
+Top Dog Teams: $25 × 5 developers = $125/month
 └─ Fixed cost for team features
 
 Shared OpenAI Key: $200/month
@@ -192,13 +192,13 @@ Total: $125 + $200 = $325/month
 ```
 Option A (Shared Key):
 - Team creates one OpenAI key
-- All developers use that key in Q-IDE
+- All developers use that key in Top Dog
 - Set spending limit on OpenAI to $X
 - Everyone sees team's usage on OpenAI dashboard
 
 Option B (Individual Keys):
 - Each developer gets own OpenAI key
-- Each adds their key to Q-IDE
+- Each adds their key to Top Dog
 - Each developer pays separately
 - Good for distributed teams or departments
 ```
@@ -210,14 +210,14 @@ Option B (Individual Keys):
 **What you get:**
 - BYOK: Add your own API keys (same as Teams)
 - Self-hosted: Deploy your own LLM server
-- Managed LLM: Use Q-IDE's hosted LLM service (additional cost)
+- Managed LLM: Use Top Dog's hosted LLM service (additional cost)
 
 **API keys required:** Depends on model choice
 
 **Cost breakdown example:**
 ```
 OPTION 1: BYOK (Self-managed keys)
-Q-IDE Enterprise: $5,000/month
+Top Dog Enterprise: $5,000/month
 └─ For 100 developers
 
 OpenAI API: $3,000-5,000/month
@@ -229,7 +229,7 @@ Total: $8,000-10,000/month
 ---
 
 OPTION 2: Self-hosted LLM
-Q-IDE Enterprise: $5,000/month
+Top Dog Enterprise: $5,000/month
 └─ For 100 developers
 
 Self-hosted LLM (on your infrastructure): $1,000-2,000/month
@@ -241,8 +241,8 @@ Total: $6,000-7,000/month
 
 ---
 
-OPTION 3: Q-IDE Managed LLM
-Q-IDE Enterprise: $5,000/month + $2,000/month for managed LLM
+OPTION 3: Top Dog Managed LLM
+Top Dog Enterprise: $5,000/month + $2,000/month for managed LLM
 └─ For 100 developers
 └─ Uses OpenAI backend
 
@@ -259,7 +259,7 @@ Your API Key
      ↓
 Encrypted using system keyring
      ↓
-Stored in: ~/.q-ide/llm_keys.json
+Stored in: ~/.Top Dog/llm_keys.json
      ↓
 Only readable by your user on your machine
 ```
@@ -268,29 +268,29 @@ Only readable by your user on your machine
 ```
 Your encrypted key
      ↓
-Q-IDE decrypts only when you use AI feature
+Top Dog decrypts only when you use AI feature
      ↓
 Key sent directly to provider (OpenAI, Google, etc.)
      ↓
-Q-IDE NEVER logs, stores, or monitors the request
+Top Dog NEVER logs, stores, or monitors the request
      ↓
-Response returned to Q-IDE
+Response returned to Top Dog
      ↓
-Q-IDE displays to you, then forgets
+Top Dog displays to you, then forgets
 ```
 
 ### Key Lifecycle (Safe)
 ```
 ┌─────────────┐
-│ Add Key     │ You paste your API key in Q-IDE settings
+│ Add Key     │ You paste your API key in Top Dog settings
 └──────┬──────┘
        ↓
 ┌─────────────┐
-│ Encrypt     │ Q-IDE encrypts with system keyring
+│ Encrypt     │ Top Dog encrypts with system keyring
 └──────┬──────┘
        ↓
 ┌─────────────┐
-│ Store Local │ Saved in ~/.q-ide/llm_keys.json
+│ Store Local │ Saved in ~/.Top Dog/llm_keys.json
 └──────┬──────┘
        ↓
 ┌─────────────┐
@@ -298,11 +298,11 @@ Q-IDE displays to you, then forgets
 └──────┬──────┘
        ↓
 ┌─────────────┐
-│ Revoke      │ Delete from Q-IDE settings anytime
+│ Revoke      │ Delete from Top Dog settings anytime
 └──────┬──────┘
        ↓
 ┌─────────────┐
-│ Forgotten   │ Q-IDE no longer has access to key
+│ Forgotten   │ Top Dog no longer has access to key
 └─────────────┘
 ```
 
@@ -310,22 +310,22 @@ Q-IDE displays to you, then forgets
 
 ## Common Questions
 
-### Q: What if Q-IDE gets hacked?
+### Q: What if Top Dog gets hacked?
 **A:** Hackers can't access your API keys because:
 - Keys stored in system keyring (encrypted)
-- Keys never sent to Q-IDE servers
-- Q-IDE doesn't know your keys on the backend
+- Keys never sent to Top Dog servers
+- Top Dog doesn't know your keys on the backend
 - Even if they hacked our servers, they'd find nothing
 
 **Recommendation:** Rotate your API key on OpenAI's dashboard annually for safety.
 
 ---
 
-### Q: Will my Q-IDE bill include LLM costs?
+### Q: Will my Top Dog bill include LLM costs?
 **A:** No. Ever.
-- Q-IDE invoice: Q-IDE features only ($0-$25/month)
+- Top Dog invoice: Top Dog features only ($0-$25/month)
 - OpenAI invoice: Separate, direct from OpenAI
-- No hidden LLM fees in your Q-IDE bill
+- No hidden LLM fees in your Top Dog bill
 
 ---
 
@@ -336,13 +336,13 @@ Settings → LLM Configuration:
 ├─ Coding role: OpenAI GPT-4 ($)
 ├─ Documentation role: Google Gemini (free)
 ├─ Research role: Local Ollama ($0)
-└─ Q-IDE picks the best one automatically
+└─ Top Dog picks the best one automatically
 ```
 
 ---
 
 ### Q: What if OpenAI's API goes down?
-**A:** Q-IDE keeps working:
+**A:** Top Dog keeps working:
 - GPT-4 feature becomes unavailable
 - You can still use local Ollama
 - Your code doesn't disappear
@@ -350,7 +350,7 @@ Settings → LLM Configuration:
 
 ---
 
-### Q: Can I use Q-IDE without any API keys?
+### Q: Can I use Top Dog without any API keys?
 **A:** Yes! Use the free local models:
 ```
 Free tier: Always works with Ollama
@@ -366,7 +366,7 @@ Pro/Teams/Enterprise: Use Pro tier WITHOUT adding any keys
 1. Go to OpenAI/Google/Anthropic dashboard
 2. Delete the old key
 3. Generate a new one
-4. Update it in Q-IDE Settings
+4. Update it in Top Dog Settings
 5. Done (takes 2 minutes)
 
 ---
@@ -387,7 +387,7 @@ Pro/Teams/Enterprise: Use Pro tier WITHOUT adding any keys
 ---
 
 ### Q: How do I set a spending limit?
-**A:** On the provider's side (not Q-IDE):
+**A:** On the provider's side (not Top Dog):
 
 **OpenAI:**
 1. Go to https://platform.openai.com/account/billing/limits
@@ -411,8 +411,8 @@ Pro/Teams/Enterprise: Use Pro tier WITHOUT adding any keys
 | Who manages spending limits? | N/A | You (on provider) | You (on provider) |
 | Who is responsible for security? | N/A | You | You |
 | Where are keys stored? | N/A | Your machine | Your machine (or self-hosted) |
-| Does Q-IDE bill for LLM? | N/A | NO | NO |
-| Can Q-IDE access your keys? | N/A | NO | NO |
+| Does Top Dog bill for LLM? | N/A | NO | NO |
+| Can Top Dog access your keys? | N/A | NO | NO |
 
 ---
 
@@ -427,19 +427,19 @@ Pro/Teams/Enterprise: Use Pro tier WITHOUT adding any keys
 - ✅ Use local Ollama
 
 **Pro tier:**
-- ✅ $12/month for Q-IDE features
+- ✅ $12/month for Top Dog features
 - ✅ Add your API keys (optional)
 - ✅ Pay provider directly for LLM usage
-- ✅ No Q-IDE markup
+- ✅ No Top Dog markup
 
 **Teams tier:**
-- ✅ $25/seat/month for Q-IDE features
+- ✅ $25/seat/month for Top Dog features
 - ✅ Team members add their API keys
 - ✅ Pay provider directly for LLM usage
-- ✅ No Q-IDE markup
+- ✅ No Top Dog markup
 
 **Enterprise:**
-- ✅ Custom pricing for Q-IDE
+- ✅ Custom pricing for Top Dog
 - ✅ BYOK, self-hosted, or managed LLM
 - ✅ Full control over infrastructure
 - ✅ Direct billing with providers
@@ -448,7 +448,7 @@ Pro/Teams/Enterprise: Use Pro tier WITHOUT adding any keys
 
 ## Bottom Line
 
-> Q-IDE is a product company, not a payment processor.  
+> Top Dog is a product company, not a payment processor.  
 > We focus on building great tools.  
 > You manage your API keys and pay providers directly.  
 > This keeps things simple, secure, and transparent.

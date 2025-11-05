@@ -1,4 +1,4 @@
-# Deployment Guide - Q-IDE (TopDog)
+# Deployment Guide - Top Dog (TopDog)
 
 ## Table of Contents
 1. [System Requirements](#system-requirements)
@@ -44,8 +44,8 @@ cargo --version  # 1.70+
 ### Setup Steps
 ```bash
 # Clone repository
-git clone https://github.com/your-org/q-ide.git
-cd q-ide
+git clone https://github.com/your-org/Top Dog.git
+cd Top Dog
 
 # Install dependencies
 pnpm install
@@ -162,7 +162,7 @@ ANTHROPIC_API_KEY=sk-ant-...
 ENVIRONMENT=production
 DEBUG=false
 LOG_LEVEL=WARNING
-BACKEND_URL=https://api.q-ide.com
+BACKEND_URL=https://api.Top Dog.com
 
 # OAuth (Production)
 GOOGLE_CLIENT_ID=your-prod-client-id.apps.googleusercontent.com
@@ -171,12 +171,12 @@ GITHUB_CLIENT_ID=your-prod-client-id
 GITHUB_CLIENT_SECRET=your-prod-secret
 
 # Frontend
-FRONTEND_URL=https://q-ide.com
+FRONTEND_URL=https://Top Dog.com
 
 # Security
 SESSION_SECRET=your-random-secret-key-min-32-chars
 SECURE_COOKIES=true
-CORS_ORIGINS=https://q-ide.com
+CORS_ORIGINS=https://Top Dog.com
 
 # Database (if using persistent storage)
 DATABASE_URL=postgresql://user:pass@host:5432/q_ide_prod
@@ -203,11 +203,11 @@ server: {
 ### Tauri Configuration (tauri.conf.json)
 ```json
 {
-  "productName": "Q-IDE",
+  "productName": "Top Dog",
   "version": "0.1.0",
   "app": {
     "windows": [{
-      "title": "Q-IDE - TopDog IDE",
+      "title": "Top Dog - TopDog IDE",
       "minWidth": 900,
       "minHeight": 600
     }],
@@ -348,7 +348,7 @@ logger.error("Error occurred", exc_info=True)
 - **Documentation**: See README.md
 - **Issues**: GitHub Issues
 - **Discussions**: GitHub Discussions
-- **Security**: security@q-ide.com
+- **Security**: security@Top Dog.com
 
 ---
 

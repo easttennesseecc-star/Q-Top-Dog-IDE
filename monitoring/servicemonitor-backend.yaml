@@ -1,0 +1,20 @@
+---
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: backend-servicemonitor
+  namespace: q-ide
+  labels:
+    app: backend
+spec:
+  selector:
+    matchLabels:
+      app: backend
+  namespaceSelector:
+    matchNames:
+      - q-ide
+  endpoints:
+    - port: http
+      interval: 15s
+      path: /metrics
+      scheme: http

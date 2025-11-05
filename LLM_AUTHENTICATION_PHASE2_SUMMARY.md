@@ -2,7 +2,7 @@
 
 ## What Was Built
 
-A complete, production-ready OAuth 2.0 authentication system that allows users to securely sign into cloud LLM providers before using them in Q-IDE.
+A complete, production-ready OAuth 2.0 authentication system that allows users to securely sign into cloud LLM providers before using them in Top Dog.
 
 ## Key Accomplishments
 
@@ -89,7 +89,7 @@ LLM_AUTHENTICATION_IMPLEMENTATION_DETAILS.md      - Technical details
 - Token expiration tracking
 
 ### Credential Storage
-- Local file: `~/.q-ide/llm_credentials.json`
+- Local file: `~/.Top Dog/llm_credentials.json`
 - Supports both API keys and OAuth tokens
 - Can be encrypted in future versions
 - User has full control via revocation
@@ -130,14 +130,14 @@ LLM_AUTHENTICATION_IMPLEMENTATION_DETAILS.md      - Technical details
 ## How It Works
 
 ### User Journey
-1. User opens Q-IDE
+1. User opens Top Dog
 2. Navigates to LLM Setup → Auth tab
 3. Sees list of cloud providers
 4. Clicks "Sign In" for desired provider
 5. OAuth window opens (provider consent screen)
 6. User authenticates and grants permission
-7. Redirected back to Q-IDE automatically
-8. Token stored in `~/.q-ide/llm_credentials.json`
+7. Redirected back to Top Dog automatically
+8. Token stored in `~/.Top Dog/llm_credentials.json`
 9. Auth tab shows "✓ Signed in as [email]"
 10. Can now use provider for LLM tasks
 
@@ -185,7 +185,7 @@ POST /llm_auth/revoke                  - Revoke authentication
 5. Click "Sign In" for OpenAI
 6. Complete OAuth flow
 7. Verify:
-   - Token saved to `~/.q-ide/llm_credentials.json`
+   - Token saved to `~/.Top Dog/llm_credentials.json`
    - Status shows "✓ Signed in as [email]"
    - Revoke button works
 
@@ -365,7 +365,7 @@ Users can now:
 - Sign into their cloud LLM providers
 - Securely store credentials locally
 - Automatically authenticate before using LLMs
-- Manage authentication from Q-IDE
+- Manage authentication from Top Dog
 
 **Status**: ✅ PRODUCTION READY
 **Version**: 1.0.0

@@ -38,7 +38,7 @@ Digital Ocean
 ### 1. Build and Run Locally
 ```bash
 # Build Docker image
-docker build -t q-ide-backend:latest -f Dockerfile --target runtime .
+docker build -t Top Dog-backend:latest -f Dockerfile --target runtime .
 
 # Or use docker-compose for full stack
 docker-compose up -d
@@ -73,7 +73,7 @@ docker-compose down -v
 Go to: https://www.digitalocean.com
 Sign up
 Add payment method
-Create project called "Q-IDE"
+Create project called "Top Dog"
 ```
 
 ### Step 2: Create Managed PostgreSQL Database
@@ -84,7 +84,7 @@ Digital Ocean Dashboard
 │  ├─ Engine: PostgreSQL 15
 │  ├─ Region: New York (nyc1) - close to users
 │  ├─ Size: Basic (2GB RAM, 1 vCPU) - enough for start
-│  ├─ Cluster name: q-ide-db-prod
+│  ├─ Cluster name: Top Dog-db-prod
 │  └─ Create Cluster
 └─ Wait 3-5 minutes for creation
 ```
@@ -99,10 +99,10 @@ postgresql://doadmin:PASSWORD@host:25060/defaultdb?sslmode=require
 Digital Ocean Dashboard
 ├─ Container Registry
 ├─ Create
-│  ├─ Name: q-ide-registry
+│  ├─ Name: Top Dog-registry
 │  ├─ Subscription: Starter ($5/month)
 │  └─ Create
-└─ Copy Registry URL: registry.digitalocean.com/q-ide-registry
+└─ Copy Registry URL: registry.digitalocean.com/Top Dog-registry
 ```
 
 ### Step 4: Create App Platform (Backend + Frontend)
@@ -139,8 +139,8 @@ STRIPE_PRICE_ID_PRO=price_...
 STRIPE_PRICE_ID_TEAMS=price_...
 
 # URLs
-BACKEND_URL=https://api.q-ide.com
-FRONTEND_URL=https://q-ide.com
+BACKEND_URL=https://api.Top Dog.com
+FRONTEND_URL=https://Top Dog.com
 ```
 
 ### 2. Configure Backend Service
@@ -169,7 +169,7 @@ Services → Frontend
 ### 4. Configure Database Connection
 ```
 Resources → Database
-├─ Select: q-ide-db-prod (from Step 2)
+├─ Select: Top Dog-db-prod (from Step 2)
 ├─ Database: defaultdb
 ├─ User: doadmin
 └─ Connection: Automatic environment variable
@@ -179,7 +179,7 @@ Resources → Database
 ```
 Settings → Domains
 ├─ Add Domain
-├─ Domain: q-ide.com
+├─ Domain: Top Dog.com
 ├─ Type: Primary
 └─ Follow DNS setup instructions
 ```
@@ -250,7 +250,7 @@ Digital Ocean handles this automatically
 ### 2. Set Up Firewall
 ```
 Networking → Firewalls
-├─ Create Firewall: q-ide-prod-fw
+├─ Create Firewall: Top Dog-prod-fw
 ├─ Inbound Rules:
 │  ├─ HTTP (80) from All
 │  ├─ HTTPS (443) from All
@@ -261,7 +261,7 @@ Networking → Firewalls
 
 ### 3. Set Up Database Firewall
 ```
-Databases → q-ide-db-prod
+Databases → Top Dog-db-prod
 ├─ Trusted Sources
 ├─ Add Trusted Source
 │  ├─ App Platform Backend
@@ -284,7 +284,7 @@ Account → Settings
 ### 1. Trigger First Deployment
 ```
 Digital Ocean Dashboard
-├─ Apps → Q-IDE App
+├─ Apps → Top Dog App
 ├─ Deployments
 ├─ Trigger Deployment
 └─ Watch progress (3-5 minutes)
@@ -293,26 +293,26 @@ Digital Ocean Dashboard
 ### 2. Verify Backend
 ```bash
 # Check health
-curl https://api.q-ide.com/health
+curl https://api.Top Dog.com/health
 
 # Check API
-curl https://api.q-ide.com/api/llm_config/models
+curl https://api.Top Dog.com/api/llm_config/models
 
 # Expected response: JSON with available models
 ```
 
 ### 3. Verify Frontend
 ```
-Open: https://q-ide.com
+Open: https://Top Dog.com
 ├─ Page should load
 ├─ Check Network tab (no errors)
-└─ Verify API calls to https://api.q-ide.com
+└─ Verify API calls to https://api.Top Dog.com
 ```
 
 ### 4. Test Stripe Webhook
 ```bash
 # Update webhook URL in Stripe Dashboard
-https://api.q-ide.com/api/billing/webhook
+https://api.Top Dog.com/api/billing/webhook
 
 # Send test event
 stripe trigger customer.subscription.created \
@@ -351,7 +351,7 @@ Services → Backend
 ```
 Networking → CDN
 ├─ Create CDN
-├─ Origin: Frontend (q-ide.com)
+├─ Origin: Frontend (Top Dog.com)
 ├─ Cache Rules:
 │  ├─ Static assets: 30 days
 │  ├─ HTML: 5 minutes
@@ -361,7 +361,7 @@ Networking → CDN
 
 ### 3. Enable Database Backups
 ```
-Databases → q-ide-db-prod
+Databases → Top Dog-db-prod
 ├─ Settings
 ├─ Backups: Enable
 ├─ Backup Schedule: Daily

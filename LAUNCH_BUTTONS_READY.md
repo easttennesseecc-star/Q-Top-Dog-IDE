@@ -2,15 +2,15 @@
 
 ## Your Launch Button Options
 
-I've made it **much easier to find and launch Q-IDE**. Here are your options:
+I've made it **much easier to find and launch Top Dog**. Here are your options:
 
 ---
 
 ## 🚀 OPTION 1: Rocket Launcher (EASIEST)
 
-**File:** `🚀_LAUNCH_Q-IDE.bat` 
+**File:** `🚀_LAUNCH_Top Dog.bat` 
 
-**Location:** `c:\Quellum-topdog-ide\🚀_LAUNCH_Q-IDE.bat`
+**Location:** `c:\Quellum-topdog-ide\🚀_LAUNCH_Top Dog.bat`
 
 **Why it's easy to find:**
 - Has a **🚀 rocket emoji** at the start of the filename
@@ -22,7 +22,7 @@ I've made it **much easier to find and launch Q-IDE**. Here are your options:
 2. Go to `c:\Quellum-topdog-ide\`
 3. Look for the file with **🚀** emoji
 4. **Double-click it**
-5. Q-IDE launches automatically!
+5. Top Dog launches automatically!
 
 ✅ **Recommended: Most visible, most professional**
 
@@ -42,9 +42,9 @@ I've made it **much easier to find and launch Q-IDE**. Here are your options:
 
 **Every time after (just use your desktop icon):**
 1. Look at your **Windows Desktop**
-2. Find the **Q-IDE** icon (blue folder icon)
+2. Find the **Top Dog** icon (blue folder icon)
 3. **Double-click it**
-4. Q-IDE launches!
+4. Top Dog launches!
 
 ✅ **Most convenient: Icon on your desktop for daily use**
 
@@ -72,9 +72,9 @@ I've made it **much easier to find and launch Q-IDE**. Here are your options:
 
 ## 📖 OPTION 4: Read the Guide
 
-**File:** `HOW_TO_LAUNCH_Q-IDE.md`
+**File:** `HOW_TO_LAUNCH_Top Dog.md`
 
-**Location:** `c:\Quellum-topdog-ide\HOW_TO_LAUNCH_Q-IDE.md`
+**Location:** `c:\Quellum-topdog-ide\HOW_TO_LAUNCH_Top Dog.md`
 
 **Content:**
 - Detailed launch instructions
@@ -90,21 +90,21 @@ I've made it **much easier to find and launch Q-IDE**. Here are your options:
 
 | What You Want | File to Use | Time | Result |
 |---------------|-------------|------|--------|
-| Quick launch today | `🚀_LAUNCH_Q-IDE.bat` | 2 sec | Runs immediately |
+| Quick launch today | `🚀_LAUNCH_Top Dog.bat` | 2 sec | Runs immediately |
 | Easy daily launch | `CREATE_DESKTOP_SHORTCUT.bat` (1x setup) | 1 min setup | Desktop icon for life |
 | Learn all options | `SHOW_FILE_LOCATIONS.bat` | 1 min | See all files + guide |
-| Read guide | `HOW_TO_LAUNCH_Q-IDE.md` | 5 min | Complete reference |
+| Read guide | `HOW_TO_LAUNCH_Top Dog.md` | 5 min | Complete reference |
 
 ---
 
 ## 🎯 My Recommendation
 
 ### For Quick Start Now:
-**Double-click:** `🚀_LAUNCH_Q-IDE.bat`
+**Double-click:** `🚀_LAUNCH_Top Dog.bat`
 
 ### For Daily Convenience:
 1. Double-click: `CREATE_DESKTOP_SHORTCUT.bat`
-2. From tomorrow onward: Double-click the Q-IDE icon on your desktop
+2. From tomorrow onward: Double-click the Top Dog icon on your desktop
 
 ---
 
@@ -112,10 +112,10 @@ I've made it **much easier to find and launch Q-IDE**. Here are your options:
 
 ```
 c:\Quellum-topdog-ide\
-├── 🚀_LAUNCH_Q-IDE.bat ...................... ← Easiest launch
+├── 🚀_LAUNCH_Top Dog.bat ...................... ← Easiest launch
 ├── CREATE_DESKTOP_SHORTCUT.bat ............. ← One-click desktop icon
 ├── SHOW_FILE_LOCATIONS.bat ................. ← Visual file guide
-├── HOW_TO_LAUNCH_Q-IDE.md .................. ← Complete guide
+├── HOW_TO_LAUNCH_Top Dog.md .................. ← Complete guide
 ├── INSTALLATION_PACKAGE_READY.md (existing)
 ├── START.bat (existing)
 ├── INSTALL.bat (existing)
@@ -130,7 +130,7 @@ c:\Quellum-topdog-ide\
 
 ### 👉 Option A: Launch RIGHT NOW
 1. Go to: `c:\Quellum-topdog-ide\`
-2. Find file: `🚀_LAUNCH_Q-IDE.bat` (has rocket emoji)
+2. Find file: `🚀_LAUNCH_Top Dog.bat` (has rocket emoji)
 3. Double-click it
 4. Done! 🎉
 
@@ -139,7 +139,7 @@ c:\Quellum-topdog-ide\
 2. Find file: `CREATE_DESKTOP_SHORTCUT.bat`
 3. Double-click it
 4. Click "OK"
-5. Check your Desktop for Q-IDE icon
+5. Check your Desktop for Top Dog icon
 6. Tomorrow: Just double-click the desktop icon! ✨
 
 ### 👉 Option C: Learn All Options

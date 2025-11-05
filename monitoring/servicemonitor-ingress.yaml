@@ -1,0 +1,22 @@
+---
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: ingress-nginx-controller
+  namespace: q-ide
+  labels:
+    release: prometheus
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: ingress-nginx
+      app.kubernetes.io/component: controller
+  namespaceSelector:
+    any: true
+  endpoints:
+    - port: metrics
+      interval: 30s
+      path: /metrics
+      scheme: http
+      honorLabels: true
+      scrapeTimeout: 10s

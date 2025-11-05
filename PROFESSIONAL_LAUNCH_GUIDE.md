@@ -1,4 +1,4 @@
-# 🚀 Q-IDE TOPDOG - PROFESSIONAL LAUNCH GUIDE
+# 🚀 Top Dog TOPDOG - PROFESSIONAL LAUNCH GUIDE
 
 **Status**: ✅ Ready to Launch  
 **Version**: Production Release  
@@ -6,28 +6,28 @@
 
 ---
 
-## 📌 THE SIMPLEST WAY TO LAUNCH Q-IDE
+## 📌 THE SIMPLEST WAY TO LAUNCH Top Dog
 
 ### ⚡ Single-Click Launch (Recommended)
 
 **Option 1: Direct File**
 1. Open File Explorer
 2. Navigate to `c:\Quellum-topdog-ide\`
-3. **Double-click `Q-IDE.bat`**
+3. **Double-click `Top Dog.bat`**
 4. Watch the startup sequence
 5. Your browser opens automatically to the application
 
 **Option 2: Desktop Shortcut (Even Better!)**
 1. Run `CREATE_SHORTCUT.bat` (in the root directory)
 2. A shortcut appears on your Desktop
-3. **Double-click `Q-IDE Topdog.lnk`** anytime to launch
+3. **Double-click `Top Dog Topdog.lnk`** anytime to launch
 4. Application starts automatically
 
 ---
 
 ## 🎯 WHAT HAPPENS WHEN YOU LAUNCH
 
-When you click `Q-IDE.bat` or the desktop shortcut, the launcher:
+When you click `Top Dog.bat` or the desktop shortcut, the launcher:
 
 1. **Stops any running servers** - Cleans up old processes
 2. **Starts backend server** - FastAPI on port 8000
@@ -39,13 +39,13 @@ When you click `Q-IDE.bat` or the desktop shortcut, the launcher:
 
 ---
 
-## 💻 ACCESSING Q-IDE
+## 💻 ACCESSING Top Dog
 
-Once launched, you can access Q-IDE at:
+Once launched, you can access Top Dog at:
 
 | Component | URL | Purpose |
 |-----------|-----|---------|
-| **Application** | http://127.0.0.1:1431 | Main Q-IDE interface |
+| **Application** | http://127.0.0.1:1431 | Main Top Dog interface |
 | **Backend API** | http://127.0.0.1:8000 | REST API endpoints |
 | **API Documentation** | http://127.0.0.1:8000/docs | Interactive API docs (Swagger UI) |
 | **Alternative Docs** | http://127.0.0.1:8000/redoc | ReDoc API documentation |
@@ -91,7 +91,7 @@ http://127.0.0.1:1431
 **Solution**: Give it more time to fully initialize (~15-20 seconds)
 
 1. Check if both server windows are still running
-2. Close Q-IDE browser tab and refresh (F5)
+2. Close Top Dog browser tab and refresh (F5)
 3. Check backend logs:
    ```powershell
    Get-Content backend\logs\app.log -Tail 50
@@ -105,17 +105,17 @@ http://127.0.0.1:1431
 
 | Launcher | Method | When to Use | Result |
 |----------|--------|------------|--------|
-| **Q-IDE.bat** | Double-click | Standard launch | Both servers start, browser opens |
-| **Desktop Shortcut** | Desktop icon | Daily use | Same as Q-IDE.bat but on Desktop |
+| **Top Dog.bat** | Double-click | Standard launch | Both servers start, browser opens |
+| **Desktop Shortcut** | Desktop icon | Daily use | Same as Top Dog.bat but on Desktop |
 | **START_DEBUG.ps1** | PowerShell | Debugging | Full debug output with troubleshooting |
 | **DIAGNOSE.ps1** | PowerShell | System check | Validates all requirements |
 
 ### Detailed Instructions
 
-**1. Standard Launch (Q-IDE.bat)**
+**1. Standard Launch (Top Dog.bat)**
 ```powershell
 cd c:\Quellum-topdog-ide
-.\Q-IDE.bat
+.\Top Dog.bat
 ```
 
 **2. Create Desktop Shortcut**
@@ -139,14 +139,14 @@ cd c:\Quellum-topdog-ide
 
 ---
 
-## 🔍 MONITORING Q-IDE
+## 🔍 MONITORING Top Dog
 
 ### Keep Servers Running
-Two console windows will appear when you launch Q-IDE:
-- **Q-IDE Backend** - Shows API server logs
-- **Q-IDE Frontend** - Shows Vite dev server output
+Two console windows will appear when you launch Top Dog:
+- **Top Dog Backend** - Shows API server logs
+- **Top Dog Frontend** - Shows Vite dev server output
 
-✅ **DO NOT CLOSE** these windows while using Q-IDE  
+✅ **DO NOT CLOSE** these windows while using Top Dog  
 ✅ Keep them open in the background  
 ✅ You can minimize them if you prefer
 
@@ -156,7 +156,7 @@ Get-Content c:\Quellum-topdog-ide\backend\logs\app.log -Wait -Tail 0
 ```
 
 ### Monitor Frontend Output
-Frontend logs appear in the "Q-IDE Frontend" console window
+Frontend logs appear in the "Top Dog Frontend" console window
 
 ### Check API Health
 ```powershell
@@ -168,7 +168,7 @@ curl http://127.0.0.1:8000/health
 ## 🚦 STARTUP SEQUENCE EXPLAINED
 
 ```
-Launch Q-IDE.bat
+Launch Top Dog.bat
     ↓
 Cleanup old processes (1-2 seconds)
     ↓
@@ -193,10 +193,10 @@ Show success message (instant)
 After launch, minimize the two server windows to keep your desktop clean. They'll keep running in the background.
 
 ### Tip 2: Restart Quickly
-Close the two server windows to stop Q-IDE, then run `Q-IDE.bat` again to restart fresh.
+Close the two server windows to stop Top Dog, then run `Top Dog.bat` again to restart fresh.
 
 ### Tip 3: Multiple Instances
-You can run Q-IDE on different ports if needed:
+You can run Top Dog on different ports if needed:
 ```powershell
 cd frontend
 pnpm run dev -- --port 1432
@@ -246,7 +246,7 @@ cd c:\Quellum-topdog-ide
 1. **Check the console windows** - They show detailed error messages
 2. **Run diagnostics** - `.\DIAGNOSE.ps1` checks your system
 3. **View logs** - `Get-Content backend\logs\app.log -Tail 50`
-4. **Try fresh start** - Close both windows and run `Q-IDE.bat` again
+4. **Try fresh start** - Close both windows and run `Top Dog.bat` again
 
 ### For Debugging Sessions
 
@@ -280,13 +280,13 @@ Before reporting issues, verify:
 
 ### Easiest
 ```
-Double-click Q-IDE.bat (or the desktop shortcut)
+Double-click Top Dog.bat (or the desktop shortcut)
 ```
 
 ### From Command Line
 ```powershell
 cd c:\Quellum-topdog-ide
-.\Q-IDE.bat
+.\Top Dog.bat
 ```
 
 ### With Full Debug Output
@@ -299,10 +299,10 @@ cd c:\Quellum-topdog-ide
 
 ## 📝 NOTES
 
-- Q-IDE launches exactly like any professional desktop application
+- Top Dog launches exactly like any professional desktop application
 - All servers run locally - no cloud dependencies
 - Your data stays on your computer
 - Perfect for development and testing
 - Production deployment docs available in separate guides
 
-**Enjoy building with Q-IDE! 🚀**
+**Enjoy building with Top Dog! 🚀**

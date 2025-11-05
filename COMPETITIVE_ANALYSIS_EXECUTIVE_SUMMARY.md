@@ -9,19 +9,19 @@
 
 ## The Bottom Line
 
-**Q-IDE is technically superior but faces structural market disadvantages.**
+**Top Dog is technically superior but faces structural market disadvantages.**
 
 ### Scorecard
 
-| Dimension | Q-IDE | GitHub | Verdict |
+| Dimension | Top Dog | GitHub | Verdict |
 |-----------|-------|--------|---------|
-| **Product Quality** | ⭐⭐⭐⭐⭐ | ⭐⭐⭐⭐ | Q-IDE wins by features |
-| **Pricing** | ⭐⭐⭐⭐⭐ | ⭐⭐ | Q-IDE wins by 73% |
+| **Product Quality** | ⭐⭐⭐⭐⭐ | ⭐⭐⭐⭐ | Top Dog wins by features |
+| **Pricing** | ⭐⭐⭐⭐⭐ | ⭐⭐ | Top Dog wins by 73% |
 | **Brand/Trust** | ⭐⭐ | ⭐⭐⭐⭐⭐ | GitHub wins decisively |
 | **Market Position** | ⭐⭐⭐ | ⭐⭐⭐⭐⭐ | GitHub wins by distribution |
 | **Execution Risk** | ⭐⭐ | ⭐⭐⭐⭐⭐ | GitHub wins by resources |
-| **Growth Potential** | ⭐⭐⭐⭐ | ⭐⭐⭐ | Q-IDE wins by upside |
-| **Overall** | ⭐⭐⭐ (67%) | ⭐⭐⭐⭐ (84%) | GitHub is safer, Q-IDE has higher upside |
+| **Growth Potential** | ⭐⭐⭐⭐ | ⭐⭐⭐ | Top Dog wins by upside |
+| **Overall** | ⭐⭐⭐ (67%) | ⭐⭐⭐⭐ (84%) | GitHub is safer, Top Dog has higher upside |
 
 ---
 
@@ -30,7 +30,7 @@
 ### Truth #1: Product Matters Less Than You Think
 
 **What Developers Say:**
-> "Q-IDE has better features and is cheaper!"
+> "Top Dog has better features and is cheaper!"
 
 **What Enterprises Say:**
 > "Is GitHub reliable? Yes? Then GitHub."
@@ -41,7 +41,7 @@
 - Brand = Trust = Risk reduction
 - Microsoft backing means "can't lose my job choosing this"
 
-**Impact**: Q-IDE's technical superiority matters to 1% of buyers. 99% just want "known brand + good enough."
+**Impact**: Top Dog's technical superiority matters to 1% of buyers. 99% just want "known brand + good enough."
 
 ---
 
@@ -55,44 +55,44 @@
 3. "What's the best product?"           (10% of decisions)
 ```
 
-**The Problem For Q-IDE:**
+**The Problem For Top Dog:**
 - GitHub has 100M developers in ecosystem
 - VS Code is default on 99M+ machines
 - When company says "use GitHub," developer uses GitHub
-- Q-IDE must convince developer to **convince** their company
+- Top Dog must convince developer to **convince** their company
 - That's hard.
 
-**Impact**: Q-IDE doesn't have distribution channel like GitHub/VS Code.
+**Impact**: Top Dog doesn't have distribution channel like GitHub/VS Code.
 
 ---
 
-### Truth #3: GitHub Can Kill Q-IDE Anytime
+### Truth #3: GitHub Can Kill Top Dog Anytime
 
 **GitHub's Playbook If They Get Threatened:**
 
 ```
 Month 1: "Copilot now supports Claude + Ollama + local LLMs"
-         (Copy Q-IDE's BYOK feature)
+         (Copy Top Dog's BYOK feature)
 
 Month 2: "Codespaces price drops to $6/month"
-         (Undercut Q-IDE on price)
+         (Undercut Top Dog on price)
 
 Month 3: "GitHub IDE media synthesis (powered by partners)"
          (Integrate media features)
 
-Result: Q-IDE's unique features... not unique anymore
+Result: Top Dog's unique features... not unique anymore
 ```
 
-**Can Q-IDE Respond?** No.
-- Q-IDE can't outspend GitHub R&D
-- Q-IDE can't out-market GitHub brand
-- Q-IDE can't out-distribute GitHub ecosystem
+**Can Top Dog Respond?** No.
+- Top Dog can't outspend GitHub R&D
+- Top Dog can't out-market GitHub brand
+- Top Dog can't out-distribute GitHub ecosystem
 
-**Impact**: Q-IDE's success depends on GitHub ignoring it (probable until Q-IDE gets big).
+**Impact**: Top Dog's success depends on GitHub ignoring it (probable until Top Dog gets big).
 
 ---
 
-## What Q-IDE Actually Wins At
+## What Top Dog Actually Wins At
 
 ### Real Wins (Defensible)
 
@@ -145,7 +145,7 @@ Result: Q-IDE's unique features... not unique anymore
 
 ---
 
-## What Would Need to Happen for Q-IDE to Win (IPO/Dominate)
+## What Would Need to Happen for Top Dog to Win (IPO/Dominate)
 
 ### IPO Scenario (10% probability)
 
@@ -203,9 +203,9 @@ Result: Q-IDE's unique features... not unique anymore
 - Microsoft support matters for procurement
 - Brand recognition means "safe decision"
 - Compliance/support requirements need big company
-- Even if Q-IDE is cheaper, not worth risk
+- Even if Top Dog is cheaper, not worth risk
 
-**Q-IDE's Chance:** <5% (only if GitHub has major failure or breach)
+**Top Dog's Chance:** <5% (only if GitHub has major failure or breach)
 
 ---
 
@@ -220,13 +220,13 @@ Result: Q-IDE's unique features... not unique anymore
 - Switching cost lower (fewer people to train)
 - Technical founders value BYOK/multi-LLM
 
-**Q-IDE's Chance:** 40-50% (competitive segment!)
+**Top Dog's Chance:** 40-50% (competitive segment!)
 
 ---
 
 ### For Data Scientists / AI Teams
 
-**Decision:** Q-IDE likely wins
+**Decision:** Top Dog likely wins
 
 **Why:**
 - Multi-LLM support is actually valuable
@@ -235,28 +235,28 @@ Result: Q-IDE's unique features... not unique anymore
 - These devs care about technical features more
 - GitHub Copilot not optimized for data science workflows
 
-**Q-IDE's Chance:** 60-70% (own this segment!)
+**Top Dog's Chance:** 60-70% (own this segment!)
 
 ---
 
 ### For Game Developers
 
-**Decision:** Q-IDE wins (if product is good)
+**Decision:** Top Dog wins (if product is good)
 
 **Why:**
 - Runway media integration is huge value
 - No other IDE has this
-- Full-stack indie developers (Q-IDE's target)
+- Full-stack indie developers (Top Dog's target)
 - Cost matters (indie developer budgets)
 - Community matters (indie game dev community)
 
-**Q-IDE's Chance:** 75-80% (DEFENSIBLE advantage!)
+**Top Dog's Chance:** 75-80% (DEFENSIBLE advantage!)
 
 ---
 
 ### For Freelancers / Indie Developers
 
-**Decision:** Q-IDE Free Tier
+**Decision:** Top Dog Free Tier
 
 **Why:**
 - Free forever is powerful
@@ -265,7 +265,7 @@ Result: Q-IDE's unique features... not unique anymore
 - No lock-in matters
 - Community appeal
 
-**Q-IDE's Chance:** 70-80% (best product for this segment!)
+**Top Dog's Chance:** 70-80% (best product for this segment!)
 
 ---
 
@@ -273,7 +273,7 @@ Result: Q-IDE's unique features... not unique anymore
 
 ### If You're An Investor
 
-**Q-IDE is a GOOD bet but not a safe bet:**
+**Top Dog is a GOOD bet but not a safe bet:**
 
 ✅ **Fund if:**
 - Team is proven (serial entrepreneurs)
@@ -292,7 +292,7 @@ Result: Q-IDE's unique features... not unique anymore
 
 ---
 
-### If You're On Q-IDE Team
+### If You're On Top Dog Team
 
 **Focus on defensibility, not dominance:**
 
@@ -302,7 +302,7 @@ Result: Q-IDE's unique features... not unique anymore
    - Hard for competitors to compete in niche
 
 2. **Build Network Effects** (Community)
-   - Content creators using Q-IDE
+   - Content creators using Top Dog
    - Tutorials, guides, showcase projects
    - Creates switching costs
 
@@ -325,22 +325,22 @@ Result: Q-IDE's unique features... not unique anymore
 
 ## Final Verdict
 
-### Q-IDE in 5 Words
+### Top Dog in 5 Words
 
 **"Good product, bad market timing."**
 
 ### Reality Check
 
-- ✅ Q-IDE is technically superior → **Doesn't matter**
-- ✅ Q-IDE is cheaper → **Temporary advantage** (GitHub can copy)
-- ✅ Q-IDE has unique features → **Defensible 1-2 years**
-- ❌ Q-IDE is unknown brand → **Massive disadvantage**
-- ❌ Q-IDE is small team → **Execution risk**
-- ❌ Q-IDE faces 10,000-person competitor → **Math doesn't work**
+- ✅ Top Dog is technically superior → **Doesn't matter**
+- ✅ Top Dog is cheaper → **Temporary advantage** (GitHub can copy)
+- ✅ Top Dog has unique features → **Defensible 1-2 years**
+- ❌ Top Dog is unknown brand → **Massive disadvantage**
+- ❌ Top Dog is small team → **Execution risk**
+- ❌ Top Dog faces 10,000-person competitor → **Math doesn't work**
 
 ### Most Likely Outcome (2030)
 
-**Q-IDE exists as:**
+**Top Dog exists as:**
 - ✅ Profitable niche leader ($30-50M ARR) OR
 - ✅ Acquired platform feature (integrated into Google/Amazon/JetBrains) OR
 - ❌ Failed company (shut down, team dispersed)
@@ -349,7 +349,7 @@ Result: Q-IDE's unique features... not unique anymore
 
 ### Investment Thesis (One Sentence)
 
-> **"Q-IDE can achieve significant success ($100M+ exit) by becoming an acquisition target for Big Tech, but has <5% chance of competing with GitHub directly."**
+> **"Top Dog can achieve significant success ($100M+ exit) by becoming an acquisition target for Big Tech, but has <5% chance of competing with GitHub directly."**
 
 ---
 
@@ -364,32 +364,32 @@ Result: Q-IDE's unique features... not unique anymore
 
 ## Key Questions Answered
 
-**Q: Can Q-IDE beat GitHub?**  
+**Q: Can Top Dog beat GitHub?**  
 A: Probability <5%. GitHub can copy features and cut price.
 
-**Q: What's Q-IDE's best chance to win?**  
+**Q: What's Top Dog's best chance to win?**  
 A: Own a specific vertical (game developers, data scientists). Build moat through community.
 
-**Q: Will GitHub respond if Q-IDE gets big?**  
-A: Yes, 95% probability if Q-IDE exceeds 500k users. GitHub has strong incentive to crush competitor.
+**Q: Will GitHub respond if Top Dog gets big?**  
+A: Yes, 95% probability if Top Dog exceeds 500k users. GitHub has strong incentive to crush competitor.
 
-**Q: Can Q-IDE reach IPO?**  
+**Q: Can Top Dog reach IPO?**  
 A: Probability <5%. More likely acquisition target at $300-500M (10x revenue multiple).
 
 **Q: What's the best outcome for founders?**  
 A: Acquisition in 2028-2029 for $300-500M. Founders make $100-200M. That's venture success.
 
-**Q: Should I work for Q-IDE?**  
+**Q: Should I work for Top Dog?**  
 A: Only if you believe in the vision and are comfortable with 65% success / 35% failure odds. Upside is large if they hit (early employees make $5-20M).
 
-**Q: Should I invest in Q-IDE?**  
+**Q: Should I invest in Top Dog?**  
 A: Only with capital you can afford to lose. Expected value is positive (6.5x) but has high variance.
 
 ---
 
 **Final Thought:**
 
-Q-IDE is not trying to be "the next GitHub." It's trying to be valuable enough that GitHub (or Google or Amazon) buys it.
+Top Dog is not trying to be "the next GitHub." It's trying to be valuable enough that GitHub (or Google or Amazon) buys it.
 
 **That's the better bet.**
 

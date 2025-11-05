@@ -168,7 +168,7 @@ Total:                 27 tests ✅
 ## 🗂️ Project Structure
 
 ```
-Q-IDE/
+Top Dog/
 ├── backend/
 │   ├── services/
 │   │   └── voice_profiling_engine.py          (350 lines) ✅

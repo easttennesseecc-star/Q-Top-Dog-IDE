@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>TopDog IDE — Admin Snapshots</title>
+  <style>
+    body { font-family: system-ui, sans-serif; margin: 2rem; }
+    header { display: flex; gap: 1rem; align-items: baseline; }
+    small { color: #666; }
+    input, select, button { padding: 0.5rem; }
+    table { border-collapse: collapse; margin-top: 1rem; width: 100%; }
+    th, td { border: 1px solid #ddd; padding: 0.5rem; }
+    th { background: #f5f5f5; text-align: left; }
+    .row { display: flex; gap: 1rem; margin: 0.5rem 0; }
+    .muted { color: #777; }
+    .label { font-size: 0.85rem; padding: 0.15rem 0.4rem; background: #eef; border-radius: 4px; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Admin: Snapshots</h1>
+    <small class="muted">Read-only browser for workflow snapshots and labels</small>
+  </header>
+
+  <section>
+    <div class="row">
+      <label>Workflow ID <input id="wf" placeholder="enter workflow_id" size="42" /></label>
+      <label>Session ID (optional) <input id="sid" placeholder="session_id for auth" size="28" /></label>
+      <label>Filter
+        <select id="filter">
+          <option value="">All labels</option>
+          <option value="checkpoint">Checkpoints only</option>
+          <option value="init">init</option>
+          <option value="pre-advance">pre-advance</option>
+          <option value="post-advance">post-advance</option>
+        </select>
+      </label>
+      <button id="btnLoad">Load</button>
+    </div>
+    <div class="row">
+      <div>Known labels: <span id="labels" class="muted">…</span></div>
+    </div>
+  </section>
+
+  <section>
+    <table>
+      <thead>
+        <tr><th>File</th><th>Timestamp</th><th>Label</th><th>Size</th><th>Actions</th></tr>
+      </thead>
+      <tbody id="rows">
+        <tr><td colspan="5" class="muted">No data</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <script>
+    async function fetchJSON(url) {
+      const res = await fetch(url);
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      return res.json();
+    }
+    async function loadLabels() {
+      try {
+        const j = await fetchJSON('/snapshots/labels');
+        document.getElementById('labels').textContent = (j.labels || []).join(', ');
+      } catch (e) {
+        document.getElementById('labels').textContent = 'failed to load';
+      }
+    }
+    function escapeHtml(s) { return (s||'').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;','\'':'&#39;'}[c])); }
+    async function load() {
+      const wf = document.getElementById('wf').value.trim();
+      const sid = document.getElementById('sid').value.trim();
+      const filter = document.getElementById('filter').value;
+      if (!wf) return;
+      let url = `/snapshots/${encodeURIComponent(wf)}?limit=200`;
+      if (filter === 'checkpoint') {
+        url = `/snapshots/${encodeURIComponent(wf)}/checkpoints?limit=200`;
+      } else if (filter) {
+        url += `&label_base=${encodeURIComponent(filter)}`;
+      }
+      if (sid) {
+        url += (url.includes('?') ? '&' : '?') + `session_id=${encodeURIComponent(sid)}`;
+      }
+      const j = await fetchJSON(url);
+      const arr = j.snapshots || j.checkpoints || [];
+      const tbody = document.getElementById('rows');
+      tbody.innerHTML = '';
+      if (!arr.length) {
+        tbody.innerHTML = '<tr><td colspan="5" class="muted">No snapshots found</td></tr>';
+        return;
+      }
+      for (const s of arr) {
+        const tr = document.createElement('tr');
+        const file = escapeHtml(s.file);
+        const ts = escapeHtml(s.timestamp);
+        const label = escapeHtml(s.label);
+        const size = s.size != null ? String(s.size) : '';
+        const viewUrl = `/snapshots/${encodeURIComponent(j.workflow_id)}/${encodeURIComponent(file)}` + (sid ? `?session_id=${encodeURIComponent(sid)}` : '');
+        tr.innerHTML = `
+          <td>${file}</td>
+          <td>${ts}</td>
+          <td>${label ? `<span class="label">${label}</span>` : ''}</td>
+          <td>${size}</td>
+          <td>
+            <a href="${viewUrl}" target="_blank" rel="noopener">View JSON</a>
+          </td>
+        `;
+        tbody.appendChild(tr);
+      }
+    }
+    document.getElementById('btnLoad').addEventListener('click', () => load().catch(err => alert(err)));
+    loadLabels();
+  </script>
+</body>
+</html>

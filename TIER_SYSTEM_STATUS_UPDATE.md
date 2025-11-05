@@ -1,4 +1,4 @@
-# ⚡ Q-IDE Tier System - STATUS UPDATE
+# ⚡ Top Dog Tier System - STATUS UPDATE
 
 ## 🎯 What Just Happened
 

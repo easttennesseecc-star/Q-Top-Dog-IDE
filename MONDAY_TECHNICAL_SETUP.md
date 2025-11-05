@@ -105,7 +105,7 @@ Run this checklist:
 ### Slack/Communication Setup (5 min)
 ```
 Set up team channels:
-├─ #q-ide-sprint-week-1 (daily updates)
+├─ #Top Dog-sprint-week-1 (daily updates)
 ├─ #intellisense-alerts (blockers)
 ├─ #refactoring-questions (help channel)
 └─ Daily standup link (video call)
@@ -142,8 +142,8 @@ Set up automation:
 **10:00-10:10: Strategic Context** (Tech Lead)
 ```
 "Here's why this week matters. We're shipping:
-1. IntelliSense engine (makes Q-IDE feel responsive)
-2. Refactoring tools (makes Q-IDE feel smart)
+1. IntelliSense engine (makes Top Dog feel responsive)
+2. Refactoring tools (makes Top Dog feel smart)
 3. By Friday Nov 7 = v0.1 in production
 
 This sets us up for:
@@ -529,7 +529,7 @@ npm install prom-client
 ```
 
 ### Slack Channels
-- #q-ide-sprint-week-1 (general updates)
+- #Top Dog-sprint-week-1 (general updates)
 - #intellisense-questions (help)
 - #intellisense-alerts (blockers)
 - #refactoring-help (help)

@@ -1,11 +1,11 @@
-# 🚀 GitHub Copilot Quick Setup for Q-IDE
+# 🚀 GitHub Copilot Quick Setup for Top Dog
 
 ## Before You Start
 
 ### Requirements:
 - ✅ Active [GitHub Copilot subscription](https://github.com/copilot) ($20/month)
 - ✅ GitHub account logged in
-- ✅ Q-IDE open with LLM Setup tab visible
+- ✅ Top Dog open with LLM Setup tab visible
 
 **Don't have Copilot?** Use **Google Gemini (free)** instead - follow the Gemini guide.
 
@@ -24,7 +24,7 @@
 On the "New personal access token" page:
 
 Token name: 
-  "Q-IDE Copilot API"
+  "Top Dog Copilot API"
 
 Expiration:
   Select "30 days" or "No expiration"
@@ -45,11 +45,11 @@ Select scopes:
 
 ---
 
-## Step 2: Add to Q-IDE (1 minute)
+## Step 2: Add to Top Dog (1 minute)
 
 ### Open Auth Tab
 ```
-In Q-IDE:
+In Top Dog:
 1. Click "LLM Setup" tab
 2. Click "Auth" subtab
 3. Look for "GitHub Copilot" card
@@ -81,12 +81,12 @@ If error:
 
 ### Check Status
 ```
-Option A: Close & Reopen Q-IDE
+Option A: Close & Reopen Top Dog
   → Backend checks Copilot credentials on startup
   → If no modal appears, credentials are valid ✓
 
 Option B: Check Console
-  In Q-IDE backend console, you should see:
+  In Top Dog backend console, you should see:
   "✓ GitHub Copilot: Authenticated"
 ```
 
@@ -114,7 +114,7 @@ Fix:
 1. Go to https://github.com/settings/tokens
 2. Delete the old token
 3. Create a NEW token
-4. Paste in Q-IDE
+4. Paste in Top Dog
 5. Try again
 ```
 
@@ -135,35 +135,35 @@ Options:
 
 ### Problem: "Token Expires Soon"
 ```
-Q-IDE will warn you: "Copilot token expiring in 7 days"
+Top Dog will warn you: "Copilot token expiring in 7 days"
 
 Fix:
 1. Go to https://github.com/settings/tokens
-2. Click on your Q-IDE token
+2. Click on your Top Dog token
 3. Edit expiration date
 4. Save
 ```
 
-### Problem: "Q-IDE Not Recognizing Token"
+### Problem: "Top Dog Not Recognizing Token"
 ```
 Try:
 1. Clear browser cache (Ctrl+Shift+Delete)
-2. Close Q-IDE completely
-3. Restart Q-IDE
+2. Close Top Dog completely
+3. Restart Top Dog
 4. Try again
 
 Still not working?
-1. Delete token from Q-IDE
+1. Delete token from Top Dog
 2. Clear saved credentials
 3. Create completely new token
-4. Re-add to Q-IDE
+4. Re-add to Top Dog
 ```
 
 ---
 
 ## What Happens Next?
 
-### Every Time You Start Q-IDE:
+### Every Time You Start Top Dog:
 ```
 Backend startup:
   ↓
@@ -196,12 +196,12 @@ Shows scopes (permissions)
 
 ### Revoke (Delete) a Token
 ```
-If you want to stop Q-IDE from using Copilot:
+If you want to stop Top Dog from using Copilot:
 1. Go to https://github.com/settings/tokens
-2. Find "Q-IDE Copilot API"
+2. Find "Top Dog Copilot API"
 3. Click "Delete"
 4. Confirm
-Result: Q-IDE will no longer work with Copilot
+Result: Top Dog will no longer work with Copilot
 ```
 
 ### Rotate (Change) a Token
@@ -212,7 +212,7 @@ If you think your token leaked:
 3. Edit expiration date to today
 4. OR click Delete to remove it
 5. Create a new token
-6. Update Q-IDE with new token
+6. Update Top Dog with new token
 ```
 
 ---
@@ -221,7 +221,7 @@ If you think your token leaked:
 
 ### Protect Your Token:
 ```
-✓ DO: Keep it in Q-IDE only
+✓ DO: Keep it in Top Dog only
 ✓ DO: Don't share it with others
 ✓ DO: Don't post it in forums/Discord
 ✓ DO: Regenerate if you think it's exposed
@@ -232,9 +232,9 @@ If you think your token leaked:
 ✗ DON'T: Use same token across multiple machines
 ```
 
-### Q-IDE Protects It:
+### Top Dog Protects It:
 ```
-✓ Stored in: ~/.q-ide/llm_credentials.json
+✓ Stored in: ~/.Top Dog/llm_credentials.json
 ✓ Not sent to: Quellum servers
 ✓ Only sent to: GitHub servers (for API calls)
 ✓ Encrypted: When possible
@@ -257,9 +257,9 @@ Free for:
   ✓ Teachers
 ```
 
-### Q-IDE:
+### Top Dog:
 ```
-Q-IDE itself: FREE
+Top Dog itself: FREE
 LLM services: Based on usage
   - Copilot: Included with subscription
   - Gemini: Free tier generous
@@ -293,7 +293,7 @@ LLM services: Based on usage
 1. Go to LLM Setup → Auth tab
 2. Find Copilot card
 3. Click "Remove"
-4. Q-IDE will suggest alternatives
+4. Top Dog will suggest alternatives
 ```
 
 **Option 2: Reassign Role**
@@ -321,7 +321,7 @@ Check:
 3. Role assigned to Copilot?
    → LLM Setup → Roles tab
    
-4. Q-IDE can reach GitHub?
+4. Top Dog can reach GitHub?
    → Check internet connection
    → Try ping google.com
    
@@ -336,7 +336,7 @@ Check:
 ### You're All Set!
 ```
 ✅ Token created
-✅ Added to Q-IDE
+✅ Added to Top Dog
 ✅ Credentials saved
 
 Now:

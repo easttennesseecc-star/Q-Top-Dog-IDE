@@ -3,7 +3,7 @@
 ## 🚀 60-Second Setup
 
 ### Desktop (30 seconds)
-1. Open Q-IDE → Click "Phone" tab
+1. Open Top Dog → Click "Phone" tab
 2. Click "Pair New Phone"
 3. See QR code + 6-character code
 4. Keep screen open

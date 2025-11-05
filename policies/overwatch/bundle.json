@@ -1,0 +1,24 @@
+{
+  "version": "1.0",
+  "policies": [
+    {
+      "id": "regulated-domain-restrictions",
+      "description": "Disallow medical/science advisories in regulated edition unless Overwatch validation passes.",
+      "rules": [
+        {"type": "block", "pattern": "medical"},
+        {"type": "block", "pattern": "diagnosis"},
+        {"type": "block", "pattern": "prescription"}
+      ]
+    },
+    {
+      "id": "llm-safety-overwatch",
+      "description": "Require Overwatch verification for risky prompts.",
+      "rules": [
+        {"type": "require_overwatch", "risk_threshold": 0.5}
+      ]
+    },
+    { "name": "regulated-domain-defaults", "path": "regulated.json" },
+    { "name": "code-compliance", "path": "compliance.rego" },
+    { "name": "model-attestation", "path": "attestation.rego" }
+  ]
+}

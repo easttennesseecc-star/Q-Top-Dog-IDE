@@ -86,14 +86,14 @@ Or navigate to: `frontend/src/App.tsx` and use dev server
 2. Select provider (e.g., "OpenAI")
 3. Enter API key (test: `sk-test-12345`)
 4. Click "Save"
-5. Should see success message and key stored in `~/.q-ide/llm_keys.json`
+5. Should see success message and key stored in `~/.Top Dog/llm_keys.json`
 
 ### 5. Test Role Assignment
 1. Go to Roles tab
 2. Click "Configure" on any role (e.g., "Analysis")
 3. Select model from dropdown
 4. Click "Assign"
-5. Should see assignment updated and saved in `~/.q-ide/llm_roles.json`
+5. Should see assignment updated and saved in `~/.Top Dog/llm_roles.json`
 
 ## API Endpoints (10 Total)
 
@@ -115,8 +115,8 @@ All under `/llm_config/` prefix:
 ## Configuration Files
 
 User's configurations are stored in:
-- `~/.q-ide/llm_keys.json` - Encrypted API keys
-- `~/.q-ide/llm_roles.json` - Role assignments
+- `~/.Top Dog/llm_keys.json` - Encrypted API keys
+- `~/.Top Dog/llm_roles.json` - Role assignments
 
 ## Known Issues
 
@@ -175,8 +175,8 @@ llm_config.py (Core Logic)
   ├── CLOUD_LLMS (7 providers)
   ├── LOCAL_MODELS (3 sources)
   └── File Storage
-       ├── ~/.q-ide/llm_keys.json
-       └── ~/.q-ide/llm_roles.json
+       ├── ~/.Top Dog/llm_keys.json
+       └── ~/.Top Dog/llm_roles.json
 ```
 
 ## Validation Checklist

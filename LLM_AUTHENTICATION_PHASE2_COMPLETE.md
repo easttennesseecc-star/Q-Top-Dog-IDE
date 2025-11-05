@@ -9,7 +9,7 @@ Complete LLM authentication system implemented with OAuth support, API key manag
 
 #### 1. **llm_auth.py** (350+ lines)
 Core credential management system with:
-- **Storage**: ~/.q-ide/llm_credentials.json (local, can be encrypted)
+- **Storage**: ~/.Top Dog/llm_credentials.json (local, can be encrypted)
 - **API Key Management**: Store/retrieve provider API keys
 - **OAuth Management**: Store/retrieve tokens with expiration tracking
 - **Auth Status Checking**: Check single or all providers
@@ -99,7 +99,7 @@ Added dev proxies for new endpoints:
 
 ## Data Structures
 
-### Credentials Storage (~/.q-ide/llm_credentials.json)
+### Credentials Storage (~/.Top Dog/llm_credentials.json)
 ```json
 {
   "providers": {
@@ -176,8 +176,8 @@ Added dev proxies for new endpoints:
 ## Security Features
 
 ### Credential Storage
-- Stored only in ~/.q-ide/llm_credentials.json
-- Never sent to Q-IDE servers
+- Stored only in ~/.Top Dog/llm_credentials.json
+- Never sent to Top Dog servers
 - Can be encrypted in future releases
 - User has full control via revocation
 
@@ -205,7 +205,7 @@ Added dev proxies for new endpoints:
 - [ ] `/llm_auth/revoke` removes credentials
 - [ ] `/llm_auth/validate/{provider}` checks auth validity
 - [ ] `/llm_auth/authenticated` lists signed-in providers
-- [ ] Credentials persisted to ~/.q-ide/llm_credentials.json
+- [ ] Credentials persisted to ~/.Top Dog/llm_credentials.json
 
 ### Frontend Testing
 - [ ] Frontend compiles without errors
@@ -230,7 +230,7 @@ Added dev proxies for new endpoints:
 6. Click "Sign In" for OpenAI
 7. Complete OAuth flow
 8. Verify:
-   - Token stored in ~/.q-ide/llm_credentials.json
+   - Token stored in ~/.Top Dog/llm_credentials.json
    - Auth tab shows as authenticated
    - Revoke button works
    - Can sign out and back in
@@ -251,7 +251,7 @@ Added dev proxies for new endpoints:
 ## Environment Variables
 
 ### Backend
-- `~/.q-ide/llm_credentials.json` - Credentials storage location (created automatically)
+- `~/.Top Dog/llm_credentials.json` - Credentials storage location (created automatically)
 
 ### Frontend
 - `BACKEND_URL` - Backend FastAPI URL (default: http://127.0.0.1:8000)
@@ -278,12 +278,12 @@ Added dev proxies for new endpoints:
 ## Deployment Notes
 
 ### Windows
-- Credentials file stored in `%USERPROFILE%\.q-ide\llm_credentials.json`
+- Credentials file stored in `%USERPROFILE%\.Top Dog\llm_credentials.json`
 - FastAPI backend must be running on port 8000
 - Frontend dev server proxies to backend
 
 ### Linux/macOS
-- Credentials file stored in `~/.q-ide/llm_credentials.json`
+- Credentials file stored in `~/.Top Dog/llm_credentials.json`
 - Same port and proxy configuration
 
 ### Production

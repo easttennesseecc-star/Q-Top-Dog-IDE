@@ -1,4 +1,4 @@
-# Q-IDE Membership Tier Implementation Guide (CORRECTED)
+# Top Dog Membership Tier Implementation Guide (CORRECTED)
 
 **Updated for your actual tech stack**:
 - Backend: Python (Flask/FastAPI)
@@ -654,7 +654,7 @@ def register_user():
     
     return {
         'success': True,
-        'message': 'Welcome to Q-IDE! You have 7 days free access.',
+        'message': 'Welcome to Top Dog! You have 7 days free access.',
         'user_id': user_id
     }, 201
 
@@ -724,7 +724,7 @@ Write-Host "✅ Monitoring script created" -ForegroundColor Green
 ```powershell
 # Schedule monitoring to run hourly
 $trigger = New-ScheduledJobTrigger -Once -At (Get-Date) -RepetitionInterval (New-TimeSpan -Hours 1)
-Register-ScheduledJob -Name "Q-IDE-Tier-Monitor" `
+Register-ScheduledJob -Name "Top Dog-Tier-Monitor" `
   -ScriptBlock { 
     cd "C:\Quellum-topdog-ide\backend"
     python scripts/monitor_tiers.py

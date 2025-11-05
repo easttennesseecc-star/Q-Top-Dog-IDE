@@ -1,6 +1,6 @@
-# 🧪 Q-IDE Local Testing & Debugging Guide
+# 🧪 Top Dog Local Testing & Debugging Guide
 
-**Purpose**: Set up Q-IDE for local testing and debugging on your PC  
+**Purpose**: Set up Top Dog for local testing and debugging on your PC  
 **Platform**: Windows (PowerShell)  
 **Status**: Ready to test immediately  
 **Time**: 15 minutes to full setup

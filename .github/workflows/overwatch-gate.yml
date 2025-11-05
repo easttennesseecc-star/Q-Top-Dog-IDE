@@ -1,0 +1,40 @@
+name: Overwatch CI Gate
+
+on:
+  pull_request:
+  push:
+    branches: [ main, develop ]
+
+jobs:
+  overwatch-gate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Determine Overwatch strictness
+        shell: bash
+        env:
+          OVW_STRICT_SECRET: ${{ secrets.OVERWATCH_GATE_STRICT }}
+        run: |
+          if [[ "${GITHUB_REF}" == "refs/heads/main" ]]; then
+            echo "OVERWATCH_GATE_STRICT=true" >> "$GITHUB_ENV"
+          elif [[ -n "${OVW_STRICT_SECRET}" ]]; then
+            echo "OVERWATCH_GATE_STRICT=${OVW_STRICT_SECRET}" >> "$GITHUB_ENV"
+          else
+            echo "OVERWATCH_GATE_STRICT=false" >> "$GITHUB_ENV"
+          fi
+      - name: Run Overwatch Gate (heuristic mode)
+        run: |
+          python tools/overwatch_ci_gate.py
+        env:
+          OVERWATCH_POLICY_BUNDLE: policies/overwatch/bundle.json
+      - name: Upload Overwatch policy bundle
+        if: always()
+        uses: actions/upload-artifact@v3
+        with:
+          name: overwatch-policy-bundle
+          path: policies/overwatch/bundle.json
+          retention-days: 30

@@ -1,4 +1,4 @@
-# 🎬 Q-IDE's Game-Changing Differentiator: Runway BYOK Media Synthesis
+# 🎬 Top Dog's Game-Changing Differentiator: Runway BYOK Media Synthesis
 
 **Document Type**: Competitive Intelligence - Game-Changer Analysis  
 **Date**: October 28, 2025  
@@ -9,9 +9,9 @@
 
 ## Executive Summary
 
-### Q-IDE is the ONLY platform offering integrated AI media generation with BYOK model
+### Top Dog is the ONLY platform offering integrated AI media generation with BYOK model
 
-| Feature | Q-IDE | GitHub | Adobe | Figma | Cursor | Replit |
+| Feature | Top Dog | GitHub | Adobe | Figma | Cursor | Replit |
 |---------|-------|--------|-------|-------|--------|--------|
 | **IDE Included** | ✅ | No | No | No | ✅ | ✅ |
 | **Multi-LLM BYOK** | ✅ | ❌ | ❌ | ❌ | ❌ | ❌ |
@@ -31,7 +31,7 @@
 
 ```
 ┌─────────────────────────────────────────────────────────────────┐
-│                  Q-IDE with Runway BYOK                         │
+│                  Top Dog with Runway BYOK                         │
 ├─────────────────────────────────────────────────────────────────┤
 │                                                                 │
 │  Developer types code/comment describing media needed           │
@@ -44,11 +44,11 @@
 │           ↓                                                     │
 │  Runway generates images/videos/audio                           │
 │           ↓                                                     │
-│  Returns generated media to Q-IDE                              │
+│  Returns generated media to Top Dog                              │
 │           ↓                                                     │
 │  Seamlessly integrated into code/project                       │
 │           ↓                                                     │
-│  YOU PAY RUNWAY, NOT Q-IDE (Cost control & no lock-in)        │
+│  YOU PAY RUNWAY, NOT Top Dog (Cost control & no lock-in)        │
 │                                                                 │
 └─────────────────────────────────────────────────────────────────┘
 ```
@@ -56,7 +56,7 @@
 ### Technical Architecture
 
 ```
-Q-IDE Frontend (React)
+Top Dog Frontend (React)
     │
     └─→ Developer writes: "Generate a profile avatar for a user"
         │
@@ -71,9 +71,9 @@ Q-IDE Frontend (React)
                 │
                 ├─→ Processes image generation
                 ├─→ Returns generated image
-                └─→ Charges YOUR Runway account (not Q-IDE)
+                └─→ Charges YOUR Runway account (not Top Dog)
                     │
-                    └─→ Returns to Q-IDE
+                    └─→ Returns to Top Dog
                         │
                         └─→ Integrated into React component
                             │
@@ -87,9 +87,9 @@ Q-IDE Frontend (React)
 Developer → Locked-in Adobe subscription → Adobe servers → Cost escalates
 ```
 
-**Q-IDE BYOK Model (Runway):**
+**Top Dog BYOK Model (Runway):**
 ```
-Developer → Q-IDE (free/cheap) + Your Runway account → Runway servers → You control costs
+Developer → Top Dog (free/cheap) + Your Runway account → Runway servers → You control costs
 ```
 
 ---
@@ -101,7 +101,7 @@ Developer → Q-IDE (free/cheap) + Your Runway account → Runway servers → Yo
 **User Request:**
 > "Build me a social media app with AI-generated profile pictures for each user"
 
-**What Happens Without Q-IDE (Traditional):**
+**What Happens Without Top Dog (Traditional):**
 1. Developer opens design tool (Figma/Adobe)
 2. Manually describes avatar needs
 3. Runs image generation tool
@@ -111,9 +111,9 @@ Developer → Q-IDE (free/cheap) + Your Runway account → Runway servers → Yo
 7. Writes code to integrate
 **Time: 30+ minutes | Tools switched: 3**
 
-**What Happens With Q-IDE:**
+**What Happens With Top Dog:**
 ```python
-# Developer writes in Q-IDE
+# Developer writes in Top Dog
 """
 Generate 5 diverse user avatar images for a social media app.
 Requirements:
@@ -136,11 +136,11 @@ Requirements:
 - UI shows working avatars immediately
 - Cost: $0.01-0.05 per image (Runway pricing, YOUR account)
 - Time: < 5 minutes
-- Tools switched: 0 (stays in Q-IDE)
+- Tools switched: 0 (stays in Top Dog)
 
 **Developer Experience:**
 ```
-Q-IDE is open with code
+Top Dog is open with code
     ↓
 "I need avatar images"
     ↓
@@ -150,7 +150,7 @@ Q Assistant generates them automatically
     ↓
 Images appear in UI preview
     ↓
-Never left Q-IDE ✨
+Never left Top Dog ✨
 ```
 
 ### Scenario 2: Video Marketing Website
@@ -168,7 +168,7 @@ Never left Q-IDE ✨
 7. Test playback
 **Time: 15+ minutes | Manual steps: 7**
 
-**Q-IDE Workflow:**
+**Top Dog Workflow:**
 ```typescript
 /*
 Generate a 30-second product demo video showing:
@@ -211,7 +211,7 @@ Generate a 30-second product demo video showing:
 7. Test audio playback
 **Time: 20+ minutes | Manual steps: 8**
 
-**Q-IDE Workflow:**
+**Top Dog Workflow:**
 ```javascript
 /*
 Generate audio for the app:
@@ -273,7 +273,7 @@ Generate audio for the app:
 - ✅ Strong code AI
 **Total Cost:** $20/month (no media capability)
 
-### Q-IDE with Runway BYOK 🏆
+### Top Dog with Runway BYOK 🏆
 - ✅ IDE included
 - ✅ Multi-LLM BYOK (code + media)
 - ✅ Image generation (BYOK)
@@ -305,11 +305,11 @@ Annual Cost (5 developers):
 $132.99 × 12 × 5 = $7,979.40/year
 ```
 
-### Using Q-IDE with Runway BYOK (New Standard)
+### Using Top Dog with Runway BYOK (New Standard)
 
 ```
 Monthly Costs:
-├─ Q-IDE Teams:        $25/month (per person)
+├─ Top Dog Teams:        $25/month (per person)
 ├─ Runway (BYOK):      $0 (free tier) or pay-per-use
 │  Example: 100 images/month @ $0.02 = $2/month
 └─ Optional: Runway paid tier = $10/month
@@ -350,7 +350,7 @@ SAVINGS: $5,879-6,479/year per team of 5 (75-85% reduction)
 │         → No cloud media services                      │
 │         → No Runway integration                        │
 │                                                         │
-│ Q-IDE:  BYOK model native to architecture             │
+│ Top Dog:  BYOK model native to architecture             │
 │         → Runway integration built-in                  │
 │         → LLM orchestration handles media specs        │
 │         → Use YOUR API keys (no lock-in)              │
@@ -359,7 +359,7 @@ SAVINGS: $5,879-6,479/year per team of 5 (75-85% reduction)
 └─────────────────────────────────────────────────────────┘
 ```
 
-### Technical Reasons Why Q-IDE Uniquely Can Offer This
+### Technical Reasons Why Top Dog Uniquely Can Offer This
 
 1. **LLM Orchestration Layer** - Q Assistant (LLM-1) can automatically:
    - Parse media requirements from code comments
@@ -368,16 +368,16 @@ SAVINGS: $5,879-6,479/year per team of 5 (75-85% reduction)
    - Integrate results back into code
    - No competitor has this automation
 
-2. **BYOK Architecture** - Q-IDE built on BYOK from day 1:
+2. **BYOK Architecture** - Top Dog built on BYOK from day 1:
    - LLM keys: Bring your own
    - Media keys: Bring your own
    - Both integrated seamlessly
    - Competitors would need architectural redesign
 
-3. **No Vendor Lock-in** - Q-IDE benefits from:
+3. **No Vendor Lock-in** - Top Dog benefits from:
    - Developer using their own Runway account
-   - No dependency on Q-IDE's infrastructure for media
-   - Runway failures don't break Q-IDE
+   - No dependency on Top Dog's infrastructure for media
+   - Runway failures don't break Top Dog
    - Developers can switch to other tools anytime
 
 ---
@@ -395,8 +395,8 @@ CUSTOMER SEGMENT 1: Small Teams (5-50 developers)
 │  = $96.99/person/month                             │
 │  = $5,819/year for team of 5                       │
 │                                                     │
-│ Q-IDE Alternative:                                 │
-│  Q-IDE Teams ($25/person) + Runway free tier      │
+│ Top Dog Alternative:                                 │
+│  Top Dog Teams ($25/person) + Runway free tier      │
 │  = $25/person/month                                │
 │  = $1,500/year for team of 5                       │
 │                                                     │
@@ -413,7 +413,7 @@ CUSTOMER SEGMENT 1: Small Teams (5-50 developers)
 CUSTOMER SEGMENT 2: Enterprise (50+ developers)
 ┌─────────────────────────────────────────────────────┐
 │ Security/Compliance Benefits:                       │
-│  ✅ No API keys stored on Q-IDE servers            │
+│  ✅ No API keys stored on Top Dog servers            │
 │  ✅ Developer controls Runway account             │
 │  ✅ No vendor lock-in vulnerability                │
 │  ✅ Can audit/revoke Runway access instantly       │
@@ -435,7 +435,7 @@ CUSTOMER SEGMENT 2: Enterprise (50+ developers)
 
 ---
 
-## Marketing Angles for Q-IDE Runway Integration
+## Marketing Angles for Top Dog Runway Integration
 
 ### Angle 1: "From Idea to Finished Product in One Tool"
 ```
@@ -453,11 +453,11 @@ What if media generation was built into your IDE?"
 
 ### Angle 2: "The Developer's Problem: Context Switching Costs Time"
 ```
-Without Q-IDE:
+Without Top Dog:
 Code → Design tool → Media generator → Code
 (5x context switch = 15+ minutes lost per feature)
 
-With Q-IDE:
+With Top Dog:
 Code → Comment "Generate..." → Done (in IDE)
 (0x context switch = feature done in 2 minutes)
 ```
@@ -477,7 +477,7 @@ Total:           70 minutes + context switching pain
 Cost:            $0.50 developer + $2 media
 ```
 
-Q-IDE:
+Top Dog:
 ```
 Write specs:     2 min   (In IDE)
 Generate/Integrate: auto (Q Assistant does it)
@@ -492,13 +492,13 @@ Savings:         -40 minutes (57% faster)
 
 ```
 Separate tools = vendor-dependent
-Q-IDE BYOK = vendor-flexible
+Top Dog BYOK = vendor-flexible
 
 "Need better media later? Switch to different Runway tier
-or different provider. Your Q-IDE workflow stays the same."
+or different provider. Your Top Dog workflow stays the same."
 
 "Afraid of lock-in? Your data and workflows aren't trapped
-in Q-IDE. Your Runway account is portable."
+in Top Dog. Your Runway account is portable."
 ```
 
 ---
@@ -534,7 +534,7 @@ in Q-IDE. Your Runway account is portable."
 ## Sales Talking Points
 
 ### For Startups/Small Teams
-> "Q-IDE saves you $4,000+ per year vs separate Adobe + Copilot + IDE tools"
+> "Top Dog saves you $4,000+ per year vs separate Adobe + Copilot + IDE tools"
 
 ### For Professionals
 > "Generate professional images/videos without leaving your IDE"
@@ -552,7 +552,7 @@ in Q-IDE. Your Runway account is portable."
 
 ## Conclusion
 
-### Q-IDE's Runway BYOK Integration is a Market First
+### Top Dog's Runway BYOK Integration is a Market First
 
 - ✅ **Only platform** combining IDE + multi-LLM + media synthesis
 - ✅ **Only offering** true BYOK for both code and media

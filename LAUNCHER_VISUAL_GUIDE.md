@@ -1,4 +1,4 @@
-# 🎬 Q-IDE PROFESSIONAL LAUNCHER - VISUAL QUICK START
+# 🎬 Top Dog PROFESSIONAL LAUNCHER - VISUAL QUICK START
 
 ## 🎯 3 Ways to Launch (Pick Your Favorite!)
 
@@ -14,13 +14,13 @@
 3. Find: CREATE_SHORTCUT.bat
 4. Double-click it
    ↓
-✅ "Q-IDE Topdog.lnk" appears on your Desktop
+✅ "Top Dog Topdog.lnk" appears on your Desktop
 ```
 
 ### Usage (Anytime You Want to Launch)
 
 ```
-1. Look for Desktop shortcut: "Q-IDE Topdog"
+1. Look for Desktop shortcut: "Top Dog Topdog"
 2. Double-click it
    ↓
 ~15 seconds later...
@@ -41,10 +41,10 @@
 ```
 1. Open File Explorer
 2. Navigate to: c:\Quellum-topdog-ide\
-3. Find: Q-IDE.bat
+3. Find: Top Dog.bat
 4. Double-click it
    ↓
-✅ Q-IDE launches immediately
+✅ Top Dog launches immediately
 ✅ No extra files needed
 ✅ Works every time
 ```
@@ -64,7 +64,7 @@
 4. Double-click it
    ↓
 📋 Interactive menu appears with options:
-   [1] Launch Q-IDE
+   [1] Launch Top Dog
    [2] Launch with Debug Output
    [3] Run System Diagnostics
    [4] Create Desktop Shortcut
@@ -73,7 +73,7 @@
    ↓
 Choose option [1]
    ↓
-✅ Q-IDE launches with full menu support
+✅ Top Dog launches with full menu support
 ```
 
 **Great for learning all available options!**
@@ -83,7 +83,7 @@ Choose option [1]
 ## 📊 LAUNCH SEQUENCE (What Happens)
 
 ```
-You double-click Q-IDE.bat
+You double-click Top Dog.bat
     ↓
     ↓ STEP 1: Cleanup (2 seconds)
     ↓ Stops any old Python/Node processes
@@ -111,7 +111,7 @@ You double-click Q-IDE.bat
 ```
 ╔════════════════════════════════════════════════════════════════════════════╗
 ║                                                                            ║
-║                    🚀 Q-IDE TOPDOG                                         ║
+║                    🚀 Top Dog TOPDOG                                         ║
 ║                                                                            ║
 ║             Professional AI Development IDE                                ║
 ║                                                                            ║
@@ -127,14 +127,14 @@ You double-click Q-IDE.bat
 ```
 [*] Starting backend server on port 8000...
 [*] Starting frontend server on port 1431...
-[*] Opening Q-IDE in browser...
+[*] Opening Top Dog in browser...
 ```
 
 ### Screen 3: Success!
 ```
 ╔════════════════════════════════════════════════════════════════════════════╗
 ║                                                                            ║
-║                ✓ Q-IDE TOPDOG LAUNCHED SUCCESSFULLY!                      ║
+║                ✓ Top Dog TOPDOG LAUNCHED SUCCESSFULLY!                      ║
 ║                                                                            ║
 ║                Application Opening in Your Browser                         ║
 ║                                                                            ║
@@ -147,19 +147,19 @@ You double-click Q-IDE.bat
 
 ### Screen 4: Application Loads
 ```
-Browser opens automatically with Q-IDE loaded!
+Browser opens automatically with Top Dog loaded!
 Ready to use! 🎉
 ```
 
 ---
 
-## 🎯 ACCESSING Q-IDE
+## 🎯 ACCESSING Top Dog
 
 After launch, you can access:
 
 | What | Where | Purpose |
 |------|-------|---------|
-| **Main App** | http://127.0.0.1:1431 | Use Q-IDE |
+| **Main App** | http://127.0.0.1:1431 | Use Top Dog |
 | **API** | http://127.0.0.1:8000 | Backend endpoints |
 | **Docs** | http://127.0.0.1:8000/docs | Interactive API documentation |
 
@@ -169,12 +169,12 @@ After launch, you can access:
 
 ### Two Server Windows
 ```
-Window 1: "Q-IDE Backend"
+Window 1: "Top Dog Backend"
 ├── Running: Python FastAPI server
 ├── Port: 8000
 └── Status: Serving API requests
 
-Window 2: "Q-IDE Frontend"
+Window 2: "Top Dog Frontend"
 ├── Running: Node.js Vite dev server
 ├── Port: 1431
 └── Status: Serving React app
@@ -183,8 +183,8 @@ Window 2: "Q-IDE Frontend"
 ### Keep These Windows Open!
 ✅ Minimize them if you prefer  
 ✅ Move them out of the way  
-⚠️ DO NOT close them - Q-IDE stops if you do  
-✅ Keep them running while using Q-IDE  
+⚠️ DO NOT close them - Top Dog stops if you do  
+✅ Keep them running while using Top Dog  
 
 ---
 
@@ -194,7 +194,7 @@ Window 2: "Q-IDE Frontend"
 
 **"Nothing happens when I click"**
 ```
-Make sure you clicked Q-IDE.bat (not a folder)
+Make sure you clicked Top Dog.bat (not a folder)
 Try double-clicking it again
 Check that file isn't corrupted
 ```
@@ -208,7 +208,7 @@ Check "Add Python to PATH" during install
 
 **"Port already in use"**
 ```
-Q-IDE.bat will try to clean up old processes
+Top Dog.bat will try to clean up old processes
 If still stuck, restart your computer
 Or run: taskkill /F /IM python.exe
 ```
@@ -234,7 +234,7 @@ Check backend logs: backend\logs\app.log
 Before launching, verify:
 
 - [ ] You're in: `c:\Quellum-topdog-ide\`
-- [ ] You can see: Q-IDE.bat
+- [ ] You can see: Top Dog.bat
 - [ ] Python installed: `python --version` works
 - [ ] Node.js installed: `node --version` works
 - [ ] Ports available: 8000 and 1431 not in use
@@ -246,15 +246,15 @@ All good? ✅ Ready to launch!
 ## 🎓 COMMON QUESTIONS
 
 **Q: Do I need to install anything?**  
-A: No! Q-IDE.bat handles everything. Just double-click!
+A: No! Top Dog.bat handles everything. Just double-click!
 
-**Q: Where does Q-IDE run?**  
+**Q: Where does Top Dog run?**  
 A: Locally on your computer. Backend on localhost:8000, Frontend on localhost:1431
 
 **Q: Can I close the server windows?**  
-A: Not while using Q-IDE. They run the application. You can minimize them.
+A: Not while using Top Dog. They run the application. You can minimize them.
 
-**Q: How do I stop Q-IDE?**  
+**Q: How do I stop Top Dog?**  
 A: Close the backend and frontend windows. Or close your browser tab.
 
 **Q: Can I run multiple instances?**  
@@ -302,12 +302,12 @@ A: Run `.\DIAGNOSE.ps1` to check your system setup.
 
 **Fastest** (After initial setup)
 ```
-Double-click: Q-IDE Topdog (desktop shortcut)
+Double-click: Top Dog Topdog (desktop shortcut)
 ```
 
 **Simplest** (No extra steps)
 ```
-Double-click: Q-IDE.bat
+Double-click: Top Dog.bat
 ```
 
 **Most Guided** (With options)
@@ -329,9 +329,9 @@ For more detailed information:
 
 ---
 
-## 🎉 ENJOY Q-IDE!
+## 🎉 ENJOY Top Dog!
 
-You're all set to use Q-IDE professionally!
+You're all set to use Top Dog professionally!
 
 Just pick a launch method and start building! 🚀
 

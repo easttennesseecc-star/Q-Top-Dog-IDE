@@ -8,9 +8,9 @@
 **What We Built:**
 A clear, intuitive **Auth Tab** in LLM Setup where you can:
 - ✅ Enter API keys for any LLM provider (Google, OpenAI, Anthropic, etc.)
-- ✅ Q-IDE stores them locally on your computer
-- ✅ Q-IDE uses them to call LLM services on your behalf
-- ✅ You authenticate with the LLM services, NOT with Q-IDE
+- ✅ Top Dog stores them locally on your computer
+- ✅ Top Dog uses them to call LLM services on your behalf
+- ✅ You authenticate with the LLM services, NOT with Top Dog
 - ✅ Complete in 2-5 minutes per provider
 
 ---
@@ -101,7 +101,7 @@ NEW:
 - ✅ All endpoints already working
 - ✅ `/llm_config/api_key` - saves/checks keys
 - ✅ `/llm_config/role_assignment` - assigns roles
-- ✅ Local storage at `~/.q-ide/llm_credentials.json`
+- ✅ Local storage at `~/.Top Dog/llm_credentials.json`
 
 ---
 
@@ -139,7 +139,7 @@ After: All (Google, OpenAI, Anthropic, GitHub, Groq, Ollama, etc.)
 
 ```
 ┌─────────────────────────────────────────────────────────┐
-│                    START: Q-IDE Open                    │
+│                    START: Top Dog Open                    │
 └────────────────────────┬────────────────────────────────┘
                          ↓
 ┌─────────────────────────────────────────────────────────┐
@@ -179,7 +179,7 @@ After: All (Google, OpenAI, Anthropic, GitHub, Groq, Ollama, etc.)
 └────────────────────────┬────────────────────────────────┘
                          ↓
 ┌─────────────────────────────────────────────────────────┐
-│     Return to Q-IDE                                   │
+│     Return to Top Dog                                   │
 │     Paste key in input field (Ctrl+V)                │
 │     Click "Save" button                              │
 └────────────────────────┬────────────────────────────────┘
@@ -215,12 +215,12 @@ After: All (Google, OpenAI, Anthropic, GitHub, Groq, Ollama, etc.)
 ### How Your Credentials Are Protected
 
 ```
-You → API Key → Q-IDE (Local Storage)
+You → API Key → Top Dog (Local Storage)
                  ↓
-                ~/.q-ide/llm_credentials.json
+                ~/.Top Dog/llm_credentials.json
                 (Encrypted, Your Computer Only)
                  ↓
-              Q-IDE Backend
+              Top Dog Backend
                  ↓
          Uses key to call Google/OpenAI/etc
                  ↓
@@ -230,7 +230,7 @@ You → API Key → Q-IDE (Local Storage)
 
 KEY POINTS:
 ✅ Your key stays on your computer
-✅ Never sent to Q-IDE servers
+✅ Never sent to Top Dog servers
 ✅ Only sent to LLM service (Google, OpenAI, etc.)
 ✅ You control when it's deleted
 ✅ Treated with same security as passwords
@@ -315,7 +315,7 @@ Do you want...?
 3. Then set up your LLM
 
 ### Option C: Just Do It
-1. Open Q-IDE
+1. Open Top Dog
 2. Go to LLM Setup → Auth tab
 3. Click a provider, follow the instructions on screen
 4. Done!
@@ -324,11 +324,11 @@ Do you want...?
 
 ## 📞 Common Questions
 
-**Q: Do I need a Q-IDE account?**
+**Q: Do I need a Top Dog account?**
 A: No! You only authenticate with LLM services (Google, OpenAI, etc.)
 
 **Q: Are my API keys safe?**
-A: Yes! They're stored locally on your computer, never sent to Q-IDE servers.
+A: Yes! They're stored locally on your computer, never sent to Top Dog servers.
 
 **Q: Can I have multiple LLMs?**
 A: Yes! Add credentials for multiple providers, assign each to different roles.
@@ -337,10 +337,10 @@ A: Yes! Add credentials for multiple providers, assign each to different roles.
 A: Yes! Click "Clear" and add a different one anytime.
 
 **Q: How much does this cost?**
-A: Q-IDE is free. You only pay the LLM services (Google free tier, or OpenAI for GPT-4).
+A: Top Dog is free. You only pay the LLM services (Google free tier, or OpenAI for GPT-4).
 
 **Q: What if I lose my API key?**
-A: Go to provider's dashboard, revoke old key, create new one, paste in Q-IDE.
+A: Go to provider's dashboard, revoke old key, create new one, paste in Top Dog.
 
 ---
 
@@ -378,7 +378,7 @@ A: Go to provider's dashboard, revoke old key, create new one, paste in Q-IDE.
 1. ✅ Clear way to enter LLM credentials (API keys)
 2. ✅ Support for all major LLM providers
 3. ✅ Local secure storage of credentials
-4. ✅ Q-IDE uses your credentials to call LLM services
+4. ✅ Top Dog uses your credentials to call LLM services
 5. ✅ Comprehensive documentation
 6. ✅ No account creation required
 7. ✅ Complete control over your credentials
@@ -393,7 +393,7 @@ A: Go to provider's dashboard, revoke old key, create new one, paste in Q-IDE.
 7. ✅ Use phone mic integration when ready
 
 ### Ready to Start?
-👉 Open Q-IDE → LLM Setup → Auth tab
+👉 Open Top Dog → LLM Setup → Auth tab
 
 ---
 
@@ -401,4 +401,4 @@ A: Go to provider's dashboard, revoke old key, create new one, paste in Q-IDE.
 
 All files are ready, documentation is complete, and you're set to authenticate with your favorite LLM services.
 
-Start with `QUICK_ADD_LLM_CREDENTIALS.md` or dive right in by opening Q-IDE!
+Start with `QUICK_ADD_LLM_CREDENTIALS.md` or dive right in by opening Top Dog!

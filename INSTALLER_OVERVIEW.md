@@ -1,8 +1,8 @@
-# ✨ Q-IDE OLLAMA INSTALLER - EVERYTHING YOU NEED
+# ✨ Top Dog OLLAMA INSTALLER - EVERYTHING YOU NEED
 
 ## 🎯 What You Have
 
-Two files ready to go in your Q-IDE folder:
+Two files ready to go in your Top Dog folder:
 
 ### **File 1: INSTALL_OLLAMA_AUTO.bat** ⭐ **← START HERE**
 - Windows batch launcher
@@ -21,7 +21,7 @@ Two files ready to go in your Q-IDE folder:
 ## 🚀 How to Install (3 Steps)
 
 ### **Step 1: Find the Launcher**
-Look in your Q-IDE folder for:
+Look in your Top Dog folder for:
 ```
 📄 INSTALL_OLLAMA_AUTO.bat
 ```
@@ -106,11 +106,11 @@ STEP 5: STARTING OLLAMA SERVICE
 
 ### **Phase 7: Next Steps** (30 seconds)
 ```
-STEP 6: NEXT STEPS FOR Q-IDE
+STEP 6: NEXT STEPS FOR Top Dog
 [OK] Ollama is installed and ready!
 
 What to do now:
-1. REFRESH Q-IDE IN YOUR BROWSER
+1. REFRESH Top Dog IN YOUR BROWSER
 2. OPTIONAL: ADD GOOGLE GEMINI FOR BACKUP
 ```
 
@@ -143,10 +143,10 @@ Summary:
  ✓ Ollama downloaded and installed
  ✓ llama2 model cached locally
  ✓ Ollama service running
- ✓ Q-IDE can now auto-detect it
+ ✓ Top Dog can now auto-detect it
 
 Next steps:
- 1. Go back to Q-IDE
+ 1. Go back to Top Dog
  2. Press F5 to refresh (important!)
  3. Go to "LLM Pool Management" tab
  4. Should see green box: "Auto-Selected Best Options"
@@ -155,8 +155,8 @@ Next steps:
  7. Done!
 ```
 
-### **In Q-IDE Browser:**
-1. Go back to your Q-IDE tab
+### **In Top Dog Browser:**
+1. Go back to your Top Dog tab
 2. Press **F5** to refresh
 3. Wait 3-5 seconds
 4. Look for green box: **"Auto-Selected Best Options"**
@@ -232,11 +232,11 @@ Step 7: Show completion summary
 ### ❌ "It says Ollama is not in PATH"
 **Solution:** Restart your computer. The installer adds it to PATH but Windows needs restart to see it
 
-### ❌ "Q-IDE doesn't detect Ollama after refresh"
+### ❌ "Top Dog doesn't detect Ollama after refresh"
 **Solution:** Try in this order:
 1. Press F5 again to refresh
 2. Wait 10 seconds, refresh again
-3. Close browser tab completely, reopen Q-IDE
+3. Close browser tab completely, reopen Top Dog
 4. Restart computer
 5. Check Ollama is running: Open PowerShell, type `ollama list`
 
@@ -259,7 +259,7 @@ Google's API for Claude-level AI quality
 3. Sign in with your Google account
 4. Click "Create API Key" (it's blue)
 5. Copy the key it shows
-6. Go to Q-IDE → **Providers** tab → **Google**
+6. Go to Top Dog → **Providers** tab → **Google**
 7. Paste the key → **Save**
 8. Done! Now you have both Ollama and Google
 
@@ -292,7 +292,7 @@ For more information:
 3. Wait ~20 minutes
 4. Done!
 
-**To use in Q-IDE:**
+**To use in Top Dog:**
 1. Refresh browser (F5)
 2. Go to LLM Pool Management
 3. Select Ollama
@@ -312,7 +312,7 @@ Questions? Check the reference guides above. 99% of issues are fixed by restarti
 
 ## Next Phase (After This Works)
 
-Once Ollama is installed and Q-IDE detects it, we'll move to:
+Once Ollama is installed and Top Dog detects it, we'll move to:
 - ✅ **Collaboration features** (pair programming, live editing)
 - ✅ **Real-time code review**
 - ✅ **Multi-user presence** in editor

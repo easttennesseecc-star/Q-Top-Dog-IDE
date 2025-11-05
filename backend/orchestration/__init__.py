@@ -1,9 +1,12 @@
-# Orchestration module for AI workflow automation
+"""Orchestration package init.
+
+Expose core workflow state machine symbols without importing services to
+avoid circular import during package initialization.
+"""
+
 from .workflow_state_machine import WorkflowState, WorkflowStateTransition
-from backend.services.orchestration_service import OrchestrationService
 
 __all__ = [
     "WorkflowState",
     "WorkflowStateTransition",
-    "OrchestrationService",
 ]

@@ -1,4 +1,4 @@
-# 🚀 Q-IDE v0.1.0 - Windows Deployment Ready
+# 🚀 Top Dog v0.1.0 - Windows Deployment Ready
 ## One-Click Install & Launch
 
 ---
@@ -98,14 +98,14 @@ Start-Process $msi.FullName
 
 ### Step 3: Launch Anytime
 ```
-Windows Start Menu → "Q-IDE" → Click
+Windows Start Menu → "Top Dog" → Click
 ```
 
 Or from PowerShell:
 ```powershell
-start q-ide:
+start Top Dog:
 # Or find the app:
-explorer "C:\Users\$env:USERNAME\AppData\Local\Programs\Q-IDE"
+explorer "C:\Users\$env:USERNAME\AppData\Local\Programs\Top Dog"
 ```
 
 ---
@@ -132,7 +132,7 @@ explorer "C:\Users\$env:USERNAME\AppData\Local\Programs\Q-IDE"
 - 🤖 LLM integration ready
 
 ✅ **Data Storage**
-- All data stored locally: `C:\Users\YourName\AppData\Local\quellum\q-ide\`
+- All data stored locally: `C:\Users\YourName\AppData\Local\quellum\Top Dog\`
 - No cloud sync needed
 - Export backups anytime
 
@@ -144,7 +144,7 @@ explorer "C:\Users\$env:USERNAME\AppData\Local\Programs\Q-IDE"
 ```
 1. Build: .\BUILD_WINDOWS.ps1 -Release
 2. Install: Double-click MSI
-3. Launch: Click Start Menu → Q-IDE
+3. Launch: Click Start Menu → Top Dog
 4. Done! ✅
 ```
 
@@ -156,7 +156,7 @@ Copy-Item "frontend/src-tauri/target/release/bundle/msi/*.msi" "\\fileserver\ins
 # Then on each PC:
 # 1. Download from \\fileserver\installers\
 # 2. Double-click to install
-# 3. Q-IDE launches after install
+# 3. Top Dog launches after install
 ```
 
 ### For Network Deployment
@@ -195,13 +195,13 @@ After installing, verify everything works:
 
 ```powershell
 # Check if installed
-Get-WmiObject Win32_Product | Where-Object {$_.Name -like "*Q-IDE*"}
+Get-WmiObject Win32_Product | Where-Object {$_.Name -like "*Top Dog*"}
 
 # Check shortcuts created
-Test-Path "$env:ProgramData\Microsoft\Windows\Start Menu\Programs\Q-IDE*"
+Test-Path "$env:ProgramData\Microsoft\Windows\Start Menu\Programs\Top Dog*"
 
 # Launch app
-& "C:\Users\$env:USERNAME\AppData\Local\Programs\Q-IDE\Q-IDE.exe"
+& "C:\Users\$env:USERNAME\AppData\Local\Programs\Top Dog\Top Dog.exe"
 ```
 
 ---
@@ -250,19 +250,19 @@ git push origin v0.1.0
 # GitHub Actions auto-creates release, upload MSI
 
 # Option B: Direct download
-# Upload to web server: https://downloads.q-ide.com/Q-IDE_0.1.0_x64.msi
+# Upload to web server: https://downloads.Top Dog.com/Q-IDE_0.1.0_x64.msi
 ```
 
 ### Step 2: Share with Users
 ```
 Email/Social Media Template:
 
-🚀 Q-IDE v0.1.0 is Now Available!
+🚀 Top Dog v0.1.0 is Now Available!
 
 Download & Install (1 minute):
-1. Download: https://github.com/quellum/q-ide/releases
+1. Download: https://github.com/quellum/Top Dog/releases
 2. Double-click Q-IDE_0.1.0_x64_en-US.msi
-3. Follow installer → Q-IDE launches automatically!
+3. Follow installer → Top Dog launches automatically!
 
 Features:
 ✅ Background customization
@@ -308,7 +308,7 @@ Download Now: [link]
 
 ## ✨ You're Done!
 
-**Q-IDE v0.1.0 is production-ready and deployable!**
+**Top Dog v0.1.0 is production-ready and deployable!**
 
 ### What You Have:
 ✅ One-click Windows installer (MSI format)
@@ -334,13 +334,13 @@ Download Now: [link]
 | **Build Issues** | `WINDOWS_BUILD_GUIDE.md` |
 | **Feature Docs** | GitHub Wiki |
 | **Report Bug** | GitHub Issues |
-| **Email Support** | support@q-ide.com |
+| **Email Support** | support@Top Dog.com |
 
 ---
 
 ## 🎉 Congratulations!
 
-Your Q-IDE application is now:
+Your Top Dog application is now:
 - ✅ Production-ready
 - ✅ Windows installer built
 - ✅ One-click installable

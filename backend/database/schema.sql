@@ -183,6 +183,59 @@ CREATE TABLE audit_log (
 );
 
 -- ============================================
+-- 11. USER NOTES TABLE (Persistent user context & explanations)
+-- ============================================
+CREATE TABLE user_notes (
+    id VARCHAR(36) PRIMARY KEY,
+    user_id VARCHAR(36) NOT NULL,
+    workspace_id VARCHAR(255) NOT NULL,
+    note_type VARCHAR(50) NOT NULL,
+    title VARCHAR(200) NOT NULL,
+    content TEXT NOT NULL,
+    tags JSONB DEFAULT '[]',
+    metadata JSONB DEFAULT '{}',
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
+    INDEX idx_user_workspace (user_id, workspace_id),
+    INDEX idx_note_type (note_type),
+    INDEX idx_created_at (created_at),
+    INDEX idx_tags ((tags->>'$'))
+);
+
+-- ============================================
+-- 12. BUILD MANIFESTS TABLE (QR code concept for project rules)
+-- ============================================
+CREATE TABLE build_manifests (
+    id VARCHAR(36) PRIMARY KEY,
+    user_id VARCHAR(36) NOT NULL,
+    workspace_id VARCHAR(255) NOT NULL,
+    project_name VARCHAR(255) NOT NULL,
+    version VARCHAR(50) NOT NULL,
+    qr_hash VARCHAR(64) NOT NULL,
+    languages JSONB DEFAULT '[]',
+    frameworks JSONB DEFAULT '[]',
+    dependencies JSONB DEFAULT '{}',
+    rules JSONB DEFAULT '[]',
+    directory_structure JSONB DEFAULT '{}',
+    required_files JSONB DEFAULT '[]',
+    ignored_patterns JSONB DEFAULT '[]',
+    build_commands JSONB DEFAULT '[]',
+    test_commands JSONB DEFAULT '[]',
+    deploy_commands JSONB DEFAULT '[]',
+    naming_conventions JSONB DEFAULT '{}',
+    code_style_config JSONB DEFAULT '{}',
+    custom_metadata JSONB DEFAULT '{}',
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
+    INDEX idx_user_workspace (user_id, workspace_id),
+    INDEX idx_qr_hash (qr_hash),
+    INDEX idx_project_name (project_name),
+    INDEX idx_created_at (created_at)
+);
+
+-- ============================================
 -- INDEXES FOR PERFORMANCE
 -- ============================================
 

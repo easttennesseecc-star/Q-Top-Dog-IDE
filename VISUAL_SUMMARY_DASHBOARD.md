@@ -10,7 +10,7 @@
 
 ```
 ┌─────────────────────────────────────────────────────┐
-│  Q-IDE GAME ENGINE INTEGRATION - OCTOBER 29, 2025   │
+│  Top Dog GAME ENGINE INTEGRATION - OCTOBER 29, 2025   │
 ├─────────────────────────────────────────────────────┤
 │                                                     │
 │  📈 Delivery Metrics                               │
@@ -390,7 +390,7 @@ ANNUAL REVENUE (Year 2):  $840k (with growth)
 ## 🏆 COMPETITIVE COMPARISON
 
 ```
-BEFORE (Without Q-IDE Multi-Engine)
+BEFORE (Without Top Dog Multi-Engine)
 ═════════════════════════════════════════
 Developer Workflow:
   Tool 1: Construct 3 Editor
@@ -408,10 +408,10 @@ Problems:
   ❌ Learning curve: 40+ hours
   ❌ High friction = Low adoption
 
-AFTER (With Q-IDE Multi-Engine)
+AFTER (With Top Dog Multi-Engine)
 ═════════════════════════════════════════
 Developer Workflow:
-  Tool 1: Q-IDE (unified)
+  Tool 1: Top Dog (unified)
   - Construct 3 support
   - Godot support
   - Unity support

@@ -341,7 +341,7 @@ TOTAL: 1.5 hours
 **Question**: "What exactly do I need to code?"  
 → Read: `AI_AGENT_MARKETPLACE_IMPLEMENTATION_CHECKLIST.md` (90 min)
 
-**Question**: "How does this connect to the rest of Q-IDE?"  
+**Question**: "How does this connect to the rest of Top Dog?"  
 → Read: `AI_AGENT_MARKETPLACE_INTEGRATION_GUIDE.md` (60 min)
 
 **Question**: "What's the 90-day plan?"  
@@ -412,7 +412,7 @@ After reading all documents, you should be able to answer:
 - [ ] What's my specific role?
 - [ ] What code will I write?
 - [ ] How do I know I'm done?
-- [ ] How does it connect to the rest of Q-IDE?
+- [ ] How does it connect to the rest of Top Dog?
 - [ ] What's the revenue opportunity?
 
 If you can answer all 10 questions, you're ready! 🚀

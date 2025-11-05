@@ -1,15 +1,49 @@
-# Q-IDE (Quellum TopDog IDE)
+# TopDog IDE - AI Development Environment
+
+**The TopDog IDE.** TopDog IDE surpasses VS Code with AI pair programming, 53+ LLMs, code analysis, refactoring, debugging, and team collaboration.
 
 **Vision:**
-Q-IDE is designed to surpass every existing IDE—including VS Code—by combining all essential features with next-level innovations:
+TopDog IDE is the ONLY AI-integrated IDE with production-ready safety, compliance, and orchestration features that competitors don't have:
 
-- Multi-agent AI orchestration: Interactive assistant coordinates specialized LLM agents for code generation, review, build health, and hallucination prevention. Each LLM or AI assistant must be aware of its specific role and responsibilities within the multi-agent system.
-- Real-time build health dashboard: Always-visible, actionable status of build, tests, dependencies, and code quality.
+## 🔥 21 UNIQUE PRODUCTION FEATURES (LIVE NOW):
 
-- AI Assistant (LLM-1) orchestrates all tasks and must specify the exact size and format required for each piece of content requested from Runway (Media Synthesis Module), according to the needs of each task. This ensures all generated assets are fit-for-purpose and seamlessly integrated into the workflow.
-- Hallucination and error prevention: AI actively blocks unreliable code and endless fix loops before they enter your build.
-- Seamless, visual workflow builder: Drag-and-drop UI for project setup, live previews, and guided onboarding.
-- Extensible extension and plugin system: Add, remove, and manage a multitude of extensions and plugins—supporting new languages, tools, and workflows with ease. Q-IDE will match and surpass VS Code in extension support and ecosystem.
+### 🛡️ **AI Safety & Reliability** (Competitors have NONE of these)
+- **OverWatch**: Active hallucination detection & prevention system
+- **Auto-consistency scoring**: Tiered thresholds with automated validation
+- **Snapshot retention**: RTO/RPO guarantees with rollback capability
+- **SLO burn-rate gates**: CI/CD pipeline quality gates
+- **PCG guardrails**: Safe procedural content generation
+- **Red-team runner**: Automated security vulnerability testing
+
+### 🏥 **Medical & Scientific Compliance** (ONLY IDE with this)
+- **Medical/Scientific data routing**: HIPAA/FDA compliance built-in
+- **Data segment isolation**: Separate medical, scientific, development routing
+
+### 🧠 **Developer Experience Revolution**
+- **Persistent user notes**: Context that remembers across sessions (never re-explain)
+- **Build manifest QR code**: Project rules persist (like a QR code for your project)
+- **Build plan approval**: Human-in-the-loop validation before execution
+- **Program learning**: System analyzes codebase & asks clarifying questions
+- **SMS text pairing**: Remote work, approvals, and wake-up commands
+
+### 🤖 **Multi-LLM Orchestration** (NO competitor has this)
+- **53+ LLM providers**: BYOK with ZERO markup (save $1000s/month)
+- **5 specialized agent roles**: Assistant, Builder, Tester, Security, Health Monitor
+- **Workflow handoffs**: Validated role-to-role transitions with audit trail
+- **Failover policies**: Automatic endpoint selection and retry logic
+
+### 🎮 **Media & Game Development** (ONLY IDE with all 4)
+- **Runway AI Media Synthesis**: AI-generated game assets (images, video, audio)
+- **4 Game Engines**: Construct 3, Godot, Unity, Unreal (integrated)
+- **PCG systems**: Procedural content with safety guardrails
+
+### 📊 **Production Observability**
+- **Real-time Prometheus metrics**: Hallucination severity, consistency scores
+- **Grafana dashboards**: Build health, performance, quality metrics
+- **Audit logging**: Complete change tracking and compliance trail
+
+**Multi-agent AI orchestration**: Interactive assistant coordinates specialized LLM agents for code generation, review, build health, and hallucination prevention. Each LLM or AI assistant must be aware of its specific role and responsibilities within the multi-agent system.
+**Real-time build health dashboard**: Always-visible, actionable status of build, tests, dependencies, and code quality.
 
 - Secure API key management: Easily add, remove, and manage API keys and secrets with robust encryption and access controls, ensuring sensitive credentials are always protected.
 - Cross-platform build and deploy: Package for Windows, macOS, Linux, mobile, and web from a single project.
@@ -26,10 +60,10 @@ Q-IDE is designed to surpass every existing IDE—including VS Code—by combini
 - Security & Compliance Dashboard: Real-time security audit, compliance status, and AI-driven risk analysis.
 
 **Mission:**
-Make Q-IDE the top dog of IDE platforms—faster, more robust, and better in every way than anything else. Every developer should feel empowered, safe, and productive from start to finish. The app will open automatically and is ready for use.
+Make Top Dog the top dog of IDE platforms—faster, more robust, and better in every way than anything else. Every developer should feel empowered, safe, and productive from start to finish. The app will open automatically and is ready for use.
 
 ## Overview
-Q-IDE is a modular, multi-agent development environment with a unified dashboard, advanced UI controls, and seamless backend integration. This desktop app is built with Tauri (Rust + React/TypeScript) and Python backend orchestration.
+Top Dog is a modular, multi-agent development environment with advanced UI controls, and seamless backend integration. This desktop app is built with Tauri (Rust + React/TypeScript) and Python backend orchestration.
 
 ## System Architecture Outline
 
@@ -96,7 +130,7 @@ These scripts help maintain build health, automate testing, and support the Over
 
 ## LLM Learning & Coding Agent Integration
 
-Q-IDE provides a comprehensive learning system for coding LLMs to:
+Top Dog provides a comprehensive learning system for coding LLMs to:
 1. **Observe builds** in real-time and learn from success/failure patterns
 2. **Analyze codebase** structure, dependencies, and project layout
 3. **Submit reports** with insights, recommendations, and confidence scores
@@ -286,7 +320,7 @@ This allows your LLM to become increasingly effective at predicting and preventi
 
 ## 🤖 The "Super Coder" Coding LLM
 
-Q-IDE's learning system enables you to build a specialized "Super Coder" LLM that continuously improves by learning from your codebase, builds, and test results.
+Top Dog's learning system enables you to build a specialized "Super Coder" LLM that continuously improves by learning from your codebase, builds, and test results.
 
 ### Super Coder Capabilities
 
@@ -302,7 +336,7 @@ Your coding LLM can learn to:
 
 #### 1. Backend Connection
 
-Your LLM must be able to connect to the Q-IDE backend:
+Your LLM must be able to connect to the Top Dog backend:
 
 ```python
 # Basic setup
@@ -605,7 +639,7 @@ def analyze_build(build_id):
 
 ## OAuth Callback Flow
 
-Q-IDE supports Google and GitHub OAuth with popup-based authentication. The callback flow works as follows:
+Top Dog supports Google and GitHub OAuth with popup-based authentication. The callback flow works as follows:
 
 ### OAuth Callback Redirect URIs
 

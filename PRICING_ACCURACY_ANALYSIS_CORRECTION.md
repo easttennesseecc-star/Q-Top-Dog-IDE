@@ -10,7 +10,7 @@
 
 ### PRO TIER: $20/month
 
-| Competitor | Price | Q-IDE | Comparison |
+| Competitor | Price | Top Dog | Comparison |
 |------------|-------|-------|-----------|
 | GitHub Copilot | $20/month | $20/month | ✅ **SAME PRICE** (not cheaper) |
 | Cursor | $20/month | $20/month | ✅ **SAME PRICE** (not cheaper) |
@@ -29,7 +29,7 @@
 
 ### TEAMS TIER: $40/seat/month
 
-| Competitor | Price | Q-IDE | Comparison |
+| Competitor | Price | Top Dog | Comparison |
 |------------|-------|-------|-----------|
 | GitHub Teams | $21+/seat | $40/seat | ❌ 90% MORE EXPENSIVE (not cheaper!) |
 | GitLab Bronze | $29/seat | $40/seat | ❌ 38% MORE EXPENSIVE |
@@ -37,8 +37,8 @@
 | JetBrains Suite | $30/month | $40/month | ❌ 33% MORE EXPENSIVE |
 
 **Wait - Problem Found**: 
-- vs GitHub Teams ($21): Q-IDE is **MORE EXPENSIVE**, not cheaper
-- vs GitLab Silver ($99): Q-IDE is 60% cheaper, but GitLab Silver has different features
+- vs GitHub Teams ($21): Top Dog is **MORE EXPENSIVE**, not cheaper
+- vs GitLab Silver ($99): Top Dog is 60% cheaper, but GitLab Silver has different features
 - **This positioning is wrong**
 
 **Accurate positioning**: "Better value than GitLab Silver, similar to GitHub Teams with more features"
@@ -47,7 +47,7 @@
 
 ### ENTERPRISE TIER: $250-300/seat/month
 
-| Competitor | Price | Q-IDE | Comparison |
+| Competitor | Price | Top Dog | Comparison |
 |------------|-------|-------|-----------|
 | GitHub Enterprise | $231/seat | $250-300/seat | ❌ 8-30% MORE EXPENSIVE |
 | GitLab Ultimate | $299/seat | $250-300/seat | ✅ SAME PRICE |
@@ -68,7 +68,7 @@ Looking at your documentation, this claim seems to come from these scenarios:
 ### Scenario 1: Copilot + Codespaces Bundle
 ```
 GitHub Copilot ($20) + GitHub Codespaces ($36) = $56
-Q-IDE Pro ($20) = -64% cheaper
+Top Dog Pro ($20) = -64% cheaper
 ✅ This is TRUE for this specific bundle
 ❌ But misleading - most people don't use both
 ```
@@ -83,15 +83,15 @@ Best-of-breed stack:
 - RunwayML: $20
 - Total: $73
 
-Q-IDE Teams: $40
+Top Dog Teams: $40
 Savings: 45% cheaper
 ✅ More accurate than 50-70%
 ```
 
-### Scenario 3: GameMaker vs Q-IDE Game Tier
+### Scenario 3: GameMaker vs Top Dog Game Tier
 ```
 GameMaker: $100-150/month
-Q-IDE with game engines: $50-100/month
+Top Dog with game engines: $50-100/month
 Savings: 33-50% cheaper
 ❌ Not 50-70%
 ```
@@ -116,7 +116,7 @@ Savings: 33-50% cheaper
 **Say**: "Market-competitive pricing with 5-10x more value"
 
 ```
-Q-IDE Pro: $20/month
+Top Dog Pro: $20/month
 ├─ Full IDE (VS Code feature-complete)
 ├─ 53 LLM providers (compete with $60+ stack)
 ├─ Game engine integration (unique, worth $30-50)
@@ -127,7 +127,7 @@ Competitor comparison:
 ├─ GitHub Copilot ($20): Just AI code completion
 ├─ Cursor ($20): IDE + basic AI (no games, no media)
 ├─ Windsurf ($25): IDE + AI + some features (no games)
-└─ Q-IDE ($20): Everything + games + media + 53 LLMs
+└─ Top Dog ($20): Everything + games + media + 53 LLMs
 
 Result: SAME PRICE, but 10x more value
 ```
@@ -159,13 +159,13 @@ Result: SAME PRICE, but 10x more value
 The "50-70% cheaper" claim is:
 
 1. **Factually inaccurate** - You're often the same price or more expensive
-2. **Strategically damaging** - It positions Q-IDE as a budget option
+2. **Strategically damaging** - It positions Top Dog as a budget option
 3. **Margin-killing** - It trains the market to expect discounts
 4. **Competitive vulnerability** - Competitors can simply undercut by 10%
 
 **Example**: If you're "50-70% cheaper," competitors think they can price at:
 - Your price × 1.15 = Still "expensive option"
-- Your price × 0.85 = "Even cheaper than Q-IDE"
+- Your price × 0.85 = "Even cheaper than Top Dog"
 
 ---
 
@@ -174,24 +174,24 @@ The "50-70% cheaper" claim is:
 ### 1. Change the Narrative
 
 **OLD** (from current docs):
-> "Q-IDE is 50-70% cheaper than competitors"
+> "Top Dog is 50-70% cheaper than competitors"
 
 **NEW** (accurate positioning):
 > "Market-competitive pricing with better features than any single competitor"
 
 **Even better**:
-> "Q-IDE Pro ($20): Same as GitHub Copilot, but with 53 LLM options + game engines + media synthesis"
+> "Top Dog Pro ($20): Same as GitHub Copilot, but with 53 LLM options + game engines + media synthesis"
 
 ### 2. Use Value-Based Messaging
 
 Instead of price discounting, talk about value:
 
 ```
-✅ GOOD: "Q-IDE Pro ($20/month) includes everything you'd pay $80+ to assemble separately"
-❌ BAD: "Q-IDE Pro ($20/month) is 75% cheaper than competitors"
+✅ GOOD: "Top Dog Pro ($20/month) includes everything you'd pay $80+ to assemble separately"
+❌ BAD: "Top Dog Pro ($20/month) is 75% cheaper than competitors"
 
-✅ GOOD: "Teams save $X/year by consolidating 5-10 tools into Q-IDE"
-❌ BAD: "Teams save 60% with Q-IDE"
+✅ GOOD: "Teams save $X/year by consolidating 5-10 tools into Top Dog"
+❌ BAD: "Teams save 60% with Top Dog"
 
 ✅ GOOD: "Same price as GitHub Copilot, with 10x more features"
 ❌ BAD: "Cheaper than GitHub Copilot"
@@ -292,7 +292,7 @@ With 75% margin: $1.3M additional profit
 **This positioning is**:
 - ✅ Factually accurate
 - ✅ Protects margins
-- ✅ Positions Q-IDE as premium, not budget
+- ✅ Positions Top Dog as premium, not budget
 - ✅ Harder for competitors to undercut
 - ✅ Allows price increases as you grow
 - ✅ Better for investor positioning

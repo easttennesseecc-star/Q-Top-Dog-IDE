@@ -18,7 +18,7 @@
 - [ ] Go to: https://github.com/settings/developers
 - [ ] Click: "New OAuth App" (or "Developer settings" → "OAuth Apps")
 - [ ] Fill in Application Details:
-  - [ ] Application name: `Q-IDE`
+  - [ ] Application name: `Top Dog`
   - [ ] Homepage URL: `http://localhost:3000`
   - [ ] Application description: `Local IDE with AI integration`
   - [ ] Authorization callback URL: `http://localhost:3000/auth/oauth/callback`
@@ -36,7 +36,7 @@
 - [ ] Create new project:
   - [ ] Click: "Select a project" (top left)
   - [ ] Click: "New project"
-  - [ ] Name: `Q-IDE`
+  - [ ] Name: `Top Dog`
   - [ ] Click: "Create"
 - [ ] Enable APIs:
   - [ ] Search for: "Google+ API"
@@ -173,7 +173,7 @@ curl http://localhost:8000/auth/health
 - [ ] Click: "Get API Key"
 - [ ] Create new project (or use existing)
 - [ ] Copy API key
-- [ ] In Q-IDE UI:
+- [ ] In Top Dog UI:
   - [ ] Find: "Gemini (Free)" card
   - [ ] Click: "🔑 Add API Key (Free)"
   - [ ] Paste: Your Gemini API key
@@ -187,7 +187,7 @@ curl http://localhost:8000/auth/health
 - [ ] Create new API key
 - [ ] (You'll get $5 free credits to start)
 - [ ] Copy key
-- [ ] In Q-IDE UI:
+- [ ] In Top Dog UI:
   - [ ] Find: "ChatGPT / GPT-4" card
   - [ ] Click: "🔑 Add API Key"
   - [ ] Paste: Your OpenAI API key
@@ -203,7 +203,7 @@ curl http://localhost:8000/auth/health
   - [ ] `write:packages`
   - [ ] `read:packages`
 - [ ] Copy token (shown only once!)
-- [ ] In Q-IDE UI:
+- [ ] In Top Dog UI:
   - [ ] Find: "⚡ Copilot" card
   - [ ] Click: "🔑 Add API Key"
   - [ ] Paste: Your Copilot token

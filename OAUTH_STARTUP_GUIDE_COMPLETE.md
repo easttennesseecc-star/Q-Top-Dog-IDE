@@ -1,8 +1,8 @@
 # 🚀 OAuth Professional Sign-In - Complete Implementation & Startup Guide
 
-**Q-IDE - Seamless OAuth Authentication System**
+**Top Dog - Seamless OAuth Authentication System**
 
-Welcome! This guide walks you through the complete OAuth implementation for professional LLM sign-in in Q-IDE.
+Welcome! This guide walks you through the complete OAuth implementation for professional LLM sign-in in Top Dog.
 
 ---
 
@@ -22,7 +22,7 @@ Welcome! This guide walks you through the complete OAuth implementation for prof
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
-│                      Q-IDE Frontend                          │
+│                      Top Dog Frontend                          │
 │                                                               │
 │  ┌──────────────────────────────────────────────────────┐    │
 │  │ LLMConfigPanel (Auth Tab)                            │    │
@@ -54,7 +54,7 @@ Welcome! This guide walks you through the complete OAuth implementation for prof
                    │ API Calls: /llm_auth/*
                    │
 ┌──────────────────▼─────────────────────────────────────────┐
-│                  Q-IDE Backend                               │
+│                  Top Dog Backend                               │
 │                                                               │
 │  ┌──────────────────────────────────────────────────────┐   │
 │  │ OAuth Routes (/llm_auth/*)                           │   │
@@ -79,7 +79,7 @@ Welcome! This guide walks you through the complete OAuth implementation for prof
 │  └──────────────────────────────────────────────────────┘   │
 │                      ↓                                        │
 │  ┌──────────────────────────────────────────────────────┐   │
-│  │ Token Storage (~/.q-ide/llm_credentials.json)       │   │
+│  │ Token Storage (~/.Top Dog/llm_credentials.json)       │   │
 │  │                                                      │   │
 │  │ Stores OAuth tokens securely with:                  │   │
 │  │  • Expiration time tracking                         │   │
@@ -177,7 +177,7 @@ python main.py
 
 **Expected Output**:
 ```
-Q-IDE Backend starting up...
+Top Dog Backend starting up...
 [INFO] Uvicorn running on http://127.0.0.1:8000
 [INFO] OAuth handler initialized
 [INFO] Mounted static files
@@ -277,7 +277,7 @@ Local: http://localhost:1431
 
 ### Phase 4: Testing OAuth Flow (15 min)
 
-#### 4.1 Access Q-IDE
+#### 4.1 Access Top Dog
 
 Open browser: `http://localhost:1431`
 
@@ -292,7 +292,7 @@ Open browser: `http://localhost:1431`
 1. Click "Sign in with Google" button
 2. New popup opens (OAuth consent screen)
 3. Sign in with your Google account
-4. Grant Q-IDE permission
+4. Grant Top Dog permission
 5. See success notification
 6. Popup closes automatically
 7. Auth tab shows "✓ Connected" for Google
@@ -303,10 +303,10 @@ Verify token saved locally:
 
 ```bash
 # On Windows PowerShell
-cat $env:USERPROFILE\.q-ide\llm_credentials.json
+cat $env:USERPROFILE\.Top Dog\llm_credentials.json
 
 # On Mac/Linux
-cat ~/.q-ide/llm_credentials.json
+cat ~/.Top Dog/llm_credentials.json
 
 # Output should show:
 # {
@@ -352,7 +352,7 @@ export QIDE_GOOGLE_CLIENT_ID=prod_google_id
 export QIDE_GOOGLE_CLIENT_SECRET=prod_google_secret
 export QIDE_GITHUB_CLIENT_ID=prod_github_id
 export QIDE_GITHUB_CLIENT_SECRET=prod_github_secret
-export QIDE_BACKEND_URL=https://api.q-ide.com
+export QIDE_BACKEND_URL=https://api.Top Dog.com
 ```
 
 Or in deployment platform:
@@ -363,10 +363,10 @@ Or in deployment platform:
 
 #### 5.2 Update OAuth Provider URIs
 
-For production domain (e.g., `q-ide.com`):
+For production domain (e.g., `Top Dog.com`):
 
 ```
-Redirect URI: https://api.q-ide.com/llm_auth/callback?provider=google
+Redirect URI: https://api.Top Dog.com/llm_auth/callback?provider=google
 ```
 
 #### 5.3 Update CORS Settings
@@ -375,8 +375,8 @@ In `backend/main.py`:
 
 ```python
 cors_origins = [
-    "https://q-ide.com",
-    "https://www.q-ide.com",
+    "https://Top Dog.com",
+    "https://www.Top Dog.com",
 ]
 ```
 
@@ -399,8 +399,8 @@ cd frontend
 npm run build
 
 # Backend deployment (docker example)
-docker build -t q-ide-backend .
-docker run -e QIDE_GOOGLE_CLIENT_ID=... q-ide-backend
+docker build -t Top Dog-backend .
+docker run -e QIDE_GOOGLE_CLIENT_ID=... Top Dog-backend
 ```
 
 ---
@@ -426,7 +426,7 @@ docker run -e QIDE_GOOGLE_CLIENT_ID=... q-ide-backend
 - [ ] Success notification shown
 - [ ] Popup closes automatically
 - [ ] Auth status shows "✓ Connected"
-- [ ] Token stored in ~/.q-ide/llm_credentials.json
+- [ ] Token stored in ~/.Top Dog/llm_credentials.json
 
 ### Additional Tests
 - [ ] Sign out button works
@@ -476,19 +476,19 @@ export QIDE_GOOGLE_CLIENT_ID=xxx
 
 ### Issue: Token Not Saving
 
-**Cause**: Permission issue in ~/.q-ide/
+**Cause**: Permission issue in ~/.Top Dog/
 
 **Solution**:
 ```bash
 # Create directory if missing
-mkdir -p ~/.q-ide
+mkdir -p ~/.Top Dog
 
 # Fix permissions
-chmod 0700 ~/.q-ide
-chmod 0600 ~/.q-ide/llm_credentials.json 2>/dev/null || true
+chmod 0700 ~/.Top Dog
+chmod 0600 ~/.Top Dog/llm_credentials.json 2>/dev/null || true
 
 # Verify
-ls -la ~/.q-ide/
+ls -la ~/.Top Dog/
 ```
 
 ### Issue: CORS Error
@@ -560,7 +560,7 @@ cors_origins = [
 ✅ No sensitive data in localStorage
 
 ### Storage Security
-✅ Tokens saved to `~/.q-ide/llm_credentials.json`
+✅ Tokens saved to `~/.Top Dog/llm_credentials.json`
 ✅ File permissions: 0o600 (read/write owner only)
 ✅ No tokens in browser localStorage
 ✅ No tokens in session storage
@@ -605,7 +605,7 @@ When fully implemented, you'll see:
 
 **Backend OAuth Issues**: Check `backend/llm_oauth_auth.py` and logs
 **Frontend OAuth Issues**: Check browser console (F12)
-**Token Storage Issues**: Check `~/.q-ide/` permissions
+**Token Storage Issues**: Check `~/.Top Dog/` permissions
 **Provider Setup Issues**: Review OAUTH_CLIENT_CONFIGURATION.md
 
 ---
@@ -613,4 +613,4 @@ When fully implemented, you'll see:
 **Status**: ✅ Production Ready
 **Phase**: 13 - OAuth Authentication System
 **Last Updated**: Today
-**Maintainer**: Q-IDE Development Team
+**Maintainer**: Top Dog Development Team

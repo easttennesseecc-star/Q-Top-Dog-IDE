@@ -1,0 +1,38 @@
+name: Python Quality
+
+on:
+  pull_request:
+  push:
+    branches: [ main, develop ]
+
+jobs:
+  lint-typecheck:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install tools
+        run: |
+          python -m pip install --upgrade pip
+          pip install ruff mypy
+      - name: Ruff (focused)
+        run: |
+          ruff --version
+          ruff check backend/services/ai_orchestration.py backend/services/orchestration_service.py backend/services/semantic_analysis.py
+      - name: Mypy (focused services)
+        run: |
+          mypy --version
+          mypy backend/services/ai_orchestration.py backend/services/semantic_analysis.py backend/services/orchestration_service.py --config-file pyproject.toml
+
+      - name: Mypy (broader, non-blocking)
+        continue-on-error: true
+        run: |
+          echo "Running broader mypy coverage (non-blocking)"
+          mypy \
+            backend/routes \
+            backend/models \
+            tools \
+            --config-file pyproject.toml || true

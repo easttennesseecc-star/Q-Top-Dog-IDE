@@ -1,0 +1,112 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: grafana-dashboard-topdog-slo
+  namespace: q-ide
+  labels:
+    grafana_dashboard: "1"
+    app.kubernetes.io/name: grafana
+    app.kubernetes.io/part-of: topdog-ide
+data:
+  topdog-slo.json: |
+    {
+      "annotations": {"list": []},
+      "editable": true,
+      "fiscalYearStartMonth": 1,
+      "graphTooltip": 0,
+      "iteration": 1,
+      "links": [],
+      "panels": [
+        {
+          "type": "timeseries",
+          "title": "TTFT p90 (s)",
+          "gridPos": {"h": 8, "w": 12, "x": 0, "y": 0},
+          "description": "Time-to-first-token p90. Lower is better.",
+          "fieldConfig": {
+            "defaults": {
+              "unit": "s",
+              "decimals": 2,
+              "color": {"mode": "palette-classic"}
+            },
+            "overrides": []
+          },
+          "targets": [
+            {
+              "expr": "histogram_quantile(0.9, sum by (le) (rate(llm_ttft_seconds_bucket[5m])))",
+              "legendFormat": "p90"
+            }
+          ]
+        },
+        {
+          "type": "timeseries",
+          "title": "Response latency p90 (s)",
+          "gridPos": {"h": 8, "w": 12, "x": 12, "y": 0},
+          "description": "End-to-end streaming latency p90. Lower is better.",
+          "fieldConfig": {
+            "defaults": {
+              "unit": "s",
+              "decimals": 2,
+              "color": {"mode": "palette-classic"}
+            },
+            "overrides": []
+          },
+          "targets": [
+            {
+              "expr": "histogram_quantile(0.9, sum by (le) (rate(llm_response_seconds_bucket[5m])))",
+              "legendFormat": "p90"
+            }
+          ]
+        },
+        {
+          "type": "timeseries",
+          "title": "Overwatch flagged ratio",
+          "gridPos": {"h": 8, "w": 12, "x": 0, "y": 8},
+          "description": "Overwatch flags / chat requests. Aim near 0.",
+          "fieldConfig": {
+            "defaults": {
+              "unit": "percentunit",
+              "decimals": 3,
+              "color": {"mode": "palette-classic"}
+            },
+            "overrides": []
+          },
+          "targets": [
+            {
+              "expr": "sum(rate(overwatch_flagged_total[5m])) / sum(rate(http_requests_total{endpoint=\"/api/chat\"}[5m]))",
+              "legendFormat": "ratio"
+            }
+          ]
+        },
+        {
+          "type": "timeseries",
+          "title": "Cost per request (USD)",
+          "gridPos": {"h": 8, "w": 12, "x": 12, "y": 8},
+          "description": "Average USD per request over a 5m window.",
+          "fieldConfig": {
+            "defaults": {
+              "unit": "currencyUSD",
+              "decimals": 4,
+              "color": {"mode": "palette-classic"}
+            },
+            "overrides": []
+          },
+          "targets": [
+            {
+              "expr": "(sum(rate(llm_cost_usd_total[5m])))/(sum(rate(http_requests_total{endpoint=\"/api/chat\"}[5m])))",
+              "legendFormat": "avg"
+            }
+          ]
+        }
+      ],
+      "refresh": "30s",
+      "schemaVersion": 38,
+      "style": "dark",
+      "tags": ["topdog", "slo", "red"],
+      "templating": {"list": []},
+      "time": {"from": "now-6h", "to": "now"},
+      "timezone": "",
+      "title": "TopDog IDE SLOs",
+      "uid": "topdog-slo",
+      "version": 1
+    }

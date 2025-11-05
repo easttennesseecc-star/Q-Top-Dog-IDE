@@ -1,6 +1,6 @@
 # 📚 LLM Learning Endpoint Guide
 
-Your custom Coding LLM can now connect to Q-IDE's learning endpoints to analyze builds, extract patterns, and continuously improve. This enables a continuous feedback loop where every build contributes to smarter LLM performance.
+Your custom Coding LLM can now connect to Top Dog's learning endpoints to analyze builds, extract patterns, and continuously improve. This enables a continuous feedback loop where every build contributes to smarter LLM performance.
 
 ## Overview
 
@@ -329,7 +329,7 @@ This will demonstrate the full learning workflow with example reports.
 - Check port 8000 is accessible
 
 **No builds available?**
-- Run builds in Q-IDE first
+- Run builds in Top Dog first
 - Builds are stored in `.build_history.json`
 
 **Reports not being saved?**

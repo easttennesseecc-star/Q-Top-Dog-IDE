@@ -115,7 +115,7 @@ NEW UI ELEMENTS:
 Q Assistant uses the **"coding"** role:
 - This role can be assigned any LLM
 - Supports both cloud and local models
-- Assignment stored in `~/.q-ide/llm_roles.json`
+- Assignment stored in `~/.Top Dog/llm_roles.json`
 
 Example `llm_roles.json`:
 ```json

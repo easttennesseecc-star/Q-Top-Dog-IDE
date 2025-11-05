@@ -1,4 +1,4 @@
-# Updated Q-IDE Tier Feature Comparison
+# Updated Top Dog Tier Feature Comparison
 
 ## THE PROBLEM YOU IDENTIFIED
 

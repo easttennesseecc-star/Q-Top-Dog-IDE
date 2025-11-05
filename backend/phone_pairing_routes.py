@@ -6,7 +6,7 @@ Handles QR code generation, device pairing, and microphone streaming
 from fastapi import APIRouter, HTTPException, WebSocket, BackgroundTasks
 from pydantic import BaseModel
 from typing import List
-from phone_pairing import phone_pairing_manager
+from backend.phone_pairing import phone_pairing_manager
 import asyncio
 import json
 

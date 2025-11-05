@@ -2,8 +2,13 @@
 Stripe Payment Processing Service
 Handles customer creation, subscriptions, billing portal, and webhook events
 """
-
-import stripe
+try:
+    import stripe
+    from stripe.error import StripeError as _StripeError
+except Exception:
+    stripe = None
+    class _StripeError(Exception):
+        pass
 import os
 import logging
 from datetime import datetime
@@ -13,7 +18,8 @@ from enum import Enum
 logger = logging.getLogger("q-ide-topdog")
 
 # Initialize Stripe with API key
-stripe.api_key = os.getenv("STRIPE_SECRET_KEY")
+if stripe is not None:
+    stripe.api_key = os.getenv("STRIPE_SECRET_KEY")
 
 
 class SubscriptionTier(str, Enum):
@@ -46,6 +52,8 @@ class StripeService:
         Returns:
             Stripe customer ID (cus_...)
         """
+        if stripe is None:
+            raise RuntimeError("Stripe SDK not available")
         try:
             customer = stripe.Customer.create(
                 email=email,
@@ -58,7 +66,7 @@ class StripeService:
             )
             logger.info(f"Created Stripe customer {customer.id} for user {user_id}")
             return customer.id
-        except stripe.error.StripeError as e:
+        except _StripeError as e:
             logger.error(f"Failed to create Stripe customer: {e}")
             raise
 
@@ -81,6 +89,8 @@ class StripeService:
         Returns:
             Subscription object dict
         """
+        if stripe is None:
+            raise RuntimeError("Stripe SDK not available")
         try:
             subscription = stripe.Subscription.create(
                 customer=customer_id,
@@ -100,7 +110,7 @@ class StripeService:
                 "trial_end": subscription.trial_end,
                 "cancel_at": subscription.cancel_at
             }
-        except stripe.error.StripeError as e:
+        except _StripeError as e:
             logger.error(f"Failed to create subscription: {e}")
             raise
 
@@ -116,6 +126,8 @@ class StripeService:
         Returns:
             Canceled subscription object dict
         """
+        if stripe is None:
+            raise RuntimeError("Stripe SDK not available")
         try:
             if at_period_end:
                 subscription = stripe.Subscription.modify(
@@ -132,7 +144,7 @@ class StripeService:
                 "canceled_at": subscription.canceled_at,
                 "cancel_at": subscription.cancel_at
             }
-        except stripe.error.StripeError as e:
+        except _StripeError as e:
             logger.error(f"Failed to cancel subscription: {e}")
             raise
 
@@ -147,6 +159,8 @@ class StripeService:
         Returns:
             Subscription object dict
         """
+        if stripe is None:
+            raise RuntimeError("Stripe SDK not available")
         try:
             subscription = stripe.Subscription.retrieve(subscription_id)
             return {
@@ -167,7 +181,7 @@ class StripeService:
                     for item in subscription.items.data
                 ]
             }
-        except stripe.error.StripeError as e:
+        except _StripeError as e:
             logger.error(f"Failed to get subscription: {e}")
             raise
 
@@ -182,6 +196,8 @@ class StripeService:
         Returns:
             Customer object dict
         """
+        if stripe is None:
+            raise RuntimeError("Stripe SDK not available")
         try:
             customer = stripe.Customer.retrieve(customer_id)
             return {
@@ -190,7 +206,7 @@ class StripeService:
                 "name": customer.name,
                 "metadata": customer.metadata or {}
             }
-        except stripe.error.StripeError as e:
+        except _StripeError as e:
             logger.error(f"Failed to get customer: {e}")
             raise
 
@@ -206,6 +222,8 @@ class StripeService:
         Returns:
             Billing portal URL
         """
+        if stripe is None:
+            raise RuntimeError("Stripe SDK not available")
         try:
             session = stripe.billing_portal.Session.create(
                 customer=customer_id,
@@ -213,7 +231,7 @@ class StripeService:
             )
             logger.info(f"Created billing portal session for customer {customer_id}")
             return session.url
-        except stripe.error.StripeError as e:
+        except _StripeError as e:
             logger.error(f"Failed to create billing portal session: {e}")
             raise
 
@@ -238,6 +256,8 @@ class StripeService:
         Returns:
             Checkout session ID
         """
+        if stripe is None:
+            raise RuntimeError("Stripe SDK not available")
         try:
             session = stripe.checkout.Session.create(
                 customer=customer_id,
@@ -257,7 +277,7 @@ class StripeService:
             )
             logger.info(f"Created checkout session {session.id}")
             return session.id
-        except stripe.error.StripeError as e:
+        except _StripeError as e:
             logger.error(f"Failed to create checkout session: {e}")
             raise
 
@@ -272,6 +292,8 @@ class StripeService:
         Returns:
             Invoice object dict
         """
+        if stripe is None:
+            raise RuntimeError("Stripe SDK not available")
         try:
             invoice = stripe.Invoice.retrieve(invoice_id)
             return {
@@ -291,7 +313,7 @@ class StripeService:
                 "hosted_invoice_url": invoice.hosted_invoice_url,
                 "invoice_pdf": invoice.invoice_pdf,
             }
-        except stripe.error.StripeError as e:
+        except _StripeError as e:
             logger.error(f"Failed to get invoice: {e}")
             raise
 
@@ -307,6 +329,8 @@ class StripeService:
         Returns:
             List of invoice objects
         """
+        if stripe is None:
+            raise RuntimeError("Stripe SDK not available")
         try:
             invoices = stripe.Invoice.list(
                 customer=customer_id,
@@ -324,7 +348,7 @@ class StripeService:
                 }
                 for inv in invoices.data
             ]
-        except stripe.error.StripeError as e:
+        except _StripeError as e:
             logger.error(f"Failed to list invoices: {e}")
             raise
 
@@ -428,6 +452,8 @@ class StripeService:
             ValueError: If payload is invalid
             stripe.error.SignatureVerificationError: If signature doesn't match
         """
+        if stripe is None:
+            raise RuntimeError("Stripe SDK not available")
         try:
             event = stripe.Webhook.construct_event(
                 payload,
@@ -438,7 +464,7 @@ class StripeService:
         except ValueError as e:
             logger.error(f"Invalid webhook payload: {e}")
             raise
-        except stripe.error.SignatureVerificationError as e:
+        except _StripeError as e:
             logger.error(f"Invalid webhook signature: {e}")
             raise
 

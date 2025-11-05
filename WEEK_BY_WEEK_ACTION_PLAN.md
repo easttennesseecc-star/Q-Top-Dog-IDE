@@ -1,6 +1,6 @@
 # 📋 4-Week Production Launch: Action Plan
 
-**Goal**: Take Q-IDE from 80% to 100% production-ready  
+**Goal**: Take Top Dog from 80% to 100% production-ready  
 **Timeline**: 4 weeks (or 2 weeks accelerated)  
 **Team Size**: 1-2 people  
 **Status**: Ready to execute
@@ -73,8 +73,8 @@ Step 1: Create Docker Hub account
 └─ Create repositories
 
 Step 2: Tag and push images
-├─ docker tag q-ide-backend:latest yourusername/q-ide-backend
-├─ docker tag q-ide-frontend:latest yourusername/q-ide-frontend
+├─ docker tag Top Dog-backend:latest yourusername/Top Dog-backend
+├─ docker tag Top Dog-frontend:latest yourusername/Top Dog-frontend
 └─ docker push (both)
 
 Step 3: Verify on Docker Hub
@@ -101,8 +101,8 @@ TASK: Deploy to Heroku
 
 Step 1: Create Heroku app
 ├─ Create account on heroku.com
-├─ Create app: q-ide-backend
-├─ Create app: q-ide-frontend
+├─ Create app: Top Dog-backend
+├─ Create app: Top Dog-frontend
 └─ Set environment variables
 
 Step 2: Configure database
@@ -215,7 +215,7 @@ DOCUMENTATION
 ```
 
 **Status After Week 1**: ✅ **LIVE IN PRODUCTION**
-- Real users can access Q-IDE
+- Real users can access Top Dog
 - Database persists data
 - Can announce beta launch
 
@@ -544,7 +544,7 @@ Step 2: Set up uptime monitoring
 
 Step 3: Create public status page
 ├─ Use Statuspage.io (free tier)
-├─ List Q-IDE and components
+├─ List Top Dog and components
 ├─ Integrate with UptimeRobot
 ├─ Share public link
 └─ Communicate to users
@@ -952,7 +952,7 @@ Only deploy backend, use CLI for frontend testing
 **Deployment Issues**:
 - Heroku docs: https://devcenter.heroku.com
 - Docker docs: https://docs.docker.com
-- Stack Overflow: Tag with heroku + q-ide
+- Stack Overflow: Tag with heroku + Top Dog
 
 **Security Issues**:
 - OWASP Top 10: https://owasp.org/Top10/

@@ -1,0 +1,91 @@
+---
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  name: q-ide-slo-burnrate
+  namespace: q-ide
+  labels:
+    prometheus: k8s
+    role: alert-rules
+spec:
+  groups:
+  - name: slo-burnrate.chat
+    interval: 30s
+    rules:
+    # Example SLO: 99% success over 30d; alert on 2h burn > 14.4x and 1h > 6x
+    - alert: SLOErrorBudgetBurn
+      expr: |
+        (
+          sum(rate(http_requests_total{job="backend",app="backend",status!~"2.."}[5m]))
+          /
+          sum(rate(http_requests_total{job="backend",app="backend"}[5m]))
+        )
+        > 0.01 * 14.4
+      for: 2h
+      labels:
+        severity: page
+      annotations:
+        summary: "Backend high error budget burn (2h)"
+        description: "Error rate burning SLO too fast over 2h window."
+    - alert: SLOErrorBudgetBurn
+      expr: |
+        (
+          sum(rate(http_requests_total{job="backend",app="backend",status!~"2.."}[5m]))
+          /
+          sum(rate(http_requests_total{job="backend",app="backend"}[5m]))
+        )
+        > 0.01 * 6
+      for: 1h
+      labels:
+        severity: warn
+      annotations:
+        summary: "Backend error budget burn (1h)"
+        description: "Error rate elevated over 1h window."
+    # Overwatch-flagged error budget burn (target 99.9% pass rate over 7d)
+    - alert: OverwatchFlaggedBurnRateHigh
+      expr: |
+        (
+          sum(rate(overwatch_flagged_total{endpoint="/api/chat"}[5m]))
+          /
+          sum(rate(http_requests_total{endpoint="/api/chat"}[5m]))
+        ) > 0.001 * 14.4
+      for: 2h
+      labels:
+        severity: page
+      annotations:
+        summary: "Overwatch flagged burn rate high (2h)"
+        description: "Verification flags burning 99.9% SLO too fast over 2h window."
+    - alert: OverwatchFlaggedBurnRateHigh
+      expr: |
+        (
+          sum(rate(overwatch_flagged_total{endpoint="/api/chat"}[5m]))
+          /
+          sum(rate(http_requests_total{endpoint="/api/chat"}[5m]))
+        ) > 0.001 * 6
+      for: 1h
+      labels:
+        severity: warn
+      annotations:
+        summary: "Overwatch flagged burn rate elevated (1h)"
+        description: "Verification flags elevated over 1h window."
+  - name: cost-spend
+    interval: 1m
+    rules:
+    # Cost spend rate per minute across all models/providers
+    - alert: LLMCostSpendRateHigh
+      expr: sum(rate(llm_cost_usd_total[5m])) > 0.5
+      for: 10m
+      labels:
+        severity: warn
+      annotations:
+        summary: "LLM spend rate high (> $0.5/min)"
+        description: "Combined LLM cost spend rate exceeded threshold. Tune models or budgets. Adjust threshold in rule."
+    # Provider-specific spend rate
+    - alert: LLMCostSpendRateHighProvider
+      expr: sum by (provider) (rate(llm_cost_usd_total[5m])) > 0.3
+      for: 10m
+      labels:
+        severity: page
+      annotations:
+        summary: "LLM spend rate high for provider (> $0.3/min)"
+        description: "Provider-specific cost spend rate exceeded threshold. Identify costly model(s) and mitigate."

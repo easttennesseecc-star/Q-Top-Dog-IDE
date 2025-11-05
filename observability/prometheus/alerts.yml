@@ -1,0 +1,151 @@
+groups:
+- name: topdog-slo-gates
+  interval: 30s
+  rules:
+  - alert: ConsistencyLow
+    expr: avg_over_time(consistency_score{component="orchestrator"}[5m]) < 0.75
+    for: 10m
+    labels:
+      severity: warning
+      product: topdog
+    annotations:
+      summary: "Consistency SLI low (<0.75)"
+      description: "Average consistency over 5m below threshold. Investigate model drift or prompt changes."
+
+  - alert: HallucinationHigh
+    expr: max_over_time(hallucination_severity{component="orchestrator"}[5m]) > 0.6
+    for: 10m
+    labels:
+      severity: warning
+      product: topdog
+    annotations:
+      summary: "Hallucination severity high (>0.6)"
+      description: "Recent hallucination severity exceeded target; block risky prompts or tighten policies."
+
+  - alert: TCUExceedsBudget
+    expr: sum(increase(tcu_unreliability_cost_usd_total[15m])) > 25
+    for: 15m
+    labels:
+      severity: critical
+      product: topdog
+    annotations:
+      summary: "Total Cost of Unreliability exceeded budget"
+      description: "15m TCU window exceeded $25. Trigger canary rollback or tighten budgets."
+
+- name: topdog-slo-gates-tiered
+  interval: 30s
+  rules:
+  # Plan-based thresholds (if 'plan' label is exported)
+  - alert: ConsistencyLow_Starter
+    expr: avg_over_time(consistency_score{component="orchestrator", plan="Starter"}[5m]) < 0.70
+    for: 10m
+    labels:
+      severity: warning
+      product: topdog
+      plan: Starter
+    annotations:
+      summary: "Starter plan consistency low (<0.70)"
+      description: "Average consistency over 5m below Starter threshold. Investigate routing or prompts."
+
+  - alert: ConsistencyLow_Pro
+    expr: avg_over_time(consistency_score{component="orchestrator", plan="Pro"}[5m]) < 0.75
+    for: 10m
+    labels:
+      severity: warning
+      product: topdog
+      plan: Pro
+    annotations:
+      summary: "Pro plan consistency low (<0.75)"
+      description: "Average consistency over 5m below Pro threshold."
+
+  - alert: ConsistencyLow_Enterprise
+    expr: avg_over_time(consistency_score{component="orchestrator", plan="Enterprise"}[5m]) < 0.80
+    for: 10m
+    labels:
+      severity: warning
+      product: topdog
+      plan: Enterprise
+    annotations:
+      summary: "Enterprise plan consistency low (<0.80)"
+      description: "Average consistency over 5m below Enterprise threshold."
+
+  - alert: HallucinationHigh_Starter
+    expr: max_over_time(hallucination_severity{component="orchestrator", plan="Starter"}[5m]) > 0.70
+    for: 10m
+    labels:
+      severity: warning
+      product: topdog
+      plan: Starter
+    annotations:
+      summary: "Starter plan hallucination high (>0.70)"
+      description: "Recent hallucination severity exceeded Starter target."
+
+  - alert: HallucinationHigh_Pro
+    expr: max_over_time(hallucination_severity{component="orchestrator", plan="Pro"}[5m]) > 0.60
+    for: 10m
+    labels:
+      severity: warning
+      product: topdog
+      plan: Pro
+    annotations:
+      summary: "Pro plan hallucination high (>0.60)"
+      description: "Recent hallucination severity exceeded Pro target."
+
+  - alert: HallucinationHigh_Enterprise
+    expr: max_over_time(hallucination_severity{component="orchestrator", plan="Enterprise"}[5m]) > 0.50
+    for: 10m
+    labels:
+      severity: warning
+      product: topdog
+      plan: Enterprise
+    annotations:
+      summary: "Enterprise plan hallucination high (>0.50)"
+      description: "Recent hallucination severity exceeded Enterprise target."
+
+- name: topdog-slo-gates-segments
+  interval: 30s
+  rules:
+  # Segment-specific thresholds (if 'data_segment' label is exported)
+  - alert: ConsistencyLow_Medical
+    expr: avg_over_time(consistency_score{component="orchestrator", data_segment="medical"}[5m]) < 0.80
+    for: 10m
+    labels:
+      severity: warning
+      product: topdog
+      data_segment: medical
+    annotations:
+      summary: "Medical segment consistency low (<0.80)"
+      description: "Medical workloads require higher consistency."
+
+  - alert: HallucinationHigh_Medical
+    expr: max_over_time(hallucination_severity{component="orchestrator", data_segment="medical"}[5m]) > 0.45
+    for: 10m
+    labels:
+      severity: warning
+      product: topdog
+      data_segment: medical
+    annotations:
+      summary: "Medical segment hallucination high (>0.45)"
+      description: "Tight hallucination threshold for medical workloads."
+
+  - alert: ConsistencyLow_Scientific
+    expr: avg_over_time(consistency_score{component="orchestrator", data_segment="scientific"}[5m]) < 0.78
+    for: 10m
+    labels:
+      severity: warning
+      product: topdog
+      data_segment: scientific
+    annotations:
+      summary: "Scientific segment consistency low (<0.78)"
+      description: "Raise model quality or adjust prompts."
+
+  - alert: HallucinationHigh_Scientific
+    expr: max_over_time(hallucination_severity{component="orchestrator", data_segment="scientific"}[5m]) > 0.55
+    for: 10m
+    labels:
+      severity: warning
+      product: topdog
+      data_segment: scientific
+    annotations:
+      summary: "Scientific segment hallucination high (>0.55)"
+      description: "Recent severity exceeded scientific target."

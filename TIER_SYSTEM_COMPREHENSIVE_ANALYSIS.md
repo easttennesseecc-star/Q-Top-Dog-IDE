@@ -1,4 +1,4 @@
-# Q-IDE TIER SYSTEM - COMPREHENSIVE ANALYSIS
+# Top Dog TIER SYSTEM - COMPREHENSIVE ANALYSIS
 
 ## 🔍 THE SITUATION (Right Now)
 
@@ -148,7 +148,7 @@ Look at the documentation:
 ```
 TIER NAME              | OFFICIAL STORY
 ───────────────────────┼──────────────────────────
-FREE                   | Try Q-IDE free for 7 days
+FREE                   | Try Top Dog free for 7 days
 PRO                    | Code execution enabled
 PRO-PLUS               | Custom LLMs & integrations
 TEAMS                  | Team collaboration

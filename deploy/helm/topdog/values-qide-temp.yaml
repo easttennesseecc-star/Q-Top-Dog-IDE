@@ -1,0 +1,73 @@
+# Production config - www.topdog-ide.com ONLY (primary domain)
+
+replicaCount: 2
+
+image:
+  repository: registry.digitalocean.com/topdog-registry/topdog
+  tag: v1.0.8
+  pullPolicy: IfNotPresent
+
+imagePullSecrets:
+  - name: docr-secret
+
+service:
+  type: ClusterIP
+  port: 8000
+
+env:
+  MARKETPLACE_MODE: "directory"
+
+extraEnv:
+  - name: ENABLE_HOST_REDIRECT
+    value: "true"
+  - name: CANONICAL_HOST
+    value: "www.topdog-ide.com"
+  - name: CORS_ORIGINS
+    value: "https://topdog-ide.com,https://www.topdog-ide.com"
+  - name: SITEMAP_HOSTS
+    value: "www.topdog-ide.com"
+  - name: PRIMARY_DOMAIN
+    value: "www.topdog-ide.com"
+
+livenessProbe:
+  path: /health
+  initialDelaySeconds: 10
+  periodSeconds: 10
+
+readinessProbe:
+  path: /health
+  initialDelaySeconds: 5
+  periodSeconds: 10
+
+autoscaling:
+  enabled: true
+  minReplicas: 2
+  maxReplicas: 10
+  targetCPUUtilizationPercentage: 70
+  targetMemoryUtilizationPercentage: 80
+
+ingress:
+  enabled: true
+  className: "nginx"
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+    acme.cert-manager.io/http01-edit-in-place: "true"
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+  hosts:
+    - host: topdog-ide.com
+      paths:
+        - path: /
+          pathType: Prefix
+    - host: www.topdog-ide.com
+      paths:
+        - path: /
+          pathType: Prefix
+  tls:
+    - secretName: topdog-tls
+      hosts:
+        - topdog-ide.com
+        - www.topdog-ide.com
+
+extraEnvFrom:
+  - secretRef:
+      name: provider-api-keys

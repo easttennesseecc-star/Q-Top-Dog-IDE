@@ -1,4 +1,4 @@
-# 🏆 TOTAL DOMINANCE PLAN: Q-IDE Becomes THE IDE (No Competition)
+# 🏆 TOTAL DOMINANCE PLAN: Top Dog Becomes THE IDE (No Competition)
 
 **Mission**: Eliminate competition by being so superior that alternatives become irrelevant  
 **Timeline**: 6 months to full dominance (180 days)  
@@ -16,13 +16,13 @@
 
 ### Target Position (After Dominance Plan)
 - **Undisputed #1**: 5-point lead on nearest competitor
-- **Network Effects**: Developers switching TO Q-IDE daily
+- **Network Effects**: Developers switching TO Top Dog daily
 - **Moat**: So wide that competitors can't catch up for years
 - **Market Capture**: 25%+ of active IDE users (vs 5% today)
 
 ### How We Win
 1. **Dominant in Every Category**: Not just match, EXCEED on all axes
-2. **Network Effects**: Collaboration features make Q-IDE the only choice for teams
+2. **Network Effects**: Collaboration features make Top Dog the only choice for teams
 3. **Ecosystem**: Extensions + integrations that competitors can't replicate
 4. **Cost Leadership**: 10x cheaper while being 2x better
 5. **Speed**: 3-5x faster than cloud competitors, better than local IDEs
@@ -54,7 +54,7 @@ NEAREST COMPETITOR           VS Code    VS Code        -40 points
 ───────────────────────────────────────────────────────────────────────
 ```
 
-**Result**: Q-IDE doesn't compete—Q-IDE DOMINATES every dimension.
+**Result**: Top Dog doesn't compete—Top Dog DOMINATES every dimension.
 
 ---
 
@@ -93,7 +93,7 @@ NEAREST COMPETITOR           VS Code    VS Code        -40 points
 - AI-suggested refactorings based on code smells
 
 **Competitive Advantage**:
-- **50+ Operations**: VS Code max 30, Q-IDE 50
+- **50+ Operations**: VS Code max 30, Top Dog 50
 - **AI Suggestions**: Auto-detects code smells
 - **Works Cross-Language**: TypeScript, Python, Go, Rust, etc.
 - **Safety**: AI validates changes before applying
@@ -110,7 +110,7 @@ NEAREST COMPETITOR           VS Code    VS Code        -40 points
 #### Week 3: Debugging Superiority
 **What We're Doing**:
 - Full DAP support (VS Code: Full ✅, but cloud?)
-- Browser-first debugging (only Q-IDE can do)
+- Browser-first debugging (only Top Dog can do)
 - iPhone/iPad debugging (unique)
 - AI-assisted debugging (find bug automatically)
 
@@ -131,7 +131,7 @@ NEAREST COMPETITOR           VS Code    VS Code        -40 points
 ---
 
 ### Sprint 2: Collaboration Network Effects (Week 3-4)
-**Goal**: Make Q-IDE the ONLY choice for teams
+**Goal**: Make Top Dog the ONLY choice for teams
 
 #### Week 3-4: Real-Time Collaboration + Presence
 **What We're Doing**:
@@ -214,7 +214,7 @@ NEAREST COMPETITOR           VS Code    VS Code        -40 points
 ## PHASE 2: BUILD MOATS (Months 3-4)
 
 ### Sprint 4: Extension Ecosystem (Week 7-10)
-**Goal**: Make Q-IDE extensible, create network effects
+**Goal**: Make Top Dog extensible, create network effects
 
 #### Week 7-8: Extension System
 **What We're Doing**:
@@ -225,7 +225,7 @@ NEAREST COMPETITOR           VS Code    VS Code        -40 points
 
 **Competitive Advantage**:
 - **VS Code API Compatible**: Extensions work on both
-- **Revenue Share**: Developers prefer Q-IDE
+- **Revenue Share**: Developers prefer Top Dog
 - **Easier Publishing**: One command vs GitHub review
 - **Better Monetization**: Free extensions + premium versions
 
@@ -233,9 +233,9 @@ NEAREST COMPETITOR           VS Code    VS Code        -40 points
 ```
 Extension Revenue Share:
 ├─ Free extensions: 100% to developer
-├─ Paid extensions: 85% to developer, 15% to Q-IDE
-├─ Team licenses: 75% to developer, 25% to Q-IDE
-└─ Enterprise add-ons: 70% to developer, 30% to Q-IDE
+├─ Paid extensions: 85% to developer, 15% to Top Dog
+├─ Team licenses: 75% to developer, 25% to Top Dog
+└─ Enterprise add-ons: 70% to developer, 30% to Top Dog
 ```
 
 **Deliverables**:
@@ -263,7 +263,7 @@ Extension Revenue Share:
 ---
 
 ### Sprint 5: Integration Ecosystem (Week 11-14)
-**Goal**: Make Q-IDE the hub for developer tools
+**Goal**: Make Top Dog the hub for developer tools
 
 #### Week 11-12: Native Integrations
 **What We're Doing**:
@@ -275,7 +275,7 @@ Extension Revenue Share:
 
 **Competitive Advantage**:
 - **First IDE** with payment collection built-in
-- **Unified Workflow**: Don't leave Q-IDE
+- **Unified Workflow**: Don't leave Top Dog
 - **Faster Development**: Everything in one place
 
 **Deliverables**:
@@ -297,14 +297,14 @@ Extension Revenue Share:
 **Competitive Advantage**:
 - **First IDE** with agent marketplace
 - **Customizable Workflow**: Your team's own agents
-- **Community Growth**: Developers build for Q-IDE
+- **Community Growth**: Developers build for Top Dog
 
 **Business Model**:
 ```
 Agent Revenue Share:
 ├─ Community agents: Creator keeps 100%
-├─ Premium agents: Creator 80%, Q-IDE 20%
-└─ Enterprise agents: Creator 70%, Q-IDE 30%
+├─ Premium agents: Creator 80%, Top Dog 20%
+└─ Enterprise agents: Creator 70%, Top Dog 30%
 ```
 
 **Deliverables**:
@@ -318,7 +318,7 @@ Agent Revenue Share:
 ## PHASE 3: LOCK-IN NETWORK EFFECTS (Months 5-6)
 
 ### Sprint 6: Team & Social Features (Week 15-18)
-**Goal**: Make Q-IDE irreplaceable for teams
+**Goal**: Make Top Dog irreplaceable for teams
 
 #### Week 15: Team Features
 **What We're Doing**:
@@ -369,7 +369,7 @@ Agent Revenue Share:
 **What We're Doing**:
 - Interactive tutorials (learn while coding)
 - Guided projects (from beginner to advanced)
-- Certifications (Q-IDE Developer, Q-IDE Expert)
+- Certifications (Top Dog Developer, Top Dog Expert)
 - Video walkthroughs of everything
 - AI tutor (Q Assistant helps you learn)
 
@@ -388,7 +388,7 @@ Agent Revenue Share:
 ---
 
 ### Sprint 7: Enterprise Lock-In (Week 19-22)
-**Goal**: Make Q-IDE enterprise-standard
+**Goal**: Make Top Dog enterprise-standard
 
 #### Week 19-20: Enterprise Features
 **What We're Doing**:
@@ -447,7 +447,7 @@ Agent Revenue Share:
 - Hook: Show code quality improvements (30% less bugs)
 
 **Segment 2: Small Teams (5-50 people)**
-- "Save $10,000+/year with Q-IDE Teams vs GitHub"
+- "Save $10,000+/year with Top Dog Teams vs GitHub"
 - Case study: Team of 10 switching from Codespaces
 - Messaging: "Collaboration built-in, no setup needed"
 - Hook: Free trial of Teams tier for 30 days
@@ -483,7 +483,7 @@ Value Prop: Each team member increases value for all
 Value Prop: More extensions → More developers → More extensions
 ├─ Day 1: 100 extensions (we port from VS Code)
 ├─ Month 1: 500 extensions (community ports)
-├─ Month 3: 2,000 extensions (new Q-IDE native)
+├─ Month 3: 2,000 extensions (new Top Dog native)
 ├─ Month 6: 5,000 extensions (ecosystem growth)
 └─ Result: Can't compete without extensions
 ```
@@ -563,25 +563,25 @@ GitHub Codespaces:
 ├─ Our Advantage: 90% cheaper + multi-LLM + better collab
 ├─ Their Advantage: Microsoft backing
 ├─ Win Condition: Cost + features
-└─ Predicted Outcome: Q-IDE wins small teams, Microsoft wins enterprise
+└─ Predicted Outcome: Top Dog wins small teams, Microsoft wins enterprise
 
 VS Code:
 ├─ Our Advantage: Cloud + collab + AI built-in
 ├─ Their Advantage: Local power + 2M extensions
-├─ Win Condition: Cloud-first developers choose Q-IDE
+├─ Win Condition: Cloud-first developers choose Top Dog
 └─ Predicted Outcome: Coexist, different use cases
 
 Replit:
 ├─ Our Advantage: Professional IDE + enterprise AI
 ├─ Their Advantage: Simplicity for beginners
 ├─ Win Condition: Market segmentation
-└─ Predicted Outcome: Q-IDE wins professionals, Replit keeps hobbyists
+└─ Predicted Outcome: Top Dog wins professionals, Replit keeps hobbyists
 
 Cursor:
 ├─ Our Advantage: Cloud + collab + team features
 ├─ Their Advantage: Local Claude AI
-├─ Win Condition: Teams prefer Q-IDE
-└─ Predicted Outcome: Q-IDE wins, Cursor niche (solo Claude fans)
+├─ Win Condition: Teams prefer Top Dog
+└─ Predicted Outcome: Top Dog wins, Cursor niche (solo Claude fans)
 ```
 
 ---
@@ -591,7 +591,7 @@ Cursor:
 ### Pricing Architecture (Dominate on Value)
 
 ```
-Q-IDE Pricing Tiers:
+Top Dog Pricing Tiers:
 
 Free Tier: $0/month (no limits) 🏆
 ├─ Full IDE
@@ -722,7 +722,7 @@ Criteria:
 ├─ 90% cheaper (competitors: 10x more expensive)
 └─ Works on iPad (competitors: Desktop only)
 
-Result: Why would someone use GitHub when Q-IDE is 5x better?
+Result: Why would someone use GitHub when Top Dog is 5x better?
 ```
 
 #### 2. **Build Network Effects Others Can't Replicate**
@@ -746,7 +746,7 @@ Moats:
 ├─ Open-source key components (goodwill)
 └─ Fair pricing (no surprises, no hourly billing)
 
-Result: Developers trust Q-IDE more than corporations
+Result: Developers trust Top Dog more than corporations
 ```
 
 ---
@@ -761,10 +761,10 @@ TODAY:
 VS Code     #1  🥇 (40% market)
 Copilot     #2  🥈 (AI layer, $10/mo)
 Codespaces  #3  🥉 ($0.18/hr)
-Q-IDE       #4  (10% market)
+Top Dog       #4  (10% market)
 
 AFTER DOMINANCE PLAN:
-Q-IDE       #1  🥇 (35% market, fastest growing)
+Top Dog       #1  🥇 (35% market, fastest growing)
 VS Code     #2  🥈 (30% market, slowing)
 Copilot     #3  🥉 (15% market, bundled with GitHub)
 Codespaces  #4  (10% market, expensive)
@@ -780,11 +780,11 @@ User Growth:
 └─ Paid conversion: $20M+ ARR
 
 Developer Perception:
-├─ "Q-IDE is how I code now"
+├─ "Top Dog is how I code now"
 ├─ "Why would I use VS Code online?"
 ├─ "Best IDE I've ever used"
 ├─ "Collaborative coding standard"
-└─ "My team all uses Q-IDE"
+└─ "My team all uses Top Dog"
 ```
 
 **Industry Impact**:
@@ -822,7 +822,7 @@ What Changes:
 - We support open VS Code extensions (they don't support ours)
 - We're not enemies, we're complementary
 
-**Win Condition**: Cloud-first developers choose Q-IDE
+**Win Condition**: Cloud-first developers choose Top Dog
 
 ---
 
@@ -897,7 +897,7 @@ What Changes:
 ## SUMMARY: THE DOMINANCE FORMULA
 
 ```
-Q-IDE Dominance = 
+Top Dog Dominance = 
   (Core IDE Excellence)         ✅ Match VS Code + exceed on speed
   × (Collaboration Network)     ✅ Build relationships, not just code
   × (Cost Leadership)           ✅ 90% cheaper than alternatives
@@ -923,4 +923,4 @@ Result: Not just competition, but market leadership.
 **Document Version**: 1.0 Strategic Plan  
 **Created**: October 29, 2025  
 **Target Completion**: April 2026 (6 months)  
-**Success Metric**: Q-IDE #1 IDE in market, $20M+ ARR
+**Success Metric**: Top Dog #1 IDE in market, $20M+ ARR

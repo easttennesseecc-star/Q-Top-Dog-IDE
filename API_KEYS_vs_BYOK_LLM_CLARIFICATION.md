@@ -1,8 +1,8 @@
-# Q-IDE Tier Features - CLARIFIED (API Keys vs BYOK LLM)
+# Top Dog Tier Features – CLARIFIED (API Keys vs BYOK LLM)
 
 ## 🔑 The Distinction
 
-### **Q-IDE API Keys** (for calling YOUR API)
+### **Top Dog API Keys** (for calling YOUR API)
 ```
 FREE:        1 key   (one integration point)
 PRO:         5 keys  (multiple projects)
@@ -11,18 +11,20 @@ TEAMS:       ∞ keys  (team members each get keys)
 ENTERPRISE:  ∞ keys  (unlimited integrations)
 ```
 
-### **BYOK LLM Keys** (users bring their own from OpenAI/Anthropic/etc)
+### **BYOK LLM Keys** (customers bring provider API keys: OpenAI/Anthropic/etc)
 ```
-FREE:        ❌ No custom LLM support
-PRO:         ❌ Only Q-IDE LLMs
-PRO-PLUS:    ✅ BYOK enabled (can use own API keys)
-TEAMS:       ✅ BYOK enabled (team admin manages keys)
-ENTERPRISE:  ✅ BYOK enabled (+ data residency, on-premise)
+FREE:        ✅ BYOK enabled (basic providers)
+PRO:         ✅ BYOK enabled
+PRO-PLUS:    ✅ BYOK enabled (multi-provider + policies)
+TEAMS:       ✅ BYOK enabled (team-wide key management)
+ENTERPRISE:  ✅ BYOK enabled (+ data residency, on‑prem options)
 ```
+
+Note: Q‑IDE does not ship a managed LLM by default. BYOK is the baseline for all tiers. For Enterprise, models are customer‑managed (BYOK and/or self‑hosted on the customer’s infrastructure). The platform does not operate models for Enterprise accounts.
 
 ---
 
-## 📊 Updated Feature Matrix (with BYOK clarification)
+## 📊 Updated Feature Matrix (BYOK enabled for all tiers)
 
 ### Core Execution
 | Feature | FREE | PRO | PRO+ | TEAMS | ENTERPRISE |
@@ -36,18 +38,18 @@ ENTERPRISE:  ✅ BYOK enabled (+ data residency, on-premise)
 ### Developer Tools & API Access
 | Feature | FREE | PRO | PRO+ | TEAMS | ENTERPRISE |
 |---------|------|-----|------|-------|------------|
-| **Q-IDE API Keys** | 1 | 5 | 10 | ∞ | ∞ |
+| **Top Dog API Keys** | 1 | 5 | 10 | ∞ | ∞ |
 | **Webhooks** | ❌ | ✅ | ✅ | ✅ | ✅ |
 | **Debug Logs Retention** | 7d | 30d | 60d | 90d | Forever |
 | **Version Control** | ❌ | ✅ | ✅ | ✅ | ✅ |
 
-### LLM Customization (BYOK)
+### LLM Customization (BYOK is default across all tiers)
 | Feature | FREE | PRO | PRO+ | TEAMS | ENTERPRISE |
 |---------|------|-----|------|-------|------------|
-| **Q-IDE LLMs Only** | ✅ | ✅ | ✅ | ✅ | ✅ |
-| **BYOK LLM Support** | ❌ | ❌ | ✅ | ✅ | ✅ |
-| **Supported Providers** | - | - | OpenAI, Anthropic, Cohere | All | All |
-| **Custom Integrations** | ❌ | ❌ | ✅ | ✅ | ✅ |
+| **Managed LLMs (platform keys)** | ❌ | ❌ | ❌ | ❌ | Optional add‑on |
+| **BYOK LLM Support** | ✅ | ✅ | ✅ | ✅ | ✅ |
+| **Supported Providers** | OpenAI (basic) | OpenAI, Anthropic | OpenAI, Anthropic, Cohere | All major | All + custom/privates |
+| **Custom Integrations** | ❌ | 🔶 Limited | ✅ | ✅ | ✅ |
 
 ### Collaboration
 | Feature | FREE | PRO | PRO+ | TEAMS | ENTERPRISE |
@@ -82,30 +84,33 @@ Add these columns to `membership_tiers` table:
 
 ```python
 # Existing (stays the same)
-api_keys_limit = 1  # Q-IDE API keys
+api_keys_limit = 1  # Top Dog API keys
 
-# NEW - Add to schema
-byok_llm_enabled = False       # Can user bring own LLM keys?
-byok_supported_providers = ""  # "openai,anthropic,cohere" etc
+# NEW / Clarified – BYOK is baseline across all tiers
+byok_llm_enabled = True             # All tiers support BYOK
+byok_supported_providers = "openai" # Per tier: expand list (e.g., "openai,anthropic,cohere")
+
+# Optional enterprise-only add-on for platform-managed keys
+platform_managed_llm_enabled = False
 
 # Example values per tier:
-# FREE:        api_keys_limit=1,  byok_llm_enabled=False
-# PRO:         api_keys_limit=5,  byok_llm_enabled=False
-# PRO-PLUS:    api_keys_limit=10, byok_llm_enabled=True, supported="openai,anthropic,cohere"
-# TEAMS-*:     api_keys_limit=-1, byok_llm_enabled=True, supported="openai,anthropic,cohere,custom"
-# ENTERPRISE:  api_keys_limit=-1, byok_llm_enabled=True, supported="*"
+# FREE:        api_keys_limit=1,  byok_llm_enabled=True,  byok_supported_providers="openai"
+# PRO:         api_keys_limit=5,  byok_llm_enabled=True,  byok_supported_providers="openai,anthropic"
+# PRO-PLUS:    api_keys_limit=10, byok_llm_enabled=True,  byok_supported_providers="openai,anthropic,cohere"
+# TEAMS-*:     api_keys_limit=-1, byok_llm_enabled=True,  byok_supported_providers="openai,anthropic,cohere,custom"
+# ENTERPRISE:  api_keys_limit=-1, byok_llm_enabled=True,  byok_supported_providers="*", platform_managed_llm_enabled=True
 ```
 
 ---
 
 ## 💾 Implementation Notes
 
-### For PRO-PLUS and above with BYOK:
+### BYOK (all tiers)
 
-1. **User adds their LLM API key** → Stored encrypted in database
-2. **We never send the key to our servers** → Forward directly to provider
-3. **Usage counts against THEIR account** → Not ours (they pay OpenAI directly)
-4. **We charge the Q-IDE subscription** → For access to our platform
+1. **User adds their provider API key(s)** → Stored encrypted or fetched on demand from a vault
+2. **We don’t log secrets** → Forward securely to the provider
+3. **Usage bills on the user’s provider account** → They pay OpenAI/Anthropic/etc directly
+4. **We charge the Q‑IDE subscription** → Access to platform, gateway, safety, observability
 
 ### Security Best Practices:
 - ✅ Never log API keys (not even truncated)
@@ -116,14 +121,28 @@ byok_supported_providers = ""  # "openai,anthropic,cohere" etc
 
 ---
 
-## 🚀 Quick Summary
+## 🚀 Quick Summary (updated)
 
 | What | Where | Who Pays |
 |------|-------|----------|
-| **Q-IDE API Keys** | FREE-ENTERPRISE (1 to ∞) | User pays Q-IDE subscription |
-| **BYOK LLM Keys** | PRO-PLUS+ only | User pays OpenAI/Anthropic directly |
-| **Q-IDE Managed LLMs** | FREE-ENTERPRISE | Included in subscription (usage limits apply) |
+| **Top Dog API Keys** | FREE–ENTERPRISE (1 to ∞) | User pays Q‑IDE subscription |
+| **BYOK LLM Keys** | FREE–ENTERPRISE (baseline) | User pays OpenAI/Anthropic directly |
+| **Platform‑managed LLMs** | Enterprise add‑on (optional) | Included in Enterprise add‑on or pass‑through |
 
-So to answer your question: **Yes, BYOK at PRO-PLUS means users bring their OWN OpenAI keys** - you're just providing the integration point, not supplying the keys.
+So to answer your question: **BYOK is available on every tier (it’s the default)** — you’re providing the integration point; we don’t supply a managed LLM by default.
 
 Want me to update the actual database schema to include the `byok_llm_enabled` column?
+
+---
+
+## 🧭 BYOK and Regulated Segments (Operational Notes)
+
+- Plan-aware and segment-aware SLAs: The backend exposes SLI metrics labeled with `plan` and `data_segment` (see `X-Plan` and `X-Data-Segment` headers). These labels enable Prometheus to evaluate tier/segment-specific alerts (e.g., stricter thresholds for `medical`/`scientific`).
+- BYOK is baseline; discounting between BYOK vs platform‑managed is only relevant if you enable the Enterprise managed‑keys add‑on.
+- Recommended headers for clients and gateways:
+	- `X-Plan`: `Starter | Pro | Enterprise`
+	- `X-Data-Segment`: `general | medical | scientific`
+- Backend defaults (when headers are missing) are controlled via environment:
+	- `DEFAULT_PLAN`, `DEFAULT_DATA_SEGMENT`, `DEFAULT_REGULATED_SEGMENT`, `ENABLE_REGULATED_DOMAINS`.
+
+This approach keeps metering, SLAs, and pricing coherent without coupling billing logic into the runtime hot path.

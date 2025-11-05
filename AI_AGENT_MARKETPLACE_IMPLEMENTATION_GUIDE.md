@@ -161,7 +161,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from cryptography.fernet import Fernet
 
 class User:
-    """Represents Q-IDE user in marketplace"""
+    """Represents Top Dog user in marketplace"""
     def __init__(self, user_id: str, email: str):
         self.user_id = user_id
         self.email = email

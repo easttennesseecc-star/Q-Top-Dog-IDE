@@ -30,7 +30,7 @@ AI Coding Assistant Market      2 million     $120/yr avg     $240M
 
 ────────────────────────────────────────────────────────────────────
 TOTAL ADDRESSABLE MARKET        28 million    varies          $14B+ (broad)
-Q-IDE ADDRESSABLE MARKET        8 million     $144-300/yr     $1.2-2.4B
+Top Dog ADDRESSABLE MARKET        8 million     $144-300/yr     $1.2-2.4B
   (small teams, startups, indie)
 ```
 
@@ -45,7 +45,7 @@ Codespaces              500k       5% cloud IDE    $180M+
 Replit                  3M         (free heavy)    $50M-100M
 JetBrains              8M          30% paid IDE    $400M+
 Cursor                  200k       (growing)       $50M+
-Q-IDE                   <50k       <0.1%           <$5M
+Top Dog                   <50k       <0.1%           <$5M
 ────────────────────────────────────────────────────────────────────
 TOTAL IDE MARKET        28M+        -               $900M+
 ```
@@ -54,14 +54,14 @@ TOTAL IDE MARKET        28M+        -               $900M+
 
 ---
 
-## Part 2: Realistic Scenarios for Q-IDE
+## Part 2: Realistic Scenarios for Top Dog
 
 ### Scenario A: Success Path (30% probability)
 
 **Assumptions:**
 - Product execution stays strong
 - Market shifts toward BYOK + multi-LLM
-- Q-IDE captures pricing-sensitive segments
+- Top Dog captures pricing-sensitive segments
 - Get Series B funding ($20-30M)
 
 **Year-by-Year Projection:**
@@ -146,7 +146,7 @@ Exit Scenarios (Year 5-7):
 ### Scenario C: Acquired Path (50% probability)
 
 **Assumptions:**
-- Q-IDE grows to be interesting to Big Tech
+- Top Dog grows to be interesting to Big Tech
 - Not big enough to compete, but valuable
 - Attractive to strategic acquirer
 
@@ -189,8 +189,8 @@ Likely Acquirers & Scenarios:
    └─ Price: $150-300M
 
 Post-Acquisition Outcomes:
-├─ Integration Success: Q-IDE features absorbed into larger platform
-├─ Platform Shutdown: Q-IDE shuts down (common outcome)
+├─ Integration Success: Top Dog features absorbed into larger platform
+├─ Platform Shutdown: Top Dog shuts down (common outcome)
 ├─ Rebranding: Becomes "Google AI IDE" or similar
 └─ Talent: Team distributed across acquirer
 ```
@@ -254,31 +254,31 @@ Likely Outcomes:
 
 ### If GitHub Responds Aggressively
 
-**Timeline: 6-12 months after Q-IDE gains 200k+ users**
+**Timeline: 6-12 months after Top Dog gains 200k+ users**
 
 ```
 GitHub Actions:
-├─ Cut Copilot price from $10 to $5/month (revenue hit, but kills Q-IDE)
-├─ Add multi-LLM support (copy Q-IDE's unique feature)
+├─ Cut Copilot price from $10 to $5/month (revenue hit, but kills Top Dog)
+├─ Add multi-LLM support (copy Top Dog's unique feature)
 ├─ Integrate with local LLMs (Ollama partnership possible)
 ├─ Launch Codespaces Team tier ($50/month with 2 users included)
 ├─ Tighter VS Code integration (lock users in)
-└─ Result: Q-IDE loses pricing advantage, BYOK advantage becomes irrelevant
+└─ Result: Top Dog loses pricing advantage, BYOK advantage becomes irrelevant
 
 Market Impact:
-├─ Q-IDE market share: 5% → 1%
+├─ Top Dog market share: 5% → 1%
 ├─ User growth: Stops
 ├─ Revenue: Declines 50%+
 ├─ Likely outcome: Acqui-hired or shutdown
 
-Timeline for Q-IDE response: Too slow
-├─ Q-IDE can't match GitHub's R&D
-├─ Q-IDE can't match GitHub's brand
-├─ Q-IDE can't match GitHub's pricing power
+Timeline for Top Dog response: Too slow
+├─ Top Dog can't match GitHub's R&D
+├─ Top Dog can't match GitHub's brand
+├─ Top Dog can't match GitHub's pricing power
 └─ Result: Death spiral
 ```
 
-**Probability GitHub responds this way: 70% (if Q-IDE gets 500k+ users)**
+**Probability GitHub responds this way: 70% (if Top Dog gets 500k+ users)**
 
 ---
 
@@ -295,36 +295,36 @@ Announcement:
 └─ Includes Copilot by default
 
 Market Impact:
-├─ Q-IDE loses cloud IDE positioning
+├─ Top Dog loses cloud IDE positioning
 ├─ 100M VS Code users get free cloud alternative
-├─ Q-IDE's integrated product becomes less unique
+├─ Top Dog's integrated product becomes less unique
 ├─ Likely outcome: Accelerates acquisition/shutdown
 
 Timeline: 2027-2028 (possible)
-Probability: 40% (Microsoft probably doesn't care about Q-IDE)
+Probability: 40% (Microsoft probably doesn't care about Top Dog)
 ```
 
 ---
 
 ### If GitHub Doesn't Respond
 
-**Timeline: Q-IDE grows to 1M+ users without competition**
+**Timeline: Top Dog grows to 1M+ users without competition**
 
 ```
 Why GitHub might NOT respond:
-├─ Q-IDE is too small to notice (Goliath doesn't see David)
+├─ Top Dog is too small to notice (Goliath doesn't see David)
 ├─ Microsoft/GitHub focused on other priorities (AI agents, etc.)
 ├─ Assumes GitHub is satisfied with margin
 ├─ Assumes market isn't cannibalizing Copilot revenue
 └─ UNLIKELY (GitHub is too competitive)
 
 If This Happens:
-├─ Q-IDE reaches $100M+ ARR
+├─ Top Dog reaches $100M+ ARR
 ├─ Market leader in BYOK segment
 ├─ Acqui-hired or IPO candidate
 ├─ Success scenario plays out
 
-Probability: 10% (GitHub will notice if Q-IDE gets big enough)
+Probability: 10% (GitHub will notice if Top Dog gets big enough)
 ```
 
 ---
@@ -339,7 +339,7 @@ Probability: 10% (GitHub will notice if Q-IDE gets big enough)
 ├─ GitHub Copilot: 2M paid users ($240M ARR)
 ├─ JetBrains: 8M users ($400M+ ARR)
 ├─ Replit: 3M users (mostly free)
-├─ Q-IDE: <50k users (<$5M ARR)
+├─ Top Dog: <50k users (<$5M ARR)
 └─ Conclusion: Fragmented, GitHub growing fast
 
 2026 (Year 1 - Early Adopters):
@@ -347,15 +347,15 @@ Probability: 10% (GitHub will notice if Q-IDE gets big enough)
 ├─ GitHub Copilot: 5M users ($600M+ ARR)
 ├─ JetBrains: 10M users (growing)
 ├─ Replit: 4M users (stalling growth)
-├─ Q-IDE: 100-150k users ($10-15M ARR)
-└─ Conclusion: GitHub accelerating, Q-IDE finding traction
+├─ Top Dog: 100-150k users ($10-15M ARR)
+└─ Conclusion: GitHub accelerating, Top Dog finding traction
 
 2027 (Year 2 - Inflection):
 ├─ VS Code: 120M users (peak maturity)
 ├─ GitHub Copilot: 8M users ($960M+ ARR)
 ├─ JetBrains: 12M users (stable)
 ├─ Replit: 4.5M users (stagnating)
-├─ Q-IDE: 300-500k users ($40-60M ARR)
+├─ Top Dog: 300-500k users ($40-60M ARR)
 ├─ Cursor: 500k+ users (growing fast)
 └─ Conclusion: Competition intensifies, winners emerge
 
@@ -364,8 +364,8 @@ Probability: 10% (GitHub will notice if Q-IDE gets big enough)
 ├─ GitHub Copilot: 10M users ($1.2B+ ARR)
 ├─ JetBrains: 13M users (enterprise stronghold)
 ├─ Replit: 4.5M users (declining)
-├─ Q-IDE: 500k-800k users ($80-120M ARR)
-├─ Cursor: 800k+ users (challenges Q-IDE)
+├─ Top Dog: 500k-800k users ($80-120M ARR)
+├─ Cursor: 800k+ users (challenges Top Dog)
 └─ Conclusion: GitHub pulls away (AI market dominant player)
 
 2029 (Year 4 - Shakeout):
@@ -373,14 +373,14 @@ Probability: 10% (GitHub will notice if Q-IDE gets big enough)
 ├─ GitHub Copilot: 12M users ($1.5B+ ARR)
 ├─ JetBrains: 14M users (holding steady)
 ├─ Replit: 4M users (declining)
-├─ Q-IDE: 800k-1.2M users ($120-200M ARR) OR Acquired
+├─ Top Dog: 800k-1.2M users ($120-200M ARR) OR Acquired
 ├─ Cursor: 1M+ users OR Acquired
 └─ Conclusion: Market consolidation complete
 
 2030 (Year 5 - New Normal):
 ├─ GitHub Copilot: Market leader (AI + IDE combo)
 ├─ VS Code: Largest user base (local, free)
-├─ Q-IDE: Niche player OR Acquired OR Failed
+├─ Top Dog: Niche player OR Acquired OR Failed
 ├─ Survivors: 2-3 major players, 5-10 niche players
 └─ Conclusion: New stable equilibrium
 ```
@@ -400,17 +400,17 @@ AI adoption accelerates                 MEDIUM        Market grows 2x faster
 Developer budgets increase              MEDIUM        More money for tools
   (companies invest in dev productivity)
 
-BYOK + multi-LLM matters to market      HIGH          Q-IDE's unique feature = irrelevant
+BYOK + multi-LLM matters to market      HIGH          Top Dog's unique feature = irrelevant
   (developers care about vendor freedom)
 
-GitHub doesn't aggressively respond     HIGH          Q-IDE dies in pricing war
+GitHub doesn't aggressively respond     HIGH          Top Dog dies in pricing war
   (assumes Microsoft has other priorities)
 
 Privacy/regulation trends               MEDIUM        BYOK becomes table-stakes
   (data locality becomes law)
 
 Startup can hire talent                 MEDIUM        Can't scale, acquisition only
-  (Q-IDE can attract engineers away from FAANG)
+  (Top Dog can attract engineers away from FAANG)
 
 Current pricing models hold             MEDIUM        Price wars kill margins
   (GitHub doesn't commoditize market)
@@ -424,9 +424,9 @@ VS Code stays local-first               MEDIUM        If VS Code goes cloud, gam
 
 ---
 
-## Part 6: What Makes Q-IDE Win vs Lose
+## Part 6: What Makes Top Dog Win vs Lose
 
-### WIN Conditions (Q-IDE Succeeds)
+### WIN Conditions (Top Dog Succeeds)
 
 ```
 ✅ Do This                          Impact           Confidence
@@ -444,7 +444,7 @@ Hire top talent away from FAANG     Execution        MEDIUM
   (Need engineers better than GitHub's)
 
 Keep multi-LLM advantage unique     Competitive      MEDIUM
-  (GitHub will copy, but Q-IDE can stay ahead)
+  (GitHub will copy, but Top Dog can stay ahead)
 
 Build community/network effects     Growth           MEDIUM
   (Word-of-mouth adoption)
@@ -456,13 +456,13 @@ Maintain 3-5 year headstart         Defensibility    LOW
   (GitHub will catch up eventually)
 ```
 
-### LOSE Conditions (Q-IDE Fails)
+### LOSE Conditions (Top Dog Fails)
 
 ```
 ❌ Avoid This                        Impact           Likelihood
 ─────────────────────────────────────────────────────────────────
 GitHub cuts prices to $5/month      Fatal            70%
-  (Q-IDE loses pricing advantage)
+  (Top Dog loses pricing advantage)
 
 Major security breach                Fatal            10%
   (Lose customer trust, brand dies)
@@ -495,11 +495,11 @@ Customer churn accelerates           Death spiral     25%
 
 ### For Venture Investors
 
-**Q-IDE Investment Score: 6/10 (Moderate opportunity)**
+**Top Dog Investment Score: 6/10 (Moderate opportunity)**
 
 ```
 Pros (Reasons to Fund):
-├─ Large addressable market ($1.2B in Q-IDE segment)
+├─ Large addressable market ($1.2B in Top Dog segment)
 ├─ Timing right (AI adoption, cloud IDE growth)
 ├─ Experienced founding team (assumed)
 ├─ Defensible tech (multi-LLM BYOK unique initially)
@@ -531,7 +531,7 @@ Risk/Reward Profile:
 
 ### For Corporate Development (Strategic Buyer)
 
-**Q-IDE Acquisition Score: 7/10 (Moderate strategic value)**
+**Top Dog Acquisition Score: 7/10 (Moderate strategic value)**
 
 ```
 Why Google Should Buy:
@@ -565,9 +565,9 @@ Why GitHub/Microsoft Should Buy:
 └─ Price: $400-600M (premium to kill competitor)
 
 Likelihood of Acquisition:
-├─ If Q-IDE reaches $50M ARR: 70% chance acquired in 2-3 years
-├─ If Q-IDE stalls at $20M ARR: 40% chance acquired (walking dead buyer)
-├─ If Q-IDE reaches $100M+ ARR: 90% chance multiple bidders
+├─ If Top Dog reaches $50M ARR: 70% chance acquired in 2-3 years
+├─ If Top Dog stalls at $20M ARR: 40% chance acquired (walking dead buyer)
+├─ If Top Dog reaches $100M+ ARR: 90% chance multiple bidders
 └─ Most likely scenario: Acquired 2027-2029 for $200-500M
 ```
 
@@ -577,7 +577,7 @@ Likelihood of Acquisition:
 
 ### Most Likely Scenario (60% probability)
 
-**Q-IDE becomes valuable acquisition target for Big Tech**
+**Top Dog becomes valuable acquisition target for Big Tech**
 
 ```
 Timeline:
@@ -605,7 +605,7 @@ Probability Distribution:
 
 ### Why This Matters
 
-**Q-IDE is NOT trying to be "the next GitHub" or IPO unicorn.** It's trying to be a valuable acquisition target or profitable niche leader.
+**Top Dog is NOT trying to be "the next GitHub" or IPO unicorn.** It's trying to be a valuable acquisition target or profitable niche leader.
 
 **This is actually the smartest strategy** given:
 - Competition from 10,000-person GitHub (impossible to beat)
@@ -627,4 +627,4 @@ Founders + team win
 **Distribution**: Executive Leadership, Board, Investors  
 
 **Key Takeaway:**
-Q-IDE isn't trying to "win the market." It's trying to be too valuable to ignore. That's a much better bet.
+Top Dog isn't trying to "win the market." It's trying to be too valuable to ignore. That's a much better bet.

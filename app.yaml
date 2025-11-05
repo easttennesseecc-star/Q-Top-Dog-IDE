@@ -1,4 +1,4 @@
-name: q-ide-production
+name: topdog-production
 services:
   - name: backend-api
     github:

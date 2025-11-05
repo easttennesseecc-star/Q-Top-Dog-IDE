@@ -2,7 +2,7 @@
 
 ## Overview
 
-Comprehensive test suite for Q-IDE IntelliSense validating:
+Comprehensive test suite for Top Dog IntelliSense validating:
 - **Performance**: <100ms SLA compliance
 - **Accuracy**: 90%+ symbol extraction & completion ranking
 - **Robustness**: Error handling, edge cases, concurrent usage

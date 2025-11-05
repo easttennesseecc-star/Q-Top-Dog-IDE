@@ -8,7 +8,7 @@
 
 ```
 ┌────────────────────────────────────────────────────────────────┐
-│ Q-IDE: The Universal Developer Platform                       │
+│ Top Dog: The Universal Developer Platform                       │
 ├────────────────────────────────────────────────────────────────┤
 │                                                                │
 │  Gap #1        Gap #2          Gap #3         Gap #4          │
@@ -43,7 +43,7 @@ User typing code
     ↓
 "Suggest next line"
     ↓
-Q-IDE asks built-in model (local)
+Top Dog asks built-in model (local)
     ↓
 Shows suggestion (no cost)
 ```
@@ -110,9 +110,9 @@ User hits breakpoint
     ↓
 Error: "TypeError: Cannot read property X"
     ↓
-User manually asks Q-IDE
+User manually asks Top Dog
     ↓
-Q-IDE explains error (using local model)
+Top Dog explains error (using local model)
 ```
 
 **With Marketplace (Gap #5)**:
@@ -170,7 +170,7 @@ User right-clicks on function
     ↓
 "Extract function"
     ↓
-Q-IDE extracts (using AST + local model)
+Top Dog extracts (using AST + local model)
     ↓
 Shows diff
 ```
@@ -241,7 +241,7 @@ Game developer in Godot
     ↓
 "Generate GDScript for NPC AI"
     ↓
-Q-IDE generates code (using local model)
+Top Dog generates code (using local model)
     ↓
 Suggests some basic logic
 ```
@@ -327,6 +327,26 @@ Returns: event definitions
 
 ---
 
+## 🧪 Selecting Data Segments (Medical/Scientific)
+
+When a project or API key requires regulated handling, set a data segment so routing + policy + billing align:
+
+- Project/API‑key metadata: `data_segment: general|medical|scientific`
+- Gateway adds `X-Data-Segment` header; OPA policy enforces protections and denies mismatches.
+- Metering includes `data_segment`, `verified` (attestation), and `policy_pack` labels.
+
+Minimal request example (pseudo):
+```
+POST /api/v1/agents/chat
+Headers:
+  Authorization: Bearer ...
+  X-Data-Segment: medical
+Body:
+  { "model": "gpt-XYZ", "message": "..." }
+```
+
+SLAs vary by segment (see Prometheus thresholds); pricing varies per MONETIZATION_V2.
+
 ## 🏗️ ARCHITECTURAL LAYERS
 
 ```
@@ -402,7 +422,7 @@ KEY: Marketplace can launch INDEPENDENTLY after core features!
 
 ### Without Marketplace (Current)
 ```
-Q-IDE Revenue Sources:
+Top Dog Revenue Sources:
 ├─ Premium subscription: $50k MRR
 ├─ Game engine support: $840k MRR
 └─ TOTAL: $890k MRR
@@ -410,7 +430,7 @@ Q-IDE Revenue Sources:
 
 ### With Marketplace (Gap #5)
 ```
-Q-IDE Revenue Sources:
+Top Dog Revenue Sources:
 ├─ Premium subscription: $50k MRR
 ├─ Game engine support: $840k MRR
 ├─ Marketplace commission (30%): $120k MRR
@@ -441,10 +461,10 @@ Before:
 (vs Code is best IDE, ChatGPT is best AI)
 
 After:
-"I'll use Q-IDE for everything"
+"I'll use Top Dog for everything"
 (VS Code features + Marketplace AI + Game engines)
 
-Result: Users never leave Q-IDE
+Result: Users never leave Top Dog
 ```
 
 ### #2: Marketplace Captures Switching Costs
@@ -455,7 +475,7 @@ User has models, history, ratings saved
     ↓
 Switching to VS Code = lose balance + start over
     ↓
-User stays in Q-IDE
+User stays in Top Dog
 ```
 
 ### #3: Marketplace Is Revenue Driver
@@ -466,13 +486,13 @@ As adoption grows, revenue grows automatically
     ↓
 Network effect: More users = cheaper (volume discounts)
     ↓
-Q-IDE keeps the margin, users get savings
+Top Dog keeps the margin, users get savings
 ```
 
 ### #4: Marketplace Expands TAM
 ```
-Before: Q-IDE targets code developers (20M market)
-After: Q-IDE targets:
+Before: Top Dog targets code developers (20M market)
+After: Top Dog targets:
 ├─ Code developers (20M)
 ├─ Game developers (6M)
 ├─ ALL developers needing AI (entire market)
@@ -544,7 +564,7 @@ Result: $120k+ MRR from marketplace alone
 # User types:
 def calculate_total(items):
 
-# Q-IDE suggests (built-in):
+# Top Dog suggests (built-in):
     return sum([item.price for item in items])
 
 # Result: Basic suggestion (free)
@@ -555,7 +575,7 @@ def calculate_total(items):
 # User types:
 def calculate_total(items):
 
-# Q-IDE offers:
+# Top Dog offers:
 [Smart suggest with GPT-4] [Best for financial with Claude]
 
 # User clicks Claude:
@@ -573,7 +593,7 @@ def calculate_total(items):
 **Without Marketplace**:
 ```
 Error: "Null reference in _process()"
-Q-IDE explains: "You're calling a method on null"
+Top Dog explains: "You're calling a method on null"
 User: "Yeah, but why?"
 ```
 
@@ -599,7 +619,7 @@ Cost: $0.005
 
 **Without Marketplace**:
 ```
-Q-IDE extracts function locally
+Top Dog extracts function locally
 Result: Basic extraction (variable names might be poor)
 ```
 
@@ -775,7 +795,7 @@ DEC 31 (Week 8):        $120k+ MRR from marketplace
 ```
 
 **Bottom Line**: 
-Q-IDE with marketplace = First IDE to unify ALL AI models + Game engines + IDE features
+Top Dog with marketplace = First IDE to unify ALL AI models + Game engines + IDE features
 
 **Result**: $1M+ MRR opportunity by Month 6
 

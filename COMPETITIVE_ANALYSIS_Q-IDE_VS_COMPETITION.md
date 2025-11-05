@@ -1,4 +1,4 @@
-# 🥊 Q-IDE Competitive Analysis: vs Industry Competition
+# 🥊 Top Dog Competitive Analysis: vs Industry Competition
 
 **Document Type**: Competitive Intelligence Report  
 **Date**: October 28, 2025  
@@ -15,7 +15,7 @@
 4. [Subscription Model Comparison](#subscription-model-comparison)
 5. [Production Readiness Comparison](#production-readiness-comparison)
 6. [Detailed Competitor Breakdowns](#detailed-competitor-breakdowns)
-7. [Q-IDE Competitive Advantages](#q-ide-competitive-advantages)
+7. [Top Dog Competitive Advantages](#Top Dog-competitive-advantages)
 8. [Market Positioning](#market-positioning)
 9. [Recommendations](#recommendations)
 
@@ -23,7 +23,7 @@
 
 ## Executive Summary
 
-### Q-IDE's Competitive Position
+### Top Dog's Competitive Position
 
 | Category | Rating | Status |
 |----------|--------|--------|
@@ -36,12 +36,12 @@
 
 ### Key Findings
 
-✅ **Q-IDE is superior to or competitive with ALL identified competitors across:**
+✅ **Top Dog is superior to or competitive with ALL identified competitors across:**
 - Physical features (more comprehensive)
 - Pricing model (most accessible)
 - Production readiness (enterprise-grade)
 
-❌ **No competitor matches Q-IDE's:**
+❌ **No competitor matches Top Dog's:**
 - Multi-LLM BYOK (Bring Your Own Key) model
 - True free tier without subscriptions ($0/month)
 - Combined IDE + AI Chat + Builds in one platform
@@ -77,10 +77,10 @@
 
 ## Physical/Technical Features Comparison
 
-### Feature Matrix: Q-IDE vs Competitors
+### Feature Matrix: Top Dog vs Competitors
 
 ```
-Feature Category                    Q-IDE   Codespaces  VS Code  Replit  GitPod  JetBrains Fleet
+Feature Category                    Top Dog   Codespaces  VS Code  Replit  GitPod  JetBrains Fleet
 ─────────────────────────────────────────────────────────────────────────────────────────────
 CORE IDE FEATURES
 ─────────────────────────────────────────────────────────────────────────────────────────────
@@ -134,167 +134,167 @@ Legend: ✅✅✅ = Excellent/Full | ✅✅ = Good/Partial | ✅ = Basic | Limit
 
 #### **Code Editor Capabilities**
 
-| Feature | Q-IDE | Codespaces | VS Code | Replit | Winner |
+| Feature | Top Dog | Codespaces | VS Code | Replit | Winner |
 |---------|-------|-----------|---------|--------|--------|
-| Language Support | 50+ languages | 50+ | 50+ | 25+ | **Q-IDE** 🏆 (extensible) |
-| Syntax Highlighting | Advanced + AI-enhanced | Advanced | Advanced | Basic | **Q-IDE** 🏆 (AI-improved) |
-| IntelliSense Quality | ✅✅✅ (AI context + refs) | ✅✅ (native) | ✅✅ (native) | ✅ (basic) | **Q-IDE** 🏆 (combines both) |
-| Bracket Matching | Yes + AI repair | Yes | Yes | Yes | **Q-IDE** 🏆 (AI assists) |
-| Code Folding | Yes + AI region detection | Yes | Yes | Yes | **Q-IDE** 🏆 (automatic) |
-| Jump to Definition | ✅✅✅ (works cross-repo/language) | ✅✅ (typed languages) | ✅✅ (typed languages) | ✅ (single language) | **Q-IDE** 🏆 (cross-language AI) |
-| Find References | ✅✅✅ (semantic + typing) | ✅✅ (typing only) | ✅✅ (typing only) | Limited | **Q-IDE** 🏆 (semantic AI search) |
-| Smart Refactoring | ✅✅✅ (AI + human patterns) | ✅✅ (limited) | ✅ (manual) | Limited | **Q-IDE** 🏆 (AI-driven) |
+| Language Support | 50+ languages | 50+ | 50+ | 25+ | **Top Dog** 🏆 (extensible) |
+| Syntax Highlighting | Advanced + AI-enhanced | Advanced | Advanced | Basic | **Top Dog** 🏆 (AI-improved) |
+| IntelliSense Quality | ✅✅✅ (AI context + refs) | ✅✅ (native) | ✅✅ (native) | ✅ (basic) | **Top Dog** 🏆 (combines both) |
+| Bracket Matching | Yes + AI repair | Yes | Yes | Yes | **Top Dog** 🏆 (AI assists) |
+| Code Folding | Yes + AI region detection | Yes | Yes | Yes | **Top Dog** 🏆 (automatic) |
+| Jump to Definition | ✅✅✅ (works cross-repo/language) | ✅✅ (typed languages) | ✅✅ (typed languages) | ✅ (single language) | **Top Dog** 🏆 (cross-language AI) |
+| Find References | ✅✅✅ (semantic + typing) | ✅✅ (typing only) | ✅✅ (typing only) | Limited | **Top Dog** 🏆 (semantic AI search) |
+| Smart Refactoring | ✅✅✅ (AI + human patterns) | ✅✅ (limited) | ✅ (manual) | Limited | **Top Dog** 🏆 (AI-driven) |
 | **WINNER** | **🏆 #1 UNMATCHED** | **4th** | **3rd** | **5th** | - |
 
-**Q-IDE Advantage**: While VS Code has native library refs, Q-IDE combines those capabilities PLUS AI semantic understanding PLUS active code repair. This makes Q-IDE 3x more powerful for actual coding speed.
+**Top Dog Advantage**: While VS Code has native library refs, Top Dog combines those capabilities PLUS AI semantic understanding PLUS active code repair. This makes Top Dog 3x more powerful for actual coding speed.
 
 #### **AI Assistance Capabilities**
 
-| Feature | Q-IDE | Copilot | Cursor | ChatGPT | Claude | Winner |
+| Feature | Top Dog | Copilot | Cursor | ChatGPT | Claude | Winner |
 |---------|-------|---------|--------|---------|--------|--------|
 | Code Generation | ✅✅✅ | ✅✅✅ | ✅✅✅ | ✅✅ | ✅✅✅ | Tie |
-| Multi-LLM Choice | ✅✅✅ (5 providers) | ❌ (Copilot only) | ❌ (Claude only) | N/A | N/A | **Q-IDE** 🏆 |
-| BYOK Model | ✅✅✅ (no vendor lock) | ❌ | ❌ | ✅ | ✅ | **Q-IDE** 🏆 |
-| Local LLM Support | ✅✅✅ (Ollama, offline) | ❌ | Limited | ❌ | ❌ | **Q-IDE** 🏆 |
-| Free Tier Quality | ✅✅✅ (unlimited) | ❌ | Limited | Limited | Limited | **Q-IDE** 🏆 |
-| Cost Control | ✅✅✅ (per-request routing) | Fixed | Fixed | Fixed | Fixed | **Q-IDE** 🏆 |
-| AI Agents (Orchestrated) | ✅✅✅ (5 specialists) | ❌ (single LLM) | ❌ (single LLM) | ❌ | ❌ | **Q-IDE** 🏆 |
+| Multi-LLM Choice | ✅✅✅ (5 providers) | ❌ (Copilot only) | ❌ (Claude only) | N/A | N/A | **Top Dog** 🏆 |
+| BYOK Model | ✅✅✅ (no vendor lock) | ❌ | ❌ | ✅ | ✅ | **Top Dog** 🏆 |
+| Local LLM Support | ✅✅✅ (Ollama, offline) | ❌ | Limited | ❌ | ❌ | **Top Dog** 🏆 |
+| Free Tier Quality | ✅✅✅ (unlimited) | ❌ | Limited | Limited | Limited | **Top Dog** 🏆 |
+| Cost Control | ✅✅✅ (per-request routing) | Fixed | Fixed | Fixed | Fixed | **Top Dog** 🏆 |
+| AI Agents (Orchestrated) | ✅✅✅ (5 specialists) | ❌ (single LLM) | ❌ (single LLM) | ❌ | ❌ | **Top Dog** 🏆 |
 | **WINNER** | **🏆 #1 UNMATCHED** | **3rd** | **4th** | **5th** | **3rd** | - |
 
 ---
 
-#### **NEXT-LEVEL FEATURES (Only Q-IDE Has These)**
+#### **NEXT-LEVEL FEATURES (Only Top Dog Has These)**
 
-| Feature | Q-IDE | Competitors | Winner |
+| Feature | Top Dog | Competitors | Winner |
 |---------|-------|-------------|--------|
-| **5 AI Agents Orchestration** | ✅ Q, Code Writer, Test Auditor, Verification, Release | ❌ None | **Q-IDE** 🏆 |
-| **Media Synthesis (Runway)** | ✅ 4K backgrounds, videos, assets | ❌ None | **Q-IDE** 🏆 |
-| **Real-time Build Intelligence** | ✅ AI learns from every build | ❌ None | **Q-IDE** 🏆 |
-| **Cost Optimization Engine** | ✅ Automatic provider routing | ❌ None | **Q-IDE** 🏆 |
-| **Mobile Phone Pairing** | ✅ QR code + WebRTC P2P | ❌ None | **Q-IDE** 🏆 |
-| **Super Coder (Fine-tuned LLM)** | ✅ Per-project learned model | ❌ None | **Q-IDE** 🏆 |
-| **Production Deployment Ready** | ✅ Full CI/CD + Docker | Limited | **Q-IDE** 🏆 |
-| **True Offline Mode** | ✅ Works with local LLMs | Limited | **Q-IDE** 🏆 |
-| **Zero Vendor Lock-in** | ✅ BYOK, switch providers anytime | ❌ Locked to 1 vendor | **Q-IDE** 🏆 |
+| **5 AI Agents Orchestration** | ✅ Q, Code Writer, Test Auditor, Verification, Release | ❌ None | **Top Dog** 🏆 |
+| **Media Synthesis (Runway)** | ✅ 4K backgrounds, videos, assets | ❌ None | **Top Dog** 🏆 |
+| **Real-time Build Intelligence** | ✅ AI learns from every build | ❌ None | **Top Dog** 🏆 |
+| **Cost Optimization Engine** | ✅ Automatic provider routing | ❌ None | **Top Dog** 🏆 |
+| **Mobile Phone Pairing** | ✅ QR code + WebRTC P2P | ❌ None | **Top Dog** 🏆 |
+| **Super Coder (Fine-tuned LLM)** | ✅ Per-project learned model | ❌ None | **Top Dog** 🏆 |
+| **Production Deployment Ready** | ✅ Full CI/CD + Docker | Limited | **Top Dog** 🏆 |
+| **True Offline Mode** | ✅ Works with local LLMs | Limited | **Top Dog** 🏆 |
+| **Zero Vendor Lock-in** | ✅ BYOK, switch providers anytime | ❌ Locked to 1 vendor | **Top Dog** 🏆 |
 
 ---
 
-## 🏆 ULTIMATE WINNER ANALYSIS: Q-IDE IS #1 UNMATCHED
+## 🏆 ULTIMATE WINNER ANALYSIS: Top Dog IS #1 UNMATCHED
 
 ### Overall Market Positioning by Category
 
-#### **1. IDE & Editor Features: Q-IDE #1** 🥇
+#### **1. IDE & Editor Features: Top Dog #1** 🥇
 - **VS Code**: #2 (native library refs, ecosystem)
 - **Codespaces**: #3 (cloud but limited locally)
 - **Replit**: #4 (web but weaker editor)
 
-**Q-IDE Advantage**: VS Code editor + AI semantic understanding = faster coding
+**Top Dog Advantage**: VS Code editor + AI semantic understanding = faster coding
 
 ---
 
-#### **2. AI Code Assistance: Q-IDE #1** 🥇
+#### **2. AI Code Assistance: Top Dog #1** 🥇
 - **GitHub Copilot**: #2 (single LLM only)
 - **Cursor**: #3 (Claude only)
 - **ChatGPT**: #4 (no IDE context)
 
-**Q-IDE Advantage**: 5 LLMs + orchestration + local support = unmatched flexibility
+**Top Dog Advantage**: 5 LLMs + orchestration + local support = unmatched flexibility
 
 ---
 
-#### **3. Cost & Pricing: Q-IDE #1** 🥇
+#### **3. Cost & Pricing: Top Dog #1** 🥇
 - **VS Code**: #2 ($0 but no AI/cloud)
 - **Replit**: #3 ($7 but limited)
 - **Copilot + Codespaces**: #4 ($28-164/month!)
 
-**Q-IDE Advantage**: $0-12/month with full AI + cloud = best value on market
+**Top Dog Advantage**: $0-12/month with full AI + cloud = best value on market
 
 ---
 
-#### **4. Team Collaboration: Q-IDE #1** 🥇 (Planned)
+#### **4. Team Collaboration: Top Dog #1** 🥇 (Planned)
 - **Codespaces**: #2 (enterprise focused)
 - **Replit**: #3 (community focused)
 - **GitPod**: #4 (DevOps only)
 
-**Q-IDE Advantage**: Real-time + AI review + orchestrated workflow
+**Top Dog Advantage**: Real-time + AI review + orchestrated workflow
 
 ---
 
-#### **5. Production Readiness: Q-IDE #1** 🥇
+#### **5. Production Readiness: Top Dog #1** 🥇
 - **GitHub Codespaces**: #2 (enterprise)
 - **AWS CodeSpaces**: #3 (AWS locked)
 - **GitPod**: #4 (DevOps specific)
 
-**Q-IDE Advantage**: Docker + CI/CD + Kubernetes + deployment automation
+**Top Dog Advantage**: Docker + CI/CD + Kubernetes + deployment automation
 
 ---
 
-#### **6. Developer Experience: Q-IDE #1** 🥇
+#### **6. Developer Experience: Top Dog #1** 🥇
 - **VS Code**: #2 (mature, familiar)
 - **JetBrains Fleet**: #3 (powerful, heavy)
 - **Cursor**: #4 (limited scope)
 
-**Q-IDE Advantage**: Familiar + powerful + intuitive = shortest learning curve
+**Top Dog Advantage**: Familiar + powerful + intuitive = shortest learning curve
 
 ---
 
 ### Feature Comparison Score Card
 
 ```
-                     Q-IDE  VS Code  Copilot  Codespaces  Replit  Winner
+                     Top Dog  VS Code  Copilot  Codespaces  Replit  Winner
 ─────────────────────────────────────────────────────────────────────────
 Editor Quality         19/20    20/20     10/20     18/20      14/20  VS Code #2
-AI Capabilities        20/20     5/20     15/20      8/20       5/20  Q-IDE #1 🏆
-Pricing & Value        20/20     20/20      8/20      6/20      12/20  Q-IDE #1 🏆
-Collaboration          18/20    10/20      5/20     18/20      14/20  Q-IDE #1 🏆
-Production Ready       19/20     8/20      5/20     20/20       8/20  Q-IDE #1 🏆
-Ease of Use            18/20    19/20      8/20     14/20      16/20  Q-IDE #1 🏆
+AI Capabilities        20/20     5/20     15/20      8/20       5/20  Top Dog #1 🏆
+Pricing & Value        20/20     20/20      8/20      6/20      12/20  Top Dog #1 🏆
+Collaboration          18/20    10/20      5/20     18/20      14/20  Top Dog #1 🏆
+Production Ready       19/20     8/20      5/20     20/20       8/20  Top Dog #1 🏆
+Ease of Use            18/20    19/20      8/20     14/20      16/20  Top Dog #1 🏆
 ───────────────────────────────────────────────────────────────────────
 TOTAL SCORE:           114/120  82/120    51/120    84/120     69/120
 ───────────────────────────────────────────────────────────────────────
 FINAL RANK:            🥇 #1    🥈 #2     🥉 #3     🏅 #4      🏅 #5
 ```
 
-**Q-IDE: 114/120 points = UNMATCHED MARKET LEADER** ✅
+**Top Dog: 114/120 points = UNMATCHED MARKET LEADER** ✅
 
 ---
 
-### Why Q-IDE Wins #1 in Every Category That Matters
+### Why Top Dog Wins #1 in Every Category That Matters
 
 #### **Category A: Coding Speed & Accuracy**
-✅ Q-IDE: AI IntelliSense (context-aware)  
+✅ Top Dog: AI IntelliSense (context-aware)  
 ❌ VS Code: Static library refs  
 ❌ Copilot: No IDE context  
-→ **Q-IDE faster by 3-5x on average task**
+→ **Top Dog faster by 3-5x on average task**
 
 #### **Category B: Cost Efficiency**
-✅ Q-IDE: $0-12/month (all-in)  
+✅ Top Dog: $0-12/month (all-in)  
 ❌ Copilot + Codespaces: $28-164/month  
 ❌ VS Code: Free but no AI/cloud  
-→ **Q-IDE saves $10K+/year per team**
+→ **Top Dog saves $10K+/year per team**
 
 #### **Category C: Freedom & Control**
-✅ Q-IDE: BYOK, switch anytime, offline-capable  
+✅ Top Dog: BYOK, switch anytime, offline-capable  
 ❌ GitHub: Vendor lock-in (Copilot only)  
 ❌ Cursor: Vendor lock-in (Claude only)  
-→ **Q-IDE gives complete control**
+→ **Top Dog gives complete control**
 
 #### **Category D: Team Productivity**
-✅ Q-IDE: 5 AI agents orchestrated (planning, coding, testing, verification, deployment)  
+✅ Top Dog: 5 AI agents orchestrated (planning, coding, testing, verification, deployment)  
 ❌ Copilot: Single agent (just code generation)  
 ❌ Codespaces: No AI orchestration  
-→ **Q-IDE automates entire workflow**
+→ **Top Dog automates entire workflow**
 
 #### **Category E: Enterprise Readiness**
-✅ Q-IDE: SSO, compliance, SLA, deployment automation  
+✅ Top Dog: SSO, compliance, SLA, deployment automation  
 ❌ VS Code: Local only, no deployment  
 ❌ Replit: Community-first, not enterprise  
-→ **Q-IDE meets Fortune 500 requirements**
+→ **Top Dog meets Fortune 500 requirements**
 
 ---
 
-### Competitive Moat: What Q-IDE Has That No One Else Can Easily Copy
+### Competitive Moat: What Top Dog Has That No One Else Can Easily Copy
 
-| Moat | Q-IDE | Competitors | Difficulty to Copy |
+| Moat | Top Dog | Competitors | Difficulty to Copy |
 |------|-------|-------------|-------------------|
 | Multi-LLM BYOK | ✅ Yes | ❌ No | HARD (needs architecture redesign) |
 | 5 AI Agents | ✅ Yes | ❌ No | VERY HARD (coordination complexity) |
@@ -304,11 +304,11 @@ FINAL RANK:            🥇 #1    🥈 #2     🥉 #3     🏅 #4      🏅 #5
 | Mobile Phone Pairing | ✅ Yes | ❌ No | MEDIUM (WebRTC + QR) |
 | True Offline | ✅ Yes | Limited | HARD (needs local optimization) |
 
-**Result**: Q-IDE has 7-year head start before competitors can match capabilities
+**Result**: Top Dog has 7-year head start before competitors can match capabilities
 
 ---
 
-### Market Position: Where Q-IDE Stands
+### Market Position: Where Top Dog Stands
 
 ```
                     PRICING
@@ -323,14 +323,14 @@ FINAL RANK:            🥇 #1    🥈 #2     🥉 #3     🏅 #4      🏅 #5
                    │ Cursor         │ ← Mid-range AI
                    │ GitPod         │
                 $  ├────────────────┤
-                   │ Q-IDE ← WINS   │ ← Best value + power
+                   │ Top Dog ← WINS   │ ← Best value + power
                    │ Replit         │ ← Budget option
                    │ VS Code (free) │ ← Free but local only
                ────┴────────────────┴──────────────────→ FEATURES
                                                         (AI + Collab + Cloud)
 ```
 
-**Q-IDE**: Maximum features at minimum cost with maximum control = **UNMATCHED POSITIONING**
+**Top Dog**: Maximum features at minimum cost with maximum control = **UNMATCHED POSITIONING**
 
 ---
 
@@ -344,7 +344,7 @@ FINAL RANK:            🥇 #1    🥈 #2     🥉 #3     🏅 #4      🏅 #5
 ├─────────────────────────────────────────────────────────────────────────────────┤
 │ Product         │ Free Tier │ Pro Tier      │ Teams        │ Enterprise         │
 │─────────────────────────────────────────────────────────────────────────────────│
-│ Q-IDE           │ $0        │ $12/mo        │ $25/seat/mo  │ Custom             │
+│ Top Dog           │ $0        │ $12/mo        │ $25/seat/mo  │ Custom             │
 │ GitHub Copilot  │ $0*       │ $10-20/mo     │ $21-30/seat  │ Custom             │
 │ Codespaces      │ $0*       │ $0.18/hr      │ $0.18/hr     │ $0.18/hr + custom  │
 │ VS Code         │ $0        │ N/A (free)    │ N/A (free)   │ N/A (free)         │
@@ -358,7 +358,7 @@ FINAL RANK:            🥇 #1    🥈 #2     🥉 #3     🏅 #4      🏅 #5
 
 ### Detailed Pricing Comparison
 
-#### **1. Q-IDE Pricing Model** 🏆 MOST COMPETITIVE
+#### **1. Top Dog Pricing Model** 🏆 MOST COMPETITIVE
 
 ```
 FREE TIER: $0/month
@@ -407,7 +407,7 @@ ENTERPRISE: Custom pricing
 └─ Perfect for: Fortune 500, regulated industries
 ```
 
-**Q-IDE Pricing Advantages:**
+**Top Dog Pricing Advantages:**
 - ✅ Genuinely FREE tier (no catch, no compute hour limits)
 - ✅ Lowest per-seat cost ($25 vs $21-50 for competitors)
 - ✅ No hourly billing trap
@@ -480,7 +480,7 @@ Idle sessions: Billed for 5 minutes after stopping
 - ❌ Easy to overspend with forgotten tabs
 - ❌ Separate Copilot purchase required
 - ❌ No free meaningful tier
-- ❌ Total cost 2-4x higher than Q-IDE
+- ❌ Total cost 2-4x higher than Top Dog
 
 ---
 
@@ -552,7 +552,7 @@ Enterprise: Custom pricing
 - ✅ Great for beginners
 
 **Replit Disadvantages:**
-- ❌ Basic AI (not comparable to Q-IDE)
+- ❌ Basic AI (not comparable to Top Dog)
 - ❌ Smaller ecosystem
 - ❌ Limited enterprise features
 - ❌ Not suitable for professional development
@@ -592,12 +592,12 @@ vs. Fleet Pro (proposed): $20+/month
 
 | Tier | Yearly Cost (1 person) | Best For |
 |------|----------------------|----------|
-| **Q-IDE Free** | **$0** 🏆 | Everyone (no limits) |
+| **Top Dog Free** | **$0** 🏆 | Everyone (no limits) |
 | **VS Code** | **$0** | Local development |
 | **Replit Free** | **$0** (limited) | Hobbyists |
 | **Codespaces Free** | **$0** (limited) | Free tier only |
 | **GitHub Copilot** | **$120/year** | AI only, not IDE |
-| **Q-IDE Pro** | **$120/year** 🏆 | Professionals |
+| **Top Dog Pro** | **$120/year** 🏆 | Professionals |
 | **Replit Pro** | **$84/year** | Beginners |
 | **JetBrains Fleet** | **$155.88/year** | Power users |
 
@@ -605,12 +605,12 @@ vs. Fleet Pro (proposed): $20+/month
 
 | Product | Monthly | Yearly |
 |---------|---------|--------|
-| **Q-IDE Teams** | $125 | $1,500 🏆 |
+| **Top Dog Teams** | $125 | $1,500 🏆 |
 | **Replit Teams** | $40-250 | $480-3,000 |
 | **GitHub Copilot + Codespaces** | $100-200 | $1,200-2,400 |
 | **JetBrains Fleet** | $65 | $780 |
 
-**Winner: Q-IDE** ($1,500/year for 5 people with full collaboration)
+**Winner: Top Dog** ($1,500/year for 5 people with full collaboration)
 
 ---
 
@@ -619,7 +619,7 @@ vs. Fleet Pro (proposed): $20+/month
 ### Enterprise Feature Matrix
 
 ```
-ENTERPRISE REQUIREMENTS              Q-IDE    Codespaces  JetBrains Fleet  Replit
+ENTERPRISE REQUIREMENTS              Top Dog    Codespaces  JetBrains Fleet  Replit
 ──────────────────────────────────────────────────────────────────────────────
 Security & Compliance
 ├─ SOC 2 Type II Certified           ✅       ✅          ⏳               ❌
@@ -670,7 +670,7 @@ PRODUCTION READINESS SCORE           95/100   92/100      78/100           65/10
 
 ### Deployment Infrastructure
 
-#### **Q-IDE Architecture**
+#### **Top Dog Architecture**
 
 ```
 Multi-region Deployment:
@@ -732,14 +732,14 @@ Limitations:
 - ❌ Cannot use your own API keys
 - ❌ Total cost $28-164/month per person
 
-**Q-IDE Advantage:**
+**Top Dog Advantage:**
 ```
 GitHub Total Cost (team of 5):
 $10 (Copilot) + $36 (compute) = $46/month per person
 = $2,760/year per team member
 = $13,800/year for team of 5
 
-Q-IDE Teams (team of 5):
+Top Dog Teams (team of 5):
 $25/month per person
 = $300/year per person
 = $1,500/year for team of 5
@@ -747,7 +747,7 @@ $25/month per person
 SAVINGS: $12,300/year per team of 5 (90% cheaper)
 ```
 
-**Why Q-IDE Wins:**
+**Why Top Dog Wins:**
 - Transparent pricing (no hourly surprises)
 - Better value (1/9th the cost)
 - More flexibility (BYOK, multiple LLMs)
@@ -768,22 +768,22 @@ SAVINGS: $12,300/year per team of 5 (90% cheaper)
 - ❌ Weak AI features (not comparable)
 - ❌ Limited for serious development
 - ❌ Smaller ecosystem
-- ❌ Less powerful than Q-IDE
+- ❌ Less powerful than Top Dog
 - ❌ Basic IDE features
 
-**Q-IDE Advantage:**
+**Top Dog Advantage:**
 ```
-Feature | Replit | Q-IDE
+Feature | Replit | Top Dog
 ───────────────────────────
 IDE Power | Good | Excellent
 AI Quality | Basic | Enterprise-grade
 Collaboration | Good | Excellent
-Multi-LLM | ❌ | ✅ (Q-IDE exclusive)
-BYOK | ❌ | ✅ (Q-IDE exclusive)
+Multi-LLM | ❌ | ✅ (Top Dog exclusive)
+BYOK | ❌ | ✅ (Top Dog exclusive)
 Pricing | $7 | $12 (only $5 more)
 ```
 
-**Why Q-IDE Wins:**
+**Why Top Dog Wins:**
 - Professional-grade AI (enterprise features)
 - Multi-LLM support (Replit locked to 1)
 - Better IDE (more powerful)
@@ -808,9 +808,9 @@ Pricing | $7 | $12 (only $5 more)
 - ❌ No AI included (must buy Copilot + $10/month)
 - ❌ No deployment features
 
-**Q-IDE Advantage:**
+**Top Dog Advantage:**
 ```
-Use Case | VS Code | Q-IDE
+Use Case | VS Code | Top Dog
 ──────────────────────────────
 Works anywhere (cloud) | ❌ | ✅
 Team collaboration | ❌ | ✅
@@ -821,16 +821,16 @@ Deployment built-in | ❌ | ✅
 Cost for AI | +$10/mo | $0-12/mo
 ```
 
-**Why Q-IDE Wins:**
+**Why Top Dog Wins:**
 - No local setup required
 - Instant team collaboration
 - Built-in professional AI
 - Cloud access from anywhere
-- For teams: Q-IDE is far superior
+- For teams: Top Dog is far superior
 
 **vs Local Development:**
 - Local: Best for solo developers (VS Code wins)
-- Cloud: Q-IDE wins (only option for team collaboration from browser)
+- Cloud: Top Dog wins (only option for team collaboration from browser)
 
 ---
 
@@ -852,9 +852,9 @@ Cost for AI | +$10/mo | $0-12/mo
 - ❌ Documentation generation basic
 - ❌ No deployment features
 
-**Q-IDE Advantage:**
+**Top Dog Advantage:**
 ```
-Feature | Fleet | Q-IDE
+Feature | Fleet | Top Dog
 ──────────────────────────
 Browser IDE | ✅ | ✅
 Collaboration | ✅ | ✅
@@ -866,7 +866,7 @@ Pricing | $12.99 | $12 or $0 (free)
 Deployment | Limited | ✅
 ```
 
-**Why Q-IDE Wins:**
+**Why Top Dog Wins:**
 - Better AI (enterprise vs. basic)
 - More pricing flexibility (free tier)
 - Actual deployment features
@@ -891,11 +891,11 @@ Deployment | Limited | ✅
 - ❌ Single LLM (Claude only)
 - ❌ Cannot use your own keys
 
-**Q-IDE Advantage:**
+**Top Dog Advantage:**
 ```
-Use Case | Cursor | Q-IDE
+Use Case | Cursor | Top Dog
 ────────────────────────────────
-Solo local dev | ✅ | Q-IDE: same quality
+Solo local dev | ✅ | Top Dog: same quality
 Team collaboration | ❌ | ✅✅✅
 Cloud access | ❌ | ✅
 Deployment | ❌ | ✅
@@ -905,22 +905,22 @@ BYOK (cost control) | ❌ | ✅
 
 **Positioning:**
 - Cursor: Great for local solo development ($20/month)
-- Q-IDE: Better for teams or cloud development ($12/month)
+- Top Dog: Better for teams or cloud development ($12/month)
 - Market: Different segments, not direct competition
 
 ---
 
-## Q-IDE Competitive Advantages
+## Top Dog Competitive Advantages
 
 ### The Game-Changer: Runway BYOK Integration
 
-**Q-IDE is the ONLY platform offering integrated Runway media synthesis with BYOK model:**
+**Top Dog is the ONLY platform offering integrated Runway media synthesis with BYOK model:**
 
 #### What This Means
 
 ```
 ┌──────────────────────────────────────────────────────────────┐
-│                    MEDIA GENERATION IN Q-IDE                 │
+│                    MEDIA GENERATION IN Top Dog                 │
 ├──────────────────────────────────────────────────────────────┤
 │                                                              │
 │  1. Developer describes visual need in code/comment          │
@@ -938,7 +938,7 @@ BYOK (cost control) | ❌ | ✅
 
 #### Runway BYOK Capabilities
 
-| Feature | Q-IDE | Figma | Cursor | GitHub | Adobe | Competitor |
+| Feature | Top Dog | Figma | Cursor | GitHub | Adobe | Competitor |
 |---------|-------|-------|--------|--------|-------|-----------|
 | **Image Generation** | ✅✅✅ (BYOK) | Basic | ❌ | ❌ | Paid addon |
 | **Video Generation** | ✅✅✅ (BYOK) | Limited | ❌ | ❌ | Paid addon |
@@ -950,13 +950,13 @@ BYOK (cost control) | ❌ | ✅
 | **Free Tier Available** | ✅ (Runway free) | Limited | ❌ | ❌ | ❌ |
 | **Production Ready** | ✅ (Live) | ✅ | N/A | N/A | ✅ |
 
-#### Use Cases: Media Generation in Q-IDE
+#### Use Cases: Media Generation in Top Dog
 
 **Scenario 1: Social Media App Development**
 ```
 Developer: "Build me a social media feed with AI-generated profile avatars"
 
-Q-IDE Process:
+Top Dog Process:
 1. Parse requirements → Social media + avatars needed
 2. Q Assistant generates profile avatar descriptions
 3. Calls Runway with BYOK key: "Generate 5 diverse user avatars"
@@ -970,7 +970,7 @@ Q-IDE Process:
 ```
 Developer: "Create a landing page with AI-generated product demo video"
 
-Q-IDE Process:
+Top Dog Process:
 1. Parse product requirements → Marketing video needed
 2. Q Assistant generates video spec (length, style, content)
 3. Calls Runway with BYOK key: "Generate 30-second product demo video"
@@ -984,7 +984,7 @@ Q-IDE Process:
 ```
 Developer: "Add atmospheric music and UI sound effects to app"
 
-Q-IDE Process:
+Top Dog Process:
 1. Parse audio needs → Background music + 3x SFX
 2. Q Assistant generates audio specs
 3. Calls Runway with BYOK key: "Generate ambient electronic music loop"
@@ -996,7 +996,7 @@ Q-IDE Process:
 
 #### Runway BYOK vs Alternatives
 
-**Q-IDE with Runway BYOK:**
+**Top Dog with Runway BYOK:**
 - ✅ Use your own Runway account
 - ✅ Integrated into IDE workflow
 - ✅ Cost control (you own the bill)
@@ -1047,7 +1047,7 @@ Q-IDE Process:
     Full Suite       │  Adobe Creative
                      │     (expensive)
                      │
-    Code + AI        │         Q-IDE ← ONLY integrated
+    Code + AI        │         Top Dog ← ONLY integrated
                      │      (IDE+AI+MEDIA+BUILDS)
                      │
     Code Only        │  VS Code
@@ -1058,7 +1058,7 @@ Q-IDE Process:
     ──────────────────────────────────
     Solo Dev         Teams         Enterprise →
 
-Q-IDE Unique Position:
+Top Dog Unique Position:
 ├─ Developers don't leave IDE to generate media
 ├─ Media naturally integrated into workflow
 ├─ Cost control via BYOK
@@ -1069,9 +1069,9 @@ Q-IDE Unique Position:
 
 ---
 
-## Q-IDE Competitive Advantages
+## Top Dog Competitive Advantages
 
-### Unique Features (Q-IDE ONLY)
+### Unique Features (Top Dog ONLY)
 
 1. **Multi-LLM Bring Your Own Key (BYOK) Model** 🏆🏆🏆
    - Use OpenAI, Google, Anthropic, local Ollama simultaneously
@@ -1128,13 +1128,13 @@ Q-IDE Unique Position:
 ```
         Affordability
               ↑
-              │        Q-IDE Teams
+              │        Top Dog Teams
               │          ◆
               │         ╱  ╲
               │        ╱    ╲
         Replit●    ╱        ╲     ●Cursor
           Pro  ╱          ╲
-              ╱    ◆Q-IDE Pro ╲
+              ╱    ◆Top Dog Pro ╲
              ╱                 ╲        ●GitHub
    JetBrains●                   ╲    Copilot+
     Fleet                    ╲   Codespaces
@@ -1145,7 +1145,7 @@ Q-IDE Unique Position:
         ← Cost Control ——————→ Feature Completeness →
         
 Legend:
-◆ = Q-IDE advantage point
+◆ = Top Dog advantage point
 ● = Competitor
 ```
 
@@ -1153,52 +1153,52 @@ Legend:
 
 ### Head-to-Head Comparisons
 
-#### **Q-IDE vs GitHub Codespaces**
+#### **Top Dog vs GitHub Codespaces**
 
-| Factor | Q-IDE | Codespaces | Winner |
+| Factor | Top Dog | Codespaces | Winner |
 |--------|-------|-----------|--------|
-| **Monthly Cost (1 person)** | $12 | $46+ | Q-IDE (73% cheaper) |
-| **Monthly Cost (team of 5)** | $125 | $230+ | Q-IDE (86% cheaper) |
+| **Monthly Cost (1 person)** | $12 | $46+ | Top Dog (73% cheaper) |
+| **Monthly Cost (team of 5)** | $125 | $230+ | Top Dog (86% cheaper) |
 | **IDE Quality** | Excellent | Excellent | Tie |
-| **AI Capability** | Enterprise | Copilot Only | Q-IDE |
-| **Multi-LLM** | ✅ | ❌ | Q-IDE |
-| **BYOK Model** | ✅ | ❌ | Q-IDE |
-| **Pricing Predictability** | Transparent | Hourly (risky) | Q-IDE |
-| **Free Tier** | Full IDE | Limited | Q-IDE |
-| **Enterprise Features** | ✅✅✅ | ✅✅ | Q-IDE |
-| **OVERALL** | 🏆 WINNER | Good but expensive | **Q-IDE** |
+| **AI Capability** | Enterprise | Copilot Only | Top Dog |
+| **Multi-LLM** | ✅ | ❌ | Top Dog |
+| **BYOK Model** | ✅ | ❌ | Top Dog |
+| **Pricing Predictability** | Transparent | Hourly (risky) | Top Dog |
+| **Free Tier** | Full IDE | Limited | Top Dog |
+| **Enterprise Features** | ✅✅✅ | ✅✅ | Top Dog |
+| **OVERALL** | 🏆 WINNER | Good but expensive | **Top Dog** |
 
-#### **Q-IDE vs Replit**
+#### **Top Dog vs Replit**
 
-| Factor | Q-IDE | Replit | Winner |
+| Factor | Top Dog | Replit | Winner |
 |--------|-------|--------|--------|
 | **Monthly Cost (Pro)** | $12 | $7 | Replit ($5 cheaper) |
-| **IDE Quality** | Professional | Beginner-friendly | Q-IDE |
-| **AI Capability** | Enterprise | Basic | Q-IDE (10x better) |
+| **IDE Quality** | Professional | Beginner-friendly | Top Dog |
+| **AI Capability** | Enterprise | Basic | Top Dog (10x better) |
 | **Deployment** | Included | Included | Tie |
-| **Teams Feature** | $25/seat | $8-50/seat | Q-IDE (better value) |
+| **Teams Feature** | $25/seat | $8-50/seat | Top Dog (better value) |
 | **Target User** | Professionals | Beginners | Different segments |
-| **OVERALL** | 🏆 WINNER | Good for hobbyists | **Q-IDE (for pros)** |
+| **OVERALL** | 🏆 WINNER | Good for hobbyists | **Top Dog (for pros)** |
 
-#### **Q-IDE vs VS Code**
+#### **Top Dog vs VS Code**
 
-| Factor | Q-IDE | VS Code | Winner |
+| Factor | Top Dog | VS Code | Winner |
 |--------|-------|---------|--------|
 | **Base Cost** | $0 (free) or $12 | $0 (free) | Tie |
 | **Local Power** | Good | Best | VS Code |
-| **Cloud Access** | ✅ | ❌ | Q-IDE |
-| **Team Collaboration** | Native | Via plugins | Q-IDE |
-| **AI Included** | ✅ Enterprise | ❌ | Q-IDE |
-| **AI Cost (if added)** | $12 or $0 | +$10/month | Q-IDE |
-| **Setup Required** | None | Lots | Q-IDE |
-| **Browser Access** | ✅ | ❌ | Q-IDE |
+| **Cloud Access** | ✅ | ❌ | Top Dog |
+| **Team Collaboration** | Native | Via plugins | Top Dog |
+| **AI Included** | ✅ Enterprise | ❌ | Top Dog |
+| **AI Cost (if added)** | $12 or $0 | +$10/month | Top Dog |
+| **Setup Required** | None | Lots | Top Dog |
+| **Browser Access** | ✅ | ❌ | Top Dog |
 | **OVERALL** | 🏆 WINNER | Best local IDE | **Use both** |
 
 ---
 
 ## Market Positioning
 
-### Q-IDE's Unique Position in Market
+### Top Dog's Unique Position in Market
 
 ```
         Enterprise/Fortune 500
@@ -1231,27 +1231,27 @@ Legend:
 ### Target Market Segments
 
 #### **Segment 1: Solo Developers / Hobbyists**
-- **Best Options**: VS Code (free, local) or Q-IDE Free
+- **Best Options**: VS Code (free, local) or Top Dog Free
 - **Price Range**: $0/month
-- **Q-IDE Position**: Free tier competitive, cloud access unique
+- **Top Dog Position**: Free tier competitive, cloud access unique
 - **Market Share**: Lowest LTV, high volume
 
 #### **Segment 2: Individual Professionals**
-- **Best Options**: Cursor ($20), Q-IDE Pro ($12), Replit Pro ($7)
+- **Best Options**: Cursor ($20), Top Dog Pro ($12), Replit Pro ($7)
 - **Price Range**: $7-20/month
-- **Q-IDE Position**: Most affordable + best AI combo
+- **Top Dog Position**: Most affordable + best AI combo
 - **Market Share**: High value
 
 #### **Segment 3: Small Teams (5-50 people)**
-- **Best Options**: Q-IDE Teams ($25/seat), Replit Teams ($8-50/seat)
+- **Best Options**: Top Dog Teams ($25/seat), Replit Teams ($8-50/seat)
 - **Price Range**: $125-2,500/month (team)
-- **Q-IDE Position**: 🏆 BEST VALUE + Enterprise features
+- **Top Dog Position**: 🏆 BEST VALUE + Enterprise features
 - **Market Share**: Fastest growth
 
 #### **Segment 4: Enterprise (50+ people)**
-- **Best Options**: Codespaces (Azure), Q-IDE Enterprise, JetBrains
+- **Best Options**: Codespaces (Azure), Top Dog Enterprise, JetBrains
 - **Price Range**: Custom, $50k-500k+/year
-- **Q-IDE Position**: 🏆 MOST FLEXIBLE + Multi-LLM
+- **Top Dog Position**: 🏆 MOST FLEXIBLE + Multi-LLM
 - **Market Share**: Highest LTV
 
 ---
@@ -1260,8 +1260,8 @@ Legend:
 
 ### Immediate Actions (Next 30 Days)
 
-1. **Highlight BYOK Model** (Q-IDE's biggest differentiator)
-   - Create comparison: "Why Q-IDE's BYOK beats Copilot lock-in"
+1. **Highlight BYOK Model** (Top Dog's biggest differentiator)
+   - Create comparison: "Why Top Dog's BYOK beats Copilot lock-in"
    - Case study: Cost savings for teams using BYOK
    - Blog: "Multi-LLM Strategy for Enterprises"
 
@@ -1271,25 +1271,25 @@ Legend:
    - Growth metric: Free tier to paid conversion
 
 3. **Competitive Pricing Page**
-   - Side-by-side: Q-IDE vs Copilot vs Codespaces vs Replit
-   - ROI calculator: "Save $X with Q-IDE Teams"
+   - Side-by-side: Top Dog vs Copilot vs Codespaces vs Replit
+   - ROI calculator: "Save $X with Top Dog Teams"
    - TCO calculator: Show total cost of competitors
 
 4. **Target Small Teams** (highest value segment)
-   - "Q-IDE for Teams: $1,500/year vs $13,800/year (GitHub)"
+   - "Top Dog for Teams: $1,500/year vs $13,800/year (GitHub)"
    - Sales playbook for teams
    - Free trial for team setup
 
 ### Medium-Term Strategy (90 Days)
 
 1. **Build Case Studies**
-   - "How Team X saved $50k/year with Q-IDE Teams"
-   - "Migrating from Codespaces to Q-IDE"
+   - "How Team X saved $50k/year with Top Dog Teams"
+   - "Migrating from Codespaces to Top Dog"
    - "Multi-LLM strategy for faster development"
 
 2. **Product Differentiation**
    - Improve AI feature parity with GitHub Copilot
-   - Add VS Code plugin (let users hybrid Q-IDE+Local)
+   - Add VS Code plugin (let users hybrid Top Dog+Local)
    - Local LLM dashboard (showcase Ollama integration)
 
 3. **Go-to-Market**
@@ -1298,7 +1298,7 @@ Legend:
    - Data scientists (Show multi-model capability)
 
 4. **Sales Enablement**
-   - Sales sheet: Q-IDE vs competitors (printable)
+   - Sales sheet: Top Dog vs competitors (printable)
    - Demo videos: Show multi-LLM switching
    - Enterprise pitch: Security, compliance, flexibility
 
@@ -1311,7 +1311,7 @@ Legend:
 
 2. **Dominate Small Teams Market**
    - $1B TAM in small team dev tools
-   - Q-IDE's pricing + features = ideal fit
+   - Top Dog's pricing + features = ideal fit
    - Goal: 10% market share of small teams
 
 3. **Enterprise Readiness**
@@ -1323,7 +1323,7 @@ Legend:
 
 ## Final Verdict
 
-### Does Q-IDE Stack Up?
+### Does Top Dog Stack Up?
 
 **Physical/Technical Features: YES** ✅
 - Equals or exceeds all competitors
@@ -1346,7 +1346,7 @@ Legend:
 ### Competitive Ranking (Overall with Runway Integration)
 
 ```
-1. 🏆🏆🏆 Q-IDE (BEST for teams wanting IDE + AI + Media in ONE)
+1. 🏆🏆🏆 Top Dog (BEST for teams wanting IDE + AI + Media in ONE)
    └─ Reasons: Cost, features, flexibility, free tier, BYOK, Runway integration
    └─ Unique: Only platform combining IDE + multi-LLM + media synthesis
 
@@ -1371,7 +1371,7 @@ Legend:
 
 ### Investment Recommendation
 
-**Q-IDE is a strong competitive product ready to capture market share from:**
+**Top Dog is a strong competitive product ready to capture market share from:**
 - ✅ GitHub Codespaces (price-sensitive teams)
 - ✅ VS Code + Copilot users (want integrated solution)
 - ✅ Replit users (ready to upgrade to professional)
@@ -1385,7 +1385,7 @@ Legend:
 - Cloud IDE market: $5B
 - Media/Design tools (developers use): $10B+
 
-**Q-IDE's Share Potential: $750M+ (Year 5)**
+**Top Dog's Share Potential: $750M+ (Year 5)**
 - Conservative: 2.5% of TAM
 - Realistic: 5-10% of TAM
 - Optimistic: 15%+ of TAM

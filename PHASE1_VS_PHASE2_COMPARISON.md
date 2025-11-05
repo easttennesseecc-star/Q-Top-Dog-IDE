@@ -102,7 +102,7 @@ Frontend                              Backend
 │ ✨ Auth Tab (NEW!)   │            │ ✨ Auth Endpoints    │
 └──────────────────────┘            └──────────────────────┘
          ↓                                   ↓
-    OAuth Callback                   ~/,q-ide/llm_credentials.json
+    OAuth Callback                   ~/,Top Dog/llm_credentials.json
     Handler (NEW)                    (Credential Storage)
          ↓                                   ↓
     OAuth Popup                      OAuth Token Exchange
@@ -230,7 +230,7 @@ User Session
 
 ### Phase 2: Persistent Local Credential Storage
 ```
-~/.q-ide/llm_credentials.json
+~/.Top Dog/llm_credentials.json
 {
   "providers": {
     "openai": {
@@ -279,7 +279,7 @@ User Session
 ### Phase 1: Manual Process
 ```
 Step 1: Get API key from provider website
-Step 2: Copy-paste into Q-IDE
+Step 2: Copy-paste into Top Dog
 Step 3: Hope it works
 Step 4: If it breaks, manually update key
 ```
@@ -475,7 +475,7 @@ Phase 3: Integration (Next)
 
 ## Conclusion
 
-**Phase 2 transforms Q-IDE's LLM system from a basic configuration tool to a complete, production-ready OAuth authentication platform.**
+**Phase 2 transforms Top Dog's LLM system from a basic configuration tool to a complete, production-ready OAuth authentication platform.**
 
 From manual API key entry to secure, automated OAuth flows with local credential storage and comprehensive validation.
 

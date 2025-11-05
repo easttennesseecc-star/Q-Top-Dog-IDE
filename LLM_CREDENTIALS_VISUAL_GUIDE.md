@@ -1,33 +1,33 @@
-# 🎯 Q-IDE LLM Credentials - Visual Guide
+# 🎯 Top Dog LLM Credentials - Visual Guide
 
 ## The Problem We Solved
 
 ### Before (Confusing):
 ```
 User: "I want to use Google Gemini"
-Q-IDE: "Go to some OAuth page?"
+Top Dog: "Go to some OAuth page?"
 User: "But I just want to enter my API key..."
-Q-IDE: ❌ No clear way to do it
+Top Dog: ❌ No clear way to do it
 ```
 
 ### Now (Crystal Clear):
 ```
 User: "I want to use Google Gemini"
-Q-IDE: "Go to LLM Setup → Auth tab"
+Top Dog: "Go to LLM Setup → Auth tab"
 User: "Shows me Google, I click 'How to get credentials'"
-Q-IDE: "Opens Google AI Studio, you copy your API key"
+Top Dog: "Opens Google AI Studio, you copy your API key"
 User: "Paste key, click Save"
-Q-IDE: ✓ "Google Gemini authenticated!"
+Top Dog: ✓ "Google Gemini authenticated!"
 ```
 
 ---
 
 ## Where Everything Is
 
-### 📍 Q-IDE UI Location
+### 📍 Top Dog UI Location
 
 ```
-Q-IDE Main Window
+Top Dog Main Window
 │
 ├─ LLM Setup (tab)
 │  │
@@ -45,18 +45,18 @@ Q-IDE Main Window
 │     ├─ GitHub 🐙 [Input field] [Save]
 │     └─ Groq 🚀 [Input field] [Save]
 │
-└─ (Other Q-IDE features)
+└─ (Other Top Dog features)
 ```
 
 ---
 
 ## Step-by-Step: Add Google Gemini
 
-### Step 1: Open Q-IDE
+### Step 1: Open Top Dog
 
 ```
 ┌─────────────────────┐
-│   Q-IDE            │
+│   Top Dog            │
 │  ┌───────────────┐  │
 │  │ LLM Setup  ✓  │  │ ← Click this
 │  └───────────────┘  │
@@ -108,7 +108,7 @@ Q-IDE Main Window
 7. Copy it (Ctrl+C)
 ```
 
-### Step 5: Paste in Q-IDE
+### Step 5: Paste in Top Dog
 
 ```
 ┌────────────────────────────────────┐
@@ -118,7 +118,7 @@ Q-IDE Main Window
 │                              [Save] │  ← Click this
 └────────────────────────────────────┘
          ↓
-    (Sending to Q-IDE backend)
+    (Sending to Top Dog backend)
          ↓
     ✓ Authenticated!
 ```
@@ -146,13 +146,13 @@ Go to "Roles" tab:
 ## What Happens Behind the Scenes
 
 ```
-FRONTEND (Q-IDE UI)          BACKEND (Your Computer)      EXTERNAL
+FRONTEND (Top Dog UI)          BACKEND (Your Computer)      EXTERNAL
 ─────────────────────        ────────────────────        ────────
 
 User pastes:                 
-"AIzaSy..."  ──POST──→   Q-IDE validates      
+"AIzaSy..."  ──POST──→   Top Dog validates      
                          Stores in:
-                         ~/.q-ide/llm_credentials.json
+                         ~/.Top Dog/llm_credentials.json
                          (Encrypted, Local)
                          
                               ↓
@@ -167,7 +167,7 @@ User pastes:
                          Streams response back to UI
 ```
 
-**Key Point:** Your API key stays on your computer, Q-IDE just uses it when needed.
+**Key Point:** Your API key stays on your computer, Top Dog just uses it when needed.
 
 ---
 
@@ -180,17 +180,17 @@ User pastes:
                  │
                  ↓
         ┌────────────────────────┐
-        │ Q-IDE Frontend         │
+        │ Top Dog Frontend         │
         │ Sends message          │
         └────────────┬───────────┘
                      │
                      ↓
         ┌────────────────────────────┐
-        │ Q-IDE Backend              │
+        │ Top Dog Backend              │
         │ Looks up Q Assistant role  │
         │ Finds: "Assigned to Google"│
         │ Retrieves API key from     │
-        │ ~/.q-ide/llm_credentials.  │
+        │ ~/.Top Dog/llm_credentials.  │
         │ json                       │
         └────────────┬───────────────┘
                      │
@@ -213,14 +213,14 @@ User pastes:
                      │
                      ↓
         ┌─────────────────────────────────────────┐
-        │ Q-IDE Backend receives response         │
+        │ Top Dog Backend receives response         │
         │ Streams it back to Frontend character   │
         │ by character                            │
         └────────────┬────────────────────────────┘
                      │
                      ↓
         ┌──────────────────────────────────────────┐
-        │ Q-IDE Frontend                           │
+        │ Top Dog Frontend                           │
         │ Shows Q Assistant's response:            │
         │ "To build a fitness app, consider:       │
         │  - User authentication                   │
@@ -244,13 +244,13 @@ User pastes:
 ```
 🔒 Secure:
    Your Computer
-   └─ API Key stored in ~/.q-ide/llm_credentials.json
-      └─ Only Q-IDE can access it
+   └─ API Key stored in ~/.Top Dog/llm_credentials.json
+      └─ Only Top Dog can access it
       └─ Never sent to anyone but the LLM service itself
-      └─ Q-IDE developers never see it
+      └─ Top Dog developers never see it
 
 ❌ Insecure (we DON'T do this):
-   Your API Key → Q-IDE Server → Hackers steal it
+   Your API Key → Top Dog Server → Hackers steal it
    Your API Key → Shared in cloud → Exposed
    Your API Key → Sent to multiple services → Risky
 ```
@@ -258,14 +258,14 @@ User pastes:
 ### What Happens With Your Data
 
 ```
-1. You paste API key in Q-IDE
-2. Q-IDE stores it locally (encrypted if possible)
+1. You paste API key in Top Dog
+2. Top Dog stores it locally (encrypted if possible)
 3. When you use Q Assistant:
-   - Q-IDE uses your key to call Google/OpenAI/etc
+   - Top Dog uses your key to call Google/OpenAI/etc
    - Your question is sent along with your API key
    - Google/OpenAI processes it
    - Response comes back
-4. Response is shown in Q-IDE
+4. Response is shown in Top Dog
 5. Your key is NEVER shared with anyone else
 ```
 
@@ -278,7 +278,7 @@ User pastes:
 ```
 Pros:
 ✓ Simple - just paste and go
-✓ No account needed on Q-IDE
+✓ No account needed on Top Dog
 ✓ Full control - revoke anytime
 ✓ Each service has its own key
 ✓ Works offline (once saved)
@@ -297,13 +297,13 @@ Pros:
 ✓ Easier account management
 
 Cons:
-✗ Requires user account on Q-IDE
+✗ Requires user account on Top Dog
 ✗ Complex flow with redirects
 ✗ Confusing for users
 ✗ "Why do I need to create an account?"
 ```
 
-### Method 3: Q-IDE Account (What We DON'T Do)
+### Method 3: Top Dog Account (What We DON'T Do)
 
 ```
 Pros:
@@ -313,7 +313,7 @@ Cons:
 ✗ We'd need to store YOUR credentials
 ✗ Major security risk
 ✗ Hackers would want to break in
-✗ Creates liability for Q-IDE
+✗ Creates liability for Top Dog
 ✗ "Your API keys were exposed in a breach"
 ```
 
@@ -334,8 +334,8 @@ Cons:
   ☐ Generate API key
   ☐ Copy the key
 
-☐ Step 3: Add to Q-IDE
-  ☐ Open Q-IDE
+☐ Step 3: Add to Top Dog
+  ☐ Open Top Dog
   ☐ Go to LLM Setup → Auth tab
   ☐ Find your provider card
   ☐ Paste API key
@@ -364,7 +364,7 @@ Problem: No LLMs showing in Auth tab
 │  └─ If not: Click "LLM Setup" first
 ├─ Check: Are there cards for Google, OpenAI, etc?
 │  └─ If not: Refresh browser (Ctrl+R)
-└─ Solution: Restart Q-IDE backend
+└─ Solution: Restart Top Dog backend
 
 Problem: "Invalid API key" error
 ├─ Check: Did you copy the ENTIRE key?
@@ -398,7 +398,7 @@ Problem: Q Assistant not responding
 2. **Assign It to Q Assistant** (so Q Assistant can respond)
 3. **Describe Your App Idea** ("I want to build an iOS and Android app...")
 4. **Let Q Assistant Guide You** (through requirements, questions, code generation)
-5. **Build Your App** (Q-IDE generates the codebase)
+5. **Build Your App** (Top Dog generates the codebase)
 
 ### 💡 Pro Tips:
 

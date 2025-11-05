@@ -1,4 +1,4 @@
-# ⚔️ MARKET DOMINATION PLAYBOOK: How Q-IDE Beats VS Code & GitHub Copilot
+# ⚔️ MARKET DOMINATION PLAYBOOK: How Top Dog Beats VS Code & GitHub Copilot
 
 **Type**: Go-to-Market Strategy (Offensive)  
 **Timeline**: 12 months to market dominance  
@@ -12,10 +12,10 @@
 ### The Old Narrative (Dead)
 > "VS Code is the best editor because it's powerful, free, and has the largest ecosystem."
 
-### The New Reality (Q-IDE)
-> "VS Code is the best *local* editor. Q-IDE is the best *production* IDE."
+### The New Reality (Top Dog)
+> "VS Code is the best *local* editor. Top Dog is the best *production* IDE."
 
-**Translation**: VS Code users write code locally. Q-IDE users ship code to production in the same interface.
+**Translation**: VS Code users write code locally. Top Dog users ship code to production in the same interface.
 
 That's game over.
 
@@ -23,14 +23,14 @@ That's game over.
 
 ## PART 1: THE SUPERIORITY OFFENSIVE
 
-### Where Q-IDE Already Dominates
+### Where Top Dog Already Dominates
 
 #### 1. **AI Marketplace** (NOBODY ELSE HAS THIS)
 
 **Current State:**
 - GitHub Copilot: "Use GPT-4 or Claude" (pick one, pay monthly)
 - VS Code: "Install extensions" (fragmented, slow)
-- Q-IDE: "Choose from 53 AI models. Switch between them. Optimize cost. No lock-in."
+- Top Dog: "Choose from 53 AI models. Switch between them. Optimize cost. No lock-in."
 
 **Why This Matters:**
 ```
@@ -40,21 +40,21 @@ Developer Problem: "I want to use Claude for some tasks, GPT-4 for others,
 
 VS Code Solution: Install 3 different extensions, switch between them manually
 GitHub Solution: Can't do this. Locked to their model.
-Q-IDE Solution: One dropdown. Switch models. Done.
+Top Dog Solution: One dropdown. Switch models. Done.
 
-Result: Q-IDE user gets 10x better results. VS Code/GitHub users are stuck.
+Result: Top Dog user gets 10x better results. VS Code/GitHub users are stuck.
 ```
 
 **Market Attack:**
 - Position as: "The AI IDE that doesn't lock you in"
 - Target: Teams tired of GitHub's monopoly
-- Press angle: "Q-IDE's Marketplace ends GitHub Copilot's single-LLM tyranny"
+- Press angle: "Top Dog's Marketplace ends GitHub Copilot's single-LLM tyranny"
 - Timeline: Launch "Marketplace 2.0" with 10x more integrations by Month 2
 
 **Why They Can't Compete:**
 - GitHub is locked into Microsoft's Azure + OpenAI partnership
 - VS Code can't build a marketplace (fragmented extension system)
-- Q-IDE owns this space for next 24+ months (until they copy it)
+- Top Dog owns this space for next 24+ months (until they copy it)
 
 ---
 
@@ -63,7 +63,7 @@ Result: Q-IDE user gets 10x better results. VS Code/GitHub users are stuck.
 **Current State:**
 - GitHub Copilot: Can't generate images/videos/audio
 - VS Code: Can't generate images/videos/audio
-- Q-IDE: Generate images, videos, audio, all integrated
+- Top Dog: Generate images, videos, audio, all integrated
 
 **Why This Matters:**
 ```
@@ -71,22 +71,22 @@ Game Developer Problem: "I need to code AND generate game assets simultaneously"
 
 VS Code Solution: Open Photoshop. Open Runway. Context-switch constantly.
 GitHub Solution: Same problem, slower.
-Q-IDE Solution: Code on left. Generate assets on right. Ship game by Friday.
+Top Dog Solution: Code on left. Generate assets on right. Ship game by Friday.
 
-Result: Q-IDE user ships 10x faster. Competitors spend 2x time context-switching.
+Result: Top Dog user ships 10x faster. Competitors spend 2x time context-switching.
 ```
 
 **Market Attack:**
 - Position as: "The IDE for full-stack developers and game makers"
 - Target: Indie game developers, content creators, AI enthusiasts
-- Press angle: "Q-IDE + Runway integration makes VS Code + Photoshop combo obsolete"
+- Press angle: "Top Dog + Runway integration makes VS Code + Photoshop combo obsolete"
 - Community: Launch indie game dev community (Discord, forums)
-- Timeline: Launch "Q-IDE Game Studio" by Month 2 with full Runway integration
+- Timeline: Launch "Top Dog Game Studio" by Month 2 with full Runway integration
 
 **Why They Can't Compete:**
 - GitHub doesn't have a media partnership
 - VS Code is code-only (adding media would bloat it)
-- Runway relationship is exclusive to Q-IDE (contractual advantage)
+- Runway relationship is exclusive to Top Dog (contractual advantage)
 - You'll own the "creator IDE" space
 
 ---
@@ -96,7 +96,7 @@ Result: Q-IDE user ships 10x faster. Competitors spend 2x time context-switching
 **Current State:**
 - GitHub Copilot: "Chat with AI" (generic)
 - VS Code: "Chat with extensions" (fragmented)
-- Q-IDE: "Deploy custom agents for any task: code review, architecture, security, performance, databases, DevOps, etc."
+- Top Dog: "Deploy custom agents for any task: code review, architecture, security, performance, databases, DevOps, etc."
 
 **Why This Matters:**
 ```
@@ -105,10 +105,10 @@ Enterprise Developer Problem: "We need an AI that understands OUR codebase,
 
 VS Code Solution: Use generic Copilot, hope it understands your context
 GitHub Solution: Same problem.
-Q-IDE Solution: Deploy custom agents trained on YOUR code + rules + patterns
+Top Dog Solution: Deploy custom agents trained on YOUR code + rules + patterns
                 Agents learn from YOUR team. Better accuracy. Own IP.
 
-Result: Q-IDE customer gets 100x better results tailored to their specific needs.
+Result: Top Dog customer gets 100x better results tailored to their specific needs.
         GitHub customer gets generic advice.
 ```
 
@@ -136,7 +136,7 @@ Result: Q-IDE customer gets 100x better results tailored to their specific needs
 **Current State:**
 - VS Code: Code locally, deploy separately (2 interfaces)
 - GitHub Codespaces: Cloud IDE, but no built-in deployment
-- Q-IDE: Code → Deploy → Monitor → Rollback (all in one interface)
+- Top Dog: Code → Deploy → Monitor → Rollback (all in one interface)
 
 **Why This Matters:**
 ```
@@ -148,14 +148,14 @@ Developer Workflow (VS Code):
 ├─ Troubleshoot in monitoring system (another tool)
 └─ Total: 4 different interfaces, 20 min feedback loop
 
-Developer Workflow (Q-IDE):
+Developer Workflow (Top Dog):
 ├─ Write code
 ├─ Deploy (1 click)
 ├─ See live feedback (built-in monitoring)
 ├─ Rollback if needed (1 click)
 └─ Total: 1 interface, 30 second feedback loop
 
-Result: Q-IDE developers ship 10x faster. VS Code developers waste time context-switching.
+Result: Top Dog developers ship 10x faster. VS Code developers waste time context-switching.
 ```
 
 **Market Attack:**
@@ -167,7 +167,7 @@ Result: Q-IDE developers ship 10x faster. VS Code developers waste time context-
 **Why They Can't Compete:**
 - VS Code is editor-only (deployment is separate concern)
 - GitHub Copilot is about coding, not shipping
-- Q-IDE owns "full-stack IDE" space
+- Top Dog owns "full-stack IDE" space
 
 ---
 
@@ -177,7 +177,7 @@ Result: Q-IDE developers ship 10x faster. VS Code developers waste time context-
 - GitHub Copilot: "Here's code. Hope it's right." (No verification)
 - VS Code: No AI safety mechanisms
 - Claude/GPT-4: Generate code, pray it works
-- **Q-IDE: AI generates code → Automatic verification → Safe execution**
+- **Top Dog: AI generates code → Automatic verification → Safe execution**
 
 **Why This Matters:**
 ```
@@ -188,7 +188,7 @@ The Hallucination Problem (Affects ALL LLMs):
 ├─ System crashes at 2 AM
 ├─ Dev is on fire department duty all night
 
-Q-IDE Solution (PREVENTS THIS):
+Top Dog Solution (PREVENTS THIS):
 ├─ AI generates code
 ├─ Overwatch system verifies it against:
 │  ├─ Syntax validation (is it valid code?)
@@ -210,7 +210,7 @@ GitHub Copilot Result:
 ├─ Entire team loses trust in Copilot
 ├─ Nobody uses it for mission-critical code
 
-Q-IDE Result:
+Top Dog Result:
 ├─ Dev uses code with confidence
 ├─ Code verified before deployment
 ├─ Entire team trusts AI suggestions
@@ -220,9 +220,9 @@ Q-IDE Result:
 **Market Attack:**
 - Position as: "The only AI IDE that verifies code BEFORE it breaks"
 - Target: Enterprise + risk-averse teams (finance, healthcare, infrastructure)
-- Messaging: "GitHub's Copilot: 'Trust us, it probably works.' Q-IDE: 'We verified it works.'"
-- Press angle: "Q-IDE solves AI hallucination problem that's plaguing every other IDE"
-- Case study potential: "How [Bank] cut production incidents 95% with Q-IDE's Overwatch"
+- Messaging: "GitHub's Copilot: 'Trust us, it probably works.' Top Dog: 'We verified it works.'"
+- Press angle: "Top Dog solves AI hallucination problem that's plaguing every other IDE"
+- Case study potential: "How [Bank] cut production incidents 95% with Top Dog's Overwatch"
 
 **Why They Can't Compete:**
 - GitHub Copilot is speed-focused (not safety-focused)
@@ -243,7 +243,7 @@ Q-IDE Result:
 - GitHub Copilot: "Generate more code based on previous code" (creates compounding errors)
 - VS Code: No error correction
 - LLM drift: AI makes assumption → builds on it → error compounds until code is unusable
-- **Q-IDE: Overwatch stops the spiral before it happens**
+- **Top Dog: Overwatch stops the spiral before it happens**
 
 **Why This Matters:**
 ```
@@ -264,7 +264,7 @@ Real Impact:
 ├─ Code breaks in production
 ├─ Takes 8 hours to find the root cause (original assumption in line 1)
 
-Q-IDE Overwatch Solution:
+Top Dog Overwatch Solution:
 ├─ Line 1: "Wait, you're assuming Postgres port 5432. Is that configured?"
 ├─ If no: "Let's verify the actual config before generating more code"
 ├─ Generation pauses. Dev confirms setup.
@@ -278,8 +278,8 @@ Result: No rabbit holes. No cascading failures. No production incidents.
 **Market Attack:**
 - Position as: "Overwatch prevents the 'rabbit hole effect' where AI generates 200 lines of code on a wrong assumption"
 - Target: Teams burnt by bad AI-generated code (most teams after 6 months of Copilot)
-- Messaging: "GitHub's Copilot let you generate yourself into a corner. Q-IDE's Overwatch prevents that."
-- Press angle: "Q-IDE's Overwatch system eliminates the 'tech debt spiral' that plagues AI-generated code"
+- Messaging: "GitHub's Copilot let you generate yourself into a corner. Top Dog's Overwatch prevents that."
+- Press angle: "Top Dog's Overwatch system eliminates the 'tech debt spiral' that plagues AI-generated code"
 
 **Why They Can't Compete:**
 - GitHub wants developers to use Copilot blindly (trust the AI)
@@ -296,26 +296,26 @@ Developer Fear (Current Reality):
 ├─ "I'm rewriting it from scratch (8 hours wasted)"
 ├─ "Copilot = expensive code I can't trust"
 
-Developer Confidence (With Q-IDE Overwatch):
-├─ "I used Q-IDE to generate code with Overwatch verification"
+Developer Confidence (With Top Dog Overwatch):
+├─ "I used Top Dog to generate code with Overwatch verification"
 ├─ "Each section was verified before generating the next"
 ├─ "I trust every line because it passed verification"
 ├─ "Code went to production without review cycles"
-├─ "Q-IDE = code I can actually use"
+├─ "Top Dog = code I can actually use"
 ```
 
 **Revenue Impact:**
 - Enterprise pays premium for "verified AI code"
 - Support tickets drop 70% (no more "why does this generated code break?")
 - Productivity multiplier (developers trust and use AI generation)
-- Lock-in effect (competitors' code becomes unreliable, Q-IDE code becomes trusted)
+- Lock-in effect (competitors' code becomes unreliable, Top Dog code becomes trusted)
 
 ---
 
-### Where Q-IDE is Strongest (vs VS Code Specifically)
+### Where Top Dog is Strongest (vs VS Code Specifically)
 
 ```
-DIMENSION                   VS CODE             Q-IDE               Q-IDE ADVANTAGE
+DIMENSION                   VS CODE             Top Dog               Top Dog ADVANTAGE
 ──────────────────────────────────────────────────────────────────────────────────
 Integrated Deployment       ❌                  ✅                  Monolithic > modular
 Production Monitoring       ❌                  ✅                  Real-time feedback
@@ -331,8 +331,8 @@ Security Scanning           PLUGIN              ✅                  Built-in SA
 Cost Optimization           ❌                  ✅✅                Automatic cost reduction
 DevOps Automation           ❌                  ✅                  Built-in K8s/Docker
 
-Result: VS Code wins 3 categories. Q-IDE wins 13 categories.
-        VS Code is "best editor." Q-IDE is "best IDE for shipping."
+Result: VS Code wins 3 categories. Top Dog wins 13 categories.
+        VS Code is "best editor." Top Dog is "best IDE for shipping."
 ```
 
 ---
@@ -343,22 +343,22 @@ Result: VS Code wins 3 categories. Q-IDE wins 13 categories.
 
 **Week 1-2: Launch "End of the Editor" Campaign**
 
-Create campaign positioning Q-IDE as the next generation:
+Create campaign positioning Top Dog as the next generation:
 
 ```
 Campaign Messaging:
-├─ Twitter: "VS Code is a great *text editor*. Q-IDE is an IDE that ships code to production."
+├─ Twitter: "VS Code is a great *text editor*. Top Dog is an IDE that ships code to production."
 ├─ Blog: "The Editor vs IDE Difference: Why VS Code's days are numbered"
-├─ Press: "Q-IDE challenges VS Code dominance with production-integrated cloud IDE"
-├─ Dev community: "Tired of VS Code + 4 other tools? Q-IDE does it all."
-└─ YouTube: "Q-IDE vs VS Code: The complete comparison" (30 min technical deep dive)
+├─ Press: "Top Dog challenges VS Code dominance with production-integrated cloud IDE"
+├─ Dev community: "Tired of VS Code + 4 other tools? Top Dog does it all."
+└─ YouTube: "Top Dog vs VS Code: The complete comparison" (30 min technical deep dive)
 
 Visual Positioning:
 ```
                      LOCAL POWER ←→ CLOUD SCALE
                      ↑
       PRODUCTION    │
-      READY         │  ◆ Q-IDE (integrated)
+      READY         │  ◆ Top Dog (integrated)
       DEPLOYMENT    │
       & MONITORING  │
                     │
@@ -372,13 +372,13 @@ Visual Positioning:
 
 **Week 3-4: Launch "Marketplace 2.0" Announcement**
 
-Reveal the full scope of what Q-IDE offers that GitHub/VS Code can't:
+Reveal the full scope of what Top Dog offers that GitHub/VS Code can't:
 
 ```
-Press Release: "Q-IDE Launches 53-Model AI Marketplace"
+Press Release: "Top Dog Launches 53-Model AI Marketplace"
 ├─ "Choose from 53 LLMs, not forced into 1"
 ├─ "Switch models mid-conversation, optimize cost automatically"
-├─ "GitHub Copilot forces you to pick 1 model. Q-IDE gives you unlimited choice"
+├─ "GitHub Copilot forces you to pick 1 model. Top Dog gives you unlimited choice"
 └─ "We're not just an editor. We're the AI IDE of the future."
 
 Developer Newsletter: "The 13 features VS Code will never have"
@@ -392,14 +392,14 @@ Developer Newsletter: "The 13 features VS Code will never have"
 ├─ ... (list all 13)
 
 Result: Developers start to realize VS Code is insufficient.
-        "Wait... I need all 4 of these tools? Q-IDE has them built-in?"
+        "Wait... I need all 4 of these tools? Top Dog has them built-in?"
 ```
 
 ---
 
 ### Month 2: Attack Specific Segments
 
-**Week 5-6: Launch Q-IDE Game Studio**
+**Week 5-6: Launch Top Dog Game Studio**
 
 Positioning: "The IDE built for indie game developers"
 
@@ -423,7 +423,7 @@ Result: Own game developer vertical completely (60%+ market share in indie).
         VS Code users still jumping between 4 tools.
 ```
 
-**Week 7-8: Launch Q-IDE Data Studio**
+**Week 7-8: Launch Top Dog Data Studio**
 
 Positioning: "The IDE built for data scientists and ML engineers"
 
@@ -444,7 +444,7 @@ Marketing:
 ├─ Partner with fast.ai (reach 1M+ data scientists)
 
 Result: Own data science vertical (40%+ market share).
-        "Why use VS Code + Jupyter + MLflow when Q-IDE does it all?"
+        "Why use VS Code + Jupyter + MLflow when Top Dog does it all?"
 ```
 
 ---
@@ -466,7 +466,7 @@ Features:
 └─ API: Build your own agents (Python SDK)
 
 Marketing to Enterprise:
-├─ "GitHub Copilot is generic. Q-IDE agents learn your patterns."
+├─ "GitHub Copilot is generic. Top Dog agents learn your patterns."
 ├─ "Deploy custom security agent that knows your compliance rules"
 ├─ "Custom code review agent that enforces your team's standards"
 ├─ "Your proprietary agents stay in your account (not sold to others)"
@@ -489,7 +489,7 @@ Why GitHub Can't Compete:
 Positioning: "The IDE for regulated industries"
 
 ```
-Q-IDE Healthcare Edition:
+Top Dog Healthcare Edition:
 ├─ HIPAA-ready (built-in, not bolted-on)
 ├─ Data residency controls (EU/US/custom region)
 ├─ Audit logging (who accessed what, when)
@@ -497,7 +497,7 @@ Q-IDE Healthcare Edition:
 ├─ Compliance dashboard (SOC2, HIPAA status)
 └─ Price: Same as enterprise (compliance = no premium)
 
-Q-IDE Finance Edition:
+Top Dog Finance Edition:
 ├─ SOC2 Type II certification
 ├─ PCI-DSS compliance ready
 ├─ Encryption key management (HSM support)
@@ -506,9 +506,9 @@ Q-IDE Finance Edition:
 └─ Price: Same as enterprise
 
 Marketing:
-├─ "GitHub makes you comply. Q-IDE IS compliant from day 1."
-├─ "Stop waiting for certifications. Use Q-IDE enterprise-ready IDEs."
-├─ "HIPAA certification matters more than brand (Q-IDE has both soon)"
+├─ "GitHub makes you comply. Top Dog IS compliant from day 1."
+├─ "Stop waiting for certifications. Use Top Dog enterprise-ready IDEs."
+├─ "HIPAA certification matters more than brand (Top Dog has both soon)"
 
 Result: Lock in healthcare, finance, government sectors.
         vs Code/GitHub can't compete on compliance (not their focus).
@@ -521,10 +521,10 @@ Result: Lock in healthcare, finance, government sectors.
 ### Kill the "Editor vs IDE" Comparison
 
 **Old Messaging** (Defensive):
-> "Q-IDE is a cloud IDE like GitHub Codespaces"
+> "Top Dog is a cloud IDE like GitHub Codespaces"
 
 **New Messaging** (Offensive):
-> "Q-IDE is what happens when you stop treating editors and IDEs as separate products"
+> "Top Dog is what happens when you stop treating editors and IDEs as separate products"
 
 ### The 5 Core Messages
 
@@ -534,7 +534,7 @@ Problem: "I use VS Code for editing, GitHub for deployment,
           DataDog for monitoring, Postman for APIs, 
           and 3 other tools for my workflow."
 
-Solution: "Q-IDE does all of this in one interface."
+Solution: "Top Dog does all of this in one interface."
 
 Proof: "53 AI models + Runway media + deployment + monitoring + 
         API testing + database GUI + performance profiling + 
@@ -548,7 +548,7 @@ Result: "1 tool. 10x faster. 5x cheaper than best-of-breed."
 Problem: "GitHub forces me to use their LLM. If I want Claude or 
           local LLMs, I'm out of luck."
 
-Solution: "Q-IDE: choose from 53 LLMs. Switch instantly. Optimize cost."
+Solution: "Top Dog: choose from 53 LLMs. Switch instantly. Optimize cost."
 
 Proof: "BYOK multi-LLM routing with automatic cost optimization"
 
@@ -560,7 +560,7 @@ Result: "Your AI. Your choice. Your money."
 Problem: "VS Code is great for writing code. But shipping? 
           That's 4 other tools and 20 minutes of context-switching."
 
-Solution: "Q-IDE: write code → deploy → monitor → rollback (all in one interface)"
+Solution: "Top Dog: write code → deploy → monitor → rollback (all in one interface)"
 
 Proof: "Production monitoring + deployment + CI/CD built-in"
 
@@ -572,7 +572,7 @@ Result: "Ideas → Production in minutes, not hours."
 Problem: "VS Code extensions are fragmented. 
           GitHub Copilot is one-size-fits-all."
 
-Solution: "Q-IDE Marketplace: 53 AI models + 1000+ agents + infinite possibilities"
+Solution: "Top Dog Marketplace: 53 AI models + 1000+ agents + infinite possibilities"
 
 Proof: "Agent marketplace, media integration, LLM routing, custom agents"
 
@@ -582,7 +582,7 @@ Result: "Your IDE, your rules. Build what you want."
 **Message #5: "Made by People Who Ship"**
 ```
 Problem: "GitHub has 10,000 people debating features. 
-          Q-IDE has a team that actually ships."
+          Top Dog has a team that actually ships."
 
 Solution: "Features you request Monday → shipped Friday"
 
@@ -598,7 +598,7 @@ Result: "The IDE that listens to you, not a committee."
 ### Channel 1: Developer Community (Organic, Viral)
 
 **HackerNews**
-- Week 1: "Q-IDE defeats VS Code in direct comparison" (technical post)
+- Week 1: "Top Dog defeats VS Code in direct comparison" (technical post)
   - Show metrics: Performance, features, pricing
   - Target: 1000+ upvotes, #1 product of the day
   
@@ -606,29 +606,29 @@ Result: "The IDE that listens to you, not a committee."
   - Show custom agents for different use cases
   - Target: Reach 100k developers
   
-- Week 5: "We shipped Q-IDE Game Studio in 8 weeks. Here's why VS Code can't" 
+- Week 5: "We shipped Top Dog Game Studio in 8 weeks. Here's why VS Code can't" 
   - Technical deep-dive on game dev IDE
   - Target: Game dev community awareness
 
 **Twitter/X**
-- Daily threads: "VS Code limitation #1, #2, #3 (that Q-IDE solves)"
+- Daily threads: "VS Code limitation #1, #2, #3 (that Top Dog solves)"
 - Weekly: Shipping updates (velocity metrics)
 - Bi-weekly: "X feature GitHub said takes 6 months, we shipped in 2 weeks"
 - Ongoing: Founder persona (technical, building, moving fast)
 
 **Reddit**
 - r/programming: "We built an IDE that does what VS Code + 5 other tools do"
-- r/gamedev: "Q-IDE Game Studio makes indie game dev 10x faster"
-- r/MachineLearning: "Data scientists: try Q-IDE Data Studio"
+- r/gamedev: "Top Dog Game Studio makes indie game dev 10x faster"
+- r/MachineLearning: "Data scientists: try Top Dog Data Studio"
 - r/learnprogramming: "Better than VS Code for beginners? Maybe"
 - Authentic founder participation (not marketing speak)
 
 **YouTube**
-- Video 1: "Q-IDE vs VS Code vs GitHub Copilot (Honest Comparison)"
+- Video 1: "Top Dog vs VS Code vs GitHub Copilot (Honest Comparison)"
   - 30 minutes, technical, side-by-side features
   - Target: 100k views by end of Month 1
   
-- Video 2: "Building a Game in Q-IDE (Full Tutorial)"
+- Video 2: "Building a Game in Top Dog (Full Tutorial)"
   - Show full workflow: code → asset generation → deploy
   - Target: 50k views, go viral in game dev community
   
@@ -639,10 +639,10 @@ Result: "The IDE that listens to you, not a committee."
 **Discord/Communities**
 - Join game dev, data science, startup communities
 - Authentic presence (not spam)
-- Answer questions with Q-IDE solutions
+- Answer questions with Top Dog solutions
 - Invite early adopters to beta programs
 
-**Result**: 500k+ developers aware of Q-IDE by end of Month 1
+**Result**: 500k+ developers aware of Top Dog by end of Month 1
            100k+ trying it by end of Month 2
            50k+ daily active users by end of Month 3
 
@@ -652,12 +652,12 @@ Result: "The IDE that listens to you, not a committee."
 
 **Tier 1 Press (Month 1)**
 - TechCrunch: "Startup challenges GitHub Copilot with multi-LLM marketplace"
-- The Verge: "Q-IDE could be the VS Code killer"
+- The Verge: "Top Dog could be the VS Code killer"
 - VentureBeat: "Cloud IDE market just got more interesting"
-- Dev.to: "Why we built Q-IDE instead of using GitHub Codespaces"
+- Dev.to: "Why we built Top Dog instead of using GitHub Codespaces"
 
 **Tier 2 Press (Month 2)**
-- InfoQ: "Q-IDE agent marketplace shows future of AI development"
+- InfoQ: "Top Dog agent marketplace shows future of AI development"
 - Hacker News: Weekly mentions
 - Product Hunt: Launch every new vertical (Game Studio, Data Studio, Enterprise)
 
@@ -674,14 +674,14 @@ Result: "The IDE that listens to you, not a committee."
 
 **Direct Sales (Starting Week 1)**
 - Target: Fast-growing companies (100-1000 employees)
-- Positioning: "VS Code is free, but costs you in productivity. GitHub Codespaces is expensive and limited. Q-IDE is 5x cheaper and 10x better."
+- Positioning: "VS Code is free, but costs you in productivity. GitHub Codespaces is expensive and limited. Top Dog is 5x cheaper and 10x better."
 - Approach: Free trial (1 week) → case study → long-term contract
 - Goal: 50 enterprise customers by Month 3
 
 **Sales Messaging:**
 ```
-Traditional Pitch: "Q-IDE is a cloud IDE"
-New Pitch: "Q-IDE is VS Code + GitHub Copilot + 4 other tools + more features for 1/3 the price"
+Traditional Pitch: "Top Dog is a cloud IDE"
+New Pitch: "Top Dog is VS Code + GitHub Copilot + 4 other tools + more features for 1/3 the price"
 
 Traditional Pitch: "We have an AI marketplace"
 New Pitch: "Copilot locked you into 1 LLM. We let you choose from 53. 
@@ -705,7 +705,7 @@ New Pitch: "We're 3-5 engineers shipping 50 features/month.
 - Target: 10k game dev users by Month 3
 
 **Data Scientists**
-- Kaggle community (competitions + Q-IDE data studio)
+- Kaggle community (competitions + Top Dog data studio)
 - r/MachineLearning, r/datascience
 - Fast.ai partnership
 - ML conferences (exhibit)
@@ -723,54 +723,54 @@ New Pitch: "We're 3-5 engineers shipping 50 features/month.
 
 ### When GitHub Cuts Copilot Price to $10/month
 
-**Q-IDE Response:**
+**Top Dog Response:**
 ```
 IF: GitHub cuts Copilot from $46 to $10/month
-THEN: Q-IDE focuses on enterprise agents, not base pricing
+THEN: Top Dog focuses on enterprise agents, not base pricing
 
 New Positioning: "GitHub cut price. We're cutting workflows."
 Message: "GitHub wants to compete on price. We want to compete on productivity.
           When GitHub cuts price, enterprises ask: 'But what does Copilot actually DO?'
-          Answer: One LLM. Q-IDE: 53 LLMs + agents + full production workflow."
+          Answer: One LLM. Top Dog: 53 LLMs + agents + full production workflow."
 
 Action: Launch "Enterprise Agent Marketplace" (higher margin than Copilot pricing)
         Enterprise pays: $1k-10k/month for custom agents
         GitHub competes on: $10/month base
-        Result: Q-IDE wins enterprise. GitHub wins individual developers.
+        Result: Top Dog wins enterprise. GitHub wins individual developers.
 ```
 
 ---
 
 ### When GitHub Adds Multi-LLM Support
 
-**Q-IDE Response:**
+**Top Dog Response:**
 ```
 IF: GitHub announces multi-LLM support
-THEN: Q-IDE is already 3 versions ahead
+THEN: Top Dog is already 3 versions ahead
 
 New Positioning: "GitHub finally admits one LLM wasn't enough. We're celebrating."
 Message: "We've had 53 LLMs + cost optimization since launch.
           GitHub just announced they'll have it in 2026.
           We'll have 150+ LLMs + agent customization by then."
 
-Action: Ship "Q-IDE Agent 3.0" (custom agent training on proprietary data)
+Action: Ship "Top Dog Agent 3.0" (custom agent training on proprietary data)
         Ship "Marketplace 3.0" (1000+ agents available)
         Announce "Model Library" (bring your own LLM in 1 click)
-Result: Q-IDE stays ahead by executing 10x faster than GitHub
+Result: Top Dog stays ahead by executing 10x faster than GitHub
 ```
 
 ---
 
 ### When VS Code Launches Cloud IDE
 
-**Q-IDE Response:**
+**Top Dog Response:**
 ```
 IF: VS Code launches cloud IDE (likely)
-THEN: Q-IDE owns the "production ready" angle
+THEN: Top Dog owns the "production ready" angle
 
 New Positioning: "VS Code in the cloud is still just an editor."
-Message: "VS Code cloud is great for editing. Q-IDE is built for shipping.
-          You can edit in VS Code Cloud. You ship in Q-IDE."
+Message: "VS Code cloud is great for editing. Top Dog is built for shipping.
+          You can edit in VS Code Cloud. You ship in Top Dog."
 
 Action: Emphasize production-grade features GitHub/VS Code don't have:
         - Deployment automation
@@ -778,7 +778,7 @@ Action: Emphasize production-grade features GitHub/VS Code don't have:
         - Custom agents
         - Media generation
         - Compliance-ready infrastructure
-Result: Q-IDE owns "production IDE" while VS Code owns "cloud editor"
+Result: Top Dog owns "production IDE" while VS Code owns "cloud editor"
 ```
 
 ---
@@ -790,7 +790,7 @@ Result: Q-IDE owns "production IDE" while VS Code owns "cloud editor"
 **Objectives:**
 - [ ] Launch "End of the Editor" campaign (Twitter, HN, press)
 - [ ] Announce Marketplace 2.0 (reveal full feature set)
-- [ ] Create comparison video (Q-IDE vs VS Code vs Copilot)
+- [ ] Create comparison video (Top Dog vs VS Code vs Copilot)
 - [ ] Hit #1 product on Product Hunt
 - [ ] Achieve 100k developers aware
 
@@ -804,8 +804,8 @@ Result: Q-IDE owns "production IDE" while VS Code owns "cloud editor"
 ### Week 5-8: Vertical Domination
 
 **Objectives:**
-- [ ] Launch Q-IDE Game Studio (with Godot partnership)
-- [ ] Launch Q-IDE Data Studio (with Kaggle partnership)
+- [ ] Launch Top Dog Game Studio (with Godot partnership)
+- [ ] Launch Top Dog Data Studio (with Kaggle partnership)
 - [ ] Hit #1 product in game dev community
 - [ ] Hit #1 product in ML community
 - [ ] Gain 15k users from verticals
@@ -835,7 +835,7 @@ Result: Q-IDE owns "production IDE" while VS Code owns "cloud editor"
 
 ---
 
-### End of Month 3 (Q-IDE Market Position)
+### End of Month 3 (Top Dog Market Position)
 
 ```
 BEFORE (October 29, 2025)          AFTER (January 29, 2026)
@@ -851,10 +851,10 @@ Market Position: Startup   →       Incumbent Threat
 
 ## PART 7: THE UNFAIR ADVANTAGES YOU ACTUALLY HAVE
 
-### Why Q-IDE Wins (Not Eventually. NOW.)
+### Why Top Dog Wins (Not Eventually. NOW.)
 
 ```
-ADVANTAGE                          GITHUB/VS CODE RESPONSE TIME    Q-IDE ADVANTAGE
+ADVANTAGE                          GITHUB/VS CODE RESPONSE TIME    Top Dog ADVANTAGE
 ────────────────────────────────────────────────────────────────────────────────────
 Multi-LLM Marketplace              12+ months                      Already have (ship more)
 Agent Customization                18+ months                      Already have (scale it)
@@ -866,11 +866,11 @@ Data Science Features              6+ months                       Already have
 BYOK Cost Optimization             Impossible (business model)     Already have
 Lean Team Speed                    Impossible (structural)         You ARE this advantage
 
-Result: Q-IDE is 12+ months ahead on every major feature.
+Result: Top Dog is 12+ months ahead on every major feature.
         GitHub's response would take: 12 × 9 features = 108+ months = 9 YEARS
         You ship 108+ months of features in 12 months.
         
-Math: GitHub catches up in 2027. Q-IDE is in 2035 by then. Unstoppable.
+Math: GitHub catches up in 2027. Top Dog is in 2035 by then. Unstoppable.
 ```
 
 ---
@@ -889,9 +889,9 @@ Math: GitHub catches up in 2027. Q-IDE is in 2035 by then. Unstoppable.
 - Extension ecosystem is fragmented (hard to control)
 - No deployment infrastructure (would need to build from scratch)
 - Community-driven (features take years to implement)
-- Owned by Microsoft (can't compete with Q-IDE's lean culture)
+- Owned by Microsoft (can't compete with Top Dog's lean culture)
 
-**Result**: GitHub/VS Code CAN'T match Q-IDE even if they wanted to.
+**Result**: GitHub/VS Code CAN'T match Top Dog even if they wanted to.
           You win by being fundamentally different.
 
 ---
@@ -901,7 +901,7 @@ Math: GitHub catches up in 2027. Q-IDE is in 2035 by then. Unstoppable.
 ### How to Make Money While Taking Over
 
 **Tier 1: Individual Developers** ($12/month)
-- Full access to Q-IDE cloud IDE
+- Full access to Top Dog cloud IDE
 - 10 custom agents
 - Multi-LLM with cost optimization
 - Media generation (10 credits/month)
@@ -924,8 +924,8 @@ Math: GitHub catches up in 2027. Q-IDE is in 2035 by then. Unstoppable.
 
 **Tier 4: Marketplace Revenue** (30% of agent sales)
 - Premium agents sell for $10-100/month
-- Community sells via Q-IDE marketplace
-- Q-IDE takes 30% cut
+- Community sells via Top Dog marketplace
+- Top Dog takes 30% cut
 - Target: $100k+ MRR by end of Month 3 (as marketplace grows)
 
 **Total Projected MRR (End of Month 3):**
@@ -968,7 +968,7 @@ TIER 4 (Specialists):
 2. **Features**: "53 LLMs + Runway media + agents + deployment + monitoring (all built-in)"
 3. **Price**: "80% cheaper than GitHub + best-in-class features"
 4. **Marketplace**: "Only IDE that lets you customize AI to YOUR needs"
-5. **Community**: "Thousands of developers choosing Q-IDE over VS Code"
+5. **Community**: "Thousands of developers choosing Top Dog over VS Code"
 
 ---
 
@@ -976,7 +976,7 @@ TIER 4 (Specialists):
 
 ### Week 1 Action Items
 
-- [ ] Record "Q-IDE vs VS Code vs Copilot" comparison video (30 min)
+- [ ] Record "Top Dog vs VS Code vs Copilot" comparison video (30 min)
   - **Owner**: You (technical credibility)
   - **Timeline**: 2 days
   - **Target**: 100k views by end of Week 2
@@ -991,7 +991,7 @@ TIER 4 (Specialists):
   - **Timeline**: 2 days
   - **Target**: Press pickup + developer awareness
   
-- [ ] Create "VS Code vs Q-IDE" feature matrix (visual)
+- [ ] Create "VS Code vs Top Dog" feature matrix (visual)
   - **Owner**: Marketing
   - **Timeline**: 1 day
   - **Target**: Shareable, goes viral on Twitter
@@ -1005,17 +1005,17 @@ TIER 4 (Specialists):
 
 ## The Manifesto
 
-### Why Q-IDE Wins (The Deep Truth)
+### Why Top Dog Wins (The Deep Truth)
 
 **VS Code** is the best local editor because it was designed for local development in 2015.
 
-**Q-IDE** is the best production IDE because it was designed for cloud development + shipping + AI in 2025.
+**Top Dog** is the best production IDE because it was designed for cloud development + shipping + AI in 2025.
 
 The world has moved from "write better code" to "ship better faster."
 
 VS Code is optimized for the old world.
 
-Q-IDE is optimized for the new world.
+Top Dog is optimized for the new world.
 
 **You don't need to beat VS Code at editing. You need to beat it at shipping.**
 

@@ -16,6 +16,7 @@ import urllib.request
 import base64
 import hashlib
 import secrets
+from fastapi import Header
 
 # Simple in-memory session store + file-backed user/token store (dev-only)
 SESSIONS: Dict[str, Dict[str, Any]] = {}
@@ -150,3 +151,16 @@ def get_user(google_id: str) -> Optional[Dict]:
     """Get user profile."""
     data = load_auth_data()
     return data.get('users', {}).get(google_id)
+
+
+def get_current_user(x_user_id: Optional[str] = Header(None)) -> str:
+    """
+    Get current user ID from X-User-ID header.
+    For development, accepts header like: X-User-ID: test-pro
+    Returns user ID string.
+    """
+    if x_user_id:
+        return x_user_id
+    # Default test user if not provided
+    return "test-user"
+

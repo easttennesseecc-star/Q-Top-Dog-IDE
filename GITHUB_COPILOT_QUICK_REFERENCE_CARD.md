@@ -9,15 +9,15 @@
 ### STEP 1 → CREATE TOKEN (2 min)
 ```
 1. Go: https://github.com/settings/tokens/new
-2. Name: "Q-IDE Copilot API"
+2. Name: "Top Dog Copilot API"
 3. Scope: ✓ user:read, ✓ write:packages, ✓ read:packages
 4. Click: "Generate token"
 5. COPY the token (you only see it ONCE!)
 ```
 
-### STEP 2 → ADD TO Q-IDE (1 min)
+### STEP 2 → ADD TO Top Dog (1 min)
 ```
-1. Q-IDE → LLM Setup tab
+1. Top Dog → LLM Setup tab
 2. Click: Auth subtab
 3. Find: GitHub Copilot card
 4. Paste: Your token
@@ -27,7 +27,7 @@
 
 ### STEP 3 → DONE!
 ```
-1. Restart Q-IDE
+1. Restart Top Dog
 2. No modal = Copilot ready ✓
 3. Start using!
 ```
@@ -48,7 +48,7 @@
 
 ## 🔑 API KEY vs OAUTH
 
-| Factor | OAuth (VS Code) | API Key (Q-IDE) |
+| Factor | OAuth (VS Code) | API Key (Top Dog) |
 |--------|-----------------|-----------------|
 | What | Browser login | Copy-paste token |
 | Time | 2 min | 3 min |
@@ -75,7 +75,7 @@ Same features for coding
 ## 🔐 SECURITY CHECKLIST
 
 ```
-☑ Token only in Q-IDE (not email/chat)
+☑ Token only in Top Dog (not email/chat)
 ☑ Never commit to Git
 ☑ Don't share on Discord/forums
 ☑ Can revoke anytime (github.com/settings/tokens)
@@ -87,8 +87,8 @@ Same features for coding
 
 ## 📱 REMEMBER
 
-**You're not creating a Q-IDE account.**
-You're giving Q-IDE permission to use your Copilot.
+**You're not creating a Top Dog account.**
+You're giving Top Dog permission to use your Copilot.
 
 **API Key is like a:** 
 - Netflix access card (you control)
@@ -116,7 +116,7 @@ After setup, you should see:
 Backend Console:
   ✓ "GitHub Copilot: Authenticated"
 
-Q-IDE Frontend:
+Top Dog Frontend:
   ✓ Auth tab shows green checkmark
   
 When asking Q Assistant:
@@ -136,7 +136,7 @@ When asking Q Assistant:
 ## 📋 CREDENTIALS STORAGE
 
 ```
-Location: ~/.q-ide/llm_credentials.json
+Location: ~/.Top Dog/llm_credentials.json
 Permissions: Read/write only (encrypted if possible)
 Scope: Local only (never sent to Quellum)
 Backup: Manual backup recommended
@@ -151,9 +151,9 @@ You create token
   ↓
 Token valid for N days (you choose)
   ↓
-Q-IDE uses it every startup
+Top Dog uses it every startup
   ↓
-Token expires → Q-IDE prompts you
+Token expires → Top Dog prompts you
   ↓
 You extend date OR create new token
 ```
@@ -200,11 +200,11 @@ If you think token leaked:
 
 ```
 1. Go: github.com/settings/tokens
-2. Find: "Q-IDE Copilot API"
+2. Find: "Top Dog Copilot API"
 3. Click: "Delete"
 4. Confirm: Delete
 5. Create: New token
-6. Update: Q-IDE with new token
+6. Update: Top Dog with new token
 7. Done: Takes 1 minute
 ```
 
@@ -249,9 +249,9 @@ GitHub Copilot
   │
   └─ Option 2: API Key (Programmatic)
      └─ Use: Copy/paste token into app
-     └─ Better for: Using in Q-IDE or other apps
+     └─ Better for: Using in Top Dog or other apps
      └─ Same: All features available
-     └─ Why Q-IDE: Local app needs explicit permission
+     └─ Why Top Dog: Local app needs explicit permission
 ```
 
 ---
@@ -262,9 +262,9 @@ GitHub Copilot
 □ Token is complete (no truncation)
 □ Token is fresh (just created)
 □ Copilot subscription is active
-□ Q-IDE auth tab shows token
+□ Top Dog auth tab shows token
 □ Browser shows green checkmark
-□ Restart Q-IDE
+□ Restart Top Dog
 □ Check console for errors
 □ Verify internet connection
 □ Try creating new token
@@ -277,7 +277,7 @@ GitHub Copilot
 You've succeeded when:
 
 ```
-✅ Q-IDE shows green checkmark
+✅ Top Dog shows green checkmark
 ✅ No "missing credentials" modal
 ✅ Q Assistant responds with Copilot
 ✅ Code generation uses Copilot
@@ -302,7 +302,7 @@ Run these checks:
    → Should get Copilot response
 
 4. Go to https://github.com/settings/tokens
-   → Should see "Q-IDE Copilot API" token listed
+   → Should see "Top Dog Copilot API" token listed
 ```
 
 ---
@@ -320,7 +320,7 @@ Run these checks:
 
 ```
 Created: October 28, 2025
-Project: Q-IDE
+Project: Top Dog
 LLM: GitHub Copilot API
 Status: Ready to Use
 Support: See full documentation

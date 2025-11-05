@@ -2,7 +2,7 @@
 
 ## 🎉 What You've Got
 
-Your Q-IDE now has a **completely professional startup system** with **99% reliability**:
+Your Top Dog now has a **completely professional startup system** with **99% reliability**:
 
 ---
 
@@ -31,14 +31,14 @@ Every time you launch, this happens automatically:
 - Exits with error if missing
 
 ### Step 5: Backend Startup ✓
-- Opens "Q-IDE Backend Server" window
+- Opens "Top Dog Backend Server" window
 - Runs: `python main.py`
 - Waits 4 seconds for startup
 - Waits 2 more seconds for stability
 - **Available at:** http://localhost:8000
 
 ### Step 6: Frontend Startup ✓
-- Opens "Q-IDE Frontend Server" window
+- Opens "Top Dog Frontend Server" window
 - Runs: `pnpm run dev`
 - Waits 5 seconds for startup
 - Waits 2 more seconds for stability
@@ -58,7 +58,7 @@ Go to: c:\Quellum-topdog-ide\
 
 ### Step 2: Launch
 ```
-Double-click: 🚀_LAUNCH_Q-IDE.bat
+Double-click: 🚀_LAUNCH_Top Dog.bat
 (Look for the file with rocket emoji 🚀)
 
 Wait 15-20 seconds...
@@ -73,7 +73,7 @@ Browser opens automatically! 🎉
 ### Updated Files (Made Better)
 | File | Improvements |
 |------|--------------|
-| `🚀_LAUNCH_Q-IDE.bat` | 6-step verification, better error handling, longer waits, clearer output |
+| `🚀_LAUNCH_Top Dog.bat` | 6-step verification, better error handling, longer waits, clearer output |
 | `START.bat` | Same improvements as rocket launcher |
 
 ### New Helper Tools
@@ -138,7 +138,7 @@ START
   ↓
 [15 sec] Browser opens
   ↓
-[20 sec] Q-IDE fully loaded
+[20 sec] Top Dog fully loaded
   ↓
 TOTAL: 15-20 seconds (first launch: 20-30 sec)
 ```
@@ -151,7 +151,7 @@ After launch, you can access:
 
 | Service | URL | Purpose |
 |---------|-----|---------|
-| **Q-IDE App** | http://localhost:1431 | Main interface (opens automatically) |
+| **Top Dog App** | http://localhost:1431 | Main interface (opens automatically) |
 | **Backend API** | http://localhost:8000 | Direct API access |
 | **API Docs** | http://localhost:8000/docs | Swagger API documentation |
 
@@ -270,7 +270,7 @@ Before starting servers, checks:
 ### Automatic Browser
 - ✅ Opens automatically after startup
 - ✅ Opens to correct port (1431)
-- ✅ Shows Q-IDE Setup Wizard
+- ✅ Shows Top Dog Setup Wizard
 
 ---
 
@@ -302,9 +302,9 @@ If all ✅ → Ready to launch! 🚀
 
 ### When Ready
 1. Navigate to: `c:\Quellum-topdog-ide\`
-2. Double-click: `🚀_LAUNCH_Q-IDE.bat`
+2. Double-click: `🚀_LAUNCH_Top Dog.bat`
 3. Wait 15-20 seconds
-4. Browser opens to Q-IDE
+4. Browser opens to Top Dog
 5. Complete Setup Wizard
 6. Start building! 🚀
 
@@ -331,7 +331,7 @@ If all ✅ → Ready to launch! 🚀
 
 ## 🎉 Summary
 
-Your Q-IDE startup system is now:
+Your Top Dog startup system is now:
 
 ✅ **Reliable** - 99% success rate  
 ✅ **Fast** - 15-20 seconds startup  
@@ -346,9 +346,9 @@ Your Q-IDE startup system is now:
 
 ```
 Location: c:\Quellum-topdog-ide\
-Launcher: 🚀_LAUNCH_Q-IDE.bat
+Launcher: 🚀_LAUNCH_Top Dog.bat
 Action: Double-click
-Result: Q-IDE running in 15-20 seconds!
+Result: Top Dog running in 15-20 seconds!
 ```
 
 **Let's create something amazing! 🎉**
@@ -357,4 +357,4 @@ Result: Q-IDE running in 15-20 seconds!
 
 **Status: ✓ PRODUCTION READY**
 
-Your Q-IDE is fully configured and ready for use!
+Your Top Dog is fully configured and ready for use!

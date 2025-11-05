@@ -1,8 +1,8 @@
-# ✅ Q-IDE PROFESSIONAL LAUNCHER - FULLY WORKING!
+# ✅ Top Dog PROFESSIONAL LAUNCHER - FULLY WORKING!
 
 ## Status: 🟢 OPERATIONAL
 
-Q-IDE is now running as a professional Windows application!
+Top Dog is now running as a professional Windows application!
 
 ---
 
@@ -15,7 +15,7 @@ You ran: **`LAUNCH_Q-IDE_PROFESSIONAL.bat`**
 - Backend FastAPI server started on port 8000
 - Frontend Vite server started on port 1431
 - Progress bars showed real-time status (5% → 100%)
-- Browser automatically opened to Q-IDE interface
+- Browser automatically opened to Top Dog interface
 - Professional launch complete! 🎯
 
 ---
@@ -26,7 +26,7 @@ You ran: **`LAUNCH_Q-IDE_PROFESSIONAL.bat`**
 |-----------|--------|---------|
 | **Backend** | ✅ Running | Python 3.11.9 on port 8000 |
 | **Frontend** | ✅ Running | Vite React app on port 1431 |
-| **Browser** | ✅ Open | Q-IDE interface loaded |
+| **Browser** | ✅ Open | Top Dog interface loaded |
 | **Setup Wizard** | ✅ Ready | Waiting for LLM provider selection |
 
 ---
@@ -39,9 +39,9 @@ You ran: **`LAUNCH_Q-IDE_PROFESSIONAL.bat`**
 Run: CREATE_DESKTOP_SHORTCUT.bat
 ```
 
-This creates a **"Q-IDE Topdog"** icon on your Desktop.
+This creates a **"Top Dog Topdog"** icon on your Desktop.
 
-Then **just double-click the icon** anytime to launch Q-IDE like any professional Windows application.
+Then **just double-click the icon** anytime to launch Top Dog like any professional Windows application.
 
 ### Option 2: Direct Launcher
 
@@ -58,7 +58,7 @@ This shows the professional launcher with:
 ### Option 3: Simple Launcher
 
 ```
-Double-click: RUN_Q-IDE.bat
+Double-click: RUN_Top Dog.bat
 ```
 
 Ultra-simple launcher (no progress bars).
@@ -69,11 +69,11 @@ Ultra-simple launcher (no progress bars).
 
 ### Step 1: Build Your iOS & Android App
 
-In the Q-IDE interface, tell the Q Assistant:
+In the Top Dog interface, tell the Q Assistant:
 
 > **"I want to make an app for both android and apple products"**
 
-### Step 2: Q-IDE Will:
+### Step 2: Top Dog Will:
 
 1. **Q Assistant** → Plans the architecture
    - Cross-platform technology recommendation
@@ -111,7 +111,7 @@ You'll get a complete, production-ready iOS + Android app!
 
 ## Installation Complete ✅
 
-Your Q-IDE installation is now:
+Your Top Dog installation is now:
 
 - ✅ **Professional** - Launches like a real Windows app
 - ✅ **Reliable** - Progress indicators and verification
@@ -128,7 +128,7 @@ Your Q-IDE installation is now:
 c:\Quellum-topdog-ide\
 ├── LAUNCH_Q-IDE_PROFESSIONAL.bat  ← Professional launcher
 ├── CREATE_DESKTOP_SHORTCUT.bat    ← Add desktop icon
-├── RUN_Q-IDE.bat                  ← Simple launcher
+├── RUN_Top Dog.bat                  ← Simple launcher
 ├── PROFESSIONAL_SETUP_GUIDE.md    ← This guide
 ├── backend/                       ← Python/FastAPI server
 ├── frontend/                      ← React/Vite UI
@@ -144,23 +144,23 @@ For the most professional experience:
 ```
 Double-click: CREATE_DESKTOP_SHORTCUT.bat
 ```
-Then you'll have a "Q-IDE Topdog" icon on your Desktop - just like Photoshop or Visual Studio!
+Then you'll have a "Top Dog Topdog" icon on your Desktop - just like Photoshop or Visual Studio!
 
 ### Tip 2: Always Keep Server Windows Open
 When you see two black PowerShell windows appear after launching:
 - ✅ **DO NOT CLOSE** these windows
 - They're the backend and frontend servers
-- Q-IDE won't work without them
+- Top Dog won't work without them
 - They'll stay in the background quietly
 
-### Tip 3: Stop Q-IDE Properly
-To stop using Q-IDE:
+### Tip 3: Stop Top Dog Properly
+To stop using Top Dog:
 1. Close the browser window (or tab)
 2. Close the two server windows
 3. Done!
 
 ### Tip 4: Use CTRL+C to Stop Servers
-If you want to stop Q-IDE quickly:
+If you want to stop Top Dog quickly:
 1. Click in a server window
 2. Press CTRL+C
 3. Press 'Y' to confirm
@@ -188,9 +188,9 @@ If you want to stop Q-IDE quickly:
 
 2. **Describe Your App**
    - "I want to make an app for both android and apple products"
-   - Let Q-IDE understand requirements
+   - Let Top Dog understand requirements
 
-3. **Watch Q-IDE Build It**
+3. **Watch Top Dog Build It**
    - 5 AI agents working in sync
    - Real-time progress
    - Complete codebase generated
@@ -257,11 +257,11 @@ If you want to stop Q-IDE quickly:
 
 ## Success! 🎉
 
-Your professional Q-IDE is ready to build amazing iOS + Android applications!
+Your professional Top Dog is ready to build amazing iOS + Android applications!
 
 **Ready to start?**
 
-👉 Tell Q-IDE: *"I want to make an app for both android and apple products"*
+👉 Tell Top Dog: *"I want to make an app for both android and apple products"*
 
 Then watch the magic happen! ✨
 

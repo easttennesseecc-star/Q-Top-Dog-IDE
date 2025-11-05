@@ -2,7 +2,7 @@
 
 ## What's New
 
-Your Q-IDE system now has **automatic LLM discovery and assignment**!
+Your Top Dog system now has **automatic LLM discovery and assignment**!
 
 ---
 
@@ -80,7 +80,7 @@ GET http://localhost:8000/api/setup/status
 
 ```
 ┌─────────────────────────────────────────┐
-│  User Opens Q-IDE First Time            │
+│  User Opens Top Dog First Time            │
 └────────────┬────────────────────────────┘
              │
              ▼
@@ -100,7 +100,7 @@ GET http://localhost:8000/api/setup/status
              │
              ▼
 ┌─────────────────────────────────────────┐
-│  Q-IDE Auto-Tests Each API              │
+│  Top Dog Auto-Tests Each API              │
 │  - Verifies connections                 │
 │  - Tests response quality               │
 └────────────┬────────────────────────────┘
@@ -216,7 +216,7 @@ Open: http://localhost:8000/docs
 5. User picks: "OpenAI" (or Anthropic, Google, Mistral)
 6. Wizard explains: Get free $5 credits at platform.openai.com
 7. User comes back with API key
-8. Q-IDE tests the key
+8. Top Dog tests the key
 9. Auto-assignment runs
 10. **User is ready to build! 🚀**
 

@@ -2,12 +2,12 @@
 
 ## Overview
 
-Q-IDE now has an **automatic LLM credential detection and setup system** that runs on startup.
+Top Dog now has an **automatic LLM credential detection and setup system** that runs on startup.
 
 ### How It Works
 
 ```
-Q-IDE Starts
+Top Dog Starts
     ↓
 Backend checks assigned LLMs
     ↓
@@ -28,11 +28,11 @@ User chooses action:
 ### On Startup (Backend)
 
 1. **Checks Role Assignments**
-   - Reads `~/.q-ide/llm_roles.json`
+   - Reads `~/.Top Dog/llm_roles.json`
    - Gets all LLMs currently assigned to roles
 
 2. **Checks Credentials**
-   - For each assigned LLM, checks `~/.q-ide/llm_credentials.json`
+   - For each assigned LLM, checks `~/.Top Dog/llm_credentials.json`
    - Determines if API key exists
 
 3. **Identifies Issues**
@@ -41,7 +41,7 @@ User chooses action:
 
 4. **Logs Status**
    ```
-   ✓ Q-IDE startup
+   ✓ Top Dog startup
    ✓ 3 LLMs authenticated and ready
    ⚠ 1 LLM needs credentials (GPT-4 assigned to Code Generation)
    ✓ Frontend will prompt user
@@ -254,7 +254,7 @@ const [showStartupAuthPrompt, setShowStartupAuthPrompt] = useState(true);
 ### Scenario 1: All LLMs Ready ✓
 
 ```
-User opens Q-IDE
+User opens Top Dog
     ↓
 Backend: "All 3 LLMs authenticated"
     ↓
@@ -266,7 +266,7 @@ User starts building immediately
 ### Scenario 2: One LLM Missing Credentials ⚠
 
 ```
-User opens Q-IDE
+User opens Top Dog
     ↓
 Backend: "GPT-4 assigned but no credentials"
     ↓
@@ -281,13 +281,13 @@ Modal closes, goes to LLM Setup → Auth tab
     ↓
 User enters API key
     ↓
-(Next time Q-IDE starts, no prompt shown)
+(Next time Top Dog starts, no prompt shown)
 ```
 
 ### Scenario 3: Multiple Missing, Some Alternatives
 
 ```
-User opens Q-IDE
+User opens Top Dog
     ↓
 Backend: "GPT-4 and Claude missing, but Gemini ready"
     ↓
@@ -373,7 +373,7 @@ If user chooses "Proceed":
 
 **Problem:** Credentials saved but prompt still shows
 **Solution:** 
-- Restart Q-IDE backend
+- Restart Top Dog backend
 - Check credentials were actually saved (Auth tab shows ✓)
 - Try different LLM
 
@@ -421,7 +421,7 @@ If user chooses "Proceed":
 
 ## Next Steps
 
-1. **User Opens Q-IDE**
+1. **User Opens Top Dog**
    - Startup auth check runs automatically
    - If needed, modal shows
 

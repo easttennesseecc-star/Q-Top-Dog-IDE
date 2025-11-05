@@ -2,7 +2,7 @@
 
 ## What's New
 
-Q-IDE now **automatically discovers and assigns the best LLM models to each role** based on what you have available. No more manual configuration!
+Top Dog now **automatically discovers and assigns the best LLM models to each role** based on what you have available. No more manual configuration!
 
 ---
 
@@ -10,7 +10,7 @@ Q-IDE now **automatically discovers and assigns the best LLM models to each role
 
 ### Step 1: Available LLM Providers
 
-Q-IDE supports these popular LLM providers (all have free trials):
+Top Dog supports these popular LLM providers (all have free trials):
 
 | Provider | Best For | Free Tier | Sign Up |
 |----------|----------|-----------|---------|
@@ -21,19 +21,19 @@ Q-IDE supports these popular LLM providers (all have free trials):
 
 ### Step 2: Setup Wizard (First Time)
 
-When you first launch Q-IDE:
+When you first launch Top Dog:
 
 1. **Choose Providers** - Select which LLM services you want to use (you can use multiple!)
 2. **Get API Keys** - Sign up and create free API keys
-3. **Enter API Keys** - Save keys securely in Q-IDE
-4. **Auto-Assign** - Q-IDE tests your APIs and assigns models optimally
+3. **Enter API Keys** - Save keys securely in Top Dog
+4. **Auto-Assign** - Top Dog tests your APIs and assigns models optimally
 
 ### Step 3: Automatic Assignment
 
-Q-IDE analyzes your available models and assigns them like this:
+Top Dog analyzes your available models and assigns them like this:
 
 ```
-Your Models                    ↓ Q-IDE Smart Assignment ↓              Your Team
+Your Models                    ↓ Top Dog Smart Assignment ↓              Your Team
 
 gpt-4 (OpenAI)            →  Q Assistant (Orchestrator)
 gpt-3.5-turbo (OpenAI)    →  Code Writer (Implementation)
@@ -113,7 +113,7 @@ Returns: Cost estimates, speed profiles, etc.
 ```python
 # 1. Start wizard
 GET /api/setup/wizard/start
-→ Shows: "Welcome to Q-IDE LLM Setup!"
+→ Shows: "Welcome to Top Dog LLM Setup!"
 
 # 2. List providers
 GET /api/setup/wizard/providers
@@ -151,7 +151,7 @@ POST /api/setup/wizard/complete
 
 ## How Assignment Scoring Works
 
-Q-IDE scores each model for each role based on:
+Top Dog scores each model for each role based on:
 
 | Factor | Weight | How it works |
 |--------|--------|-------------|
@@ -190,7 +190,7 @@ Gemini-Pro:      Score: 70/100  (ok code, very cheap)
 ```
 Use: GPT-3.5-Turbo (OpenAI) + Gemini-Pro (Google)
 Cost: Free or $2-3/month
-Best for: Learning Q-IDE, small projects
+Best for: Learning Top Dog, small projects
 ```
 
 ### Balanced ($5-$20/month)
@@ -217,14 +217,14 @@ Once setup is complete:
 1. Setup Wizard         ← You are here first time
    ↓ (Save API keys, auto-assign)
 
-2. Q-IDE Dashboard
+2. Top Dog Dashboard
    ↓ (Choose your app idea)
 
 3. Q Assistant Chat
    ↓ (Describe your app requirements)
 
 4. Auto Build Pipeline
-   ↓ (Q-IDE coordinates all 5 LLM roles)
+   ↓ (Top Dog coordinates all 5 LLM roles)
 
 5. Generated Codebase
    ↓ (Ready-to-run application)

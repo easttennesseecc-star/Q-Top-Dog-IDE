@@ -9,7 +9,7 @@ import os
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from database.tier_schema import MembershipTierSchema
+from backend.database.tier_schema import MembershipTierSchema
 
 
 def verify_tiers():

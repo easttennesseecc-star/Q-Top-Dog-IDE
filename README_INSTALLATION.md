@@ -1,4 +1,4 @@
-# Q-IDE TOPDOG - Installation & Launch Guide
+# Top Dog TOPDOG - Installation & Launch Guide
 
 ## System Requirements
 
@@ -27,7 +27,7 @@ If these commands don't work, Python/Node are not in PATH. Reinstall them and ch
 
 ---
 
-### Step 2: Install Q-IDE
+### Step 2: Install Top Dog
 
 **Option A: Double-Click Install (Easiest)**
 1. Navigate to: `c:\Quellum-topdog-ide\`
@@ -51,7 +51,7 @@ cd c:\Quellum-topdog-ide
 
 ---
 
-### Step 3: Launch Q-IDE
+### Step 3: Launch Top Dog
 
 **Option A: Double-Click Launch (Easiest)**
 1. Navigate to: `c:\Quellum-topdog-ide\`
@@ -73,7 +73,7 @@ When you run `START.bat`, here's what you'll see:
 
 ```
 ================================================================================
-                    Q-IDE TOPDOG - APPLICATION LAUNCHER
+                    Top Dog TOPDOG - APPLICATION LAUNCHER
 ================================================================================
 
 [INFO] Cleaning up old processes...
@@ -95,8 +95,8 @@ Keep both windows open while using the application.
 ```
 
 Two new **Command Prompt windows** will open:
-- **"Q-IDE Backend"** - Shows: `INFO: Application startup complete`
-- **"Q-IDE Frontend"** - Shows: `VITE ready in XXX ms`
+- **"Top Dog Backend"** - Shows: `INFO: Application startup complete`
+- **"Top Dog Frontend"** - Shows: `VITE ready in XXX ms`
 
 ---
 
@@ -162,7 +162,7 @@ http://localhost:8000/docs
 
 ## What This System Does
 
-**Q-IDE** is an AI-powered development IDE with:
+**Top Dog** is an AI-powered development IDE with:
 
 - **5 LLM Roles**: Q Assistant (orchestrator) → Code Writer → Test Auditor → Verification Overseer → Release Manager
 - **Cost-Optimized**: Simple SVG image generation ($0 vs expensive APIs)

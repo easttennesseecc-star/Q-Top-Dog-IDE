@@ -2,7 +2,7 @@
 
 **Status**: Planning Complete  
 **Date**: October 29, 2025  
-**Revenue Model**: 30% commission on paid agent usage  
+**Marketplace Model**: Directory (BYOK links; no commissions collected)  
 **Timeline**: Week 2-3 (concurrent with IntelliSense + Game Engines)  
 **Market Size**: $15B+ AI model services market  
 
@@ -12,66 +12,93 @@
 
 **Problem**: Developers waste time switching between ChatGPT, Claude, Copilot, Gemini, Llama, etc.
 
-**Solution**: Single unified marketplace in Q-IDE to:
+**Solution**: Single unified marketplace in Top Dog to:
 - ✅ Browse 50+ AI models (free + paid)
 - ✅ Sign in with one account
 - ✅ Get Q Assistant recommendations ("What model should I use?")
 - ✅ Use any model directly inside the IDE
 - ✅ Pay only for what you use (or use free models)
 
-**Outcome**: Q-IDE becomes the **universal AI agent hub** for developers
+**Outcome**: Top Dog becomes the **universal AI agent hub** for developers
 
 ---
 
-## 💰 REVENUE MODEL
+## 🧭 MARKETPLACE MODE: DIRECTORY (BYOK)
 
-### Commission-Based (30% from Marketplace Sales)
+This marketplace operates as a directory and integration hub, not a reseller. We do not collect commissions or re-sell tokens. Users bring their own provider keys (BYOK) and connect them inside Top Dog. Our job is to make discovery easy and integration seamless.
 
+What this means:
+- No commission or revenue share is enforced. Listings point to providers' official sign‑up pages.
+- Top Dog offers a uniform UX (model picker, chat, code tools) on top of your own provider accounts.
+- Optional: non‑production “Demo” models hosted by us for trial only (strict quotas, no SLAs).
+
+User flow:
+1) Browse models in the Marketplace (Directory)
+2) Click “Get API Key” → opens the provider’s official sign‑up page
+3) Paste your API key into Top Dog (BYOK) and start using models within the IDE
+
+Notes:
+- Enterprise remains customer‑managed/self‑hosted with BYOK only.
+- Where available, we may use referral links; these do not affect user pricing or availability.
+
+---
+
+## 🧪 Regulated Segments: Medical & Scientific Pricing
+
+Some marketplace agents/tools operate on regulated or high‑integrity data. Offer segment SKUs with added protections and distinct pricing.
+
+Segments:
+- medical (PHI/HIPAA): PHI scrubbing, audit logging, provenance/attestation, data residency controls, stricter SLAs.
+- scientific (high-integrity R&D): citation mode, provenance, stricter hallucination limits.
+
+How this appears in Marketplace:
+- Model cards and agent listings can declare supported segments (badges: Medical, Scientific).
+- Users can choose a segment at project/API-key level; OPA enforces policy at the gateway.
+
+Pricing (illustrative; see MONETIZATION_V2 for formulas):
+- Pro-Med: $299/mo, 250k TCU; overage $0.0015/TCU (BYOK discount available)
+- Pro-Scientific: $239/mo, 250k TCU; overage $0.0014/TCU
+- Enterprise: custom annual with BYOK, private deploy, custom OPA policies
+
+SLAs tied to existing SLIs:
+- medical: consistency ≥ 0.80; hallucination ≤ 0.45
+- scientific: consistency ≥ 0.78; hallucination ≤ 0.55
+
+Billing and metering fields:
+- `data_segment` (general|medical|scientific), `verified` (attestation), `policy_pack` and `residency` labels.
+
+---
+
+## 🧩 Free Demo Models and API Keys
+
+Purpose: Let users test the marketplace before upgrading. Demo models are strictly non‑production: rate‑limited, low quotas, and no SLAs. Upgrade to Pro/Enterprise for production throughput and guarantees.
+
+Key properties:
+- Issued API keys marked plan="Free" and key_type="demo".
+- Per‑key quota (e.g., 200 requests/day), per‑minute rate limit (e.g., 10 rpm).
+- Model caps: small open‑source backbones, short context windows.
+- Non‑production Terms: no PHI/PII, no regulated workloads, no external integrations.
+
+Catalog schema (`marketplace/free-models.catalog.json`):
+```json
+[
+  {
+    "id": "topdog-demo-7b",
+    "name": "TopDog Demo 7B",
+    "provider": "topdog",
+    "pricing": "free-demo",
+    "production": false,
+    "quotas": { "daily": 200, "rpm": 10 },
+    "limits": { "max_context": 4096, "max_output": 512 },
+    "disclaimer": "Demo only. Non-production. Upgrade required for SLAs."
+  }
+]
 ```
-Free Models (0% revenue)
-├─ OpenAI GPT-4 Free Trial
-├─ Anthropic Claude Free
-├─ Meta Llama 2 (free tier)
-├─ Google Gemini Free
-├─ Mistral Open Source
-├─ HuggingFace Free
-└─ Local Ollama (self-hosted)
 
-Paid Models (30% commission to Q-IDE)
-├─ OpenAI GPT-4 ($0.03/1K tokens) → Q-IDE gets $0.009/1K
-├─ Anthropic Claude 3 ($0.015/1K) → Q-IDE gets $0.0045/1K
-├─ Google Gemini Pro ($0.0005/1K) → Q-IDE gets $0.00015/1K
-├─ Mistral Large ($0.008/1K) → Q-IDE gets $0.0024/1K
-└─ Custom Models ($variable) → Q-IDE gets 30%
-
-Projected Revenue (Year 1):
-├─ 50k active developers
-├─ 40% use paid models ($200/developer/year avg)
-├─ Commission: 50k × 0.4 × $200 × 0.30 = $1.2M/year
-└─ Monthly: ~$100k MRR (Year 1 Phase 3)
-```
-
-### Additional Revenue Streams
-
-1. **Premium Model Subscriptions** ($5-15/mo)
-   - Unlimited calls to top 5 models
-   - Priority queue
-   - Advanced features (fine-tuning, batch processing)
-   - Expected: 5k subscribers = $50k MRR
-
-2. **Enterprise Licenses** ($5k-50k/year)
-   - Custom model integration
-   - Team management
-   - Usage analytics
-   - Expected: 100 enterprise contracts = $50k MRR
-
-3. **AI Agent Builder Tools** (Premium, $10/mo)
-   - Create custom agents with no code
-   - Deploy as marketplace models
-   - Monetize: 70/30 split with creators
-   - Expected: $30k MRR Year 2
-
-**Total Projected Marketplace Revenue**: $130k+ MRR by Year 1 Phase 3
+Gating behaviors:
+- Requests with plan="Free" are capped; attempting regulated segments returns policy deny with guidance to upgrade.
+- Marketplace UI labels demo models as "Demo (non‑production)" with a clear path to upgrade.
+- Prometheus rules exclude demo models from production SLO reports.
 
 ---
 
@@ -130,13 +157,13 @@ User Query
          ▼
 ┌─────────────────────┐
 │ Authentication      │ ← User signs in
-│ (JWT + API Keys)    │   Q-IDE gets model token
+│ (JWT + API Keys)    │   Top Dog gets model token
 └────────┬────────────┘
          │
          ▼
 ┌─────────────────────┐
-│ Billing Check       │ ← Verify account balance
-│ (Usage Tracker)     │   or subscription active
+│ Subscription Check  │ ← Verify subscription status
+│ (Usage Tracker)     │   and entitlements
 └────────┬────────────┘
          │
          ▼
@@ -154,8 +181,8 @@ User Query
          │
          ▼
 ┌─────────────────────┐
-│ Billing Service     │ ← Log usage
-│ (charge account)    │   Update balance
+│ Subscription/Usage  │ ← Log usage
+│ (telemetry only)    │   Provider bills usage
 └────────┬────────────┘
          │
          ▼
@@ -222,7 +249,7 @@ MODELS = [
 
 ```python
 class User:
-    """Q-IDE user account"""
+    """Top Dog user account"""
     user_id: str
     email: str
     password_hash: str
@@ -690,7 +717,7 @@ class TestBillingService(unittest.TestCase):
 
 ### Feature 1: Universal Model Browser
 ```
-Browsing a model in Q-IDE:
+Browsing a model in Top Dog:
 
 ┌─────────────────────────────────────────┐
 │ GPT-4 Turbo                             │
@@ -985,7 +1012,7 @@ def ask_q_assistant(query: str):
 
 ## ✅ SUCCESS METRICS
 
-- **Adoption**: 50%+ of Q-IDE users have tried marketplace in first 30 days
+- **Adoption**: 50%+ of Top Dog users have tried marketplace in first 30 days
 - **Usage**: Average user tries 3+ models in first week
 - **Revenue**: $100k+ MRR by month 6 of launch
 - **Satisfaction**: 4.5+ star rating on marketplace models
@@ -998,7 +1025,7 @@ def ask_q_assistant(query: str):
 
 ## 🎉 FINAL IMPACT
 
-**Q-IDE becomes the universal hub for developers to:**
+**Top Dog becomes the universal hub for developers to:**
 - 🎮 Build games (4 engines)
 - 🤖 Use any AI model (50+ models)
 - 💻 Code with IDE features (IntelliSense, refactoring, debugging)

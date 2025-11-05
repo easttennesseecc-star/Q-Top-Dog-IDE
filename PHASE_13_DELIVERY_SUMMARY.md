@@ -3,7 +3,7 @@
 
 **Date**: Today  
 **Status**: ✅ **COMPLETE & PRODUCTION READY**  
-**User Request**: "Get LLMs signed in upon signin of Q-IDE... make this a MAIN experience... not a hassle"
+**User Request**: "Get LLMs signed in upon signin of Top Dog... make this a MAIN experience... not a hassle"
 
 ---
 
@@ -117,7 +117,7 @@ Security Features:     8
 
 ```
 ┌─────────────┐
-│   Q-IDE     │
+│   Top Dog     │
 │  Frontend   │
 └──────┬──────┘
        │
@@ -153,7 +153,7 @@ OAuthHandler (OAuth logic)
     ↓
 OAuthRoutes (API endpoints)
     ↓
-Token Storage (~/.q-ide/llm_credentials.json)
+Token Storage (~/.Top Dog/llm_credentials.json)
     ↓
 LLM APIs & User Sessions
 ```
@@ -418,7 +418,7 @@ curl -X POST http://localhost:8000/llm_auth/logout/google
 - Users can click "Sign in"
 - OAuth popup opens automatically
 - Users sign in at provider
-- Credentials transfer to Q-IDE
+- Credentials transfer to Top Dog
 - Status shows "✓ Connected"
 - No manual copy-paste needed
 - Professional IDE experience
@@ -555,7 +555,7 @@ curl -X POST http://localhost:8000/llm_auth/logout/google
 
 You now have a **complete, professional OAuth authentication system** that:
 
-✅ Works seamlessly with Q-IDE  
+✅ Works seamlessly with Top Dog  
 ✅ Supports Google, GitHub, OpenAI, Anthropic  
 ✅ Provides enterprise-grade security  
 ✅ Offers one-click sign-in experience  
@@ -563,7 +563,7 @@ You now have a **complete, professional OAuth authentication system** that:
 ✅ Includes comprehensive troubleshooting  
 ✅ Scales to production  
 
-**Everything you need to make Q-IDE the most professional IDE on the market!**
+**Everything you need to make Top Dog the most professional IDE on the market!**
 
 ---
 
@@ -580,7 +580,7 @@ You now have a **complete, professional OAuth authentication system** that:
 
 ## ✨ Thank You
 
-Thank you for your partnership in building Q-IDE. This OAuth system represents our commitment to:
+Thank you for your partnership in building Top Dog. This OAuth system represents our commitment to:
 
 - **Professional Quality** - Enterprise-grade implementation
 - **User Experience** - Seamless, frictionless authentication
@@ -588,7 +588,7 @@ Thank you for your partnership in building Q-IDE. This OAuth system represents o
 - **Complete Documentation** - Everything needed to succeed
 - **Production Readiness** - Deploy with confidence
 
-**Q-IDE is now ready for professional users everywhere!** 🚀
+**Top Dog is now ready for professional users everywhere!** 🚀
 
 ---
 

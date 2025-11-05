@@ -1,8 +1,8 @@
-# Q-IDE Multi-LLM Build Orchestration System
+# Top Dog Multi-LLM Build Orchestration System
 
 ## Overview
 
-The Q-IDE system uses **5 specialized LLM roles** working together in sequence to build flawless applications. Each LLM has specific responsibilities, system prompts, and success criteria. The Q Assistant serves as the interactive coordinator and project lead.
+The Top Dog system uses **5 specialized LLM roles** working together in sequence to build flawless applications. Each LLM has specific responsibilities, system prompts, and success criteria. The Q Assistant serves as the interactive coordinator and project lead.
 
 ## The 5 LLM Roles
 

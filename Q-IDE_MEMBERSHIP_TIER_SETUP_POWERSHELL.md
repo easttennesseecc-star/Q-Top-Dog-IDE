@@ -1,4 +1,4 @@
-# Q-IDE Membership Tier Setup - PowerShell Commands
+# Top Dog Membership Tier Setup - PowerShell Commands
 
 ## TIER 1: FREE (Trial - 7 Days)
 
@@ -17,7 +17,7 @@ $freeTier = @{
     code_execution = $false
     data_persistence = $true
     read_only_after_expiry = $true
-    watermark = "Made with Q-IDE Free Trial"
+    watermark = "Made with Top Dog Free Trial"
 }
 
 # Execute in database
@@ -300,7 +300,7 @@ Write-Host "ENTERPRISE-ULTIMATE tier created" -ForegroundColor Green
 ```powershell
 # Complete setup script for all 9 membership tiers
 
-Write-Host "Starting Q-IDE Membership Tier Setup..." -ForegroundColor Cyan
+Write-Host "Starting Top Dog Membership Tier Setup..." -ForegroundColor Cyan
 
 # Array of all tiers
 $allTiers = @(

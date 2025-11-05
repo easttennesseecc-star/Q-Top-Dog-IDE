@@ -24,7 +24,7 @@ cd ../backend
 ```bash
 git add .
 git commit -m "chore: bump version to 0.1.0"
-git tag -a v0.1.0 -m "Release Q-IDE v0.1.0 - Production Ready"
+git tag -a v0.1.0 -m "Release Top Dog v0.1.0 - Production Ready"
 git push origin main
 git push origin v0.1.0
 ```
@@ -42,7 +42,7 @@ GitHub Actions automatically runs when tag is pushed:
 3. ✅ Builds Linux AppImage/DEB
 4. ✅ Creates Release with artifacts
 
-**Monitor**: https://github.com/quellum/q-ide/actions
+**Monitor**: https://github.com/quellum/Top Dog/actions
 
 ### Manual (If Actions Fail)
 ```bash
@@ -52,10 +52,10 @@ pnpm run build
 pnpm tauri build
 
 # Upload artifacts manually via GitHub web interface
-# 1. Go to https://github.com/quellum/q-ide/releases
+# 1. Go to https://github.com/quellum/Top Dog/releases
 # 2. Click "Create Release"
 # 3. Tag: v0.1.0
-# 4. Title: Q-IDE v0.1.0 - Production Release
+# 4. Title: Top Dog v0.1.0 - Production Release
 # 5. Upload built files from frontend/src-tauri/target/release/bundle/
 # 6. Publish
 ```
@@ -68,7 +68,7 @@ pnpm tauri build
 
 ### Release Notes Template
 ```markdown
-# Q-IDE v0.1.0 - Production Release 🎉
+# Top Dog v0.1.0 - Production Release 🎉
 
 **October 25, 2025**
 
@@ -89,7 +89,7 @@ pnpm tauri build
 - [Linux DEB](link) - Debian/Ubuntu package
 
 ## Installation
-See [QUICKSTART.md](https://github.com/quellum/q-ide#quick-start) for detailed setup.
+See [QUICKSTART.md](https://github.com/quellum/Top Dog#quick-start) for detailed setup.
 
 ## Documentation
 - [Deployment Guide](DEPLOYMENT.md)
@@ -108,12 +108,12 @@ See [QUICKSTART.md](https://github.com/quellum/q-ide#quick-start) for detailed s
 None reported in beta testing. Please report any issues.
 
 ## Support
-- 🐛 [Report Issues](https://github.com/quellum/q-ide/issues)
-- 💬 [Discussions](https://github.com/quellum/q-ide/discussions)
-- 📧 [Email Support](mailto:support@q-ide.com)
+- 🐛 [Report Issues](https://github.com/quellum/Top Dog/issues)
+- 💬 [Discussions](https://github.com/quellum/Top Dog/discussions)
+- 📧 [Email Support](mailto:support@Top Dog.com)
 
 ## Thanks!
-Thank you for trying Q-IDE. We'd love your feedback!
+Thank you for trying Top Dog. We'd love your feedback!
 
 ---
 Built with ❤️ by Quellum Team
@@ -149,7 +149,7 @@ After publishing, verify:
 
 ```bash
 # Quick verification
-curl -s https://api.github.com/repos/quellum/q-ide/releases/latest | grep tag_name
+curl -s https://api.github.com/repos/quellum/Top Dog/releases/latest | grep tag_name
 # Should show: "v0.1.0"
 ```
 
@@ -203,7 +203,7 @@ curl -s https://api.github.com/repos/quellum/q-ide/releases/latest | grep tag_na
 
 ### Message Template
 ```
-🎉 Q-IDE v0.1.0 is now available for download!
+🎉 Top Dog v0.1.0 is now available for download!
 
 Desktop IDE for Windows, macOS, Linux - Production Ready
 
@@ -214,9 +214,9 @@ Desktop IDE for Windows, macOS, Linux - Production Ready
 - Build health monitoring
 - LLM integration ready
 
-🔗 Download: https://github.com/quellum/q-ide/releases/v0.1.0
+🔗 Download: https://github.com/quellum/Top Dog/releases/v0.1.0
 
-🚀 Get started: https://github.com/quellum/q-ide#quick-start
+🚀 Get started: https://github.com/quellum/Top Dog#quick-start
 ```
 
 ---
@@ -249,7 +249,7 @@ Timeline: 1-2 weeks after v0.1.0
 - **Technical**: See DEPLOYMENT.md
 - **Testing**: See TESTING.md
 - **Features**: See README.md
-- **Support**: support@q-ide.com
+- **Support**: support@Top Dog.com
 
 ---
 
@@ -259,10 +259,10 @@ Timeline: 1-2 weeks after v0.1.0
 
 ```bash
 # Copy-paste ready:
-cd ~/path/to/q-ide
+cd ~/path/to/Top Dog
 git add .
 git commit -m "chore: bump version to 0.1.0"
-git tag -a v0.1.0 -m "Release Q-IDE v0.1.0 - Production Ready"
+git tag -a v0.1.0 -m "Release Top Dog v0.1.0 - Production Ready"
 git push origin main
 git push origin v0.1.0
 ```

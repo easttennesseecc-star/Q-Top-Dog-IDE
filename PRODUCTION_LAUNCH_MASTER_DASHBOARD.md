@@ -1,4 +1,4 @@
-# 🎯 Q-IDE Production Launch: Master Dashboard
+# 🎯 Top Dog Production Launch: Master Dashboard
 
 **Status**: 80% → 100% Roadmap Complete ✅  
 **Timeline**: 4 weeks to production  
@@ -97,7 +97,7 @@ Deploy in 2 weeks, then upgrade to B if needed
 
 ### 📅 WEEK 1: Deploy to Cloud (Highest Priority)
 ```
-Day 1  → Dockerize Q-IDE
+Day 1  → Dockerize Top Dog
 Day 2  → Push to Docker Hub
 Day 3  → Deploy to Heroku (backend)
 Day 4  → Deploy to Heroku (frontend)
@@ -374,7 +374,7 @@ BUDGET CONSTRAINT?
 ### In 2 Weeks (MVP)
 ```
 ✅ Live deployment with real URL
-✅ Real users can access Q-IDE
+✅ Real users can access Top Dog
 ✅ Database persists data
 ✅ OAuth works
 ✅ Basic monitoring
@@ -554,5 +554,5 @@ Once you cross this finish line:
 **Next Step**: Choose platform (Heroku recommended)  
 **Success Rate**: Very high (straightforward execution)  
 
-**Let's ship Q-IDE to the world!**
+**Let's ship Top Dog to the world!**
 

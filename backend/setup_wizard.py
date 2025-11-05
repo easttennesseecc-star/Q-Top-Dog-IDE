@@ -176,7 +176,7 @@ async def save_api_keys(keys: Dict[str, str]):
     logger.info(f"[Setup Wizard] Saving API keys for {len(keys)} provider(s)")
     
     try:
-        from llm_auth import save_api_key
+        from backend.llm_auth import save_api_key
         
         saved_count = 0
         failed = []
@@ -212,7 +212,7 @@ async def verify_connections():
     logger.info("[Setup Wizard] Verifying API connections")
     
     try:
-        from llm_auth import verify_provider_connection, get_authenticated_providers
+        from backend.llm_auth import verify_provider_connection, get_authenticated_providers
         
         authenticated = get_authenticated_providers()
         verification_results = {}
@@ -255,7 +255,7 @@ async def complete_setup():
     logger.info("[Setup Wizard] Completing setup - auto-assigning models")
     
     try:
-        from llm_auth import get_authenticated_providers
+        from backend.llm_auth import get_authenticated_providers
         from llm_auto_assignment import LLMAutoAssignment
         
         # Get authenticated providers
@@ -292,7 +292,7 @@ async def complete_setup():
 async def get_setup_status():
     """Get current setup status"""
     try:
-        from llm_auth import get_authenticated_providers
+        from backend.llm_auth import get_authenticated_providers
         
         authenticated = get_authenticated_providers()
         completed_providers = [p for p, is_auth in authenticated.items() if is_auth]

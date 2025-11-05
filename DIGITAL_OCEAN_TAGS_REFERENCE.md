@@ -1,6 +1,6 @@
-# 🏷️ Digital Ocean Tags Reference for Q-IDE
+# 🏷️ Digital Ocean Tags Reference for Top Dog
 
-**Purpose**: Organize, manage, and categorize Q-IDE resources in Digital Ocean  
+**Purpose**: Organize, manage, and categorize Top Dog resources in Digital Ocean  
 **Date**: October 30, 2025  
 **Status**: Complete tag taxonomy for deployment
 
@@ -34,7 +34,7 @@ environment:testing
 **Example**: A web server in production gets `environment:production`
 
 ### 2. **Project Tags** (REQUIRED)
-Tags that identify which Q-IDE component:
+Tags that identify which Top Dog component:
 
 ```
 project:core-ide
@@ -139,7 +139,7 @@ release:stable
 
 ---
 
-## Complete Tag Set for Q-IDE Deployment
+## Complete Tag Set for Top Dog Deployment
 
 ### For Production Web Servers
 ```
@@ -373,7 +373,7 @@ Apply firewall rules to entire tag groups:
 
 ---
 
-## Q-IDE Specific Recommendations
+## Top Dog Specific Recommendations
 
 ### Minimum Required Tags
 For simplicity, start with these 3 tags on EVERY resource:
@@ -409,7 +409,7 @@ dr:required
 
 ## Example Complete Deployment
 
-If you're deploying Q-IDE with 3 Droplets + 1 Database + 1 CDN:
+If you're deploying Top Dog with 3 Droplets + 1 Database + 1 CDN:
 
 ### Droplet 1: Web Server
 ```
@@ -509,7 +509,7 @@ environment:development, project:core-ide, owner:backend, cost-center:engineerin
 
 ## Summary
 
-Q-IDE deployment on Digital Ocean should use:
+Top Dog deployment on Digital Ocean should use:
 
 | Tag Type | Examples | Required? |
 |----------|----------|-----------|

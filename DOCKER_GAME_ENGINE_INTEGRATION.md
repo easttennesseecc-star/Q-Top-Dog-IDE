@@ -1,5 +1,5 @@
 # 🐳 DOCKER INTEGRATION FOR GAME ENGINES
-## Q-IDE Multi-Engine Support via Containers
+## Top Dog Multi-Engine Support via Containers
 
 **Date**: October 29, 2025  
 **Version**: 1.0  
@@ -9,7 +9,7 @@
 
 ## EXECUTIVE SUMMARY
 
-Q-IDE will use **Docker containers** to run game engine runtimes, enabling:
+Top Dog will use **Docker containers** to run game engine runtimes, enabling:
 
 1. **Godot** - GDScript debugger + scene preview in Docker
 2. **Unreal Engine** - C++ compilation + PIE (Play In Editor) in Docker
@@ -29,9 +29,9 @@ Q-IDE will use **Docker containers** to run game engine runtimes, enabling:
 ### Container Strategy
 
 ```
-Q-IDE Frontend (React, Monaco)
+Top Dog Frontend (React, Monaco)
     ↕ WebSocket
-Q-IDE Backend (Python)
+Top Dog Backend (Python)
     ├─ Docker Manager (spawn/manage containers)
     ├─ Container 1: Godot Runtime (port 6006)
     ├─ Container 2: Unreal Build (port 6007)
@@ -44,7 +44,7 @@ Q-IDE Backend (Python)
 ### Port Mapping
 
 ```
-Q-IDE Backend: 5000
+Top Dog Backend: 5000
 ├─ Godot LSP: 5001
 ├─ Godot Debugger: 6006
 ├─ Godot Preview: 8006
@@ -122,7 +122,7 @@ class DockerManager:
     def start_godot_runtime(self, project_id, project_path):
         """Start Godot runtime in Docker container"""
         container = self.client.containers.run(
-            image="q-ide-godot:latest",
+            image="Top Dog-godot:latest",
             name=f"godot-{project_id}",
             ports={'6006/tcp': 6006, '8006/tcp': 8006},
             volumes={project_path: {'bind': '/project', 'mode': 'rw'}},
@@ -208,7 +208,7 @@ class DockerManager:
         """Start Unreal Engine in Docker container"""
         # Note: Windows containers only
         container = self.client.containers.run(
-            image="q-ide-unreal:latest",
+            image="Top Dog-unreal:latest",
             name=f"unreal-{project_id}",
             ports={
                 '6007/tcp': 6007,    # Debugger
@@ -327,7 +327,7 @@ class ContainerManager:
     def _start_godot(self, project_id: str, config: dict):
         """Start Godot container"""
         return self.client.containers.run(
-            image=config.get('image', 'q-ide-godot:latest'),
+            image=config.get('image', 'Top Dog-godot:latest'),
             name=f"godot-{project_id}",
             ports={
                 '6006/tcp': config.get('debugger_port', 6006),
@@ -346,7 +346,7 @@ class ContainerManager:
     def _start_unreal(self, project_id: str, config: dict):
         """Start Unreal Engine container"""
         return self.client.containers.run(
-            image=config.get('image', 'q-ide-unreal:latest'),
+            image=config.get('image', 'Top Dog-unreal:latest'),
             name=f"unreal-{project_id}",
             ports={
                 '6007/tcp': config.get('debugger_port', 6007),
@@ -493,14 +493,14 @@ export function ContainerManager() {
 
 ```bash
 # Build all game engine images
-docker build -f docker/godot-runtime.dockerfile -t q-ide-godot:latest .
-docker build -f docker/game-preview.dockerfile -t q-ide-preview:latest .
+docker build -f docker/godot-runtime.dockerfile -t Top Dog-godot:latest .
+docker build -f docker/game-preview.dockerfile -t Top Dog-preview:latest .
 
 # On Windows, build Unreal image (requires Windows container)
-docker build -f docker/unreal-build.dockerfile -t q-ide-unreal:latest .
+docker build -f docker/unreal-build.dockerfile -t Top Dog-unreal:latest .
 
 # Verify images
-docker images | grep q-ide
+docker images | grep Top Dog
 ```
 
 ### Docker Compose (Local Dev Stack)
@@ -510,7 +510,7 @@ docker images | grep q-ide
 version: '3.8'
 
 services:
-  q-ide-backend:
+  Top Dog-backend:
     build: .
     ports:
       - "5000:5000"
@@ -520,7 +520,7 @@ services:
       - DOCKER_HOST=unix:///var/run/docker.sock
 
   godot-runtime:
-    image: q-ide-godot:latest
+    image: Top Dog-godot:latest
     ports:
       - "6006:6006"
       - "8006:8006"
@@ -528,7 +528,7 @@ services:
       - ./projects:/project
 
   game-preview:
-    image: q-ide-preview:latest
+    image: Top Dog-preview:latest
     ports:
       - "8080:8080"
     volumes:
@@ -605,10 +605,10 @@ jobs:
       - uses: actions/checkout@v3
       
       - name: Build Godot Container
-        run: docker build -f docker/godot-runtime.dockerfile -t q-ide-godot:latest .
+        run: docker build -f docker/godot-runtime.dockerfile -t Top Dog-godot:latest .
       
       - name: Start Godot Container
-        run: docker run -d -p 6006:6006 q-ide-godot:latest
+        run: docker run -d -p 6006:6006 Top Dog-godot:latest
       
       - name: Run Game Tests
         run: docker exec godot-0 godot --path /project --script tests/run_tests.gd
@@ -632,7 +632,7 @@ jobs:
 ```python
 # Limit container memory usage
 container = self.client.containers.run(
-    image='q-ide-godot:latest',
+    image='Top Dog-godot:latest',
     mem_limit='1g',  # 1GB max
     memswap_limit='1g',
     cpuset_cpus='0-3'  # Use only 4 CPU cores
@@ -684,7 +684,7 @@ docker inspect godot-project-1
 
 ## CONCLUSION
 
-Docker enables Q-IDE to:
+Docker enables Top Dog to:
 - ✅ Support Godot, Unreal, and custom game runtimes without local installation
 - ✅ Scale multiple projects in parallel (one container per project)
 - ✅ Deploy game builds to cloud infrastructure

@@ -1,6 +1,6 @@
-# 📚 Q-IDE MARKET STRATEGY DOCUMENTATION INDEX
+# 📚 Top Dog MARKET STRATEGY DOCUMENTATION INDEX
 
-**Complete Guide to Q-IDE's Capabilities, Positioning, and Go-to-Market Strategy**
+**Complete Guide to Top Dog's Capabilities, Positioning, and Go-to-Market Strategy**
 
 ---
 
@@ -43,7 +43,7 @@
 **Best for**: C-suite, investors, board meetings
 
 **Contains**:
-- ✅ One-page overview (what is Q-IDE)
+- ✅ One-page overview (what is Top Dog)
 - ✅ Why it's valuable (replaces 5-10 tools)
 - ✅ Market opportunity ($8B SAM)
 - ✅ Competitive positioning matrix
@@ -159,7 +159,7 @@ Result: Compelling marketing narrative
 ### Strategy & Positioning
 | Question | Answer Location |
 |----------|-----------------|
-| What is Q-IDE? | EXECUTIVE_SUMMARY: One-page overview |
+| What is Top Dog? | EXECUTIVE_SUMMARY: One-page overview |
 | Why is it valuable? | EXECUTIVE_SUMMARY: Value comparison |
 | What's unique about it? | CAPABILITIES: Unique features section |
 | How does it compare to competitors? | CAPABILITIES: Pricing comparison matrix |
@@ -245,7 +245,7 @@ MARKET SIZE
 ├─ Total Addressable Market: $50B
 ├─ Serviceable Addressable Market: $8B
 ├─ Serviceable Obtainable Market (Year 3): $80M-800M+
-└─ Q-IDE Revenue Potential (Year 3): $1.4-4.2B
+└─ Top Dog Revenue Potential (Year 3): $1.4-4.2B
 
 FEATURE COUNT
 ├─ Supported Languages: 50+
@@ -348,15 +348,15 @@ COMPETITIVE COMPARISON
 ## 🎯 BOTTOM LINE
 
 These three documents provide **everything you need to**:
-- ✅ Understand Q-IDE's complete capabilities
-- ✅ Position Q-IDE in the market
+- ✅ Understand Top Dog's complete capabilities
+- ✅ Position Top Dog in the market
 - ✅ Justify pricing and positioning
 - ✅ Pitch to investors
 - ✅ Enable your sales team
 - ✅ Plan your marketing strategy
 - ✅ Execute go-to-market plan
 
-**Combined, they tell the complete story of why Q-IDE will become a $1.4-4.2B revenue company by Year 3.**
+**Combined, they tell the complete story of why Top Dog will become a $1.4-4.2B revenue company by Year 3.**
 
 ---
 

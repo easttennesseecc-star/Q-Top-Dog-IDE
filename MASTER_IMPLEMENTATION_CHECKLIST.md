@@ -191,7 +191,7 @@ Displays all 10 tiers with pricing, features, and value propositions. Marketing 
 
 **Value Propositions**
 - [ ] For each tier, show what problems it solves:
-  - FREE: "Try Q-IDE for free"
+  - FREE: "Try Top Dog for free"
   - PRO: "Run custom code"
   - PRO-PLUS: "Use your own LLMs"
   - PRO-TEAM: "Collaborate with team"

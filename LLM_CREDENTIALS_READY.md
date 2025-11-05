@@ -2,7 +2,7 @@
 
 ## What Just Happened
 
-We completely redesigned how you add LLM credentials to Q-IDE.
+We completely redesigned how you add LLM credentials to Top Dog.
 
 ### The Old Way (❌ Complicated)
 ```
@@ -40,15 +40,15 @@ Groq 🚀             → Free API key
 Ollama 🖥️           → Local (no key)
 ```
 
-### ✅ Q-IDE Will Use Your Credentials
+### ✅ Top Dog Will Use Your Credentials
 ```
 You: "I want to build an app"
 ↓
-Q-IDE: Uses your Google/OpenAI key
+Top Dog: Uses your Google/OpenAI key
 ↓
-Q-IDE calls Google/OpenAI with your key
+Top Dog calls Google/OpenAI with your key
 ↓
-Q-IDE gets AI response
+Top Dog gets AI response
 ↓
 You see response in Q Assistant
 ```
@@ -57,7 +57,7 @@ You see response in Q Assistant
 ```
 Keys stored on YOUR computer
    ↓
-Not sent to Q-IDE servers
+Not sent to Top Dog servers
    ↓
 Not visible to anyone else
    ↓
@@ -70,7 +70,7 @@ You control everything
 
 ### 1️⃣ Open LLM Setup
 ```
-Click "LLM Setup" tab in Q-IDE
+Click "LLM Setup" tab in Top Dog
 ```
 
 ### 2️⃣ Click Auth Tab
@@ -82,7 +82,7 @@ You'll see all LLM providers with input fields
 ```
 Example: Google Gemini
 Click the link to get API key
-Paste key in Q-IDE
+Paste key in Top Dog
 Click Save
 ```
 
@@ -112,7 +112,7 @@ Get response powered by your LLM! 🎉
 
 1. **No Account Needed**
    ```
-   You don't create a "Q-IDE account"
+   You don't create a "Top Dog account"
    You only add credentials for LLM services
    (Google, OpenAI, Anthropic, etc.)
    ```
@@ -120,7 +120,7 @@ Get response powered by your LLM! 🎉
 2. **Credentials Stay Local**
    ```
    Your API keys stored on your computer
-   Q-IDE never sends them to servers
+   Top Dog never sends them to servers
    You're in complete control
    ```
 
@@ -145,7 +145,7 @@ Get response powered by your LLM! 🎉
 1. Go to: ai.google.dev/tutorials/setup
 2. Click "Get API Key"
 3. Copy the key
-4. Paste in Q-IDE Auth tab
+4. Paste in Top Dog Auth tab
 5. Click Save
 ⏱️ 2 minutes
 💰 Free (60 requests/minute)
@@ -156,7 +156,7 @@ Get response powered by your LLM! 🎉
 1. Go to: platform.openai.com/account/api-keys
 2. Add payment method (required)
 3. Create new key
-4. Copy and paste in Q-IDE
+4. Copy and paste in Top Dog
 5. Click Save
 ⏱️ 5 minutes
 💰 Pay-as-you-go (~$0.03/use)
@@ -167,7 +167,7 @@ Get response powered by your LLM! 🎉
 1. Download: ollama.ai
 2. Run: ollama pull mistral
 3. Start: ollama serve
-4. Q-IDE auto-detects it
+4. Top Dog auto-detects it
 5. Start using
 ⏱️ 10 minutes
 💰 Free, offline
@@ -237,15 +237,15 @@ For EACH provider:
 ```
 🔒 Your Computer
    └─ Your API keys stored here
-      └─ Encrypted file: ~/.q-ide/llm_credentials.json
-      └─ Only Q-IDE accesses it
+      └─ Encrypted file: ~/.Top Dog/llm_credentials.json
+      └─ Only Top Dog accesses it
       └─ Treated like passwords
 
 🌐 When You Ask Q Assistant
-   └─ Q-IDE sends: your key + your message
+   └─ Top Dog sends: your key + your message
    └─ To: Google/OpenAI/Anthropic (only)
-   └─ Not: Q-IDE servers, anyone else
-   └─ Q-IDE just: relays response back
+   └─ Not: Top Dog servers, anyone else
+   └─ Top Dog just: relays response back
 
 🛡️ Your Control
    └─ You can revoke anytime (click Clear)
@@ -325,14 +325,14 @@ Q Assistant will:
 ### ✅ What's Next:
 1. Pick your first LLM (Gemini recommended)
 2. Get your API key (2-5 min)
-3. Add to Q-IDE (1 min)
+3. Add to Top Dog (1 min)
 4. Start building your app! 🚀
 
 ---
 
 ## Reference Guide
 
-**Q-IDE → LLM Setup → Auth Tab**
+**Top Dog → LLM Setup → Auth Tab**
 
 ```
 For Every Provider You See:
@@ -362,7 +362,7 @@ Repeat for multiple providers if desired.
 
 ---
 
-**You're ready! Open Q-IDE and go to LLM Setup → Auth tab. Let's build! 🚀**
+**You're ready! Open Top Dog and go to LLM Setup → Auth tab. Let's build! 🚀**
 
 Questions? Check the documentation files:
 - Quick setup: QUICK_ADD_LLM_CREDENTIALS.md

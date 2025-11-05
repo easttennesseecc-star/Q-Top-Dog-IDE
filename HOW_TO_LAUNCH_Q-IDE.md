@@ -1,23 +1,23 @@
-# 🚀 Q-IDE - Easy Launch Guide
+# 🚀 Top Dog - Easy Launch Guide
 
 ## Where to Find Your Launch Button
 
-Your Q-IDE has **3 easy ways to launch**:
+Your Top Dog has **3 easy ways to launch**:
 
 ---
 
 ## Method 1: Rocket Launcher (⭐ EASIEST)
 
-### File: `🚀_LAUNCH_Q-IDE.bat` 
+### File: `🚀_LAUNCH_Top Dog.bat` 
 
-**Location:** `c:\Quellum-topdog-ide\🚀_LAUNCH_Q-IDE.bat`
+**Location:** `c:\Quellum-topdog-ide\🚀_LAUNCH_Top Dog.bat`
 
 **How to use:**
 1. Open `c:\Quellum-topdog-ide\` folder in Windows Explorer
 2. Look for the file with the **🚀 rocket emoji** at the start
 3. **Double-click it**
 4. Two windows open automatically
-5. Browser opens to Q-IDE automatically
+5. Browser opens to Top Dog automatically
 
 ✅ **Easiest method - just double-click and go!**
 
@@ -37,8 +37,8 @@ Your Q-IDE has **3 easy ways to launch**:
 
 **Every day after:**
 1. Look on your **Windows Desktop**
-2. Find the **Q-IDE icon** (blue gear/cube icon)
-3. **Double-click it** - Q-IDE launches!
+2. Find the **Top Dog icon** (blue gear/cube icon)
+3. **Double-click it** - Top Dog launches!
 
 ✅ **Most convenient - icon on your desktop**
 
@@ -63,7 +63,7 @@ This is the original launcher. Still works great!
 
 | Method | File | Time | Convenience |
 |--------|------|------|-------------|
-| 🚀 Rocket | `🚀_LAUNCH_Q-IDE.bat` | 2 seconds | ⭐⭐⭐⭐⭐ |
+| 🚀 Rocket | `🚀_LAUNCH_Top Dog.bat` | 2 seconds | ⭐⭐⭐⭐⭐ |
 | 🖥️ Desktop Shortcut | First: `CREATE_DESKTOP_SHORTCUT.bat` | 1 minute setup | ⭐⭐⭐⭐⭐ |
 | Original | `START.bat` | 3 seconds | ⭐⭐⭐ |
 
@@ -80,7 +80,7 @@ Frontend starts (React/Vite on port 1431)
         ↓
 Browser opens automatically to http://localhost:1431
         ↓
-🎉 Q-IDE is running!
+🎉 Top Dog is running!
         ↓
 Complete Setup Wizard
         ↓
@@ -99,10 +99,10 @@ Start building your app!
 2. Navigate to `c:\Quellum-topdog-ide\`
 3. Double-click `CREATE_DESKTOP_SHORTCUT.bat`
 4. Click "OK" when you see the success message
-5. Check your **Desktop** - you'll see a new **"Q-IDE"** icon
+5. Check your **Desktop** - you'll see a new **"Top Dog"** icon
 
 **From then on:**
-- Just double-click the **Q-IDE** icon on your desktop to launch!
+- Just double-click the **Top Dog** icon on your desktop to launch!
 
 ---
 
@@ -110,10 +110,10 @@ Start building your app!
 
 ```
 Windows Desktop
-└── Q-IDE (shortcut) ← Double-click this after setup!
+└── Top Dog (shortcut) ← Double-click this after setup!
 
 C:\Quellum-topdog-ide\
-├── 🚀_LAUNCH_Q-IDE.bat      ← Easiest (with rocket emoji!)
+├── 🚀_LAUNCH_Top Dog.bat      ← Easiest (with rocket emoji!)
 ├── CREATE_DESKTOP_SHORTCUT.bat  ← Create desktop icon
 ├── START.bat                ← Original launcher
 ├── INSTALL.bat              ← Installation (first-time only)
@@ -151,7 +151,7 @@ C:\Quellum-topdog-ide\
 
 | Service | URL | Purpose |
 |---------|-----|---------|
-| Q-IDE App | http://localhost:1431 | Main UI - Start here! |
+| Top Dog App | http://localhost:1431 | Main UI - Start here! |
 | API Docs | http://localhost:8000/docs | Backend API reference |
 | Backend API | http://localhost:8000 | Direct API access |
 
@@ -163,9 +163,9 @@ C:\Quellum-topdog-ide\
 
 ✅ **No installation headache:** Just use the rocket launcher
 
-✅ **Multiple instances:** Yes, you can run multiple Q-IDE windows (each project separate)
+✅ **Multiple instances:** Yes, you can run multiple Top Dog windows (each project separate)
 
-✅ **Keep running:** You can keep Q-IDE running in the background
+✅ **Keep running:** You can keep Top Dog running in the background
 
 ✅ **Logs:** Check `logs/` folder for troubleshooting
 
@@ -176,9 +176,9 @@ C:\Quellum-topdog-ide\
 Choose your favorite launch method and start building:
 
 - **Desktop icon?** Run `CREATE_DESKTOP_SHORTCUT.bat` once
-- **Quick launch?** Double-click `🚀_LAUNCH_Q-IDE.bat`
-- **Either way:** You'll have Q-IDE running in seconds!
+- **Quick launch?** Double-click `🚀_LAUNCH_Top Dog.bat`
+- **Either way:** You'll have Top Dog running in seconds!
 
 **Questions?** Check `README_INSTALLATION.md` for more details.
 
-**Ready?** Launch Q-IDE now! 🚀
+**Ready?** Launch Top Dog now! 🚀

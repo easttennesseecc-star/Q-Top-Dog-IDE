@@ -58,8 +58,8 @@ After:
 - ✅ All endpoints already working correctly
 
 **Storage:**
-- ✅ Keys stored in `~/.q-ide/llm_credentials.json` (local)
-- ✅ No Q-IDE server involvement needed
+- ✅ Keys stored in `~/.Top Dog/llm_credentials.json` (local)
+- ✅ No Top Dog server involvement needed
 
 ### 3. Documentation Created
 
@@ -80,11 +80,11 @@ After:
 ### Old Experience (❌ Confusing)
 ```
 User: "I have my API key"
-Q-IDE: "Click Auth tab"
+Top Dog: "Click Auth tab"
 User: "I see 'Sign In' buttons?"
-Q-IDE: "That's for OAuth..."
+Top Dog: "That's for OAuth..."
 User: "But I want to paste my key"
-Q-IDE: "Try Setup tab?"
+Top Dog: "Try Setup tab?"
 User: "That's one-at-a-time... there's no clear way to do this"
 ❌ Frustrated and lost
 ```
@@ -92,9 +92,9 @@ User: "That's one-at-a-time... there's no clear way to do this"
 ### New Experience (✅ Clear)
 ```
 User: "I have my API key"
-Q-IDE: "Go to Auth tab"
+Top Dog: "Go to Auth tab"
 User: "I see Google card with input field"
-Q-IDE: "Paste your key, click Save"
+Top Dog: "Paste your key, click Save"
 User: "✓ Shows 'Authenticated' in green"
 ✅ Done in 2 minutes
 ```
@@ -120,7 +120,7 @@ User: "✓ Shows 'Authenticated' in green"
 - **After:** All providers (API key and OAuth options)
 
 ### 5. User Understanding
-- **Before:** Unclear that Q-IDE doesn't store user account
+- **Before:** Unclear that Top Dog doesn't store user account
 - **After:** Crystal clear this is for LLM service credentials only
 
 ---
@@ -142,14 +142,14 @@ User: "✓ Shows 'Authenticated' in green"
 
 ```
 ✅ SECURE (What we do):
-   1. User pastes API key in Q-IDE
-   2. Q-IDE stores in ~/.q-ide/llm_credentials.json (local only)
-   3. When needed, Q-IDE uses key to call LLM API
+   1. User pastes API key in Top Dog
+   2. Top Dog stores in ~/.Top Dog/llm_credentials.json (local only)
+   3. When needed, Top Dog uses key to call LLM API
    4. Key never leaves your computer
-   5. Q-IDE developers never see it
+   5. Top Dog developers never see it
 
 ❌ NOT SECURE (What we DON'T do):
-   - Send keys to Q-IDE servers
+   - Send keys to Top Dog servers
    - Store in cloud
    - Share with 3rd parties
    - Make visible in logs
@@ -201,9 +201,9 @@ c:\Quellum-topdog-ide\
 
 ## Step-by-Step: How User Gets Started
 
-### 1. User Opens Q-IDE
+### 1. User Opens Top Dog
 ```
-Desktop → Q-IDE launcher → Application opens
+Desktop → Top Dog launcher → Application opens
 ```
 
 ### 2. User Navigates to LLM Setup
@@ -231,9 +231,9 @@ Follows steps → Gets API key
 Copies key (Ctrl+C)
 ```
 
-### 6. User Adds to Q-IDE
+### 6. User Adds to Top Dog
 ```
-Returns to Q-IDE Auth tab
+Returns to Top Dog Auth tab
 Pastes key in input field
 Clicks Save button
 ```
@@ -309,11 +309,11 @@ A: Yes! Add credentials for Google, OpenAI, Anthropic, all of them.
 **Q: Can each role use a different LLM?**
 A: Yes! Q Assistant → Gemini, Code → GPT-4, Review → Claude
 
-**Q: Do I create a Q-IDE account?**
+**Q: Do I create a Top Dog account?**
 A: No! You only authenticate with LLM services (Google, OpenAI, etc.)
 
 **Q: Where are my keys stored?**
-A: On your computer in ~/.q-ide/llm_credentials.json (local only)
+A: On your computer in ~/.Top Dog/llm_credentials.json (local only)
 
 **Q: Can I revoke access anytime?**
 A: Yes! Click "Clear" in Auth tab to remove any credential.
@@ -336,7 +336,7 @@ A: Yes! All TypeScript checks pass, endpoints working, documentation complete.
 5. ✅ Verified everything works (0 TypeScript errors)
 
 ### Result:
-Users can now easily provide their LLM API credentials to Q-IDE, which then uses them to call LLM services on their behalf - **all in 2-5 minutes with crystal clear instructions.**
+Users can now easily provide their LLM API credentials to Top Dog, which then uses them to call LLM services on their behalf - **all in 2-5 minutes with crystal clear instructions.**
 
 ---
 

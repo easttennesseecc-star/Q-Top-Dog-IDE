@@ -1,6 +1,6 @@
 /*
  * OAuth Configuration Panel Snippet
- * Q-IDE - Intelligent Development Environment
+ * Top Dog - Intelligent Development Environment
  * Add this to LLMConfigPanel.tsx Auth Tab
  * 
  * Integrates professional OAuth sign-in alongside manual API key entry
@@ -130,7 +130,7 @@ async function revokeAuth(providerId: string) {
 //   → User signs in at Google
 //   → Google redirects to /llm_auth/callback?code=...
 //   → Backend exchanges code for token
-//   → Backend stores token locally in ~/.q-ide/llm_credentials.json
+//   → Backend stores token locally in ~/.Top Dog/llm_credentials.json
 //   → Frontend receives postMessage, closes popup
 //   → Frontend refreshes auth status
 //   → User can now use LLMs!
@@ -166,7 +166,7 @@ async function revokeAuth(providerId: string) {
 //           Check backend logs for errors
 
 // Issue: Token not saved
-// Solution: Check ~/.q-ide/ directory permissions
+// Solution: Check ~/.Top Dog/ directory permissions
 //           Check backend logs for "token storage" errors
 
 // Issue: Token expired

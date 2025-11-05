@@ -2,7 +2,7 @@
 
 ## What It Does
 
-When Q-IDE starts:
+When Top Dog starts:
 
 ✅ Checks which LLMs are assigned to roles
 ✅ Checks if credentials exist for those LLMs
@@ -15,7 +15,7 @@ When Q-IDE starts:
 
 ### If Everything is Ready
 ```
-User opens Q-IDE
+User opens Top Dog
     ↓
 Backend: "All LLMs authenticated ✓"
     ↓
@@ -26,7 +26,7 @@ User builds immediately
 
 ### If Something's Missing
 ```
-User opens Q-IDE
+User opens Top Dog
     ↓
 Backend: "GPT-4 is assigned but missing credentials ⚠"
     ↓
@@ -46,11 +46,11 @@ Modal pops up:
     ↓
 User clicks "Add Credentials Now"
     ↓
-Modal closes, Q-IDE opens Auth tab
+Modal closes, Top Dog opens Auth tab
     ↓
 User pastes API key, clicks Save
     ↓
-Next time Q-IDE starts, no modal shown
+Next time Top Dog starts, no modal shown
 ```
 
 ---
@@ -189,7 +189,7 @@ const [showStartupAuthPrompt, setShowStartupAuthPrompt] = useState(true);
 
 ### Scenario A: Fresh Install
 ```
-1. User downloads Q-IDE
+1. User downloads Top Dog
 2. Opens it first time
 3. No LLMs assigned yet
 4. No modal shown (nothing to prompt about)
@@ -203,7 +203,7 @@ const [showStartupAuthPrompt, setShowStartupAuthPrompt] = useState(true);
 ### Scenario B: Multiple LLMs
 ```
 1. User has Gemini (working) and GPT-4 (missing creds)
-2. Opens Q-IDE
+2. Opens Top Dog
 3. Modal shows: "GPT-4 missing credentials"
 4. Also shows: "Gemini is ready to use"
 5. User can:
@@ -216,7 +216,7 @@ const [showStartupAuthPrompt, setShowStartupAuthPrompt] = useState(true);
 ### Scenario C: Lost Credentials
 ```
 1. User deletes API key from provider
-2. Opens Q-IDE
+2. Opens Top Dog
 3. Modal shows: "GPT-4 no longer authenticated"
 4. Suggests: "Use Gemini (free tier) or Ollama (local)"
 5. User either:
@@ -231,8 +231,8 @@ const [showStartupAuthPrompt, setShowStartupAuthPrompt] = useState(true);
 
 ### Backend Logs
 ```
-✓ Q-IDE Backend starting up...
-✓ Q-IDE startup tasks running...
+✓ Top Dog Backend starting up...
+✓ Top Dog startup tasks running...
 ✓ Checking LLM authentication...
 ✓ All 3 LLMs authenticated and ready
   → Q Assistant: Gemini Pro
@@ -243,7 +243,7 @@ const [showStartupAuthPrompt, setShowStartupAuthPrompt] = useState(true);
 
 ### Or With Issues
 ```
-✓ Q-IDE Backend starting up...
+✓ Top Dog Backend starting up...
 ✓ Checking LLM authentication...
 ⚠ 2 LLM(s) need credentials:
   - GPT-4 (assigned to Code Generation)
@@ -282,7 +282,7 @@ const [showStartupAuthPrompt, setShowStartupAuthPrompt] = useState(true);
 ## Summary
 
 ### For Users:
-- Opens Q-IDE → Auto-check happens
+- Opens Top Dog → Auto-check happens
 - If LLMs missing → Helpful modal with options
 - Choose your action → Continue building
 - Can add/change credentials anytime

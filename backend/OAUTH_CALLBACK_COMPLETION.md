@@ -100,7 +100,7 @@ The README now includes:
    - Enforce best practices
 
 #### 2. **Requirements to Connect**
-   - **Backend Connection**: Setup `LLMClient` to connect to Q-IDE backend
+   - **Backend Connection**: Setup `LLMClient` to connect to Top Dog backend
    - **LLM Model Requirements**: Model specs (context window, API access, response time)
    - **Data Access**: Build data, codebase analysis, learning persistence
    - **Integration Patterns**: Continuous learning, on-demand analysis, real-time monitoring
@@ -343,7 +343,7 @@ patterns = {
 ## 📊 Current Architecture
 
 ```
-Q-IDE Backend (FastAPI, port 8000)
+Top Dog Backend (FastAPI, port 8000)
 ├── /auth/google/start → Google auth URL
 ├── /auth/google/callback → (redirects to) /static/oauth-callback.html
 ├── /auth/github/start → GitHub auth URL
@@ -356,7 +356,7 @@ Q-IDE Backend (FastAPI, port 8000)
 ├── /llm/learning/report → Submit LLM analysis
 └── /static → Static files (oauth-callback.html, etc.)
 
-Q-IDE Frontend (React, port 1431)
+Top Dog Frontend (React, port 1431)
 ├── GoogleSignIn popup → Opens /auth/google/start
 ├── SignInPanel modal → Manages OAuth flow
 ├── AccountLinkingPanel → Manage connected providers
@@ -368,7 +368,7 @@ Static Files (frontend/public)
 └── Other assets
 
 LLM Client Library (Python)
-├── LLMClient → Connect to Q-IDE backend
+├── LLMClient → Connect to Top Dog backend
 ├── get_builds() → Fetch build history
 ├── get_build() → Fetch specific build details
 ├── get_codebase() → Fetch project structure

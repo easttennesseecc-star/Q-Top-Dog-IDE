@@ -16,7 +16,7 @@
 **Purpose**: Comprehensive strategic reference document
 
 **Sections**:
-- Executive summary (what Q-IDE is, why it matters)
+- Executive summary (what Top Dog is, why it matters)
 - Market positioning matrix (TAM/SAM analysis)
 - **Tier 1: Core IDE Features** (10 pages)
   - Code editor & syntax highlighting (50+ languages)
@@ -60,7 +60,7 @@
 **Purpose**: Board/investor briefing (10-15 minute read)
 
 **Sections**:
-- One-page Q-IDE overview
+- One-page Top Dog overview
 - Why it's valuable (replaces 5-10 tools)
 - Market opportunity ($8B SAM)
 - Competitive positioning matrix (vs 5 competitors)
@@ -223,7 +223,7 @@
   - Conservative (1% of SAM): $80M
   - Moderate (5% of SAM): $400M
   - Aggressive (10% of SAM): $800M+
-- **Q-IDE Target** (3% conservative estimate): $1.4-4.2B Year 3
+- **Top Dog Target** (3% conservative estimate): $1.4-4.2B Year 3
 
 ### Go-to-Market Strategy (5-Point Framework)
 
@@ -322,7 +322,7 @@
 
 ## Unique Competitive Advantages (7 Exclusive Features)
 
-| Feature | Q-IDE | GitHub | Cursor | Windsurf | GameMaker | Status |
+| Feature | Top Dog | GitHub | Cursor | Windsurf | GameMaker | Status |
 |---------|-------|--------|--------|----------|-----------|--------|
 | Multi-game engine | ✅ 4 engines | ❌ None | ❌ None | ❌ None | ❌ 1 engine | UNIQUE |
 | LLM learning system | ✅ Yes | ❌ No | ❌ No | ❌ No | ❌ No | UNIQUE |
@@ -336,7 +336,7 @@
 
 ## Source Documents Analyzed
 
-All insights derived from authoritative Q-IDE source documents:
+All insights derived from authoritative Top Dog source documents:
 
 1. **PRODUCTION_READY.md** (626 lines)
    - ✅ 22/22 tests passing
@@ -457,7 +457,7 @@ Total new content: 15,500+ lines across 4 documents
 
 ## Bottom Line
 
-**Q-IDE is positioned to become a $1.4-4.2B company by 2028** with:
+**Top Dog is positioned to become a $1.4-4.2B company by 2028** with:
 
 ✅ **Better Product** (Full IDE + 53 LLMs + 4 game engines)
 ✅ **Better Value** (Market-competitive pricing with 10x more integrated capabilities, premium positioning by Year 2)

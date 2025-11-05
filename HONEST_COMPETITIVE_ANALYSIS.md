@@ -1,16 +1,16 @@
-# 🥊 HONEST COMPETITIVE ANALYSIS: Q-IDE vs Competition
+# 🥊 HONEST COMPETITIVE ANALYSIS: Top Dog vs Competition
 ## No BS, Just Facts
 
 **Type**: Unfiltered Competitive Intelligence  
 **Audience**: Investors, Product Team, Executive Leadership  
 **Date**: October 29, 2025  
-**Tone**: Brutally Honest (including Q-IDE's weaknesses)
+**Tone**: Brutally Honest (including Top Dog's weaknesses)
 
 ---
 
 ## TL;DR - The Real Situation
 
-### Q-IDE's Actual Position
+### Top Dog's Actual Position
 
 **The Good News:**
 - ✅ Best pricing in market ($12/month vs $46-164 for competitors)
@@ -20,13 +20,13 @@
 
 **The Bad News:**
 - ❌ Brand recognition: Near zero vs GitHub's 100M developers
-- ❌ Production track record: Launched Q-IDE 2025, no enterprise customers yet
+- ❌ Production track record: Launched Top Dog 2025, no enterprise customers yet
 - ❌ Market adoption: Competitors have 5-10 year headstart
 - ❌ Switching costs: GitHub + VS Code ecosystem has massive lock-in
-- ❌ Sales/Support: Q-IDE has 1-2 person team vs GitHub's 10,000+
+- ❌ Sales/Support: Top Dog has 1-2 person team vs GitHub's 10,000+
 
 **The Reality:**
-Q-IDE is technically superior on features/pricing but faces a uphill battle against entrenched competitors with massive distribution and brand power. This is a David vs Goliath situation. **Success depends on execution speed and finding a defensible niche before competitors respond.**
+Top Dog is technically superior on features/pricing but faces a uphill battle against entrenched competitors with massive distribution and brand power. This is a David vs Goliath situation. **Success depends on execution speed and finding a defensible niche before competitors respond.**
 
 ---
 
@@ -141,7 +141,7 @@ GitHub isn't trying to be "best IDE". They're:
 ❌ **No Default AI**: Requires buying GitHub Copilot
 - Best option is $10/month add-on
 - Continue.dev alternative is weaker
-- No built-in AI assistant comparable to Q-IDE
+- No built-in AI assistant comparable to Top Dog
 
 ❌ **No Integrated Media**: Can't generate assets
 - Need Figma for design
@@ -182,7 +182,7 @@ GitHub isn't trying to be "best IDE". They're:
 
 ❌ **Weak AI**: Not enterprise-grade
 - Single model (not customizable)
-- Lower quality than Copilot/Q-IDE
+- Lower quality than Copilot/Top Dog
 - Feels tacked-on, not central to product
 
 ❌ **IDE Performance**: Noticeably slower than VS Code
@@ -250,7 +250,7 @@ GitHub isn't trying to be "best IDE". They're:
 - Cursor users should expect price increase post-acquisition
 - Not a long-term stable choice for companies
 
-**Market Reality**: Cursor is the best local option for individual developers. But that's a limited market ($500M-1B max). Q-IDE targets bigger market (teams).
+**Market Reality**: Cursor is the best local option for individual developers. But that's a limited market ($500M-1B max). Top Dog targets bigger market (teams).
 
 ---
 
@@ -278,9 +278,9 @@ GitHub isn't trying to be "best IDE". They're:
 - Enterprise customers aren't moving yet
 
 ❌ **Expensive for Limited Features**: $12.99/month
-- Only $1 cheaper than Q-IDE
-- Less features than Q-IDE
-- Less AI than Q-IDE
+- Only $1 cheaper than Top Dog
+- Less features than Top Dog
+- Less AI than Top Dog
 - Feels behind the curve
 
 ❌ **No AI Innovation**: Weak Copilot integration
@@ -288,7 +288,7 @@ GitHub isn't trying to be "best IDE". They're:
 - Not differentiated
 - Can't compete with Copilot directly
 
-❌ **Limited LLM Support**: Not like Q-IDE
+❌ **Limited LLM Support**: Not like Top Dog
 - Copilot integration only
 - No BYOK
 - No multi-model
@@ -299,19 +299,19 @@ GitHub isn't trying to be "best IDE". They're:
 - Community smaller
 - Switching cost: Why leave VS Code?
 
-**Market Reality**: JetBrains Fleet is 2-3 years away from being relevant. By then, Q-IDE will have captured the early adopter cloud IDE market.
+**Market Reality**: JetBrains Fleet is 2-3 years away from being relevant. By then, Top Dog will have captured the early adopter cloud IDE market.
 
 ---
 
-## Part 2: Honest Assessment of Q-IDE
+## Part 2: Honest Assessment of Top Dog
 
-### Q-IDE's Real Strengths
+### Top Dog's Real Strengths
 
 #### Strength #1: Best Price-to-Feature Ratio
 
 **Math:**
 - Copilot + Codespaces: $46/month ($552/year)
-- Q-IDE Pro: $12/month ($144/year)
+- Top Dog Pro: $12/month ($144/year)
 - **Savings: $408/year per person (73% cheaper)**
 - **For team of 10: $4,080/year savings**
 
@@ -320,7 +320,7 @@ GitHub isn't trying to be "best IDE". They're:
 - Switching cost is real ($408 doesn't overcome "I already know VS Code")
 - Price alone doesn't win markets
 
-**Q-IDE Advantage**: Strongest with price-sensitive segments (students, startups, freelancers). Weakest with enterprises who care more about support than price.
+**Top Dog Advantage**: Strongest with price-sensitive segments (students, startups, freelancers). Weakest with enterprises who care more about support than price.
 
 #### Strength #2: Multi-LLM BYOK (Genuinely Unique)
 
@@ -342,7 +342,7 @@ GitHub isn't trying to be "best IDE". They're:
 - Price-sensitive teams understand (big win here)
 - But: Requires setup (not plug-and-play like Copilot)
 
-**Q-IDE Advantage**: Powerful with enterprises and cost-conscious devs. Value not understood by mainstream market yet.
+**Top Dog Advantage**: Powerful with enterprises and cost-conscious devs. Value not understood by mainstream market yet.
 
 #### Strength #3: Runway Media Integration (Unmatched)
 
@@ -363,7 +363,7 @@ GitHub isn't trying to be "best IDE". They're:
 - This is a niche feature for full-stack/indie hackers
 - But: Very powerful in that niche
 
-**Q-IDE Advantage**: ONLY option for developers building solo projects with media (indie apps, games, etc). Unmatched in this segment.
+**Top Dog Advantage**: ONLY option for developers building solo projects with media (indie apps, games, etc). Unmatched in this segment.
 
 #### Strength #4: Integrated Product Philosophy
 
@@ -382,7 +382,7 @@ GitHub isn't trying to be "best IDE". They're:
 - Developers love flexibility (best-in-class point solutions)
 - This is a trade-off: Integration vs Best-in-Class
 
-**Q-IDE Advantage**: Enterprise buyers. Disadvantage: Power users who want "best of breed" tools.
+**Top Dog Advantage**: Enterprise buyers. Disadvantage: Power users who want "best of breed" tools.
 
 #### Strength #5: True Free Tier (No Gotchas)
 
@@ -398,15 +398,15 @@ GitHub isn't trying to be "best IDE". They're:
 - Conversion: Free tier → Pro
 
 **Reality Check:**
-- Free tier has no monetization (Q-IDE loses money on free users)
+- Free tier has no monetization (Top Dog loses money on free users)
 - But: Creates user base, builds word-of-mouth
 - Freemium model proven to work (Slack, Figma, etc.)
 
-**Q-IDE Advantage**: Best acquisition funnel in market. Free tier users aren't monetized but lead to paid upgrades.
+**Top Dog Advantage**: Best acquisition funnel in market. Free tier users aren't monetized but lead to paid upgrades.
 
 ---
 
-### Q-IDE's Real Weaknesses (The Honest Part)
+### Top Dog's Real Weaknesses (The Honest Part)
 
 #### Weakness #1: Brand Recognition = ZERO
 
@@ -414,9 +414,9 @@ GitHub isn't trying to be "best IDE". They're:
 - GitHub: 100M developers recognize brand
 - VS Code: 99M active users know the name
 - Copilot: Household name in developer community
-- Q-IDE: ???
+- Top Dog: ???
 
-**How Developers Find Q-IDE:**
+**How Developers Find Top Dog:**
 - Reddit comment (maybe)
 - HN post (if lucky)
 - Google search for "cloud IDE" (ranks 5th-10th)
@@ -424,7 +424,7 @@ GitHub isn't trying to be "best IDE". They're:
 - That's it.
 
 **Real Impact:**
-- When CTO asks "Should we use Q-IDE?", answer is often "What's Q-IDE?"
+- When CTO asks "Should we use Top Dog?", answer is often "What's Top Dog?"
 - Enterprise procurement doesn't recognize brand (risk factor)
 - No distribution channel (vs GitHub's 100M installed base)
 - Word-of-mouth only (very slow growth)
@@ -434,10 +434,10 @@ GitHub isn't trying to be "best IDE". They're:
 - "Safe choice" = known brand
 - Building brand costs $50M+ (Red Hat, HashiCorp playbook)
 
-**Q-IDE's Situation:**
+**Top Dog's Situation:**
 - Technically better product, but nobody knows about it
 - Winning requires 3-5 years of consistent marketing + 10x growth to reach 1M developers
-- GitHub can just lower prices and kill Q-IDE if threatened
+- GitHub can just lower prices and kill Top Dog if threatened
 
 #### Weakness #2: Zero Enterprise Track Record
 
@@ -445,7 +445,7 @@ GitHub isn't trying to be "best IDE". They're:
 - GitHub: Used by 95% of Fortune 500
 - VS Code: Default IDE at Microsoft, Google, Apple
 - Copilot: Deployed in 1000s of enterprise teams
-- Q-IDE: ??? 
+- Top Dog: ??? 
 
 **Reality:**
 - No case studies (because no enterprise customers)
@@ -456,12 +456,12 @@ GitHub isn't trying to be "best IDE". They're:
 **Impact:**
 - Enterprise procurement: "Unproven platform"
 - Risk assessment: "Small team, could fold"
-- Security review: "Show us your penetration test results" (Q-IDE: ???)
-- Support: "What's your 24/7 support SLA?" (Q-IDE: Premium feature only)
+- Security review: "Show us your penetration test results" (Top Dog: ???)
+- Support: "What's your 24/7 support SLA?" (Top Dog: Premium feature only)
 
 **Real Example:**
-- A company is considering Q-IDE vs GitHub Copilot
-- CTO says "Let's try Q-IDE, it's cheaper"
+- A company is considering Top Dog vs GitHub Copilot
+- CTO says "Let's try Top Dog, it's cheaper"
 - Legal/Security team says "We need SOC2 Type II, HIPAA certification, proven uptime, 24/7 support"
 - Decision: GitHub Copilot (even though it's 4x more expensive)
 
@@ -474,7 +474,7 @@ GitHub isn't trying to be "best IDE". They're:
 - Product managers: 50+
 - R&D: 2,000+
 
-**Q-IDE: ~3-5 people (estimated)**
+**Top Dog: ~3-5 people (estimated)**
 - Founder/CTO: 1
 - Backend engineers: 1-2
 - Frontend: 1
@@ -483,13 +483,13 @@ GitHub isn't trying to be "best IDE". They're:
 - No marketing team
 
 **Reality:**
-- One critical person leaves → Q-IDE stalls
+- One critical person leaves → Top Dog stalls
 - Can't support enterprise customers (requires dedicated team)
 - Can't keep up with feature development (GitHub ship 10 features per week)
 - Support tickets: Backlog is probably 50+ deep
 
 **Impact:**
-- Scalability: Q-IDE can't scale with demand
+- Scalability: Top Dog can't scale with demand
 - Reliability: Small team = higher risk of outages
 - Enterprise requirements: Can't meet SLA/support guarantees
 
@@ -508,14 +508,14 @@ GitHub isn't trying to be "best IDE". They're:
 - Laptop pre-install (OEM partnerships)
 - Developer community (word-of-mouth)
 
-**Q-IDE's Channels:**
+**Top Dog's Channels:**
 - Website (developers must find you)
 - ???
 
 **Reality:**
 - Competitors get users delivered by distribution
-- Q-IDE must earn every single user through marketing/content
-- Customer acquisition cost (CAC) for Q-IDE is probably 3-5x higher than GitHub
+- Top Dog must earn every single user through marketing/content
+- Customer acquisition cost (CAC) for Top Dog is probably 3-5x higher than GitHub
 - At $12/month subscription, payback period is very long
 
 **Math:**
@@ -527,7 +527,7 @@ GitHub isn't trying to be "best IDE". They're:
 #### Weakness #5: Product Execution Risk
 
 **Current Reality:**
-- Q-IDE launched Q-IDE recently (2025)
+- Top Dog launched Top Dog recently (2025)
 - No major updates since launch (estimated)
 - Feature development speed: Unknown
 - Quality/reliability: Early stage (expect bugs)
@@ -540,15 +540,15 @@ GitHub isn't trying to be "best IDE". They're:
 
 **Real Risk:**
 - GitHub could respond by lowering price to $9/month
-- Q-IDE can't compete on brand or support
-- Q-IDE's margin disappears
-- Q-IDE dies
+- Top Dog can't compete on brand or support
+- Top Dog's margin disappears
+- Top Dog dies
 
 **Execution Speed:**
-- Q-IDE is moving fast (good)
+- Top Dog is moving fast (good)
 - But GitHub can move faster (they have more developers)
 - Copilot was written by 100+ engineers in 6 months
-- Q-IDE team: 3-5 people
+- Top Dog team: 3-5 people
 
 #### Weakness #6: Market Transition Inertia
 
@@ -561,7 +561,7 @@ GitHub isn't trying to be "best IDE". They're:
 5. Stays locked in: Switching costs accumulate
 ```
 
-**Q-IDE Entry Points:**
+**Top Dog Entry Points:**
 ```
 1. Developer must actively SEEK alternative
 2. Developer must be willing to switch from VS Code
@@ -575,7 +575,7 @@ GitHub isn't trying to be "best IDE". They're:
 - 99% of developers never consider switching (effort >> benefit they perceive)
 - 1% consider switching (typically startups/freelancers)
 - Of that 1%, maybe 50% actually switch
-- Result: Q-IDE captures <1% of market in Year 1
+- Result: Top Dog captures <1% of market in Year 1
 
 ---
 
@@ -590,16 +590,16 @@ GitHub isn't trying to be "best IDE". They're:
 4. **Social Proof**: "Everyone uses GitHub" (psychological)
 5. **Switching Cost**: Training new hires on new tools costs $$
 
-**Q-IDE's Problem:**
+**Top Dog's Problem:**
 - No network effects initially
 - Employer rejects (no brand recognition)
-- Ecosystem doesn't know about Q-IDE
+- Ecosystem doesn't know about Top Dog
 - No social proof
 - High switching cost to convince team
 
 **Math:**
 - GitHub gets stronger as it grows (network effects)
-- Q-IDE must fight against stronger competitors as market grows
+- Top Dog must fight against stronger competitors as market grows
 - This is asymmetric warfare
 
 ### Market Consolidation Trend
@@ -611,19 +611,19 @@ GitHub isn't trying to be "best IDE". They're:
 - Alphabet acquired Mandiant, Postmates, etc.
 - Consolidation = Fewer winners, more losers
 
-**Q-IDE's Risk:**
-- As market consolidates, Q-IDE either:
+**Top Dog's Risk:**
+- As market consolidates, Top Dog either:
   1. Gets acquired (lose independence)
   2. Stays independent but becomes niche player
   3. Fails to compete and dies
 
 **Acquisition Scenarios:**
-- Google buys Q-IDE for Workspace integration ($50-200M)
-- JetBrains buys Q-IDE to compete with VS Code ($100-300M)
-- AWS buys Q-IDE to integrate with AWS ecosystem ($50-150M)
-- GitHub buys Q-IDE to kill BYOK threat ($200-500M)
+- Google buys Top Dog for Workspace integration ($50-200M)
+- JetBrains buys Top Dog to compete with VS Code ($100-300M)
+- AWS buys Top Dog to integrate with AWS ecosystem ($50-150M)
+- GitHub buys Top Dog to kill BYOK threat ($200-500M)
 
-**Reality:** If Q-IDE becomes successful, it will likely be acquired. Surviving as independent 10-person company competing against 10,000-person GitHub is extremely hard.
+**Reality:** If Top Dog becomes successful, it will likely be acquired. Surviving as independent 10-person company competing against 10,000-person GitHub is extremely hard.
 
 ---
 
@@ -640,7 +640,7 @@ GitHub isn't trying to be "best IDE". They're:
 - Risk: LOW (GitHub won't disappear, won't drop support)
 - **Decision: YES** (worth the money for safety)
 
-**Q-IDE Enterprise Decision:**
+**Top Dog Enterprise Decision:**
 - Pros: Cheaper, better features, BYOK flexibility
 - Cons: Unproven, small team, no reference customers, risky
 - Cost: $25 × 100 people = $2,500/month = $30,000/year
@@ -660,7 +660,7 @@ GitHub isn't trying to be "best IDE". They're:
 - Problem: Seems expensive on startup budget
 - **Decision: MAYBE** (they look at price, feel pain)
 
-**Q-IDE Enterprise Decision:**
+**Top Dog Enterprise Decision:**
 - Cost: $25 × 10 = $250/month ($3,000/year)
 - Savings: $2,520/year
 - Problem: Is it reliable enough?
@@ -668,11 +668,11 @@ GitHub isn't trying to be "best IDE". They're:
 
 **Tiebreaker Factors:**
 - Is founder familiar with GitHub? → GitHub wins
-- Does startup need BYOK for cost control? → Q-IDE wins
+- Does startup need BYOK for cost control? → Top Dog wins
 - Does startup need 24/7 support? → GitHub wins
-- Does startup need to switch later? → Q-IDE wins (no lock-in)
+- Does startup need to switch later? → Top Dog wins (no lock-in)
 
-**Likely Winner: 60% GitHub, 40% Q-IDE** (Depends on founder preference)
+**Likely Winner: 60% GitHub, 40% Top Dog** (Depends on founder preference)
 
 ---
 
@@ -685,13 +685,13 @@ GitHub isn't trying to be "best IDE". They're:
 - Problem: Add-on subscription feels expensive for side project
 - **Decision: NO** (too expensive for hobby coding)
 
-**VS Code + Continue.dev / Q-IDE Free**
+**VS Code + Continue.dev / Top Dog Free**
 - Cost: $0/month
 - Copilot alternative: Continue.dev (free, weaker AI)
-- Q-IDE: $0/month (full IDE + basic AI)
+- Top Dog: $0/month (full IDE + basic AI)
 - **Decision: YES** (free is compelling)
 
-**Winner: Q-IDE Free Tier** (Best option for indie developers)
+**Winner: Top Dog Free Tier** (Best option for indie developers)
 
 ---
 
@@ -705,23 +705,23 @@ GitHub isn't trying to be "best IDE". They're:
 - Cost optimization: Nope, fixed price
 - **Decision: Okay, but not ideal**
 
-**Q-IDE Pro/Teams:**
+**Top Dog Pro/Teams:**
 - Support: Good (Ollama integration for local models)
 - Multi-LLM: YES (use GPT-4 + Claude + Llama simultaneously)
 - Cost optimization: YES (route experiments to cheapest LLM)
 - BYOK: YES (use your own API keys)
 - **Decision: BETTER fit**
 
-**Winner: Q-IDE** (Purpose-built for multi-LLM workflows)
+**Winner: Top Dog** (Purpose-built for multi-LLM workflows)
 
 ---
 
-## Part 5: The Real Question: Can Q-IDE Win?
+## Part 5: The Real Question: Can Top Dog Win?
 
-### Scenario A: Q-IDE Succeeds (10% probability)
+### Scenario A: Top Dog Succeeds (10% probability)
 
 **What Would Have to Happen:**
-1. Q-IDE executes flawlessly for 2-3 years
+1. Top Dog executes flawlessly for 2-3 years
 2. Product stays 1-2 years ahead of competitors
 3. Converts 5-10% of Copilot users (10M developers)
 4. Achieves $100M+ ARR (5-10 year timeline)
@@ -730,34 +730,34 @@ GitHub isn't trying to be "best IDE". They're:
 **Catalyst Events Needed:**
 - Copilot dramatically increases price (GitHub stops)
 - GitHub has major security breach (unlikely)
-- Q-IDE achieves network effect in specific vertical (possible)
+- Top Dog achieves network effect in specific vertical (possible)
 - Microsoft/Google pressure limits Copilot access (unlikely)
 
 **Reality Check:**
 - Possible but requires: luck + execution + market shift
 - Most startups (90%) don't succeed
-- Q-IDE has better odds than typical (already has distribution advantage via marketing)
+- Top Dog has better odds than typical (already has distribution advantage via marketing)
 - But still: <15% probability of major success
 
-### Scenario B: Q-IDE Gets Acquired (50% probability)
+### Scenario B: Top Dog Gets Acquired (50% probability)
 
 **Most Likely Outcome:**
-- Q-IDE grows to 100k-500k users
+- Top Dog grows to 100k-500k users
 - One of the Big Tech (Google, Amazon, JetBrains, etc.) notices
 - Acquisition price: $100M-500M
 - Founders do well, team becomes part of larger company
-- Q-IDE is either integrated into bigger product or discontinued
+- Top Dog is either integrated into bigger product or discontinued
 
 **Timeline:** 2027-2030
 
 **Reality:**
 - Acquisition is "success" for founders (exit)
-- But Q-IDE as product might not survive integration
+- But Top Dog as product might not survive integration
 
-### Scenario C: Q-IDE Becomes Niche (40% probability)
+### Scenario C: Top Dog Becomes Niche (40% probability)
 
 **Most Likely Scenario:**
-- Q-IDE captures 1-2% of market
+- Top Dog captures 1-2% of market
 - Dominates specific segments (data scientists, indie developers, privacy-focused)
 - Profitable but not huge ($10M-50M ARR)
 - Remains independent
@@ -773,9 +773,9 @@ GitHub isn't trying to be "best IDE". They're:
 
 ---
 
-## Part 6: Strategic Recommendations for Q-IDE
+## Part 6: Strategic Recommendations for Top Dog
 
-### What Q-IDE Should Do (Honest Advice)
+### What Top Dog Should Do (Honest Advice)
 
 #### 1. Own the BYOK + Multi-LLM Segment (Defensible Niche)
 
@@ -798,7 +798,7 @@ GitHub isn't trying to be "best IDE". They're:
 **Strategy:**
 - Pick verticals: Financial services, healthcare, legal tech
 - Build compliance + security features for verticals
-- Market as "Q-IDE for Finance" not "Q-IDE for Everyone"
+- Market as "Top Dog for Finance" not "Top Dog for Everyone"
 - Easier to win territory and build moat
 
 **Why It Works:**
@@ -808,9 +808,9 @@ GitHub isn't trying to be "best IDE". They're:
 - Sales cycles shorten (vertical expertise)
 
 **Examples:**
-- Q-IDE Finance: HIPAA + SOC2 + trade law compliance
-- Q-IDE Healthcare: HIPAA focus, doctor/nurse workflows
-- Q-IDE Legal: Legal compliance, attorney/paralegal workflows
+- Top Dog Finance: HIPAA + SOC2 + trade law compliance
+- Top Dog Healthcare: HIPAA focus, doctor/nurse workflows
+- Top Dog Legal: Legal compliance, attorney/paralegal workflows
 
 **Target:** $100M ARR in 7 years (aggressive but achievable)
 
@@ -820,7 +820,7 @@ GitHub isn't trying to be "best IDE". They're:
 - Free tier → real users → content creators → word-of-mouth
 - Invest in community: Discord, forums, content creators
 - Build network effects (harder to beat than pricing)
-- Make Q-IDE the "default" for specific developer type
+- Make Top Dog the "default" for specific developer type
 
 **Why It Works:**
 - Community creates switching costs (friends are on platform)
@@ -828,9 +828,9 @@ GitHub isn't trying to be "best IDE". They're:
 - Word-of-mouth is 10x cheaper than ads
 
 **Examples:**
-- "Q-IDE for Game Developers" (with Runway integration)
-- "Q-IDE for Full-Stack Developers" (media + IDE)
-- "Q-IDE for AI/ML Engineers" (multi-LLM + cost optimization)
+- "Top Dog for Game Developers" (with Runway integration)
+- "Top Dog for Full-Stack Developers" (media + IDE)
+- "Top Dog for AI/ML Engineers" (multi-LLM + cost optimization)
 
 **Target:** 1M active users in 3 years (possible)
 
@@ -847,8 +847,8 @@ GitHub isn't trying to be "best IDE". They're:
 - Shared marketing budget
 
 **Examples:**
-- Official partnership with OpenAI (Q-IDE is recommended multi-LLM client)
-- Integration with AWS CodeBuild (Q-IDE + AWS CI/CD)
+- Official partnership with OpenAI (Top Dog is recommended multi-LLM client)
+- Integration with AWS CodeBuild (Top Dog + AWS CI/CD)
 - Partnership with Runway (exclusive IDE integration)
 
 #### 5. Be Acquisition Target (Realistic Exit)
@@ -876,7 +876,7 @@ GitHub isn't trying to be "best IDE". They're:
 
 ## Part 7: The Unflinching Truth
 
-### What Q-IDE Needs to Win
+### What Top Dog Needs to Win
 
 1. **Perfect Execution**: Cannot have 1-2 bad quarters (competitors are watching)
 2. **Viral Growth**: Must achieve 10x growth before incumbents respond
@@ -885,11 +885,11 @@ GitHub isn't trying to be "best IDE". They're:
 5. **Team**: Must hire top talent (hard when brand is unknown)
 6. **Luck**: Some things are out of your control (timing, market trends, competition)
 
-### Why Q-IDE Might Fail
+### Why Top Dog Might Fail
 
-1. **GitHub Cuts Price**: If GitHub drops to $6/month, Q-IDE loses price advantage
+1. **GitHub Cuts Price**: If GitHub drops to $6/month, Top Dog loses price advantage
 2. **Feature Parity**: Competitors will copy multi-LLM in 6-12 months
-3. **Brand Inertia**: Switching to Q-IDE costs time/money that large teams won't spend
+3. **Brand Inertia**: Switching to Top Dog costs time/money that large teams won't spend
 4. **Acquisition Risk**: Top talent leaves if acquired (common outcome)
 5. **Funding Crunch**: VC market tightens, Series B becomes impossible
 6. **Execution Mistakes**: One bad deployment, customer data breach, etc. kills momentum
@@ -910,20 +910,20 @@ Total success (exits, acquisitions, etc):  73%
 Total failure:                              27%
 ```
 
-**Reality Check:** 73% success rate is much better than typical startup (10-20%), but still realistic. Q-IDE has advantages but faces entrenched competitors.
+**Reality Check:** 73% success rate is much better than typical startup (10-20%), but still realistic. Top Dog has advantages but faces entrenched competitors.
 
 ---
 
 ## Conclusion: Honest Assessment
 
-### What Q-IDE Gets Right
+### What Top Dog Gets Right
 
 ✅ **Technology**: Best-in-class features (multi-LLM, BYOK, media, pricing)  
 ✅ **Timing**: Market shifting to AI-native + cloud-first development  
 ✅ **Positioning**: Understandable value prop (cheaper, more flexible, no lock-in)  
 ✅ **Execution**: Shipping fast, building real product, not vaporware  
 
-### What Q-IDE Must Overcome
+### What Top Dog Must Overcome
 
 ❌ **Brand**: Near-zero recognition vs GitHub's 100M users  
 ❌ **Lock-in**: Competitors have massive switching costs  
@@ -934,20 +934,20 @@ Total failure:                              27%
 ### Realistic Outcome
 
 **Most Likely (60% probability):**
-- Q-IDE captures 1-5% market share
+- Top Dog captures 1-5% market share
 - Focuses on BYOK + multi-LLM segment (defensible)
 - Acquires by Google/Amazon/JetBrains in 2027-2030
 - Founders make $100M-$500M
 - Defined as "success" for startup world
 
 **Less Likely but Possible (20% probability):**
-- Q-IDE sustains as independent $50M ARR company
+- Top Dog sustains as independent $50M ARR company
 - Vertical market leader (finance, healthcare, etc.)
 - Comfortable but not dominant
 - Moderate success
 
 **Unlikely but Not Impossible (10% probability):**
-- Q-IDE scales to $500M+ ARR
+- Top Dog scales to $500M+ ARR
 - Becomes real competitor to GitHub/VS Code
 - Requires perfect execution + external catalyst
 - Similar to Slack's trajectory (possible but rare)
@@ -961,9 +961,9 @@ Total failure:                              27%
 
 ## Final Word
 
-**Q-IDE is not a bad bet.** It has real technical advantages, entering a growing market at the right time, and has better odds than 90% of startups.
+**Top Dog is not a bad bet.** It has real technical advantages, entering a growing market at the right time, and has better odds than 90% of startups.
 
-**But Q-IDE is fighting uphill.** Incumbents have:
+**But Top Dog is fighting uphill.** Incumbents have:
 - 100x the resources
 - 10,000x the users
 - 5-10 year head start
@@ -978,7 +978,7 @@ Total failure:                              27%
 
 **This is venture capital: high risk, high reward.** Most similar companies fail. But the few that succeed become worth billions.
 
-Q-IDE has the ingredients to be one of the winners. Whether it executes is the open question.
+Top Dog has the ingredients to be one of the winners. Whether it executes is the open question.
 
 ---
 
@@ -991,10 +991,10 @@ Q-IDE has the ingredients to be one of the winners. Whether it executes is the o
 
 **Addendum: Questions This Analysis Can't Answer**
 
-- Will GitHub cut prices to kill Q-IDE? (Depends on Microsoft strategy)
+- Will GitHub cut prices to kill Top Dog? (Depends on Microsoft strategy)
 - Will market shift to privacy/BYOK as critical? (Likely but timing unknown)
-- Can Q-IDE acquire top talent with unknown brand? (Hard but possible with equity)
+- Can Top Dog acquire top talent with unknown brand? (Hard but possible with equity)
 - Will Series B funding be available in 2026? (Depends on VC market)
-- Can Q-IDE retain users if acquired? (Track record is poor)
+- Can Top Dog retain users if acquired? (Track record is poor)
 
-**These uncertainties make Q-IDE a classic venture bet: asymmetric risk/reward.**
+**These uncertainties make Top Dog a classic venture bet: asymmetric risk/reward.**

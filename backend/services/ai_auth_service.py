@@ -96,6 +96,8 @@ class User:
     api_keys: Dict[str, APIKey] = field(default_factory=dict)
     balance: UserBalance = field(default_factory=lambda: UserBalance(user_id=""))
     is_active: bool = True
+    paid: bool = False  # Payment status for user verification
+    is_founder: bool = False  # Founder bypass - always has full access
     preferences: Dict = field(default_factory=dict)
     
     def to_dict_safe(self):
@@ -107,6 +109,8 @@ class User:
             'created_at': self.created_at,
             'last_login': self.last_login,
             'is_active': self.is_active,
+            'paid': self.paid,
+            'is_founder': self.is_founder,
             'api_keys_count': len(self.api_keys),
             'balance': self.balance.to_dict()
         }
@@ -177,6 +181,9 @@ class KeyEncryption:
 class AIAuthService:
     """Authentication service for marketplace users"""
     
+    # Founder email - always has full access regardless of payment status
+    FOUNDER_EMAIL = "paul@quellum.net"  # Update with actual founder email
+    
     def __init__(self):
         """Initialize the auth service"""
         self.users: Dict[str, User] = {}
@@ -210,11 +217,16 @@ class AIAuthService:
         user_id = secrets.token_hex(8)
         password_hash = PasswordHasher.hash_password(password)
         
+        # Check if founder
+        is_founder = email.lower() == self.FOUNDER_EMAIL.lower()
+        
         user = User(
             id=user_id,
             email=email,
             username=username,
-            password_hash=password_hash
+            password_hash=password_hash,
+            is_founder=is_founder,
+            paid=is_founder  # Founder always has paid access
         )
         user.balance = UserBalance(user_id=user_id)
         
@@ -280,6 +292,40 @@ class AIAuthService:
         if email in self.email_index:
             return self.users[self.email_index[email]]
         return None
+    
+    def verify_user_access(self, user_id: str) -> Tuple[bool, str]:
+        """
+        Verify if user has access based on paid status.
+        Founders always have full access regardless of payment.
+        
+        Returns: (has_access, reason)
+        """
+        user = self.get_user(user_id)
+        if not user:
+            return False, "User not found"
+        
+        # Founder bypass - always has full access
+        if user.is_founder:
+            return True, "Founder access"
+        
+        # Check paid status
+        if user.paid:
+            return True, "Paid user"
+        
+        return False, "Payment required. Please upgrade your account."
+    
+    def set_paid_status(self, user_id: str, paid: bool) -> Tuple[bool, str]:
+        """Set user's paid status (admin function)"""
+        user = self.get_user(user_id)
+        if not user:
+            return False, "User not found"
+        
+        # Cannot modify founder status
+        if user.is_founder:
+            return True, "Founder always has full access"
+        
+        user.paid = paid
+        return True, f"User paid status set to {paid}"
     
     # ==================== API KEY MANAGEMENT ====================
     

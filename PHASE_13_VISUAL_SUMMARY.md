@@ -117,7 +117,7 @@ BEFORE OAUTH:
 │ 1. Go to Google Cloud Console       │  ≈ 5-10 minutes
 │ 2. Create API key                   │  of frustration
 │ 3. Copy key                         │
-│ 4. Paste into Q-IDE                 │
+│ 4. Paste into Top Dog                 │
 │ 5. "Where are my keys stored?"      │
 │ 6. Repeat for GitHub, OpenAI, etc.  │
 │ 7. Frustrated with complexity       │
@@ -359,7 +359,7 @@ When fully deployed, you'll see:
 ║   🎊 CONGRATULATIONS! 🎊                                       ║
 ║                                                                ║
 ║   You now have a complete, professional OAuth authentication  ║
-║   system ready to make Q-IDE the most user-friendly IDE       ║
+║   system ready to make Top Dog the most user-friendly IDE       ║
 ║   on the market!                                              ║
 ║                                                                ║
 ║   Status: ✅ PRODUCTION READY                                 ║

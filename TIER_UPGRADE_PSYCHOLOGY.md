@@ -43,7 +43,7 @@ Day 22+:        DECISION 🤔
 - Students learning to code
 - Hobbyists working on side projects
 - Open source contributors
-- People evaluating Q-IDE
+- People evaluating Top Dog
 
 **Hard Limits** (By Design):
 ```
@@ -61,7 +61,7 @@ Real-time Collaboration:    Not available (can't work with others)
 
 **The Pain Point**:
 ```
-Day 1:   "I love Q-IDE! This is amazing!"
+Day 1:   "I love Top Dog! This is amazing!"
 Day 3:   "I need to analyze this code again... oh, 5/day limit."
 Day 5:   "Hmm, I can't refactor this without manually rewriting it."
 Day 7:   "I want to pair with my friend... it's not available."
@@ -80,7 +80,7 @@ Decision: "Okay, $12/month is nothing compared to the time I'd save."
 - Anyone writing code professionally
 - Technical founders
 
-**No Hard Limits** (Within reason):
+**Includes** (No Hard Limits):
 ```
 Code Analysis:              ∞ Unlimited (analyze all day)
 Smart Refactoring:          ✅ Unlimited (click refactor, it's done)
@@ -92,17 +92,19 @@ Performance Insights:       ✅ AI tells you exactly what's slow
 Test Generation:            ✅ "@ai generate tests" → done
 Documentation Gen:          ✅ Auto-generate all docs
 Real-time Collaboration:    ✅ Code with others in real-time
+Available LLMs:             ✅ 53 AI models (Claude, GPT-4, Llama, Mistral, etc.)
+Code Execution:             ✅ Run code directly in IDE
 ```
 
 **The Economics**:
 ```
-PRO = $12/month = $1/day = $0.04/hour
+PRO = $20/month = $1.67/day = $0.07/hour
 
 But if it saves you 1 hour per week:      ROI = 52 hours/year = $5,200 value
 If it saves you 2 hours per week:         ROI = 104 hours/year = $10,400 value
 If it saves you 1 hour per day:           ROI = 260 hours/year = $52,000 value
 
-A freelancer making $50/hr breaks even after 15 minutes per month.
+A freelancer making $50/hr breaks even after 25 minutes per month.
 That's an INSTANT ROI.
 ```
 
@@ -142,6 +144,15 @@ Velocity Tracking:          ✅ Team productivity metrics
 Audit Logs:                 ✅ Track all changes (legal/compliance)
 SSO/SAML:                   ✅ Enterprise login (no password resets)
 Onboarding:                 ✅ 3 hours of setup help
+Available LLMs:             ✅ All 53+ AI models
+Dedicated Support:          ✅ Priority support queue
+```
+
+**Pricing** (3 options for different team sizes):
+```
+Teams Starter:    $30/seat/month  (5-20 people)
+Teams Pro:        $40/seat/month  (20-200 people)
+Teams Enterprise: $50/seat/month  (200+ people)
 ```
 
 **Why a Team Upgrades**:
@@ -158,15 +169,19 @@ BEFORE TEAMS TIER:
 
 AFTER TEAMS TIER:
 ├─ Developers pair program (found bug in 15 minutes, not 2 hours)
-├─ New dev onboarded in 1 day (with Q-IDE team help)
+├─ New dev onboarded in 1 day (with Top Dog team help)
 ├─ Code review takes 1 hour (AI + team in same IDE)
 ├─ Team velocity tracked automatically
 ├─ Shared debugging (no guessing what others are doing)
 └─ Team chat in IDE (no context switching)
 
-COST: $25/person/month = $150/month for 6-person team
+COST: 
+  - $30/person × 6 = $180/month (Teams Starter)
+  - $40/person × 6 = $240/month (Teams Pro)
+  - $50/person × 6 = $300/month (Teams Enterprise)
+
 VALUE: 1 hour saved per day per person = 6 hours × $75/hr = $450 saved
-PROFIT: $450 saved - $150 cost = $300/day net benefit
+PROFIT: $450 saved - $180-300 cost = $150-270/day net benefit
 ```
 
 **Tangible Differences From PRO**:
@@ -207,13 +222,21 @@ Executive Dashboard:        ✅ C-level reporting
 IP Allowlist:               ✅ Network security
 AD/LDAP Integration:        ✅ Your existing login system
 Custom SLA:                 ✅ 99.99% uptime guaranteed
+Available LLMs:             ✅ All 53+ models PLUS custom integrations
+Custom Integrations:        ✅ API, webhooks, custom connectors
+```
+
+**Pricing**:
+```
+Enterprise:       $250-300/seat/month (100+ minimum commitment)
+Custom:           Negotiable based on requirements & volume
 ```
 
 **Why Enterprise Upgrades**:
 
 ```
 BEFORE ENTERPRISE:
-├─ "We can't use Q-IDE, it's not SOC 2 compliant"
+├─ "We can't use Top Dog, it's not SOC 2 compliant"
 ├─ "Patient data can't be sent to cloud"
 ├─ "We need to audit all code usage"
 ├─ "50,000 developers, we need support"
@@ -296,9 +319,9 @@ MARKET LEADER
 
 ---
 
-### Pro → Teams ($25/seat upgrade)
+### Pro → Teams ($30/seat upgrade)
 
-**The Psychology**: *"My team is wasting 1 hour per day on stuff Q-IDE could eliminate."*
+**The Psychology**: *"My team is wasting 1 hour per day on stuff Top Dog could eliminate."*
 
 **Trigger Points**:
 1. Want to pair program with a teammate
@@ -322,7 +345,7 @@ MARKET LEADER
 2. CTO says "customer data can't go to cloud"
 3. Growing to 100+ developers (need support)
 4. Board asks "why aren't we using AI tools?"
-5. Competitor is using Q-IDE and shipping faster
+5. Competitor is using Top Dog and shipping faster
 
 **Decision Time**: 1-3 months (approval, security review)  
 **Friction**: High (many stakeholders)  
@@ -341,13 +364,13 @@ FREE TIER (Network Effect):
 └─ Value: Creates "moat" (network effects)
 
 PRO TIER (High-Velocity, Low-Friction Monetization):
-├─ Revenue: $12/month × 12 months × 3-5 years = $432-720
+├─ Revenue: $20/month × 12 months × 3-5 years = $720-1,200
 ├─ Conversion to Teams: 5-10% (when team forms)
 ├─ Retention: 85%+ (switching costs high)
 └─ Value: Excellent LTV:CAC ratio (100:1)
 
 TEAMS TIER (Expansion Revenue):
-├─ Revenue: $25/seat/month × avg 5 seats × 3-5 years = $4,500-7,500
+├─ Revenue: $30-50/seat/month × avg 5 seats × 3-5 years = $9,000-15,000
 ├─ Expansion: $40/seat → $50/seat (as they grow)
 ├─ Conversion to Enterprise: 5-20% (when bigger)
 ├─ Retention: 92%+ (very sticky, integrated)
@@ -380,10 +403,10 @@ Day 8-14 (FREE):
 ├─ Can't pair program with client
 └─ Problem: Can't meet client needs
 
-Decision: "For $12/month, I can satisfy clients. That's $600/month more revenue."
+Decision: "For $20/month, I can satisfy clients. That's $600/month more revenue."
 Result: UPGRADES TO PRO ✅
 
-Why: 2-3 hours saved per week = $150-225/week value > $3/week cost
+Why: 2-3 hours saved per week = $150-225/week value > $5/week cost
 ```
 
 ### Example 2: Startup Team
@@ -391,14 +414,14 @@ Why: 2-3 hours saved per week = $150-225/week value > $3/week cost
 Name: Emma's startup (5 developers)
 
 Day 1-7 (PRO - all 5 devs):
-├─ Developers work solo in Q-IDE
+├─ Developers work solo in Top Dog
 ├─ Bug takes 2 hours to find (no pair debugging)
 ├─ Onboarding new dev: 3 days of wasted time
 ├─ Code review: 4 hours (all async, slow)
 ├─ Total cost: 40 wasted hours/week
 └─ Cost: 40 hours × $60/hr = $2,400/week waste
 
-Day 8-14 (TEAMS - all 5 devs):
+Day 8-14 (TEAMS STARTER - all 5 devs):
 ├─ Pair programming on hard bugs (30 min vs 2 hours)
 ├─ Shared debugging (instant collaboration)
 ├─ New dev onboarded in 1 day (vs 3)
@@ -406,9 +429,9 @@ Day 8-14 (TEAMS - all 5 devs):
 ├─ Total saved: 20 hours/week
 └─ Savings: 20 hours × $60/hr = $1,200/week
 
-Cost: $25/seat × 5 = $125/month = $29/week
+Cost: $30/seat × 5 = $150/month = $35/week
 Benefit: $1,200/week
-ROI: 4,100% (41x return!)
+ROI: 3,400% (34x return!)
 
 Decision: "Obviously upgrade to Teams."
 Result: UPGRADES TO TEAMS ✅
@@ -418,7 +441,7 @@ Result: UPGRADES TO TEAMS ✅
 ```
 Name: Big Corp (1,000 developers)
 
-Problem: "We want Q-IDE, but it's not SOC 2 compliant"
+Problem: "We want Top Dog, but it's not SOC 2 compliant"
          "We can't put customer data in the cloud"
          "We need self-hosted with audit logs"
 
@@ -484,14 +507,14 @@ Pro Developer thinking:
 ├─ "I make $75/hr"
 ├─ "This will save me 2 hours per week"
 ├─ "That's $150/week value"
-├─ "It costs $3/week"
-└─ "Obvious upgrade" (50:1 ROI)
+├─ "It costs $5/week"
+└─ "Obvious upgrade" (30:1 ROI)
 
 Team Manager thinking:
 ├─ "My team loses 2 hours/day to debugging"
 ├─ "That's 80 hours/month × $60 = $4,800"
-├─ "Teams tier costs $125/month"
-└─ "Obvious upgrade" (40:1 ROI)
+├─ "Teams tier costs $150-200/month"
+└─ "Obvious upgrade" (24-32:1 ROI)
 
 CTO thinking:
 ├─ "We can't use this without compliance"
@@ -508,4 +531,4 @@ That's not manipulation. That's just good economics.
 
 ---
 
-*Created for Q-IDE Phase 14: Monetization Strategy*
+*Created for Top Dog Phase 14: Monetization Strategy*

@@ -2,7 +2,7 @@
 
 ## Overview
 
-Q-IDE now supports **THREE tiers of image/media generation**:
+Top Dog now supports **THREE tiers of image/media generation**:
 
 ```
 Tier 1: FREE (Q Assistant) ✨
@@ -57,7 +57,7 @@ Option C: ALL THREE (PREMIUM)
 Go to: https://huggingface.co/settings/tokens
 1. Create account (free)
 2. Create API key
-3. In Q-IDE → Media Setup → Add Stable Diffusion key
+3. In Top Dog → Media Setup → Add Stable Diffusion key
 4. Done! (60 seconds)
 ```
 
@@ -66,7 +66,7 @@ Go to: https://huggingface.co/settings/tokens
 Go to: https://app.runwayml.com/settings/api
 1. Create account (free, $50 credits)
 2. Create API key
-3. In Q-IDE → Media Setup → Add Runway key
+3. In Top Dog → Media Setup → Add Runway key
 4. Done! (60 seconds)
 ```
 
@@ -313,7 +313,7 @@ Using ALL THREE (Premium):
 
 ## 🔧 Configuration
 
-### **In Q-IDE UI → Settings → Media**
+### **In Top Dog UI → Settings → Media**
 
 ```
 TIER 1: FREE (Always Available)
@@ -429,7 +429,7 @@ PROVIDERS = {
 1. [ ] Choose your tier (Free/Budget/Premium)
 2. [ ] If Budget: Get HuggingFace API key (1 minute)
 3. [ ] If Premium: Get Runway API key (2 minutes)
-4. [ ] Add keys to Q-IDE Media Setup
+4. [ ] Add keys to Top Dog Media Setup
 
 ### **Soon:**
 1. [ ] Generate first image
@@ -453,7 +453,7 @@ PROVIDERS = {
 ### **Recommended Setup (BUDGET):**
 - [ ] Sign up for HuggingFace (free)
 - [ ] Create API key (1 min)
-- [ ] Add to Q-IDE settings (30 sec)
+- [ ] Add to Top Dog settings (30 sec)
 - [ ] Test generation (1 min)
 - [ ] Start using! ($0.003-0.01 per image)
 
@@ -463,7 +463,7 @@ PROVIDERS = {
 - [ ] HuggingFace: https://huggingface.co/settings/tokens
 - [ ] Runway account: https://app.runwayml.com
 - [ ] Runway API key: Settings → API
-- [ ] Add both keys to Q-IDE
+- [ ] Add both keys to Top Dog
 - [ ] Ready for any media type!
 
 ---

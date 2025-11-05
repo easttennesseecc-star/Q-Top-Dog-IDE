@@ -1,4 +1,4 @@
-# 📱 Q-IDE Phone Pairing & Notification System - Simplified Setup Guide
+# 📱 Top Dog Phone Pairing & Notification System - Simplified Setup Guide
 
 **Status**: Simplified Guide for Desktop + Mobile Pairing  
 **Last Updated**: October 28, 2025  
@@ -13,7 +13,7 @@
 
 The **Phone Pairing System** allows you to:
 
-- ✅ **Pair your phone** with your desktop Q-IDE (one-time setup)
+- ✅ **Pair your phone** with your desktop Top Dog (one-time setup)
 - ✅ **Use phone's microphone** for voice input on desktop
 - ✅ **Receive notifications** from build system on phone
 - ✅ **Voice commands** from phone to desktop
@@ -31,10 +31,10 @@ The **Phone Pairing System** allows you to:
 
 ## 📋 Prerequisites
 
-### On Your Desktop (Q-IDE)
+### On Your Desktop (Top Dog)
 
 ```
-✅ Q-IDE running (backend + frontend)
+✅ Top Dog running (backend + frontend)
 ✅ Browser open to http://127.0.0.1:1431
 ✅ "Phone" tab visible in sidebar
 ✅ Bluetooth enabled (optional, for direct connection)
@@ -57,7 +57,7 @@ The **Phone Pairing System** allows you to:
 
 #### Desktop Setup (2 minutes)
 
-1. **Open Q-IDE** at `http://127.0.0.1:1431`
+1. **Open Top Dog** at `http://127.0.0.1:1431`
 
 2. **Click "Phone" Tab** in left sidebar
    ```
@@ -123,7 +123,7 @@ The **Phone Pairing System** allows you to:
 
 #### Desktop Setup (2 minutes)
 
-1. **Click "Pair New Phone"** on Q-IDE Phone tab
+1. **Click "Pair New Phone"** on Top Dog Phone tab
 
 2. **Write down the 6-character code** shown:
    ```
@@ -256,7 +256,7 @@ System:
 Desktop browser shows:
 ```
 ┌────────────────────────────────────┐
-│ "Q-IDE wants to access            │
+│ "Top Dog wants to access            │
 │  your microphone"                   │
 │                    [Allow] [Block] │
 └────────────────────────────────────┘
@@ -272,7 +272,7 @@ Desktop browser shows:
 
 1. **Browser notification:**
    ```
-   "Q-IDE requesting microphone access"
+   "Top Dog requesting microphone access"
    [Allow]  [Block]
    ```
 
@@ -354,7 +354,7 @@ TEAM NOTIFICATIONS:
 
 ## 📊 Status Indicators
 
-### Desktop (Q-IDE)
+### Desktop (Top Dog)
 
 ```
 PHONE TAB STATUS
@@ -438,7 +438,7 @@ Checklist:
 ├─ ✓ Speaker volume up on desktop (to hear playback)
 
 If still failing:
-├─ Unplug phone from Q-IDE
+├─ Unplug phone from Top Dog
 ├─ Click "✕ Unpair"
 ├─ Wait 5 seconds
 ├─ Pair again using QR code
@@ -470,7 +470,7 @@ Problem: "Phone Link" won't connect
 
 Reasons & Fixes:
 ├─ Firewall blocking P2P:
-│  └─ Whitelist Q-IDE in firewall
+│  └─ Whitelist Top Dog in firewall
 ├─ Different networks:
 │  └─ Both must be on same WiFi
 ├─ Browser doesn't support WebRTC:
@@ -623,7 +623,7 @@ If latency >500ms:
 ## 🚀 Quick Start Checklist
 
 **Desktop (2 min):**
-- [ ] Q-IDE open at http://127.0.0.1:1431
+- [ ] Top Dog open at http://127.0.0.1:1431
 - [ ] "Phone" tab visible
 - [ ] Click "Pair New Phone"
 - [ ] QR code showing
@@ -656,16 +656,16 @@ If latency >500ms:
 
 ```
 Documentation:
-└─ Q-IDE.com/docs/phone-pairing
+└─ Top Dog.com/docs/phone-pairing
 
 GitHub Issues:
-└─ Report bugs: github.com/quellum/q-ide/issues
+└─ Report bugs: github.com/quellum/Top Dog/issues
 
 Discord Community:
-└─ Ask questions: discord.gg/q-ide
+└─ Ask questions: discord.gg/Top Dog
 
 Email Support:
-└─ support@q-ide.com
+└─ support@Top Dog.com
 ```
 
 ### Error Messages Quick Reference

@@ -1,0 +1,10 @@
+# Common Helm ignore rules
+.git/
+.github/
+.vscode/
+.DS_Store
+*.swp
+*.bak
+*.tmp
+*.orig
+node_modules/

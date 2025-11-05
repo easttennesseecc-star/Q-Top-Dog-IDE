@@ -20,7 +20,7 @@
 **Key Points**:
 - 11 REST endpoints for auth operations
 - OAuth 2.0 implementation with code exchange
-- Local credential storage (~/.q-ide/llm_credentials.json)
+- Local credential storage (~/.Top Dog/llm_credentials.json)
 - Support for 5 cloud LLM providers
 - React UI with Auth tab and status indicators
 - Full error handling and logging
@@ -226,7 +226,7 @@ LLM_AUTHENTICATION_INDEX.md (THIS FILE)
 ### Backend
 - **Framework**: FastAPI
 - **Language**: Python 3.8+
-- **Storage**: JSON file (~/.q-ide/llm_credentials.json)
+- **Storage**: JSON file (~/.Top Dog/llm_credentials.json)
 - **Authentication**: OAuth 2.0 (Authorization Code Flow)
 - **Logging**: logger_utils module
 
@@ -299,7 +299,7 @@ LLM_AUTHENTICATION_INDEX.md (THIS FILE)
 ### Common Questions
 
 **Q: Where are my credentials stored?**
-A: In `~/.q-ide/llm_credentials.json` on your machine. Never sent to servers.
+A: In `~/.Top Dog/llm_credentials.json` on your machine. Never sent to servers.
 
 **Q: How do I sign out?**
 A: Click "Revoke" in the Auth tab. Credentials removed immediately.
@@ -395,7 +395,7 @@ Supported Providers:
 
 ## License & Attribution
 
-All code and documentation created as part of Q-IDE LLM Authentication Phase 2.
+All code and documentation created as part of Top Dog LLM Authentication Phase 2.
 
 **Status**: ✅ Production Ready
 **Quality**: Enterprise Grade

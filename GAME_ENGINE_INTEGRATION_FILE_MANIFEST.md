@@ -174,7 +174,7 @@ Features:
 ## 🔗 FILE DEPENDENCY CHAIN
 
 ```
-Q-IDE Frontend
+Top Dog Frontend
     ↓
 frontend/components/MultiEngineGamePanel.tsx (450 lines)
     │ (imports nothing from backend, uses REST API)

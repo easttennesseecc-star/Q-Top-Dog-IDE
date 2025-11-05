@@ -5,7 +5,7 @@ Runs daily to deactivate expired FREE tier trials
 
 import sqlite3
 from datetime import datetime, timedelta
-from database.tier_schema import MembershipTierSchema
+from backend.database.tier_schema import MembershipTierSchema
 import threading
 import time
 

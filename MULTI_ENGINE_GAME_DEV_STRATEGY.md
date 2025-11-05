@@ -1,5 +1,5 @@
 # 🎮 MULTI-ENGINE GAME DEVELOPMENT STRATEGY
-## Q-IDE as the Universal Game Development IDE
+## Top Dog as the Universal Game Development IDE
 
 **Date**: October 29, 2025  
 **Version**: 1.0  
@@ -9,7 +9,7 @@
 
 ## EXECUTIVE SUMMARY
 
-Q-IDE will become the first IDE to support **ALL major game engines** in a unified interface:
+Top Dog will become the first IDE to support **ALL major game engines** in a unified interface:
 
 - **Construct 3** (2D indie games, 500k active users)
 - **Godot** (open-source, 1M+ community, 50k active developers)
@@ -18,7 +18,7 @@ Q-IDE will become the first IDE to support **ALL major game engines** in a unifi
 
 **Total addressable market**: 6M+ game developers  
 **Total revenue opportunity**: **$2B+/year** (if capturing 20% market)  
-**Q-IDE strategy**: Own all 4 segments instead of competing in one
+**Top Dog strategy**: Own all 4 segments instead of competing in one
 
 ---
 
@@ -29,9 +29,9 @@ Q-IDE will become the first IDE to support **ALL major game engines** in a unifi
 **Market Size**: 500k active users, 2-3M total registered  
 **Developer Type**: Non-programmers, hobbyists, indie studios  
 **Revenue per User**: $75-100/month (Pro tier)  
-**Q-IDE Opportunity**: $37.5-50M/year (if 5k paying users)
+**Top Dog Opportunity**: $37.5-50M/year (if 5k paying users)
 
-**Why Q-IDE Wins**:
+**Why Top Dog Wins**:
 - ✅ Unified editing + Construct 3 in ONE window
 - ✅ Local debugging for C3 games (currently no good debugging)
 - ✅ Real-time collaboration on game projects
@@ -41,7 +41,7 @@ Q-IDE will become the first IDE to support **ALL major game engines** in a unifi
 - Revenue share: 20% to Construct 3
 - Co-marketing launch: Nov 21, 2025
 - API access: Full C3 runtime access
-- Exclusive feature: "Q-IDE Official Editor for Construct 3"
+- Exclusive feature: "Top Dog Official Editor for Construct 3"
 
 ---
 
@@ -49,10 +49,10 @@ Q-IDE will become the first IDE to support **ALL major game engines** in a unifi
 
 **Market Size**: 1M+ community, 50k actively developing  
 **Developer Type**: Open-source advocates, indie, learning developers  
-**Revenue per User**: $30-50/month (starter tier for Q-IDE)  
-**Q-IDE Opportunity**: $1.5-2.5M/year (if 5k paying users)
+**Revenue per User**: $30-50/month (starter tier for Top Dog)  
+**Top Dog Opportunity**: $1.5-2.5M/year (if 5k paying users)
 
-**Why Q-IDE Wins**:
+**Why Top Dog Wins**:
 - ✅ GDScript + C# IntelliSense in IDE (Godot Editor is basic)
 - ✅ Debugger integration (via LSP + DAP)
 - ✅ Better UI/UX than Godot Editor for scripting
@@ -68,7 +68,7 @@ Q-IDE will become the first IDE to support **ALL major game engines** in a unifi
 
 **Partnership Model**:
 - No revenue share (Godot is free/open-source)
-- Free tier: Full GDScript support in Q-IDE
+- Free tier: Full GDScript support in Top Dog
 - Paid tier: Premium features (collaboration, advanced debugging)
 - Co-marketing: Featured in Godot ecosystem
 
@@ -79,9 +79,9 @@ Q-IDE will become the first IDE to support **ALL major game engines** in a unifi
 **Market Size**: 4.4M registered users, 1.5M actively developing  
 **Developer Type**: Professional studios, indie professionals  
 **Revenue per User**: $100-200/month (professional tier)  
-**Q-IDE Opportunity**: $150-300M/year (if 15k paying users)
+**Top Dog Opportunity**: $150-300M/year (if 15k paying users)
 
-**Why Q-IDE Wins**:
+**Why Top Dog Wins**:
 - ✅ C# IntelliSense faster than Visual Studio
 - ✅ Scene file editing + prefab management
 - ✅ Real-time collaboration on game scripts
@@ -91,7 +91,7 @@ Q-IDE will become the first IDE to support **ALL major game engines** in a unifi
 
 **Current Pain Point**:
 - Unity developers spend $149-599/year on Visual Studio Professional
-- Q-IDE undercuts at $1,200/year (full team tier)
+- Top Dog undercuts at $1,200/year (full team tier)
 - Developers currently use free VS Code (but without Unity integration)
 - **HUGE MARKET** willing to pay for proper IDE
 
@@ -117,9 +117,9 @@ Q-IDE will become the first IDE to support **ALL major game engines** in a unifi
 **Market Size**: 700k registered developers, 100k professional studios  
 **Developer Type**: AAA studios, large indie teams  
 **Revenue per User**: $200-500/month (enterprise tier)  
-**Q-IDE Opportunity**: $20-50M/year (if 5-10k paying enterprise users)
+**Top Dog Opportunity**: $20-50M/year (if 5-10k paying enterprise users)
 
-**Why Q-IDE Wins**:
+**Why Top Dog Wins**:
 - ✅ C++ IntelliSense (faster than VS Code + Clangd)
 - ✅ Unreal scripting (Blueprint editing + C++ scripts)
 - ✅ Remote debugging (attach to running Unreal instances)
@@ -128,7 +128,7 @@ Q-IDE will become the first IDE to support **ALL major game engines** in a unifi
 
 **Current Pain Point**:
 - Unreal developers use VS Professional ($149-599/year) or Rider ($200/year)
-- Q-IDE: Specialized C++ + Unreal support ($300-500/month for enterprise)
+- Top Dog: Specialized C++ + Unreal support ($300-500/month for enterprise)
 - Teams of 50-200 people → $1,500-100,000/month revenue
 - **HIGH-VALUE SEGMENT** but lower volume
 
@@ -364,7 +364,7 @@ TASK 4.4:  Testing & Documentation               (200-300 lines)
 ### Multi-Engine LSP Strategy
 
 ```
-Q-IDE Backend
+Top Dog Backend
 │
 ├─ Language Server Router
 │   ├─ Construct3-LSP (custom, WebAssembly-based)
@@ -392,7 +392,7 @@ Q-IDE Backend
 ### Frontend Multi-Engine UI
 
 ```
-Q-IDE Frontend
+Top Dog Frontend
 │
 ├─ Game Preview Panel (React Component)
 │   ├─ C3 preview (WebAssembly runtime)
@@ -440,7 +440,7 @@ EXPOSE 8080
 
 ## COMPETITIVE COMPARISON
 
-| Feature | Q-IDE | VS Code | Visual Studio | GameMaker | Unreal | Unity |
+| Feature | Top Dog | VS Code | Visual Studio | GameMaker | Unreal | Unity |
 |---------|-------|---------|---------------|-----------|--------|-------|
 | **Multi-Engine** | ✅ 4 engines | ❌ None | ❌ None | ❌ 1 engine | ❌ 1 engine | ❌ 1 engine |
 | **IntelliSense <50ms** | ✅ Yes | ❌ 200ms | ❌ 500ms | ❌ N/A | ❌ 300ms | ❌ 200ms |
@@ -451,7 +451,7 @@ EXPOSE 8080
 | **Learning Platform** | ✅ Yes | ❌ No | ❌ No | ❌ No | ❌ No | ❌ No |
 | **Price** | $30-500/mo | Free | $149-599/yr | $99-400/mo | Free | $0-149/mo |
 
-**Q-IDE Advantage**: Only IDE that supports ALL major game engines + fastest performance + best collaboration
+**Top Dog Advantage**: Only IDE that supports ALL major game engines + fastest performance + best collaboration
 
 ---
 
@@ -541,8 +541,8 @@ EXPOSE 8080
 
 ## CONCLUSION
 
-**Q-IDE's Strategic Positioning**:
-Instead of competing with VS Code (general IDEs), GameMaker (indie), or Unreal/Unity (professional), Q-IDE becomes the **first universal game development IDE** supporting all segments.
+**Top Dog's Strategic Positioning**:
+Instead of competing with VS Code (general IDEs), GameMaker (indie), or Unreal/Unity (professional), Top Dog becomes the **first universal game development IDE** supporting all segments.
 
 **Market Opportunity**: $2B+/year if capturing 20% market share of game developers  
 **Achievable MRR by Month 6**: $840k (vs $867k generic PLG)  

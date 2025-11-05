@@ -1,6 +1,54 @@
-# Q-IDE Membership Tiers & Pricing Model
+# Top Dog Membership Tiers & Pricing Model
 
-## MAIN MEMBERSHIP TIERS
+**Aura Development | Aura Medical | Aura Scientific**
+
+> **BYOK MARKETPLACE DIRECTORY MODEL** (No Commissions, Flat Subscriptions)
+
+See also: `PRICING_TOP_DOG_AURA_9_TIERS.md` for the canonical matrix across Development, Medical, and Scientific verticals.
+
+---
+
+## 🎯 THE 10 TIERS - PREMIUM PRICING
+
+```
+TIER 1:  FREE                    → $0/month (Trial - 7 Days)
+TIER 2:  PRO                     → $49/month
+TIER 3:  PRO-PLUS               → $99/month
+TIER 4:  PRO-TEAM               → $199/month
+TIER 5:  TEAMS-SMALL            → $499/month (5 users)
+TIER 6:  TEAMS-MEDIUM           → $999/month (30 users)
+TIER 7:  TEAMS-LARGE            → $2,499/month (100 users)
+TIER 8:  ENTERPRISE-STANDARD    → $9,999/month (500 users)
+TIER 9:  ENTERPRISE-PREMIUM     → $24,999/month (2000 users)
+TIER 10: ENTERPRISE-ULTIMATE    → $99,999/month (Unlimited users)
+```
+
+**Why Premium Pricing?**
+- 🔥 **UNIQUE**: BYOK Multi-LLM (53+ providers, no markup - only IDE with this)
+- 🎬 **UNIQUE**: Runway AI Media Synthesis integration (AI-generated game assets)
+- 🎮 **UNIQUE**: Multi-game-engine support (Construct 3, Godot, Unity, Unreal)
+- 🤖 **UNIQUE**: AI Agent Marketplace (directory model, no commissions)
+- 🛡️ **UNIQUE**: OverWatch - Active hallucination detection & prevention
+- 📊 **UNIQUE**: Auto-consistency scoring with tiered thresholds
+- 💾 **UNIQUE**: Snapshot retention system (RTO/RPO guarantees)
+- 🚦 **UNIQUE**: SLO burn-rate gates in CI/CD pipeline
+- 🎯 **UNIQUE**: PCG guardrails for safe procedural content generation
+- 🔒 **UNIQUE**: Red-team runner for automated security testing
+- 🏥 **UNIQUE**: Medical/Scientific data segment routing (HIPAA/FDA compliance)
+- 📝 **UNIQUE**: Persistent user notes & context system (never re-explain)
+- 🏗️ **UNIQUE**: Build manifest QR code system (project rules persist)
+- ✅ **UNIQUE**: Build plan approval workflow (human-in-the-loop)
+- 🧠 **UNIQUE**: Program learning with clarification questions
+- 📱 **UNIQUE**: SMS text pairing for remote work & approvals
+- 🤖 **UNIQUE**: Multi-LLM agent architecture (5 specialized roles)
+- 🔄 **UNIQUE**: Mature rollback & snapshot system
+- 💰 **VALUE**: Users save $1000s/month vs. competitors (no LLM markup)
+- 🚀 **COMPETITIVE**: Still cheaper than Cursor ($20) + Copilot ($10) + API costs
+- 📈 **PRODUCTION-READY**: Real-time Prometheus/Grafana observability
+
+---
+
+## DETAILED TIER BREAKDOWN
 
 ### TIER 1: FREE
 
@@ -12,14 +60,14 @@
 - **Auto-expires after 7 days**
 
 **Features:**
-- Core IDE access (VS Code base - read-only features)
+- Core Top Dog IDE access (Aura Development – read-only features)
 - 2 LLM models available (basic GPT, Claude Light)
 - No code execution (read-only IDE)
 - No game engine access
 - No media synthesis
 - 512MB storage (limited)
 - Public sharing only
-- Watermark on all exports: "Made with Q-IDE Free Trial"
+- Watermark on all exports: "Made with Top Dog Free Trial"
 - 5 minute max session length
 - Data saved (no loss of progress) - BUT read-only after 7 days
 
@@ -38,7 +86,7 @@ $tier = @{
     DataPersistence = $true
     ReadOnlyAfter = "7 days"
     Support = "Community"
-    Watermark = "Made with Q-IDE Free Trial"
+    Watermark = "Made with Top Dog Free Trial"
 }
 ```
 
@@ -53,8 +101,8 @@ $tier = @{
 - Email support
 
 **Features:**
-- Full IDE access
-- All 53 LLM models
+- Full IDE access (Aura Development)
+- All 53 LLM models (BYOK directory)
 - 1 game engine (choose: Construct 3, Godot, Unity, Unreal)
 - Basic media synthesis (DALL-E 3 only)
 - 100GB storage
@@ -74,6 +122,43 @@ $tier = @{
     MediaSynthesis = "DALL-E 3"
     VerifiedCodeChecks = 50
     Support = "Email"
+}
+```
+
+---
+
+### TIER 2B: PRO — FULL ACCESS (Solo Developer)
+
+Designed so solo builders aren’t handicapped. Everything in PRO, plus all engines and full media.
+
+**Daily API Call Limits:**
+- 25,000 API calls/day
+- 2,500 LLM requests/day
+- 8 concurrent sessions
+- Priority email support
+
+**Features:**
+- Full IDE access (Aura Development)
+- All 53+ LLM models (BYOK directory)
+- All 4 game engines (Construct 3, Godot, Unity, Unreal)
+- All media synthesis (DALL·E, Midjourney, Runway)
+- 250GB storage
+- Private repos (up to 10)
+- Verified code (Overwatch) — 500 checks/day
+
+**Code:**
+```powershell
+$tier = @{
+    Name = "PRO-FULL"
+    Price = 59
+    DailyCallLimit = 25000
+    LLMRequests = 2500
+    ConcurrentSessions = 8
+    Storage = "250GB"
+    GameEngines = 4
+    MediaSynthesis = "All"
+    VerifiedCodeChecks = 500
+    Support = "Priority Email"
 }
 ```
 
@@ -99,6 +184,10 @@ $tier = @{
 - Role-based access control (5 roles)
 - Team billing
 - SSO (Single Sign-On)
+
+Pricing guidance (users vs. price):
+- Base includes 5 seats at $100. For larger teams, add seats at $20–$30/seat depending on support/SLA.
+- Aim for per-seat clarity to avoid leaving money on the table while keeping small teams affordable.
 
 **Code:**
 ```powershell
@@ -421,5 +510,5 @@ FREE ──→ PRO-Starter ──→ PRO-Plus ──→ TEAMS-Small ──→ TE
 - ✅ 7-day expiration creates urgency
 - ✅ No code execution = can't build anything meaningful
 - ✅ Watermark reminds them it's trial version
-- ✅ Competitive advantage: Users see Q-IDE is SO much better than free tools, they'll pay
-- ✅ Everyone who wants to actually USE Q-IDE upgrades to PRO ($20/mo minimum)
+- ✅ Competitive advantage: Users see Top Dog is SO much better than free tools, they'll pay
+- ✅ Everyone who wants to actually USE Top Dog upgrades to PRO ($20/mo minimum)

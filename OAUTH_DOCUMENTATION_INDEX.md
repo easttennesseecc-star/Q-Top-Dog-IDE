@@ -1,6 +1,6 @@
 # 📚 OAuth System - Complete Documentation Index
 
-**Q-IDE Professional OAuth Authentication - All Resources**
+**Top Dog Professional OAuth Authentication - All Resources**
 
 ---
 
@@ -403,7 +403,7 @@ Before you start, gather these items:
 
 1. **Check documentation** (this index)
 2. **Search for error message** in troubleshooting sections
-3. **Review backend logs** (`backend/logs/q-ide-topdog.log`)
+3. **Review backend logs** (`backend/logs/Top Dog-topdog.log`)
 4. **Check browser console** (F12)
 5. **Verify environment variables** (`.env` file)
 6. **Read source code** comments
@@ -461,7 +461,7 @@ A: Follow Phase 5 of OAUTH_STARTUP_GUIDE_COMPLETE.md
 
 ## 🎉 Ready to Deploy!
 
-You now have everything needed to implement professional OAuth sign-in in Q-IDE.
+You now have everything needed to implement professional OAuth sign-in in Top Dog.
 
 **Next action**: Choose your starting document above and begin implementation!
 
@@ -474,4 +474,4 @@ You now have everything needed to implement professional OAuth sign-in in Q-IDE.
 **Documentation Quality**: Comprehensive (4,900+ lines)
 **Code Quality**: Production-grade (1,690+ lines)
 
-**Let's make Q-IDE the most professional IDE on the market!** 🚀
+**Let's make Top Dog the most professional IDE on the market!** 🚀

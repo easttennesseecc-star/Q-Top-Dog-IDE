@@ -4,7 +4,7 @@
 
 **Q: Why API key instead of GitHub OAuth for Copilot?**
 
-**A:** OAuth is for official apps (VS Code). Q-IDE is local, so needs API key. Actually MORE secure!
+**A:** OAuth is for official apps (VS Code). Top Dog is local, so needs API key. Actually MORE secure!
 
 ---
 
@@ -13,20 +13,20 @@
 ### Step 1 (2 min): Create Token
 ```
 https://github.com/settings/tokens/new
-Name: "Q-IDE Copilot API"
+Name: "Top Dog Copilot API"
 Scopes: ✓ user:read, ✓ write:packages, ✓ read:packages
 Copy token
 ```
 
-### Step 2 (1 min): Add to Q-IDE
+### Step 2 (1 min): Add to Top Dog
 ```
-Q-IDE → LLM Setup → Auth
+Top Dog → LLM Setup → Auth
 Paste token → Save → Green ✓
 ```
 
 ### Step 3: Done ✓
 ```
-Restart Q-IDE
+Restart Top Dog
 Start using Copilot!
 ```
 
@@ -49,7 +49,7 @@ Start using Copilot!
 ```
 Go: https://makersuite.google.com/app/apikeys
 Create key (free)
-Add to Q-IDE same way
+Add to Top Dog same way
 Done! (2 min, no cost)
 ```
 

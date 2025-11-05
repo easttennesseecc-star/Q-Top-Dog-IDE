@@ -32,7 +32,7 @@ ENTERPRISE          $250-300/seat       $3,000-3,600/seat   100 seats
 
 STRIPE_PRODUCTS = {
     'pro': {
-        'name': 'Q-IDE Pro',
+        'name': 'Top Dog Pro',
         'description': 'Professional developer tools',
         'price_monthly': 2000,  # $20 in cents
         'price_yearly': 20000,  # $200 in cents (with discount)
@@ -40,28 +40,28 @@ STRIPE_PRODUCTS = {
         'billing_cycle': 'month'
     },
     'teams_starter': {
-        'name': 'Q-IDE Teams Starter',
+        'name': 'Top Dog Teams Starter',
         'description': 'Team collaboration - Starter',
         'price_per_seat': 4000,  # $40 in cents
         'min_seats': 5,
         'billing_cycle': 'month'
     },
     'teams_pro': {
-        'name': 'Q-IDE Teams Pro',
+        'name': 'Top Dog Teams Pro',
         'description': 'Team collaboration - Pro',
         'price_per_seat': 6000,  # $60 in cents
         'min_seats': 20,
         'billing_cycle': 'month'
     },
     'teams_enterprise': {
-        'name': 'Q-IDE Teams Enterprise',
+        'name': 'Top Dog Teams Enterprise',
         'description': 'Team collaboration - Enterprise',
         'price_per_seat': 10000,  # $100 in cents
         'min_seats': 50,
         'billing_cycle': 'month'
     },
     'enterprise': {
-        'name': 'Q-IDE Enterprise',
+        'name': 'Top Dog Enterprise',
         'description': 'Custom enterprise solutions',
         'price_per_seat': 27500,  # $275 in cents (midpoint)
         'min_seats': 100,
@@ -248,11 +248,11 @@ const PRICING_TIERS = [
 **Email Template: Pricing Update Announcement**
 
 ```
-Subject: Q-IDE Pricing Updated (Better Value for You!)
+Subject: Top Dog Pricing Updated (Better Value for You!)
 
 Hi [Customer Name],
 
-We've optimized Q-IDE pricing to better reflect the value we provide:
+We've optimized Top Dog pricing to better reflect the value we provide:
 
 ✅ Pro: Now $20/month (was $15)
 ✅ Teams: Now $40-100/seat (was $30-50)
@@ -265,7 +265,7 @@ Better news: If you're already a customer, you get:
 
 [See What's New] [Learn About Your Tier]
 
-Questions? Reply to this email or contact support@q-ide.com
+Questions? Reply to this email or contact support@Top Dog.com
 ```
 
 **Subtasks**:

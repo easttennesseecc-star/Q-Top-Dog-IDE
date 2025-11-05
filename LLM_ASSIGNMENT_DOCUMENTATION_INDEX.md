@@ -20,7 +20,7 @@
 - Troubleshooting guide
 - FAQ section
 
-**When to Read**: You just opened Q-IDE and want to know how to assign LLMs
+**When to Read**: You just opened Top Dog and want to know how to assign LLMs
 
 **Key Sections**:
 - How to Assign an LLM to a Role

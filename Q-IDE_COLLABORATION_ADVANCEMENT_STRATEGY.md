@@ -1,10 +1,10 @@
-# 🤝 Q-IDE Collaboration Features: Strategic Advancement Plan
+# 🤝 Top Dog Collaboration Features: Strategic Advancement Plan
 
 **Document Type**: Product Strategy & Roadmap  
 **Date**: October 28, 2025  
 **Prepared For**: Product Team, Engineering Leadership, Stakeholders  
 **Status**: Strategic Planning & Implementation Roadmap  
-**Objective**: Elevate Q-IDE from ✅✅ (Good) to ✅✅✅ (Excellent) in collaboration category
+**Objective**: Elevate Top Dog from ✅✅ (Good) to ✅✅✅ (Excellent) in collaboration category
 
 ---
 
@@ -13,7 +13,7 @@
 ### Current State vs Competitive Gap
 
 ```
-Current Q-IDE Collaboration Capabilities:
+Current Top Dog Collaboration Capabilities:
 ├─ Real-time Collaboration        ✅✅  (Good/Partial - GitHub rivals ✅✅✅)
 ├─ Team Permissions               ✅✅✅ (Excellent - At parity with GitHub)
 ├─ Comment & Discussion           ✅✅  (Good - Behind GitHub by 1 level)
@@ -27,8 +27,8 @@ Current Gap Analysis:
 OPPORTUNITY:
 Transform collaboration from "Good/Partial" (✅✅) to "Excellent/Full" (✅✅✅)
 This becomes a GAME-CHANGER differentiator when combined with:
-├─ Multi-LLM BYOK (unique to Q-IDE)
-├─ Runway media synthesis (unique to Q-IDE)
+├─ Multi-LLM BYOK (unique to Top Dog)
+├─ Runway media synthesis (unique to Top Dog)
 └─ Best pricing in market
 
 Result: "The BEST collaboration IDE for teams" positioning
@@ -48,7 +48,7 @@ Result: "The BEST collaboration IDE for teams" positioning
 
 ## Current Collaboration Features Analysis
 
-### What Q-IDE Has ✅
+### What Top Dog Has ✅
 
 **Team Permissions (✅✅✅ - Excellent)**
 - ✅ Role-based access control (Admin, Editor, Viewer, Commenter)
@@ -167,7 +167,7 @@ MISSING: Team Analytics
 ### Collaboration Feature Matrix (Current State)
 
 ```
-FEATURE                          Q-IDE    GitHub    VS Code    Replit   JetBrains
+FEATURE                          Top Dog    GitHub    VS Code    Replit   JetBrains
                                           Codespaces           Fleet
 ─────────────────────────────────────────────────────────────────────────────────
 REAL-TIME COLLABORATION
@@ -231,7 +231,7 @@ Team velocity metrics             ❌       ✅        ❌        ❌      ❌
                             │        ╱   │
                     20      │      ╱     │
                             │    ╱       │ ← Gap: 8 features
-                    15      │  ╱ Q-IDE    │   (25%)
+                    15      │  ╱ Top Dog    │   (25%)
                             │╱ (24 features)
                     10      │         (Current state)
                             │
@@ -244,12 +244,12 @@ Team velocity metrics             ❌       ✅        ❌        ❌      ❌
 ```
 
 **Current Reality:**
-- Q-IDE: 24 collaboration features (✅✅ Good)
+- Top Dog: 24 collaboration features (✅✅ Good)
 - GitHub Codespaces: 32 features (✅✅✅ Excellent)
 - Gap: 8 features (25% behind)
 
 **After Implementation:**
-- Q-IDE: 40+ features (✅✅✅ Excellent)
+- Top Dog: 40+ features (✅✅✅ Excellent)
 - Position: 25% AHEAD of GitHub
 - Unique differentiators competitors can't match
 
@@ -295,7 +295,7 @@ Deliverables:
 
 **UI Mockup:**
 ```
-Q-IDE Team Panel (Redesigned):
+Top Dog Team Panel (Redesigned):
 ┌─────────────────────────────────┐
 │ 👥 Team (4 Active)              │
 ├─────────────────────────────────┤
@@ -356,10 +356,10 @@ Features:
 #### 1.3 AI-Powered Code Review Integration
 
 ```
-Priority: HIGH (unique to Q-IDE!)
+Priority: HIGH (unique to Top Dog!)
 Complexity: HIGH (integrates with Q Assistant)
 Time: 1.5 weeks
-Impact: Q-IDE reviews code automatically (UNIQUE FEATURE)
+Impact: Top Dog reviews code automatically (UNIQUE FEATURE)
 
 How It Works:
 1. Developer submits code for review (or marks file for review)
@@ -403,9 +403,9 @@ Example Review:
 
 Unique Advantage Over GitHub:
 ├─ GitHub has Copilot review suggestions (premium)
-├─ Q-IDE has Q Assistant built-in (all tiers)
-├─ Q-IDE suggestions are more context-aware (full codebase)
-├─ Q-IDE can suggest exact fixes (not just issues)
+├─ Top Dog has Q Assistant built-in (all tiers)
+├─ Top Dog suggestions are more context-aware (full codebase)
+├─ Top Dog can suggest exact fixes (not just issues)
 └─ Works with BYOK models (cost control)
 ```
 
@@ -661,7 +661,7 @@ Traditional (isolated):
 ├─ Charlie: "Did you check the database?"
 ├─ Takes 30 minutes via chat
 
-Q-IDE Shared Debugging:
+Top Dog Shared Debugging:
 ├─ Alice shares debugging session
 ├─ All see breakpoints in API handler
 ├─ Alice steps through code → all watch
@@ -703,7 +703,7 @@ Features:
 ✅ Integration with meeting tools
    ├─ Click "Start Zoom" → creates meeting
    ├─ Click "Slack call" → initiates Slack call
-   ├─ Calendar integration: "Join Q-IDE call" in calendar
+   ├─ Calendar integration: "Join Top Dog call" in calendar
    └─ One-click context (not "which Zoom link?")
 
 ✅ Visual annotations during screen share
@@ -809,9 +809,9 @@ WEEK 3-4: Code Review Enhancements
 ├─ AI-powered code review (Q Assistant integration)
 └─ Suggested fixes in review comments
 
-Deliverable: Q-IDE v2.1 (Oct 31)
+Deliverable: Top Dog v2.1 (Oct 31)
 ├─ Collaboration features significantly improved
-├─ Marketing: "Q-IDE Collaboration v2: Now with AI Code Review"
+├─ Marketing: "Top Dog Collaboration v2: Now with AI Code Review"
 └─ Sales point: "Only IDE with built-in AI code review at all tiers"
 ```
 
@@ -832,9 +832,9 @@ WEEK 9-12: Debugging & Analytics
 ├─ Collaboration analytics dashboard
 └─ Performance optimization
 
-Deliverable: Q-IDE v2.2 (Jan 31)
+Deliverable: Top Dog v2.2 (Jan 31)
 ├─ Professional collaboration platform
-├─ Marketing: "Q-IDE: The IDE built for teamwork"
+├─ Marketing: "Top Dog: The IDE built for teamwork"
 └─ Sales point: "More collaboration features than GitHub, better price"
 ```
 
@@ -845,7 +845,7 @@ Deliverable: Q-IDE v2.2 (Jan 31)
 ### Features Comparison: After Implementation
 
 ```
-Feature                          Q-IDE    GitHub    Cursor   JetBrains
+Feature                          Top Dog    GitHub    Cursor   JetBrains
                                  (NEW)    Codespaces         Fleet
 ─────────────────────────────────────────────────────────────────────
 REAL-TIME COLLABORATION          ✅✅✅   ✅✅✅    ❌       ✅✅
@@ -898,7 +898,7 @@ ANALYTICS                        ✅✅✅   ✅        ❌       ❌
 🆕 = New feature (not in current competitors)
 ═══════════════════════════════════════════════════════════════
 TOTAL FEATURES                   42       32        8        18
-Q-IDE Advantage                  +10      ✅ AHEAD!  ✅ WAY AHEAD  ✅ 24 AHEAD
+Top Dog Advantage                  +10      ✅ AHEAD!  ✅ WAY AHEAD  ✅ 24 AHEAD
 ```
 
 ### Market Positioning: After Implementation
@@ -913,7 +913,7 @@ Collaboration Excellence Matrix
               │        ◆
               │       ╱  ╲
               │      ╱    ╲
-              │     ╱      ╲        Q-IDE 2.2
+              │     ╱      ╲        Top Dog 2.2
               │    ╱        ╲        (Excellent)
               │   ╱          ◆◆◆◆
               │  ╱          ╱    ╲
@@ -926,7 +926,7 @@ Collaboration Excellence Matrix
         ────────────────────────────────→
         Cost Efficiency ──→ Feature Richness
 
-Q-IDE's New Position:
+Top Dog's New Position:
 ├─ Most features (42 vs 32)
 ├─ Best price ($12-25 vs $50+)
 ├─ Only with AI review + pair programming
@@ -937,29 +937,29 @@ Q-IDE's New Position:
 ### Sales Differentiation After Implementation
 
 **Before (Current):**
-> "Q-IDE has collaboration features similar to GitHub, but cheaper"
+> "Top Dog has collaboration features similar to GitHub, but cheaper"
 
 **After Implementation:**
-> "Q-IDE is the ONLY IDE with professional pair programming, mob programming, and AI-powered code review. Plus, it's 75% cheaper than GitHub Codespaces"
+> "Top Dog is the ONLY IDE with professional pair programming, mob programming, and AI-powered code review. Plus, it's 75% cheaper than GitHub Codespaces"
 
 **Unique Selling Points:**
-1. **Pair Programming** (✅ Q-IDE, ❌ GitHub)
+1. **Pair Programming** (✅ Top Dog, ❌ GitHub)
    - Driver/Navigator mode
    - Automatic role handoff
    - Knowledge transfer optimized
 
-2. **Mob Programming** (✅ Q-IDE, ❌ Everyone)
+2. **Mob Programming** (✅ Top Dog, ❌ Everyone)
    - First IDE with built-in mob support
    - Perfect for agile teams
    - Automatic rotation timer
 
-3. **AI Code Review** (✅ Q-IDE built-in, ⚠️ GitHub Copilot premium)
-   - All tiers get AI review (Q-IDE)
+3. **AI Code Review** (✅ Top Dog built-in, ⚠️ GitHub Copilot premium)
+   - All tiers get AI review (Top Dog)
    - Suggested fixes (not just issues)
    - Context-aware (full codebase)
    - BYOK models (cost control)
 
-4. **Collaboration Analytics** (✅ Q-IDE, ⚠️ GitHub basic)
+4. **Collaboration Analytics** (✅ Top Dog, ⚠️ GitHub basic)
    - Pairing statistics
    - Knowledge transfer patterns
    - Team engagement metrics
@@ -1077,37 +1077,37 @@ Same as above but:
 **Angle 1: "Pair Programming is Now Built-in"**
 ```
 Problem: "I have to use separate screen sharing tools for pair programming"
-Solution: "In Q-IDE, pair programming is a first-class feature"
+Solution: "In Top Dog, pair programming is a first-class feature"
 
 Target: Software engineers who pair program frequently
 Channels: Dev blogs, Twitter/X, Dev.to
-Message: "No more tool switching. Pair in Q-IDE."
+Message: "No more tool switching. Pair in Top Dog."
 ```
 
 **Angle 2: "Mob Programming for Agile Teams"**
 ```
 Problem: "Our Agile mob sessions are chaotic (who's typing?)"
-Solution: "Q-IDE's mob mode with auto-rotation timer"
+Solution: "Top Dog's mob mode with auto-rotation timer"
 
 Target: Agile teams, XP practitioners, Scrum masters
 Channels: Agile blogs, Scrum publications, company training
-Message: "Structured mob programming with Q-IDE"
+Message: "Structured mob programming with Top Dog"
 ```
 
 **Angle 3: "AI Code Review, No Premium Required"**
 ```
 Problem: "GitHub Copilot code review is $20/month extra"
-Solution: "Q-IDE has AI code review at all tier levels"
+Solution: "Top Dog has AI code review at all tier levels"
 
 Target: Budget-conscious teams, startups, enterprises
 Channels: Technical blogs, Dev Twitter, Reddit r/golang, r/webdev
-Message: "Enterprise-grade AI code review, included with Q-IDE"
+Message: "Enterprise-grade AI code review, included with Top Dog"
 ```
 
 **Angle 4: "Understand Your Team's Collaboration"**
 ```
 Problem: "We don't know how our team collaborates or if it's effective"
-Solution: "Q-IDE collaboration analytics shows pairing patterns, review speed, engagement"
+Solution: "Top Dog collaboration analytics shows pairing patterns, review speed, engagement"
 
 Target: Engineering managers, tech leads, CTOs
 Channels: Dev.to, Medium, Engineering blogs, LinkedIn
@@ -1118,19 +1118,19 @@ Message: "Metrics that matter: collaboration quality, not just velocity"
 
 ```
 1. Feature Demo Video (3 min)
-   ├─ "Pair programming in Q-IDE"
+   ├─ "Pair programming in Top Dog"
    ├─ "5-person mob session with auto-rotation"
    ├─ "AI code review suggests exact fixes"
    └─ Upload to YouTube, embed on landing page
 
 2. Comparison Sheet
-   ├─ Q-IDE vs GitHub Codespaces (collaboration focus)
-   ├─ Q-IDE vs Cursor (for remote teams)
+   ├─ Top Dog vs GitHub Codespaces (collaboration focus)
+   ├─ Top Dog vs Cursor (for remote teams)
    ├─ ROI: "Save $X/year on tool integration"
    └─ Printable PDF + dynamic web version
 
 3. Case Study Template
-   ├─ "Team X improved code review turnaround 50% with Q-IDE"
+   ├─ "Team X improved code review turnaround 50% with Top Dog"
    ├─ "Startup Y onboards developers 2x faster with pair programming"
    ├─ Metrics: time saved, developer satisfaction, quality improvements
    └─ 2-3 pages, PDF
@@ -1189,7 +1189,7 @@ Message: "Metrics that matter: collaboration quality, not just velocity"
 **Market Metrics:**
 ```
 ✅ Market Share
-   ├─ Teams on Q-IDE using collaboration features: Target 60%+
+   ├─ Teams on Top Dog using collaboration features: Target 60%+
    ├─ Awareness (mentioned in dev surveys): Target top 5
    ├─ Market share (small teams): Target 3-5%
    └─ Win rate vs GitHub Codespaces: Target 30%+
@@ -1203,14 +1203,14 @@ Message: "Metrics that matter: collaboration quality, not just velocity"
 
 **Current State:**
 ```
-Q-IDE Collaboration: ✅✅ (Good/Partial)
+Top Dog Collaboration: ✅✅ (Good/Partial)
 Competition: ✅✅-✅✅✅ (Similar to GitHub, behind on some features)
 Market Position: "Cheaper alternative with okay collaboration"
 ```
 
 **After Implementation:**
 ```
-Q-IDE Collaboration: ✅✅✅ (Excellent/Full)
+Top Dog Collaboration: ✅✅✅ (Excellent/Full)
 Competition: 🏆 AHEAD (42 features vs 32 for GitHub)
 Market Position: "The IDE built for professional teamwork"
 ```
@@ -1225,7 +1225,7 @@ Market Position: "The IDE built for professional teamwork"
 
 ### Strategic Importance
 
-**Collaboration is the final frontier for Q-IDE:**
+**Collaboration is the final frontier for Top Dog:**
 - ✅ IDE features: On par with GitHub Codespaces
 - ✅ AI features: AHEAD with multi-LLM BYOK
 - ✅ Pricing: AHEAD (50-75% cheaper)
@@ -1233,7 +1233,7 @@ Market Position: "The IDE built for professional teamwork"
 - ⏳ **Collaboration: OPPORTUNITY to go from good to excellent**
 
 When collaboration features are excellent + AI is best-in-class + price is lowest:
-→ **Q-IDE becomes the obvious choice for professional teams**
+→ **Top Dog becomes the obvious choice for professional teams**
 
 ---
 

@@ -2,7 +2,7 @@
 
 ## Files Ready?
 
-Check that these files exist in your Q-IDE folder:
+Check that these files exist in your Top Dog folder:
 
 - [ ] **INSTALL_OLLAMA_AUTO.bat** (Windows batch launcher)
 - [ ] **INSTALL_OLLAMA_AUTO.ps1** (PowerShell automation script)
@@ -22,7 +22,7 @@ If both exist, you're good to go! ✅
 
 ### **Should Have:**
 - [ ] Modern browser (Chrome, Edge, Firefox)
-- [ ] Q-IDE already open in browser tab
+- [ ] Top Dog already open in browser tab
 - [ ] Quiet time (let it run without interruption)
 
 ---
@@ -48,12 +48,12 @@ If both exist, you're good to go! ✅
 - Test: Try to download a file and save to C:\Program Files
 
 **4. Browser Ready**
-- [ ] Is Q-IDE open in a browser tab?
+- [ ] Is Top Dog open in a browser tab?
 - [ ] Keep that tab open during installation
 
 **5. Close Programs**
 - [ ] Close any large programs (Visual Studio, heavy games)
-- [ ] Close web browsers except Q-IDE
+- [ ] Close web browsers except Top Dog
 - [ ] Close antivirus/Windows Defender is fine (don't worry)
 
 ---
@@ -178,7 +178,7 @@ This is needed to:
 - [ ] Both files found: INSTALL_OLLAMA_AUTO.bat + .ps1
 - [ ] At least 5 GB free disk space
 - [ ] Internet connection working
-- [ ] Q-IDE browser tab open
+- [ ] Top Dog browser tab open
 - [ ] All unnecessary programs closed
 - [ ] You have 20+ minutes
 - [ ] Read all the above ✅
@@ -230,7 +230,7 @@ Time    What You'll See
 ### **What You CAN Do:**
 - ✅ Use other applications
 - ✅ Check email
-- ✅ Browse the web (keep Q-IDE tab open)
+- ✅ Browse the web (keep Top Dog tab open)
 - ✅ Get coffee ☕
 
 ---
@@ -243,8 +243,8 @@ Time    What You'll See
 3. Type Y or N and press Enter
 4. Installer closes
 
-### **Next - Verify in Q-IDE:**
-1. Go to Q-IDE browser tab
+### **Next - Verify in Top Dog:**
+1. Go to Top Dog browser tab
 2. Press F5 to refresh
 3. Wait 3-5 seconds
 4. Look for green box: "Auto-Selected Best Options"
@@ -317,7 +317,7 @@ Read these guides:
 
 Everything is ready. The automation will handle everything else.
 
-**Time to get AI in your Q-IDE!**
+**Time to get AI in your Top Dog!**
 
 🎉 See you on the other side!
 

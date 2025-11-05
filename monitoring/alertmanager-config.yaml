@@ -1,0 +1,49 @@
+---
+apiVersion: monitoring.coreos.com/v1alpha1
+kind: AlertmanagerConfig
+metadata:
+  name: topdog-routing
+  namespace: q-ide
+  labels:
+    alertmanagerConfig: topdog
+spec:
+  route:
+    groupBy: [alertname]
+    groupWait: 30s
+    groupInterval: 5m
+    repeatInterval: 4h
+    receiver: default
+    routes:
+      - matchers:
+          - name: severity
+            value: page
+            matchType: =
+        receiver: pagerduty
+      - matchers:
+          - name: severity
+            value: warn
+            matchType: =
+        receiver: slack
+  receivers:
+    - name: default
+      emailConfigs:
+        - to: "oncall@example.com"
+          from: "alerts@example.com"
+          smarthost: "smtp.example.com:587"
+          authUsername: "${SMTP_USER}"
+          authPassword:
+            name: alertmanager-secrets
+            key: smtp_password
+    - name: pagerduty
+      pagerdutyConfigs:
+        - routingKey:
+            name: alertmanager-secrets
+            key: pagerduty_routing_key
+          severity: "critical"
+    - name: slack
+      slackConfigs:
+        - channel: "#alerts"
+          sendResolved: true
+          apiUrl:
+            name: alertmanager-secrets
+            key: slack_webhook_url

@@ -1,0 +1,20 @@
+groups:
+  - name: cost-and-retry-alerts
+    rules:
+      - alert: TokenSpike
+        expr: sum(rate(topdog_tokens_total[5m])) > 50000
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Token spike detected"
+          description: "Tokens per minute exceeded 50k for 5 minutes. Investigate runaway prompts or loops."
+
+      - alert: RetryStorm
+        expr: sum(rate(topdog_llm_retries_total[5m])) > 100
+        for: 5m
+        labels:
+          severity: critical
+        annotations:
+          summary: "LLM retry storm"
+          description: "Retries per minute exceeded 100 for 5 minutes. Check upstream failures and backoff policies."

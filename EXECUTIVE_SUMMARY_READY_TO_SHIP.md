@@ -102,7 +102,7 @@
 
 ### Market Opportunity
 ```
-Q-IDE Multi-Engine Support
+Top Dog Multi-Engine Support
 ├─ Construct 3: 5,000 users × $75/user/year  = $375k MRR
 ├─ Godot: 3,000 users × $30/user/year        = $90k MRR
 ├─ Unity: 2,000 users × $150/user/year       = $300k MRR
@@ -161,10 +161,10 @@ Learning curve: 40+ hours
 Revenue: $0
 ```
 
-### After (Q-IDE with Game Engine Integration)
+### After (Top Dog with Game Engine Integration)
 ```
 Developer needs:
-- Q-IDE (all-in-one)
+- Top Dog (all-in-one)
 
 Setup time: 5 minutes
 Context switches: 0 per day
@@ -359,7 +359,7 @@ Testing:
 > "Production code is ready. All tests passing. Team aligned. Demo prepared. Launch is in 35 minutes on Monday."
 
 ### For Customers
-> "Q-IDE now supports Construct 3, Godot, Unity, and Unreal. One IDE. All engines. No friction."
+> "Top Dog now supports Construct 3, Godot, Unity, and Unreal. One IDE. All engines. No friction."
 
 ---
 
@@ -437,5 +437,5 @@ Testing:
 ---
 
 **Created by**: GitHub Copilot (Agent)  
-**For**: Q-IDE Development Team  
+**For**: Top Dog Development Team  
 **Status**: Production Ready ✅

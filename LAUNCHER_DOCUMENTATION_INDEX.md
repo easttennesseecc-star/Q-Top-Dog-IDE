@@ -1,4 +1,4 @@
-# 📑 Q-IDE PROFESSIONAL LAUNCHER - COMPLETE DOCUMENTATION INDEX
+# 📑 Top Dog PROFESSIONAL LAUNCHER - COMPLETE DOCUMENTATION INDEX
 
 **Status**: ✅ Production Ready  
 **Implementation Date**: October 28, 2025  
@@ -12,12 +12,12 @@
 1. Read: `START_HERE.md` (2 minutes)
 2. Run: `CREATE_SHORTCUT.bat` (30 seconds)
 3. Click: Desktop shortcut (5 seconds)
-4. Enjoy: Q-IDE! 🚀
+4. Enjoy: Top Dog! 🚀
 
 ### For Existing Users
-1. Click: Desktop shortcut "Q-IDE Topdog"
+1. Click: Desktop shortcut "Top Dog Topdog"
 2. Wait: ~15 seconds
-3. Use: Q-IDE at http://127.0.0.1:1431
+3. Use: Top Dog at http://127.0.0.1:1431
 
 ### For Developers/Troubleshooting
 1. Run: `.\DIAGNOSE.ps1` (system check)
@@ -30,7 +30,7 @@
 
 ### 🎬 Main Launcher Scripts
 
-#### **Q-IDE.bat** ⭐ RECOMMENDED
+#### **Top Dog.bat** ⭐ RECOMMENDED
 - **Purpose**: Primary single-click launcher
 - **Usage**: Double-click to launch
 - **Time**: ~15 seconds startup
@@ -52,7 +52,7 @@
   - Documentation access
 - **Best For**: Users who want options
 
-#### **Q-IDE.vbs** (Optional)
+#### **Top Dog.vbs** (Optional)
 - **Purpose**: Silent VBScript launcher
 - **Usage**: Double-click (no console)
 - **Time**: ~15 seconds startup
@@ -68,7 +68,7 @@
 #### **CREATE_SHORTCUT.bat**
 - **Purpose**: Creates desktop shortcut
 - **Usage**: Run once to setup
-- **Creates**: "Q-IDE Topdog.lnk" on Desktop
+- **Creates**: "Top Dog Topdog.lnk" on Desktop
 - **Time**: 30 seconds
 - **Best For**: One-time initial setup
 
@@ -113,7 +113,7 @@
 - **Content**:
   - Quick start (3 options)
   - What happens on launch
-  - Where to find Q-IDE
+  - Where to find Top Dog
   - Important notes
   - Quick commands
   - Troubleshooting basics
@@ -126,7 +126,7 @@
 - **Content**:
   - 3 launch methods
   - What happens during launch
-  - Accessing Q-IDE URLs
+  - Accessing Top Dog URLs
   - Troubleshooting guide
   - Monitoring instructions
   - Common issues & fixes
@@ -206,7 +206,7 @@
 
 ## 🎯 WHICH FILE TO READ?
 
-### "I just got Q-IDE, what do I do?"
+### "I just got Top Dog, what do I do?"
 → Read: `START_HERE.md`
 
 ### "I want complete setup instructions"
@@ -236,16 +236,16 @@
 ### Method 1: Desktop Shortcut (EASIEST) ⭐
 ```
 1. Run: CREATE_SHORTCUT.bat (one time)
-2. Use: Desktop shortcut "Q-IDE Topdog"
+2. Use: Desktop shortcut "Top Dog Topdog"
 3. Click: Double-click
-4. Result: Q-IDE launches
+4. Result: Top Dog launches
 ```
 
 ### Method 2: Direct File (SIMPLE)
 ```
-1. File: Q-IDE.bat (in project root)
+1. File: Top Dog.bat (in project root)
 2. Action: Double-click
-3. Result: Q-IDE launches
+3. Result: Top Dog launches
 ```
 
 ### Method 3: Interactive Menu (GUIDED)
@@ -259,8 +259,8 @@
 ```
 1. Open: PowerShell or Command Prompt
 2. Command: cd c:\Quellum-topdog-ide
-3. Command: .\Q-IDE.bat
-4. Result: Q-IDE launches
+3. Command: .\Top Dog.bat
+4. Result: Top Dog launches
 ```
 
 ### Method 5: Debug Mode (TROUBLESHOOTING)
@@ -268,7 +268,7 @@
 1. Open: PowerShell
 2. Command: cd c:\Quellum-topdog-ide
 3. Command: .\START_DEBUG.ps1
-4. Result: Q-IDE launches with full output
+4. Result: Top Dog launches with full output
 ```
 
 ---
@@ -279,9 +279,9 @@
 c:\Quellum-topdog-ide\
 │
 ├── 🎬 LAUNCHER SCRIPTS
-│   ├── Q-IDE.bat ⭐ (Use this!)
+│   ├── Top Dog.bat ⭐ (Use this!)
 │   ├── LAUNCHER_MENU.bat (Interactive menu)
-│   ├── Q-IDE.vbs (Silent launcher)
+│   ├── Top Dog.vbs (Silent launcher)
 │   └── CREATE_SHORTCUT.bat (One-time setup)
 │
 ├── 🐛 DEBUG SCRIPTS
@@ -337,7 +337,7 @@ c:\Quellum-topdog-ide\
 
 ## ✅ QUICK CHECKLIST
 
-Before launching Q-IDE, verify:
+Before launching Top Dog, verify:
 
 - [ ] You have Python 3.9+: `python --version`
 - [ ] You have Node.js: `node --version`
@@ -354,7 +354,7 @@ All checked? → Ready to launch! 🚀
 
 | Symptom | Cause | Fix | Doc Reference |
 |---------|-------|-----|---|
-| Can't find Q-IDE.bat | Wrong directory | cd to project root | START_HERE.md |
+| Can't find Top Dog.bat | Wrong directory | cd to project root | START_HERE.md |
 | Command not recognized | Python not installed | Install Python | PROFESSIONAL_LAUNCH_GUIDE.md |
 | Port already in use | Old process | Restart or kill process | PROFESSIONAL_LAUNCH_GUIDE.md |
 | Browser won't open | Settings/firewall | Manually go to URL | LAUNCHER_VISUAL_GUIDE.md |
@@ -371,13 +371,13 @@ Choose appropriate docs based on your role (see above)
 Run: `CREATE_SHORTCUT.bat`
 
 ### Step 3: Launch
-Click: Desktop shortcut (or Q-IDE.bat)
+Click: Desktop shortcut (or Top Dog.bat)
 
 ### Step 4: Use
 Visit: http://127.0.0.1:1431
 
 ### Step 5: Enjoy
-Build amazing things with Q-IDE! 🚀
+Build amazing things with Top Dog! 🚀
 
 ---
 
@@ -442,7 +442,7 @@ Everything you need is documented and ready!
 **Technical?** → PROFESSIONAL_LAUNCHER_COMPLETE.md  
 **Developer?** → LAUNCHER_COMPLETE_STATUS.md  
 
-Then just **double-click Q-IDE.bat** and enjoy! 🚀
+Then just **double-click Top Dog.bat** and enjoy! 🚀
 
 ---
 
@@ -465,4 +465,4 @@ Then just **double-click Q-IDE.bat** and enjoy! 🚀
 *Status: Production Ready*  
 *Version: 1.0 Professional Release*
 
-🚀 Ready to launch Q-IDE!
+🚀 Ready to launch Top Dog!

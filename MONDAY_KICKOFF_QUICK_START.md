@@ -113,7 +113,7 @@ npm run dev
 
 **Action 7a**: Open browser to http://localhost:3000
 ```
-You should see: Q-IDE with Game Engine panel visible
+You should see: Top Dog with Game Engine panel visible
 ```
 
 **Action 7b**: Test 1 - Register a Project

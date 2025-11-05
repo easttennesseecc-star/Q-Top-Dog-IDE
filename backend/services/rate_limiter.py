@@ -5,7 +5,7 @@ Checks daily API call limits and trial expiry
 
 import sqlite3
 from datetime import datetime, date
-from database.tier_schema import MembershipTierSchema
+from backend.database.tier_schema import MembershipTierSchema
 
 
 class RateLimiter:

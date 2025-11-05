@@ -10,7 +10,7 @@
 
 ## Executive Overview
 
-You're going to **deploy Q-IDE to production in 2 weeks** using Heroku. This is the fastest path to real users and real feedback.
+You're going to **deploy Top Dog to production in 2 weeks** using Heroku. This is the fastest path to real users and real feedback.
 
 ### What You'll Have After 2 Weeks
 ✅ Live URL that users can visit  
@@ -63,7 +63,7 @@ OUTPUT: Working backend Dockerfile
 **Action Items:**
 - [ ] Create `backend/Dockerfile`
 - [ ] Create `backend/.dockerignore`
-- [ ] Test build locally: `docker build -t q-ide-backend .`
+- [ ] Test build locally: `docker build -t Top Dog-backend .`
 
 **Dockerfile Template** (save as `backend/Dockerfile`):
 ```dockerfile
@@ -127,7 +127,7 @@ OUTPUT: Working frontend Dockerfile
 **Action Items:**
 - [ ] Create `frontend/Dockerfile`
 - [ ] Create `frontend/.dockerignore`
-- [ ] Test build locally: `docker build -t q-ide-frontend .`
+- [ ] Test build locally: `docker build -t Top Dog-frontend .`
 
 **Dockerfile Template** (save as `frontend/Dockerfile`):
 ```dockerfile
@@ -181,8 +181,8 @@ TASKS:
    └─ Install Heroku CLI
 
 2. Create 2 Heroku apps
-   └─ heroku create q-ide-backend
-   └─ heroku create q-ide-frontend
+   └─ heroku create Top Dog-backend
+   └─ heroku create Top Dog-frontend
    └─ Note the generated URLs
 
 3. Add PostgreSQL addon to backend app
@@ -203,21 +203,21 @@ npm install -g heroku
 heroku login
 
 # Create apps
-heroku create q-ide-backend
-heroku create q-ide-frontend
+heroku create Top Dog-backend
+heroku create Top Dog-frontend
 
 # Add PostgreSQL to backend
-heroku addons:create heroku-postgresql:hobby-dev --app q-ide-backend
+heroku addons:create heroku-postgresql:hobby-dev --app Top Dog-backend
 
 # Get database URL
-heroku config:get DATABASE_URL --app q-ide-backend
+heroku config:get DATABASE_URL --app Top Dog-backend
 ```
 
 **Action Items:**
 - [ ] Create Heroku account
 - [ ] Install Heroku CLI
-- [ ] Create q-ide-backend app
-- [ ] Create q-ide-frontend app
+- [ ] Create Top Dog-backend app
+- [ ] Create Top Dog-frontend app
 - [ ] Add PostgreSQL database
 - [ ] Note all 3 URLs (backend, frontend, database)
 
@@ -246,23 +246,23 @@ OUTPUT: All env vars configured
 **Command Reference:**
 ```bash
 # View current config
-heroku config --app q-ide-backend
+heroku config --app Top Dog-backend
 
 # Set a variable
-heroku config:set DATABASE_URL="..." --app q-ide-backend
+heroku config:set DATABASE_URL="..." --app Top Dog-backend
 
 # Set multiple variables at once
 heroku config:set \
-  FRONTEND_URL="https://q-ide-frontend.herokuapp.com" \
+  FRONTEND_URL="https://Top Dog-frontend.herokuapp.com" \
   LLM_API_KEY="your-key" \
   OAUTH_CLIENT_ID="your-id" \
   OAUTH_CLIENT_SECRET="your-secret" \
-  --app q-ide-backend
+  --app Top Dog-backend
 
 # For frontend
 heroku config:set \
-  VITE_API_URL="https://q-ide-backend.herokuapp.com" \
-  --app q-ide-frontend
+  VITE_API_URL="https://Top Dog-backend.herokuapp.com" \
+  --app Top Dog-frontend
 ```
 
 **Action Items:**
@@ -287,20 +287,20 @@ heroku config:set \
 ```
 TASKS:
 1. Push code to Heroku
-   └─ heroku git:remote -a q-ide-backend
+   └─ heroku git:remote -a Top Dog-backend
    └─ git push heroku main
 
 2. Monitor deployment
-   └─ heroku logs --tail --app q-ide-backend
+   └─ heroku logs --tail --app Top Dog-backend
    └─ Watch for errors
    └─ Fix if needed
 
 3. Verify health endpoint
-   └─ curl https://q-ide-backend.herokuapp.com/health
+   └─ curl https://Top Dog-backend.herokuapp.com/health
    └─ Should return 200 OK
 
 4. Check database connection
-   └─ heroku logs --app q-ide-backend
+   └─ heroku logs --app Top Dog-backend
    └─ Look for "Database connected"
 
 TIME: 8 hours (mostly waiting for build)
@@ -312,19 +312,19 @@ OUTPUT: Backend running on Heroku
 ```bash
 # Connect Heroku remote
 cd backend
-heroku git:remote -a q-ide-backend
+heroku git:remote -a Top Dog-backend
 
 # Deploy
 git push heroku main
 
 # Watch logs
-heroku logs --tail --app q-ide-backend
+heroku logs --tail --app Top Dog-backend
 
 # Test health endpoint
-curl https://q-ide-backend.herokuapp.com/health
+curl https://Top Dog-backend.herokuapp.com/health
 
 # If deployment fails, check:
-heroku logs --app q-ide-backend | tail -50
+heroku logs --app Top Dog-backend | tail -50
 ```
 
 **Troubleshooting:**
@@ -374,10 +374,10 @@ OUTPUT: Backend fully tested
 **OAuth Configuration Update Needed:**
 ```
 GitHub OAuth:
-  - Redirect URL: https://q-ide-backend.herokuapp.com/oauth/callback/github
+  - Redirect URL: https://Top Dog-backend.herokuapp.com/oauth/callback/github
 
 Google OAuth:
-  - Redirect URL: https://q-ide-backend.herokuapp.com/oauth/callback/google
+  - Redirect URL: https://Top Dog-backend.herokuapp.com/oauth/callback/google
 ```
 
 **Update in:**
@@ -409,15 +409,15 @@ Google OAuth:
 TASKS:
 1. Deploy frontend to Heroku
    └─ cd frontend
-   └─ heroku git:remote -a q-ide-frontend
+   └─ heroku git:remote -a Top Dog-frontend
    └─ git push heroku main
 
 2. Monitor deployment
-   └─ heroku logs --tail --app q-ide-frontend
+   └─ heroku logs --tail --app Top Dog-frontend
    └─ Watch for build success
 
 3. Verify frontend loads
-   └─ Open https://q-ide-frontend.herokuapp.com
+   └─ Open https://Top Dog-frontend.herokuapp.com
    └─ Should see login screen
    └─ No console errors
 
@@ -428,8 +428,8 @@ TASKS:
    ├─ Verify everything works
 
 5. Check logs
-   └─ heroku logs --app q-ide-frontend
-   └─ heroku logs --app q-ide-backend
+   └─ heroku logs --app Top Dog-frontend
+   └─ heroku logs --app Top Dog-backend
    └─ No critical errors
 
 TIME: 8 hours
@@ -443,16 +443,16 @@ OUTPUT: Full stack live
 cd frontend
 
 # Connect Heroku remote
-heroku git:remote -a q-ide-frontend
+heroku git:remote -a Top Dog-frontend
 
 # Deploy
 git push heroku main
 
 # Watch logs
-heroku logs --tail --app q-ide-frontend
+heroku logs --tail --app Top Dog-frontend
 
 # Test the URL
-# Open: https://q-ide-frontend.herokuapp.com
+# Open: https://Top Dog-frontend.herokuapp.com
 ```
 
 **Troubleshooting:**
@@ -683,7 +683,7 @@ YOU'LL KNOW YOU'RE SUCCESSFUL IF:
 ### Issue: "Application Error"
 **Solution**: 
 ```bash
-heroku logs --app q-ide-backend
+heroku logs --app Top Dog-backend
 # Look for the error, fix it locally, push again
 git push heroku main
 ```
@@ -692,10 +692,10 @@ git push heroku main
 **Solution**:
 ```bash
 # Verify DATABASE_URL is set
-heroku config:get DATABASE_URL --app q-ide-backend
+heroku config:get DATABASE_URL --app Top Dog-backend
 
 # If not set, add PostgreSQL addon
-heroku addons:create heroku-postgresql:hobby-dev --app q-ide-backend
+heroku addons:create heroku-postgresql:hobby-dev --app Top Dog-backend
 ```
 
 ### Issue: CORS Errors
@@ -704,7 +704,7 @@ heroku addons:create heroku-postgresql:hobby-dev --app q-ide-backend
 # In backend main.py, update CORSMiddleware
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["https://q-ide-frontend.herokuapp.com"],
+    allow_origins=["https://Top Dog-frontend.herokuapp.com"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -716,9 +716,9 @@ app.add_middleware(
 ```bash
 # Check browser console for errors
 # Ensure VITE_API_URL is correct
-heroku config --app q-ide-frontend | grep VITE_API_URL
+heroku config --app Top Dog-frontend | grep VITE_API_URL
 
-# Should be: https://q-ide-backend.herokuapp.com
+# Should be: https://Top Dog-backend.herokuapp.com
 ```
 
 ---
@@ -815,5 +815,5 @@ But these are NOT required for MVP launch.
 **Outcome**: MVP live with real users  
 **Next**: Gather feedback and improve
 
-**Let's ship Q-IDE!** 🌍
+**Let's ship Top Dog!** 🌍
 

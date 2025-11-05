@@ -1,8 +1,8 @@
-# Q-IDE STANDALONE DEPLOYMENT GUIDE
+# Top Dog STANDALONE DEPLOYMENT GUIDE
 
 ## What You Have Now
 
-✅ **Q-IDE is working on your PC** with both servers running
+✅ **Top Dog is working on your PC** with both servers running
 - Backend running on http://127.0.0.1:8000
 - Frontend running on http://127.0.0.1:1431
 
@@ -22,7 +22,7 @@ This creates a **self-contained folder** that you can copy to any PC.
 - ✅ All frontend React files  
 - ✅ All configuration files
 - ✅ Smart SETUP.bat for dependency installation
-- ✅ Smart LAUNCH_Q-IDE.bat launcher
+- ✅ Smart LAUNCH_Top Dog.bat launcher
 - ✅ Full documentation
 
 **Step 2: Deploy to Another PC**
@@ -30,23 +30,23 @@ This creates a **self-contained folder** that you can copy to any PC.
 2. Double-click `SETUP.bat` (one time only)
    - Checks for Python 3.11+ and Node.js
    - Installs all dependencies automatically
-3. Double-click `LAUNCH_Q-IDE.bat` to start using Q-IDE
+3. Double-click `LAUNCH_Top Dog.bat` to start using Top Dog
 
 ### Option 2: Manual Copy (If you prefer)
 
 Simply copy these folders to another PC:
 ```
-Q-IDE-Root/
+Top Dog-Root/
 ├── backend/
 ├── frontend/
 ├── SETUP.bat         (install dependencies)
-├── LAUNCH_Q-IDE.bat  (start servers)
+├── LAUNCH_Top Dog.bat  (start servers)
 └── README.txt
 ```
 
 Then on the new PC:
 1. Run `SETUP.bat` to install dependencies
-2. Run `LAUNCH_Q-IDE.bat` to launch
+2. Run `LAUNCH_Top Dog.bat` to launch
 
 ## System Requirements (On Target PC)
 
@@ -72,11 +72,11 @@ If present → Installs dependencies
        ↓
 "Setup Complete - Ready to Launch!"
        ↓
-Double-clicks LAUNCH_Q-IDE.bat
+Double-clicks LAUNCH_Top Dog.bat
        ↓
 Both servers start
        ↓
-Browser opens to Q-IDE interface
+Browser opens to Top Dog interface
        ↓
 User sees Setup Wizard
        ↓
@@ -97,7 +97,7 @@ Ready to build apps!
 
 **Time to complete:** ~5-10 minutes (depending on internet speed)
 
-## What LAUNCH_Q-IDE.bat Does
+## What LAUNCH_Top Dog.bat Does
 
 ```batch
 ✓ Stops any previously running servers
@@ -133,9 +133,9 @@ If these ports are in use by other apps, the servers won't start. Close other ap
 
 ### Running Multiple Instances
 
-You can run multiple copies of Q-IDE on the same PC:
+You can run multiple copies of Top Dog on the same PC:
 - Each copy must use different ports
-- Edit `LAUNCH_Q-IDE.bat` to change the port numbers
+- Edit `LAUNCH_Top Dog.bat` to change the port numbers
 
 ## Troubleshooting on Target PC
 
@@ -162,7 +162,7 @@ You can run multiple copies of Q-IDE on the same PC:
 ### Servers won't start
 
 **Solution:**
-1. Close any existing Q-IDE windows
+1. Close any existing Top Dog windows
 2. Open a PowerShell window
 3. Run:
    ```powershell
@@ -170,7 +170,7 @@ You can run multiple copies of Q-IDE on the same PC:
    taskkill /F /IM node.exe
    ```
 4. Wait 5 seconds
-5. Run LAUNCH_Q-IDE.bat again
+5. Run LAUNCH_Top Dog.bat again
 
 ### "Connection refused" errors
 
@@ -217,14 +217,14 @@ See `docs/` folder for more advanced customization options.
 ## Summary
 
 **You now have:**
-- ✅ Working Q-IDE on your development PC
+- ✅ Working Top Dog on your development PC
 - ✅ Automatic standalone packaging via STANDALONE_INSTALLER.bat
 - ✅ Easy one-click setup (SETUP.bat) for target PCs
-- ✅ Easy one-click launch (LAUNCH_Q-IDE.bat)
+- ✅ Easy one-click launch (LAUNCH_Top Dog.bat)
 - ✅ Portable across any Windows machine
 
 **Next Steps:**
 1. Run `STANDALONE_INSTALLER.bat` to create the package
 2. Copy `Q-IDE_STANDALONE` to the target PC
-3. Run `SETUP.bat` then `LAUNCH_Q-IDE.bat`
-4. Enjoy Q-IDE on unlimited PCs!
+3. Run `SETUP.bat` then `LAUNCH_Top Dog.bat`
+4. Enjoy Top Dog on unlimited PCs!

@@ -483,7 +483,7 @@ time curl http://localhost:8000/api/workflows/$WORKFLOW_ID/status > /dev/null
 ## 📞 Support
 
 **If issues occur**:
-1. Check error logs: `tail -f backend/logs/q-ide-topdog.log`
+1. Check error logs: `tail -f backend/logs/Top Dog-topdog.log`
 2. Review database: `sqlite3 topdog_ide.db ".tables"`
 3. Test API directly: `curl -X GET http://localhost:8000/api/workflows`
 4. Check FastAPI docs: `http://localhost:8000/docs`

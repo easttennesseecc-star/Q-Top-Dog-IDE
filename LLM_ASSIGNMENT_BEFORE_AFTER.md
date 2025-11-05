@@ -318,7 +318,7 @@ Benefit: Reusable styling, easier maintenance
 
 ## Real-World Usage Scenarios
 
-### Scenario 1: New User Learning Q-IDE
+### Scenario 1: New User Learning Top Dog
 ```
 BEFORE:
 User: "How do I assign an LLM?"

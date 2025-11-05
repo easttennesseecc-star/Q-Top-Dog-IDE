@@ -1,4 +1,4 @@
-# 🏷️ Kubernetes Cluster Tags for Q-IDE
+# 🏷️ Kubernetes Cluster Tags for Top Dog
 
 ## Cluster-Level Tags
 
@@ -150,9 +150,9 @@ security:internal-only
 
 ## Pod/Deployment Labels (for Kubernetes)
 
-### Q-IDE Core
+### Top Dog Core
 ```
-app:q-ide
+app:Top Dog
 tier:core
 environment:production
 project:core-ide

@@ -64,9 +64,20 @@ type QAssistantChatProps = {
   activePanel?: string | null;
   setActivePanel?: (p: string | null) => void;
   showViewer?: boolean;
+  edition?: 'dev' | 'regulated';
 };
 
-export default function QAssistantChat({ activePanel, setActivePanel: _setActivePanel, showViewer = true }: QAssistantChatProps) {
+export default function QAssistantChat({ activePanel, setActivePanel: _setActivePanel, showViewer = true, edition }: QAssistantChatProps) {
+  // Resolve backend base URL from runtime injection or build-time envs
+  const backendBase = (
+    (window as any).__VITE_BACKEND_URL ||
+    (import.meta as any)?.env?.VITE_BACKEND_URL ||
+    (import.meta as any)?.env?.VITE_API_URL ||
+    (process as any)?.env?.REACT_APP_BACKEND_URL ||
+    ""
+  ) as string;
+  const toApi = (path: string) => `${backendBase.replace(/\/$/, "")}${path.startsWith("/") ? path : "/" + path}`;
+
   const [messages, setMessages] = useState([
     { role: "assistant", content: "Hi! I'm your Q Assistant. How can I help you today?" }
   ]);
@@ -92,7 +103,7 @@ export default function QAssistantChat({ activePanel, setActivePanel: _setActive
   useEffect(() => {
     const loadLLMConfig = async () => {
       try {
-        const res = await fetch('/llm_config/q_assistant');
+        const res = await fetch(toApi('/llm_config/q_assistant'));
         if (res.ok) {
           const config = await res.json() as QAssistantLLMConfig;
           setLLMConfig(config);
@@ -188,9 +199,13 @@ export default function QAssistantChat({ activePanel, setActivePanel: _setActive
     
     try {
       // Connect to backend streaming endpoint
-      const response = await fetch('/api/chat/', {
+      const response = await fetch(toApi('/api/chat/'), {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'text/event-stream',
+          ...(edition ? { 'X-Edition': edition } : {}),
+        },
         body: JSON.stringify({ 
           message: userMsg,
           conversation_id: "default",
@@ -233,6 +248,16 @@ export default function QAssistantChat({ activePanel, setActivePanel: _setActive
                   const msgsNoStreaming = msgs.filter(m => !(m.role === "assistant" && (m as any).streaming));
                   return [...msgsNoStreaming, { role: "assistant", content: assistantResponse, streaming: true }];
                 });
+              } else if (event.type === 'verification') {
+                // Show lightweight verification summary inline as a system note
+                const v = event as any;
+                const ow = v.overwatch ? `Overwatch: ${v.overwatch}` : 'Overwatch';
+                const summary = typeof v.result_raw === 'string' ? v.result_raw.slice(0, 280) : '';
+                setMessages(msgs => [...msgs, { role: 'assistant', content: `\n[${ow}] ${summary}` }]);
+              } else if (event.type === 'blocked') {
+                // Blocked by verification policy
+                const reason = event.reason || 'Response blocked by policy';
+                setMessages(msgs => [...msgs, { role: 'assistant', content: `⛔ ${reason}` }]);
               } else if (event.type === 'done') {
                 // Stream complete
                 setMessages(msgs => {
@@ -279,7 +304,7 @@ export default function QAssistantChat({ activePanel, setActivePanel: _setActive
     setInflight(prev => ({ ...prev, [id]: true }));
     setBuildQueue(q => [...q, id]);
     // persist to backend
-    fetch(`/api/snapshots/${id}/approve`, { method: 'POST' })
+    fetch(toApi(`/snapshots/${id}/approve`), { method: 'POST' })
       .then(res => res.json())
       .then((body) => {
         if (body.status !== 'ok') throw new Error(body.message || 'Server error');
@@ -301,7 +326,7 @@ export default function QAssistantChat({ activePanel, setActivePanel: _setActive
     setSnapshots(prev => prev.map(s => s.id === id ? { ...s, status: 'requested' } : s));
     setInflight(prev => ({ ...prev, [id]: true }));
     // persist
-    fetch(`/api/snapshots/${id}/request-change`, { method: 'POST' })
+    fetch(toApi(`/snapshots/${id}/request-change`), { method: 'POST' })
       .then(res => res.json())
       .then((body) => {
         if (body.status !== 'ok') throw new Error(body.message || 'Server error');

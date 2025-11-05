@@ -10,14 +10,14 @@ Quick LLM Setup Guide - Shows you exactly how to get Gemini working with voice
 3. Choose or create a Google Cloud project
 4. Copy your API key
 
-## Step 2: Configure Q-IDE to Use Gemini
+## Step 2: Configure Top Dog to Use Gemini
 ### Option A: Using Environment Variable (Recommended)
 ```powershell
 # Open PowerShell and run:
 [Environment]::SetEnvironmentVariable("GOOGLE_API_KEY", "your_api_key_here", "User")
 
-# Then restart Q-IDE:
-# Close all windows and run LAUNCH_Q-IDE.bat again
+# Then restart Top Dog:
+# Close all windows and run LAUNCH_Top Dog.bat again
 ```
 
 ### Option B: Using .env File
@@ -26,10 +26,10 @@ Quick LLM Setup Guide - Shows you exactly how to get Gemini working with voice
 ```
 GOOGLE_API_KEY=your_api_key_here
 ```
-3. Restart Q-IDE
+3. Restart Top Dog
 
 ## Step 3: Assign Gemini to Q Assistant
-1. Open Q-IDE
+1. Open Top Dog
 2. Go to "LLM Setup" tab
 3. Click "Providers" tab
 4. Find "Google Gemini"
@@ -60,7 +60,7 @@ GOOGLE_API_KEY=your_api_key_here
 4. Gemini will respond with natural voice output
 
 ## Troubleshooting:
-- **"API key not set"** → Restart Q-IDE after setting env var
+- **"API key not set"** → Restart Top Dog after setting env var
 - **"Gemini not working"** → Check your API key is correct at ai.google.dev
 - **"No voice output"** → Browser needs permission for speaker (check browser settings)
 - **"Can't select Gemini"** → First set your API key in the Providers tab

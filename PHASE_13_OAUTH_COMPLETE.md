@@ -1,10 +1,10 @@
 # 🎉 Phase 13 Complete: OAuth Professional Sign-In System
 
-**Q-IDE - Professional OAuth Authentication Implementation**
+**Top Dog - Professional OAuth Authentication Implementation**
 
 **Status**: ✅ **COMPLETE AND PRODUCTION READY**
 **Date**: Today
-**User Request**: "Let's find a loophole and get the LLMs signed in upon signin of Q-IDE... I want this to be a MAIN experience for people... not a hassle to use"
+**User Request**: "Let's find a loophole and get the LLMs signed in upon signin of Top Dog... I want this to be a MAIN experience for people... not a hassle to use"
 
 ---
 
@@ -25,7 +25,7 @@
 - `handle_callback()` - Process callback from OAuth provider
 - `_exchange_code_for_token()` - Exchange authorization code for access token
 - `get_user_info()` - Retrieve user profile from provider
-- `store_token()` - Securely save token to `~/.q-ide/llm_credentials.json`
+- `store_token()` - Securely save token to `~/.Top Dog/llm_credentials.json`
 - `get_stored_token()` - Retrieve token with expiration check
 - `revoke_token()` - Revoke token at provider and locally
 
@@ -233,19 +233,19 @@ OAUTH_INTEGRATION_GUIDE.md                     400+ lines   ✅ CREATED
 
 ### Before (The Hassle)
 ```
-1. User wants to use Q-IDE
+1. User wants to use Top Dog
 2. "You need to enter your LLM credentials"
 3. Goes to OpenAI → copies API key
 4. Goes to Google → copies API key
 5. Goes to GitHub → copies API key
-6. Pastes 3 keys into Q-IDE
+6. Pastes 3 keys into Top Dog
 7. Worried about security: "Where are my keys stored?"
 8. Frustrated: "Why is this so complicated?"
 ```
 
 ### After (The Seamless Experience)
 ```
-1. User opens Q-IDE
+1. User opens Top Dog
 2. Sees: "Sign in with Google"
 3. Clicks button
 4. Already logged into Google (takes 0 seconds)
@@ -263,7 +263,7 @@ OAUTH_INTEGRATION_GUIDE.md                     400+ lines   ✅ CREATED
 
 ```
 ┌─────────────┐                                    ┌──────────────┐
-│   Q-IDE     │                                    │   Google     │
+│   Top Dog     │                                    │   Google     │
 │  Frontend   │                                    │    OAuth     │
 └──────┬──────┘                                    └──────────────┘
        │
@@ -286,7 +286,7 @@ OAUTH_INTEGRATION_GUIDE.md                     400+ lines   ✅ CREATED
        │
        │ 8. Backend exchanges code for access token
        │
-       │ 9. Backend stores token in ~/.q-ide/llm_credentials.json
+       │ 9. Backend stores token in ~/.Top Dog/llm_credentials.json
        │
        │ 10. Callback page signals parent via postMessage
        │
@@ -308,7 +308,7 @@ OAuthHandler (generates URLs, exchanges codes)
     ↓
 OAuthRoutes (FastAPI endpoints)
     ↓
-Token Storage (~/.q-ide/llm_credentials.json)
+Token Storage (~/.Top Dog/llm_credentials.json)
     ↓
 LLM APIs (Google, GitHub, OpenAI, Anthropic)
 ```
@@ -505,7 +505,7 @@ For most issues, check:
 1. **README_OAUTH.md** - General overview
 2. **OAUTH_STARTUP_GUIDE_COMPLETE.md** - Setup issues
 3. **OAUTH_CLIENT_CONFIGURATION.md** - Provider config issues
-4. Backend logs: `backend/logs/q-ide-topdog.log`
+4. Backend logs: `backend/logs/Top Dog-topdog.log`
 5. Browser console (F12): JavaScript errors
 
 ### Maintenance Schedule
@@ -546,9 +546,9 @@ For most issues, check:
 
 **Mission Accomplished!**
 
-We have successfully built a **professional OAuth authentication system** for Q-IDE that delivers exactly what you requested:
+We have successfully built a **professional OAuth authentication system** for Top Dog that delivers exactly what you requested:
 
-✅ **"Get the LLMs signed in upon signin of Q-IDE"**
+✅ **"Get the LLMs signed in upon signin of Top Dog"**
 - OAuth system integrated with LLM credentials
 
 ✅ **"Make this a MAIN experience"**

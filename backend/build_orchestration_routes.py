@@ -10,14 +10,14 @@ import json
 import asyncio
 from datetime import datetime
 
-from build_orchestrator import (
+from backend.build_orchestrator import (
     orchestrator, BuildProject, BuildPhaseResult, BuildPhase, LLMAssignment
 )
-from llm_roles_descriptor import (
+from backend.llm_roles_descriptor import (
     LLMRole, get_all_roles, get_role_by_name, get_role_context
 )
-from llm_config import get_q_assistant_llm
-from middleware.tier_validator import require_tier_access
+from backend.llm_config import get_q_assistant_llm
+from backend.middleware.tier_validator import require_tier_access
 
 router = APIRouter(prefix="/api/builds", tags=["builds"])
 

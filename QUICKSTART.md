@@ -1,6 +1,6 @@
-# Q-IDE (TopDog IDE) - Quick Start & Production Ready
+# Top Dog (TopDog IDE) - Quick Start & Production Ready
 
-![Q-IDE](https://img.shields.io/badge/Q--IDE-Production%20Ready-green?style=for-the-badge)
+![Top Dog](https://img.shields.io/badge/Q--IDE-Production%20Ready-green?style=for-the-badge)
 ![Version](https://img.shields.io/badge/version-0.1.0-blue?style=for-the-badge)
 ![License](https://img.shields.io/badge/license-MIT-green?style=for-the-badge)
 
@@ -16,8 +16,8 @@
 
 ```bash
 # Clone and setup
-git clone https://github.com/quellum/q-ide.git
-cd q-ide
+git clone https://github.com/quellum/Top Dog.git
+cd Top Dog
 pnpm install
 
 # Start development server
@@ -60,7 +60,7 @@ pnpm tauri build
 ## 🏗️ Project Structure
 
 ```
-q-ide/
+Top Dog/
 ├── frontend/                  # React + Tauri desktop app
 │   ├── src/                   # TypeScript/React components
 │   ├── e2e/                   # Playwright E2E tests
@@ -105,7 +105,7 @@ cd backend && python -m pytest
 ## 📦 Deployment
 
 ### Desktop Application
-1. Download installer from [GitHub Releases](https://github.com/quellum/q-ide/releases)
+1. Download installer from [GitHub Releases](https://github.com/quellum/Top Dog/releases)
 2. Run installer (Windows: `.msi`, macOS: `.dmg`, Linux: `.AppImage`)
 3. Launch application
 
@@ -141,8 +141,8 @@ EOF
 ```bash
 # Set environment variables (never commit .env.production)
 export ENVIRONMENT=production
-export BACKEND_URL=https://api.q-ide.com
-export FRONTEND_URL=https://q-ide.com
+export BACKEND_URL=https://api.Top Dog.com
+export FRONTEND_URL=https://Top Dog.com
 # ... other variables
 ```
 
@@ -183,10 +183,10 @@ Contributions welcome! Please:
 
 ## 🐛 Bug Reports & Support
 
-- **Issues**: [GitHub Issues](https://github.com/quellum/q-ide/issues)
-- **Discussions**: [GitHub Discussions](https://github.com/quellum/q-ide/discussions)
-- **Email**: support@q-ide.com
-- **Security**: security@q-ide.com
+- **Issues**: [GitHub Issues](https://github.com/quellum/Top Dog/issues)
+- **Discussions**: [GitHub Discussions](https://github.com/quellum/Top Dog/discussions)
+- **Email**: support@Top Dog.com
+- **Security**: security@Top Dog.com
 
 ## 📄 License
 
@@ -205,14 +205,14 @@ Built with:
 
 | Channel | Link |
 |---------|------|
-| Documentation | https://q-ide.com/docs |
-| Issues | https://github.com/quellum/q-ide/issues |
-| Email | support@q-ide.com |
+| Documentation | https://Top Dog.com/docs |
+| Issues | https://github.com/quellum/Top Dog/issues |
+| Email | support@Top Dog.com |
 | Twitter | [@qIDEdev](https://twitter.com/qIDEdev) |
 
 ---
 
-**Q-IDE** - The Top Dog IDE  
+**Top Dog** - The Top Dog IDE  
 Built with ❤️ by [Quellum Team](https://quellum.com)
 
 *Last Updated: October 25, 2025*

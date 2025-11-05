@@ -16,8 +16,8 @@ import json
 import os
 from pathlib import Path
 from typing import Dict, List, Optional, Tuple
-from llm_config import CLOUD_LLMS, LLM_ROLES, get_api_key, get_model_for_role
-from logger_utils import get_logger
+from backend.llm_config import CLOUD_LLMS, LLM_ROLES, get_api_key, get_model_for_role
+from backend.logger_utils import get_logger
 
 logger = get_logger(__name__)
 
@@ -32,6 +32,11 @@ class LLMAuthenticationStatus:
         self.missing_credentials: List[str] = []  # llm_ids without credentials
         self.authenticated_llms: List[str] = []  # llm_ids with credentials
         self.needs_setup: List[Dict] = []  # detailed setup info
+    
+    @property
+    def all_ready(self) -> bool:
+        """Check if all assigned LLMs are authenticated"""
+        return len(self.missing_credentials) == 0
     
     def to_dict(self):
         return {
@@ -57,11 +62,15 @@ def get_assigned_llms() -> Dict[str, str]:
         with open(roles_file) as f:
             roles_config = json.load(f)
             # Extract model_name (llm_id) from each role
-            return {
-                role_id: role_data.get('model_name', '')
-                for role_id, role_data in roles_config.items()
-                if role_data.get('model_name')
-            }
+            result = {}
+            for role_id, role_data in roles_config.items():
+                # Handle both string values (model name) and dict values (with model_name key)
+                if isinstance(role_data, str):
+                    if role_data:  # Not empty
+                        result[role_id] = role_data
+                elif isinstance(role_data, dict) and role_data.get('model_name'):
+                    result[role_id] = role_data.get('model_name', '')
+            return result
     except Exception as e:
         logger.error(f"Error reading roles file: {e}")
         return {}

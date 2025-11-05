@@ -24,9 +24,9 @@ Licensed under the MIT License
 ### The Short Answer:
 ```
 ❌ GitHub OAuth (VS Code): Can only be used by VS Code
-✅ GitHub Copilot API Key: For programmatic access (like Q-IDE)
+✅ GitHub Copilot API Key: For programmatic access (like Top Dog)
 
-Q-IDE is a LOCAL application, so it needs an explicit API key
+Top Dog is a LOCAL application, so it needs an explicit API key
 instead of GitHub OAuth. It's a security requirement.
 ```
 
@@ -35,7 +35,7 @@ instead of GitHub OAuth. It's a security requirement.
 | Type | For | Authentication |
 |------|-----|-----------------|
 | **OAuth Sign-In** | VS Code Extension | Browser login + GitHub verification |
-| **API Key** | Q-IDE + Other Apps | Explicit permission via token |
+| **API Key** | Top Dog + Other Apps | Explicit permission via token |
 
 **Reason:** GitHub trusts VS Code (Microsoft software with certificates). They don't trust random local apps, so they require explicit API keys for programmatic access.
 
@@ -55,7 +55,7 @@ instead of GitHub OAuth. It's a security requirement.
 
 ### File 2: `GITHUB_COPILOT_SETUP_GUIDE.md`
 **What:** Step-by-step setup (400 lines)
-**Why:** Actually get Copilot working in Q-IDE
+**Why:** Actually get Copilot working in Top Dog
 **Contains:**
 - 3-step quick setup
 - Common problems & fixes
@@ -76,15 +76,15 @@ Create token with scopes: user:read, write:packages, read:packages
 Copy the token
 ```
 
-**Step 2: Add to Q-IDE** (1 min)
+**Step 2: Add to Top Dog** (1 min)
 ```
-Q-IDE → LLM Setup → Auth tab → GitHub Copilot
+Top Dog → LLM Setup → Auth tab → GitHub Copilot
 Paste token, click Save
 ```
 
 **Step 3: Done!** (automatic)
 ```
-Next time Q-IDE starts, it checks the token
+Next time Top Dog starts, it checks the token
 If valid → No modal shown ✓
 If invalid → Modal prompts you ⚠
 ```
@@ -106,7 +106,7 @@ Setup: 2 minutes
 Same features for coding
 No subscription needed
 
-Go to Q-IDE → Auth tab → Gemini
+Go to Top Dog → Auth tab → Gemini
 (easier than Copilot)
 ```
 
@@ -130,17 +130,17 @@ Go to Q-IDE → Auth tab → Gemini
 ### For Your Question:
 ```
 Q: "Why can't I use GitHub sign-in like VS Code?"
-A: "VS Code gets special OAuth access. Q-IDE (a local app) 
+A: "VS Code gets special OAuth access. Top Dog (a local app) 
     needs an explicit API key for security. GitHub requires 
     this to prevent impersonation."
 ```
 
 ### What This Means:
 ```
-✓ Q-IDE never authenticates USERS
-✓ Q-IDE only authenticates with LLM SERVICES
+✓ Top Dog never authenticates USERS
+✓ Top Dog only authenticates with LLM SERVICES
 ✓ You're not creating an account
-✓ You're just giving Q-IDE permission to use YOUR Copilot
+✓ You're just giving Top Dog permission to use YOUR Copilot
 ```
 
 ### The System Design:
@@ -150,7 +150,7 @@ You have:
   - Copilot subscription (you pay for)
   - API key (you create, you control)
   
-Q-IDE:
+Top Dog:
   - Uses your API key (only)
   - Never sees your password
   - Never has account access
@@ -181,7 +181,7 @@ Q-IDE:
 
 ### The Architecture:
 
-**OAuth (Doesn't work for Q-IDE):**
+**OAuth (Doesn't work for Top Dog):**
 ```
 Your Browser
   → GitHub OAuth URL
@@ -190,19 +190,19 @@ Your Browser
   → Token only valid for VS Code
 ```
 
-**API Key (What Q-IDE Uses):**
+**API Key (What Top Dog Uses):**
 ```
 Your GitHub Settings
   → Create Personal Access Token
   → You copy the token
-  → You give it to Q-IDE
-  → Q-IDE sends it with each request
+  → You give it to Top Dog
+  → Top Dog sends it with each request
   → GitHub verifies token + authorizes request
 ```
 
 ### Why This Is Better:
 ```
-✓ Q-IDE doesn't need browser/OAuth flow
+✓ Top Dog doesn't need browser/OAuth flow
 ✓ Users explicitly grant access (clear intent)
 ✓ Token is revocable (security)
 ✓ Different tokens for different apps (control)
@@ -219,7 +219,7 @@ Your GitHub Settings
 - Pricing: https://github.com/copilot/pricing
 - Subscribe: https://github.com/copilot
 
-### Q-IDE Documentation:
+### Top Dog Documentation:
 - Guide: `GITHUB_COPILOT_SETUP_GUIDE.md`
 - Explanation: `GITHUB_COPILOT_API_KEY_EXPLAINED.md`
 - All LLMs: `LLM_CREDENTIALS_QUICK_REF.md`

@@ -1,4 +1,4 @@
-# 🎯 Q-IDE MARKET STRATEGY - EXECUTIVE SUMMARY
+# 🎯 Top Dog (Aura) MARKET STRATEGY - EXECUTIVE SUMMARY
 
 **Date**: October 29, 2025  
 **Prepared For**: Product & Business Teams  
@@ -8,7 +8,7 @@
 
 ## ONE-PAGE OVERVIEW
 
-### What is Q-IDE?
+### What is Top Dog (Aura)?
 A full-stack AI-powered IDE that combines:
 - Professional code editor (50+ languages)
 - 53 AI model integration (user choice, no vendor lock-in)
@@ -24,7 +24,7 @@ A full-stack AI-powered IDE that combines:
 - Midjourney ($10-20/month)
 - Game development IDEs ($0-150/month)
 - Build & deployment tools ($50-500/month)
-- **Total replaced: $100-700/month in tools** → Q-IDE: $20-300/month
+- **Total replaced: $100-700/month in tools** → Top Dog (Aura): $20-300/month
 
 ### Market opportunity
 ```
@@ -42,7 +42,7 @@ Conservative revenue projection:
 
 ## COMPETITIVE POSITIONING
 
-| Feature | Q-IDE | GitHub Copilot | Cursor | Windsurf | GameMaker |
+| Feature | Top Dog (Aura) | GitHub Copilot | Cursor | Windsurf | GameMaker |
 |---------|-------|---|--------|----------|-----------|
 | Full IDE | ✅✅✅ | ❌ | ✅ | ✅ | ❌ |
 | LLM Options | 53 | 1 | 2-3 | 1 | 0 |
@@ -70,7 +70,7 @@ Enterprise        $250-300/seat   + private deployment    93%
 
 ## TARGET MARKET SEGMENTS (Priority Order)
 
-| Segment | Size | Pain Point | Q-IDE Solution | Timeline |
+| Segment | Size | Pain Point | Top Dog (Aura) Solution | Timeline |
 |---------|------|-----------|------------------|----------|
 | **Solo Devs** | 10M+ | Too many subscriptions | $20/month all-in-one | Month 1-3 |
 | **Game Devs** | 500k-2M | Context switching | All engines in one IDE | Month 2-4 |
@@ -82,7 +82,7 @@ Enterprise        $250-300/seat   + private deployment    93%
 ## GO-TO-MARKET CHANNELS
 
 **Direct**
-- Website (q-ide.com) with free trial
+- Website (www.topdog-ide.com) with free trial
 - Freemium conversion funnel
 - Organic SEO + content marketing
 
@@ -201,7 +201,7 @@ YEAR 3    →  Market leadership + $1.4B+
 
 ## BOTTOM LINE
 
-**Q-IDE is positioned to become a $1.4-4.2B revenue company by Year 3** by:
+**Top Dog (Aura) is positioned to become a $1.4-4.2B revenue company by Year 3** by:
 
 1. ✅ Offering 50-70% better value than competitors
 2. ✅ Targeting an underserved market (game devs)

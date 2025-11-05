@@ -1,4 +1,4 @@
-# 🔐 Unified Authentication System for Q-IDE
+# 🔐 Unified Authentication System for Top Dog
 
 ## Overview
 
@@ -94,14 +94,14 @@ API_URL=http://localhost:8000
 1. Go to: https://github.com/settings/developers
 2. Click "New OAuth App"
 3. Fill in:
-   - **Application name:** Q-IDE
+   - **Application name:** Top Dog
    - **Homepage URL:** http://localhost:3000
    - **Authorization callback URL:** http://localhost:3000/auth/oauth/callback
 4. Copy Client ID and Client Secret to `.env`
 
 #### Google OAuth
 1. Go to: https://console.cloud.google.com/
-2. Create new project: "Q-IDE"
+2. Create new project: "Top Dog"
 3. Enable APIs: Google+ API
 4. Create OAuth 2.0 credentials (Web application)
 5. Add authorized redirect URIs: http://localhost:3000/auth/oauth/callback
@@ -341,7 +341,7 @@ Response: Repository content (JSON or raw file)
 ### Workflow 1: First-Time Sign-In
 
 ```
-1. User visits Q-IDE
+1. User visits Top Dog
 2. Sees "Sign In Hub" with GitHub, Google, Microsoft buttons
 3. Clicks "Sign in with GitHub"
 4. OAuth popup opens
@@ -365,7 +365,7 @@ Response: Repository content (JSON or raw file)
 5. User pastes API key from OpenAI
 6. Clicks "Save"
 7. ✅ OpenAI is now active and available
-8. Q-IDE can now use OpenAI for code generation
+8. Top Dog can now use OpenAI for code generation
 ```
 
 ### Workflow 3: Add GitHub Copilot
@@ -376,7 +376,7 @@ Response: Repository content (JSON or raw file)
 3. Goes to /auth/github/repos/{user_id}/copilot
 4. Follows link to create GitHub Copilot API token
 5. Creates Personal Access Token on GitHub
-6. Pastes token into Q-IDE UI
+6. Pastes token into Top Dog UI
 7. ✅ Copilot is now active
 8. Can use Copilot in code editor
 ```
@@ -387,7 +387,7 @@ Response: Repository content (JSON or raw file)
 1. User wants free offline models
 2. Installs Ollama from ollama.ai
 3. Runs: ollama run llama2 (downloads ~4GB, runs locally)
-4. In Q-IDE, adds Ollama credential:
+4. In Top Dog, adds Ollama credential:
    - Service: "ollama_local"
    - Endpoint: "http://localhost:11434"
    - Model: "llama2"

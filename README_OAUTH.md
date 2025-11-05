@@ -1,12 +1,12 @@
-# OAuth Professional Sign-In System - Q-IDE
+# OAuth Professional Sign-In System - Top Dog
 
-**Professional OAuth authentication for Q-IDE with Google, GitHub, OpenAI, and Anthropic**
+**Professional OAuth authentication for Top Dog with Google, GitHub, OpenAI, and Anthropic**
 
 ---
 
 ## 🎯 Executive Summary
 
-Q-IDE now features a **professional OAuth authentication system** that delivers the seamless sign-in experience users expect from enterprise IDEs like VSCode and JetBrains.
+Top Dog now features a **professional OAuth authentication system** that delivers the seamless sign-in experience users expect from enterprise IDEs like VSCode and JetBrains.
 
 ### What This Means for Users
 
@@ -15,7 +15,7 @@ Q-IDE now features a **professional OAuth authentication system** that delivers 
 ❌ Go to Google Cloud Console
 ❌ Create API key
 ❌ Copy API key  
-❌ Paste into Q-IDE
+❌ Paste into Top Dog
 ❌ Manage multiple credentials
 ```
 
@@ -103,7 +103,7 @@ cd frontend && npm start
 5. See success notification
 6. Token automatically stored!
 
-**That's it!** OAuth is working. Tokens stored in `~/.q-ide/llm_credentials.json`
+**That's it!** OAuth is working. Tokens stored in `~/.Top Dog/llm_credentials.json`
 
 ---
 
@@ -146,7 +146,7 @@ User authenticated! ✓
 
 ### Data Storage
 
-Tokens stored securely in `~/.q-ide/llm_credentials.json`:
+Tokens stored securely in `~/.Top Dog/llm_credentials.json`:
 
 ```json
 {
@@ -274,7 +274,7 @@ http://localhost:8000/llm_auth/callback?provider=anthropic
 - Verified on callback
 
 ✅ **Token Security**
-- Stored locally in `~/.q-ide/llm_credentials.json`
+- Stored locally in `~/.Top Dog/llm_credentials.json`
 - File permissions: 0o600 (owner only)
 - Never in browser storage
 - User can revoke anytime
@@ -315,12 +315,12 @@ curl http://localhost:8000/llm_auth/login/google
 curl http://localhost:8000/llm_auth/status
 
 # 5. Check stored tokens
-cat ~/.q-ide/llm_credentials.json | jq .
+cat ~/.Top Dog/llm_credentials.json | jq .
 ```
 
 ### UI Testing
 
-1. Open Q-IDE: `http://localhost:1431`
+1. Open Top Dog: `http://localhost:1431`
 2. Go to LLM Config → Auth tab
 3. Click "Sign in with Google"
 4. Go through OAuth flow
@@ -389,17 +389,17 @@ python main.py
 
 **Solution**:
 ```bash
-# Create ~/.q-ide directory
-mkdir -p ~/.q-ide
+# Create ~/.Top Dog directory
+mkdir -p ~/.Top Dog
 
 # Fix permissions
-chmod 0700 ~/.q-ide
+chmod 0700 ~/.Top Dog
 
 # Check if file exists
-ls -la ~/.q-ide/llm_credentials.json
+ls -la ~/.Top Dog/llm_credentials.json
 
 # View token contents
-jq . ~/.q-ide/llm_credentials.json
+jq . ~/.Top Dog/llm_credentials.json
 ```
 
 ### CORS Error
@@ -525,7 +525,7 @@ services:
       QIDE_GOOGLE_CLIENT_SECRET: ${QIDE_GOOGLE_CLIENT_SECRET}
       QIDE_GITHUB_CLIENT_ID: ${QIDE_GITHUB_CLIENT_ID}
       QIDE_GITHUB_CLIENT_SECRET: ${QIDE_GITHUB_CLIENT_SECRET}
-      QIDE_BACKEND_URL: https://api.q-ide.com
+      QIDE_BACKEND_URL: https://api.Top Dog.com
 ```
 
 ### Production Checklist
@@ -537,7 +537,7 @@ services:
 - [ ] Test OAuth flow in production
 - [ ] Monitor token storage permissions
 - [ ] Set up log monitoring
-- [ ] Configure backup for `~/.q-ide/` tokens
+- [ ] Configure backup for `~/.Top Dog/` tokens
 
 ---
 
@@ -581,13 +581,13 @@ Check backend logs:
 
 ```bash
 # View logs
-tail -f backend/logs/q-ide-topdog.log
+tail -f backend/logs/Top Dog-topdog.log
 
 # Search for OAuth events
-grep "oauth" backend/logs/q-ide-topdog.log
+grep "oauth" backend/logs/Top Dog-topdog.log
 
 # Search for errors
-grep "ERROR" backend/logs/q-ide-topdog.log | grep oauth
+grep "ERROR" backend/logs/Top Dog-topdog.log | grep oauth
 ```
 
 ---
@@ -619,7 +619,7 @@ grep "ERROR" backend/logs/q-ide-topdog.log | grep oauth
 A: No, you can still use manual API key entry as fallback.
 
 **Q: Are my credentials safe?**
-A: Yes! Tokens stored locally with 0o600 permissions, never sent to Q-IDE servers.
+A: Yes! Tokens stored locally with 0o600 permissions, never sent to Top Dog servers.
 
 **Q: What if I lose my token?**
 A: Just sign in again - takes 30 seconds.
@@ -655,7 +655,7 @@ For issues or questions:
 
 1. Check **OAUTH_STARTUP_GUIDE_COMPLETE.md** for setup issues
 2. Review **OAUTH_CLIENT_CONFIGURATION.md** for provider config
-3. Check backend logs: `backend/logs/q-ide-topdog.log`
+3. Check backend logs: `backend/logs/Top Dog-topdog.log`
 4. Check browser console (F12)
 5. Verify .env file has correct credentials
 
@@ -705,13 +705,13 @@ For issues or questions:
 **Status**: ✅ **PRODUCTION READY**
 **Phase**: 13 - OAuth Professional Sign-In
 **Last Updated**: Today
-**Maintainer**: Q-IDE Development Team
+**Maintainer**: Top Dog Development Team
 
 ---
 
 ## 🙏 Thank You
 
-Thank you for choosing Q-IDE! Enjoy the professional OAuth sign-in experience that makes authentication effortless.
+Thank you for choosing Top Dog! Enjoy the professional OAuth sign-in experience that makes authentication effortless.
 
 **Questions?** Check the documentation above or review the source code in `backend/llm_oauth_auth.py` and `frontend/src/components/LLMOAuthPanel.tsx`.
 

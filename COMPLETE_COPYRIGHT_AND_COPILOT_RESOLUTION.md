@@ -28,7 +28,7 @@ OAuth (for VS Code):
   ├─ GitHub trusts VS Code with certificates
   └─ Can't be used by local apps
 
-API Key (for Q-IDE):
+API Key (for Top Dog):
   ├─ For local applications
   ├─ Explicit permission from you
   ├─ More secure (you can revoke)
@@ -88,9 +88,9 @@ API Key (for Q-IDE):
 
 | Question | Answer |
 |----------|--------|
-| Why API key instead of OAuth? | OAuth is for official apps (VS Code). Q-IDE needs explicit API key for security. |
+| Why API key instead of OAuth? | OAuth is for official apps (VS Code). Top Dog needs explicit API key for security. |
 | Is it secure? | YES! Actually more secure than OAuth (you can revoke it anytime). |
-| How long to set up? | 3 minutes (2 min create token + 1 min add to Q-IDE). |
+| How long to set up? | 3 minutes (2 min create token + 1 min add to Top Dog). |
 | Do I need Copilot subscription? | Yes ($20/month) OR use free Google Gemini. |
 | Can I use same API key on multiple machines? | Not recommended - create separate tokens for security. |
 | What if I lose my API key? | Delete it from GitHub Settings (instant revocation). |
@@ -102,15 +102,15 @@ API Key (for Q-IDE):
 ### Step 1: Create Token
 ```
 Go: https://github.com/settings/tokens/new
-Name: "Q-IDE Copilot API"
+Name: "Top Dog Copilot API"
 Scopes: user:read, write:packages, read:packages
 Generate
 Copy (you only see it once!)
 ```
 
-### Step 2: Add to Q-IDE
+### Step 2: Add to Top Dog
 ```
-Q-IDE → LLM Setup → Auth tab
+Top Dog → LLM Setup → Auth tab
 Find: "GitHub Copilot"
 Paste: Your token
 Click: Save
@@ -119,7 +119,7 @@ See: Green checkmark ✓
 
 ### Step 3: Done!
 ```
-Restart Q-IDE
+Restart Top Dog
 No modal = Token is valid ✓
 Copilot ready to use!
 ```
@@ -134,7 +134,7 @@ OAuth (VS Code):
   ✓ Easy for official apps
   ✗ Risky for local apps (how does GitHub verify?)
 
-API Key (Q-IDE):
+API Key (Top Dog):
   ✓ YOU explicitly grant permission
   ✓ YOU can revoke anytime
   ✓ GitHub can track per-token
@@ -234,7 +234,7 @@ Technical Answer:
   
 Simple Answer:
   - VS Code gets special GitHub OAuth
-  - Q-IDE (local app) needs explicit API key
+  - Top Dog (local app) needs explicit API key
   - It's actually MORE secure
   
 Result:
@@ -261,7 +261,7 @@ A: To prevent impersonation and give you control.
 A: Yes! Generate a new token, delete the old one anytime.
 
 **Q: What happens if my token expires?**
-A: Copilot stops working. Create a new token and update Q-IDE.
+A: Copilot stops working. Create a new token and update Top Dog.
 
 **Q: Do I pay for the API key?**
 A: No! You pay for Copilot subscription (if you have one).
@@ -303,6 +303,6 @@ A: No! You pay for Copilot subscription (if you have one).
 ---
 
 **Version:** October 28, 2025
-**Project:** Q-IDE (Intelligent Development Environment)
+**Project:** Top Dog (Intelligent Development Environment)
 **Status:** Ready to Use
 **Next Step:** Read a guide and set up an LLM!

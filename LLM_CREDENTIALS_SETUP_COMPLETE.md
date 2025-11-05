@@ -1,4 +1,4 @@
-# ✅ Q-IDE LLM Credentials Setup - Complete Solution
+# ✅ Top Dog LLM Credentials Setup - Complete Solution
 
 ## What We Fixed
 
@@ -7,12 +7,12 @@
 
 ### The Solution:
 
-**Q-IDE now has a clear Credentials Manager where you:**
+**Top Dog now has a clear Credentials Manager where you:**
 
 1. ✅ Enter your LLM API keys (Google, OpenAI, Anthropic, GitHub, etc.)
-2. ✅ Q-IDE stores them locally (encrypted, on your machine)
-3. ✅ Q-IDE uses them to authenticate with LLM services on your behalf
-4. ✅ You never create a "Q-IDE account" - you authenticate with the LLM services themselves
+2. ✅ Top Dog stores them locally (encrypted, on your machine)
+3. ✅ Top Dog uses them to authenticate with LLM services on your behalf
+4. ✅ You never create a "Top Dog account" - you authenticate with the LLM services themselves
 5. ✅ Your credentials never leave your computer
 
 ---
@@ -21,13 +21,13 @@
 
 ### 🎯 Quick Start (2 minutes):
 
-1. **Open Q-IDE**
+1. **Open Top Dog**
 2. **Click "LLM Setup" tab**
 3. **Click "Auth" tab** (you'll see all LLM providers)
 4. **Pick one LLM** (Google Gemini recommended)
 5. **Click "How to get credentials" link** 
 6. **Get your API key from the provider**
-7. **Paste it in Q-IDE**
+7. **Paste it in Top Dog**
 8. **Click "Save"**
 9. **Done!** ✓
 
@@ -47,7 +47,7 @@
 
 ```
 🔐 LLM Provider Credentials
-Enter your API credentials below so Q-IDE can authenticate 
+Enter your API credentials below so Top Dog can authenticate 
 with LLM services on your behalf.
 
 ┌─────────────────────────────────────┐
@@ -88,7 +88,7 @@ with LLM services on your behalf.
 1. Go to: https://ai.google.dev/tutorials/setup
 2. Click "Get API Key"
 3. Copy the key (starts with AIzaSy)
-4. Paste in Q-IDE Auth tab
+4. Paste in Top Dog Auth tab
 5. Click Save
 ⏱️ Time: 2-3 minutes
 💰 Cost: FREE (60 requests/minute)
@@ -100,7 +100,7 @@ with LLM services on your behalf.
 2. Add payment method (required)
 3. Create new secret key
 4. Copy it (starts with sk-)
-5. Paste in Q-IDE Auth tab
+5. Paste in Top Dog Auth tab
 6. Click Save
 ⏱️ Time: 5 minutes
 💰 Cost: Pay-as-you-go ($0.03-0.20 per 1K tokens)
@@ -112,7 +112,7 @@ with LLM services on your behalf.
 2. Add payment method (required)
 3. Create key
 4. Copy it (starts with sk-ant-)
-5. Paste in Q-IDE Auth tab
+5. Paste in Top Dog Auth tab
 6. Click Save
 ⏱️ Time: 5 minutes
 💰 Cost: Pay-as-you-go ($0.80-3.00 per 1M tokens)
@@ -123,7 +123,7 @@ with LLM services on your behalf.
 1. Download: https://ollama.ai
 2. Run: ollama pull mistral
 3. Start: ollama serve
-4. In Q-IDE → Providers tab → Setup Ollama
+4. In Top Dog → Providers tab → Setup Ollama
 ⏱️ Time: 10 minutes (first-time download)
 💰 Cost: FREE
 🎯 Best for: Privacy, offline work
@@ -137,7 +137,7 @@ with LLM services on your behalf.
 
 ```
 User: "I want Gemini as my Q Assistant"
-Q-IDE: "Click Auth tab, then... OAuth? No wait, Setup tab?"
+Top Dog: "Click Auth tab, then... OAuth? No wait, Setup tab?"
 User: "I'm confused, where do I paste my key?"
 ❌ No clear path
 ```
@@ -146,9 +146,9 @@ User: "I'm confused, where do I paste my key?"
 
 ```
 User: "I want Gemini as my Q Assistant"
-Q-IDE: "Go to LLM Setup → Auth tab"
+Top Dog: "Go to LLM Setup → Auth tab"
 User: "I see Google card with input field"
-Q-IDE: "Click link → get API key → paste → save"
+Top Dog: "Click link → get API key → paste → save"
 User: "✓ Done in 2 minutes"
 ✅ Crystal clear
 ```
@@ -193,7 +193,7 @@ User: "✓ Done in 2 minutes"
 - `/llm_config/api_key` - POST endpoint to save API keys
 - `/llm_config/api_key/{provider}` - GET to check key exists, DELETE to remove
 - Already integrated with role assignment system
-- Keys stored locally in `~/.q-ide/llm_credentials.json`
+- Keys stored locally in `~/.Top Dog/llm_credentials.json`
 
 ### ✅ Frontend UI
 
@@ -213,12 +213,12 @@ User: "✓ Done in 2 minutes"
 ```
 ✅ SAFE:
    Your Computer
-   └─ ~/.q-ide/llm_credentials.json (encrypted, local)
-   └─ Q-IDE uses these to call LLM APIs
+   └─ ~/.Top Dog/llm_credentials.json (encrypted, local)
+   └─ Top Dog uses these to call LLM APIs
    └─ Only your machine accesses your keys
 
 ❌ NOT SAFE:
-   Keys sent to Q-IDE servers
+   Keys sent to Top Dog servers
    Keys shared in cloud storage
    Keys visible in environment variables
    Keys stored unencrypted
@@ -227,7 +227,7 @@ User: "✓ Done in 2 minutes"
 ### Trust Model
 
 ```
-Google → (your key) → Q-IDE → (your key) → Google AI
+Google → (your key) → Top Dog → (your key) → Google AI
              ↓
         Stored locally only
         Only used to talk to Google
@@ -241,9 +241,9 @@ Google → (your key) → Q-IDE → (your key) → Google AI
 ```
 1. You: "Build a fitness app"
    ↓
-2. Q-IDE Frontend: Sends message to backend
+2. Top Dog Frontend: Sends message to backend
    ↓
-3. Q-IDE Backend: Looks up "Q Assistant" role
+3. Top Dog Backend: Looks up "Q Assistant" role
    ↓
 4. Backend: Finds "Q Assistant → Gemini"
    ↓
@@ -295,12 +295,12 @@ Use Google Gemini Free Tier for Everything:
 ## FAQ: LLM Credentials
 
 **Q: Where are my API keys stored?**
-A: In `~/.q-ide/llm_credentials.json` on your computer. Local only.
+A: In `~/.Top Dog/llm_credentials.json` on your computer. Local only.
 
-**Q: Can Q-IDE see my keys?**
-A: Q-IDE stores them locally, but the Q-IDE developers never see them.
+**Q: Can Top Dog see my keys?**
+A: Top Dog stores them locally, but the Top Dog developers never see them.
 
-**Q: Do I need to create a Q-IDE account?**
+**Q: Do I need to create a Top Dog account?**
 A: No! You only authenticate with the LLM providers (Google, OpenAI, etc.).
 
 **Q: Can I revoke access anytime?**
@@ -316,12 +316,12 @@ A: Yes, but you'd need to enter it on each machine separately.
 A: No! Treat it like a password. Anyone with your key can use your account.
 
 **Q: Can I use multiple keys from the same provider?**
-A: Currently Q-IDE stores one per provider, but you can rotate them anytime.
+A: Currently Top Dog stores one per provider, but you can rotate them anytime.
 
 **Q: What if a provider is down?**
 A: Q Assistant will show an error. Check provider's status page.
 
-**Q: Can I use Q-IDE without any LLM?**
+**Q: Can I use Top Dog without any LLM?**
 A: Yes, Q Assistant has smart fallback responses that help guide you.
 
 ---
@@ -332,7 +332,7 @@ A: Yes, Q Assistant has smart fallback responses that help guide you.
 
 1. **Choose your first LLM** (Gemini recommended)
 2. **Get your API key** (follow provider link in Auth tab)
-3. **Add to Q-IDE** (paste in Auth tab, click Save)
+3. **Add to Top Dog** (paste in Auth tab, click Save)
 4. **Assign to Q Assistant** (go to Roles tab)
 5. **Test it** (ask Q Assistant a question)
 6. **Describe your app idea** to Q Assistant

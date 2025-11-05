@@ -1,0 +1,26 @@
+global:
+  scrape_interval: 15s
+
+rule_files:
+  - alerts.yml
+
+scrape_configs:
+  - job_name: backend
+    static_configs:
+      - targets: ['backend:8000']
+    metrics_path: /metrics
+
+  - job_name: envoy
+    static_configs:
+      - targets: ['envoy:9901']
+    metrics_path: /stats/prometheus
+
+  - job_name: nginx
+    static_configs:
+      - targets: ['nginx-exporter:9113']
+
+# Example SLI queries
+# - llm_model_consistency_score: use consistency_score gauge exported by backend
+#   e.g., avg_over_time(consistency_score{component="orchestrator"}[5m])
+# - hallucination_severity: hallucination_severity{component="orchestrator"}
+# - TCU (window): sum(increase(tcu_unreliability_cost_usd_total[15m]))

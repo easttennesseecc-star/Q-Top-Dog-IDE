@@ -65,7 +65,7 @@ INSERT INTO membership_tiers (
 **The reality:**
 
 ### What DigitalOcean is
-**DigitalOcean = Your web hosting provider** (where your Q-IDE server runs)
+**DigitalOcean = Your web hosting provider** (where your Top Dog server runs)
 
 ### What "Database" is
 **Database = SQLite file** (or PostgreSQL if you upgrade) that stores all your tiers

@@ -77,7 +77,7 @@ Release → GPT-4 (reliable)
 2. Find the provider you want (OpenAI, Gemini, etc.)
 3. Click **"Setup"** if not configured
 4. Get your API key from the provider's website
-5. Add it in Q-IDE
+5. Add it in Top Dog
 6. Now it's available in the **Roles** tab!
 
 ## **Your Current Setup:**

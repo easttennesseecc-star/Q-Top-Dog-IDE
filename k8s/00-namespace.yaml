@@ -1,0 +1,10 @@
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: q-ide
+  labels:
+    name: q-ide
+    environment: production
+  annotations:
+    description: "Q-IDE Production Namespace"

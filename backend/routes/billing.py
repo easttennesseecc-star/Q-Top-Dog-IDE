@@ -7,19 +7,29 @@ from fastapi import APIRouter, Depends, HTTPException, Request, Body
 from fastapi.responses import JSONResponse
 import os
 import json
-import stripe
+try:
+    import stripe
+    from stripe.error import StripeError as _StripeError
+except Exception:  # stripe not installed in some envs (tests)
+    stripe = None
+    class _StripeError(Exception):
+        pass
 from pydantic import BaseModel
 from typing import Optional, Dict
 from datetime import datetime
 import logging
 
-from services.stripe_service import StripeService, SubscriptionTier, get_tier_from_price_id
-from models.subscription import Subscription, Invoice, UsageEvent, BillingAlert, SubscriptionStatus
-from database.database_service import get_db
+from backend.services.stripe_service import StripeService, SubscriptionTier, get_tier_from_price_id
+from backend.models.subscription import Subscription, Invoice, UsageEvent, BillingAlert, SubscriptionStatus
+from backend.database.database_service import get_db
 from auth import get_current_user
 
 logger = logging.getLogger("q-ide-topdog")
 router = APIRouter(prefix="/api/billing", tags=["billing"])
+def _require_stripe():
+    if stripe is None:
+        raise HTTPException(status_code=503, detail="Billing is not configured on this environment")
+
 
 
 class CreateCheckoutRequest(BaseModel):
@@ -50,19 +60,19 @@ class GetSubscriptionResponse(BaseModel):
 
 @router.get("/subscription", response_model=GetSubscriptionResponse)
 async def get_subscription(
-    current_user = Depends(get_current_user),
+    current_user: str = Depends(get_current_user),
     db = Depends(get_db)
 ):
     """Get current subscription info for user"""
     try:
         subscription = db.query(Subscription).filter(
-            Subscription.user_id == current_user.id
+            Subscription.user_id == current_user
         ).first()
         
         if not subscription:
             # Create free tier subscription for new user
             subscription = Subscription(
-                user_id=current_user.id,
+                user_id=current_user,
                 tier=SubscriptionTier.FREE,
                 status=SubscriptionStatus.ACTIVE,
                 api_calls_limit=100
@@ -93,6 +103,7 @@ async def create_checkout_session(
 ):
     """Create Stripe checkout session for plan upgrade"""
     try:
+        _require_stripe()
         # Get or create subscription
         subscription = db.query(Subscription).filter(
             Subscription.user_id == current_user.id
@@ -133,7 +144,7 @@ async def create_checkout_session(
             "sessionId": session_id
         }
     
-    except stripe.error.StripeError as e:
+    except _StripeError as e:
         logger.error(f"Stripe error creating checkout: {e}")
         raise HTTPException(status_code=400, detail=f"Payment error: {str(e)}")
     except Exception as e:
@@ -149,6 +160,7 @@ async def checkout_success(
 ):
     """Handle successful checkout"""
     try:
+        _require_stripe()
         session_id = request_data.get("sessionId")
         if not session_id:
             raise HTTPException(status_code=400, detail="Missing session ID")
@@ -182,6 +194,7 @@ async def create_billing_portal(
 ):
     """Create link to Stripe billing portal"""
     try:
+        _require_stripe()
         subscription = db.query(Subscription).filter(
             Subscription.user_id == current_user.id
         ).first()
@@ -201,7 +214,7 @@ async def create_billing_portal(
             "url": portal_url
         }
     
-    except stripe.error.StripeError as e:
+    except _StripeError as e:
         logger.error(f"Stripe error creating portal: {e}")
         raise HTTPException(status_code=400, detail="Failed to create billing portal")
     except Exception as e:
@@ -241,7 +254,7 @@ async def cancel_subscription(
             "cancel_at": result.get("cancel_at")
         }
     
-    except stripe.error.StripeError as e:
+    except _StripeError as e:
         logger.error(f"Stripe error canceling subscription: {e}")
         raise HTTPException(status_code=400, detail="Failed to cancel subscription")
     except Exception as e:
@@ -304,6 +317,7 @@ async def handle_webhook(request: Request, db = Depends(get_db)):
     Critical: This processes all payment events and updates subscriptions
     """
     try:
+        _require_stripe()
         payload = await request.body()
         sig_header = request.headers.get("stripe-signature")
         webhook_secret = os.getenv("STRIPE_WEBHOOK_SECRET")
@@ -399,7 +413,7 @@ async def handle_webhook(request: Request, db = Depends(get_db)):
     except ValueError as e:
         logger.error(f"Invalid webhook payload: {e}")
         raise HTTPException(status_code=400, detail="Invalid payload")
-    except stripe.error.SignatureVerificationError as e:
+    except _StripeError as e:
         logger.error(f"Invalid webhook signature: {e}")
         raise HTTPException(status_code=401, detail="Invalid signature")
     except Exception as e:

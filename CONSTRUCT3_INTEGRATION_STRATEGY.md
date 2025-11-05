@@ -1,4 +1,4 @@
-# 🎮 CONSTRUCT 3 INTEGRATION: Q-IDE's Game Development Moat
+# 🎮 CONSTRUCT 3 INTEGRATION: Top Dog's Game Development Moat
 
 **Status**: Strategic Differentiator (Weeks 1-2 of Phase 1)  
 **Launch**: November 7, 2025 (Public Beta)  
@@ -30,10 +30,10 @@ Pain Points:
 
 ### Future State: Unified Game Development
 
-**Game Developer's Day (Q-IDE)**:
+**Game Developer's Day (Top Dog)**:
 ```
 Morning:
-├─ Open Q-IDE
+├─ Open Top Dog
 ├─ Left panel: Write game logic (JavaScript)
 ├─ Right panel: Live preview of game
 ├─ Middle panel: Asset manager (drag-drop sprites)
@@ -50,7 +50,7 @@ Benefits:
 
 ---
 
-## WHY CONSTRUCT 3 IS PERFECT FOR Q-IDE
+## WHY CONSTRUCT 3 IS PERFECT FOR Top Dog
 
 ### Market Size
 ```
@@ -61,34 +61,34 @@ Indie Game Developers (Global):
 ├─ Indie devs: $20-50B market
 │
 Growth Potential:
-├─ Q-IDE free tier: Target 50k game devs in Year 1
-├─ Q-IDE paid tier: Target 5k game devs ($50-100/month)
+├─ Top Dog free tier: Target 50k game devs in Year 1
+├─ Top Dog paid tier: Target 5k game devs ($50-100/month)
 ├─ Game Dev tier revenue: 5k × $75 × 12 = $4.5M/year
 └─ Plus: Marketplace revenue from game assets/extensions
 ```
 
 ### Competitive Advantages
 ```
-Q-IDE + Construct 3 vs Competitors:
+Top Dog + Construct 3 vs Competitors:
 
 VS Visual Studio Code + Construct 3:
-├─ Q-IDE: All in one (IDE + game preview + debugger)
+├─ Top Dog: All in one (IDE + game preview + debugger)
 ├─ VS Code: Two separate apps (context switch)
-├─ Winner: Q-IDE (better UX, faster workflow)
+├─ Winner: Top Dog (better UX, faster workflow)
 
 VS GameMaker Studio 2:
-├─ Q-IDE: Free tier + affordable paid
+├─ Top Dog: Free tier + affordable paid
 ├─ GameMaker: $39-150/month (expensive for indies)
-├─ Q-IDE: Modern, cloud-based, collaborative
+├─ Top Dog: Modern, cloud-based, collaborative
 ├─ GameMaker: Desktop-only, old UI
-├─ Winner: Q-IDE (price + features + UX)
+├─ Winner: Top Dog (price + features + UX)
 
 VS Unreal Engine:
-├─ Q-IDE + C3: No-code + code hybrid approach
+├─ Top Dog + C3: No-code + code hybrid approach
 ├─ Unreal: Steep learning curve
-├─ Q-IDE + C3: Low barrier to entry
+├─ Top Dog + C3: Low barrier to entry
 ├─ Unreal: Better for high-fidelity games
-├─ Winner: Q-IDE for indie/2D, Unreal for AAA
+├─ Winner: Top Dog for indie/2D, Unreal for AAA
 ```
 
 ### Partnership Synergy
@@ -97,24 +97,24 @@ Why Construct 3 team loves this:
 
 1. Market Expansion
    ├─ C3 on web is great, but IDE integration is new
-   ├─ Q-IDE gives C3 desktop-like experience
+   ├─ Top Dog gives C3 desktop-like experience
    └─ Opens new market (devs who want VS Code-like workflow)
 
 2. Co-Marketing Opportunity
-   ├─ "Q-IDE is now THE Construct 3 IDE"
+   ├─ "Top Dog is now THE Construct 3 IDE"
    ├─ Reach 500k C3 users
    ├─ Cross-promote on both platforms
    └─ Revenue share model (15-20% to C3 team)
 
 3. Feature Completeness
    ├─ C3 web lacks professional IDE features
-   ├─ Q-IDE brings: Debugger, refactoring, AI assistance
+   ├─ Top Dog brings: Debugger, refactoring, AI assistance
    ├─ C3 team can focus on game engine
-   ├─ Q-IDE handles IDE features
+   ├─ Top Dog handles IDE features
    └─ Win-win partnership
 
 4. Revenue Model
-   ├─ Q-IDE charges $50-100/month for game dev tier
+   ├─ Top Dog charges $50-100/month for game dev tier
    ├─ Share revenue with C3 team
    ├─ C3 benefits without building IDE themselves
    └─ Aligned incentives (both grow together)
@@ -127,10 +127,10 @@ Why Construct 3 team loves this:
 ### Architecture Overview
 
 ```
-Q-IDE with Construct 3:
+Top Dog with Construct 3:
 
 ┌─────────────────────────────────────────────────────┐
-│                     Q-IDE Frontend                   │
+│                     Top Dog Frontend                   │
 ├──────────────────┬──────────────────┬───────────────┤
 │   Code Editor    │  Game Preview    │  Asset Panel  │
 │   (Monaco)       │  (C3 Runtime)    │  (File Tree)  │
@@ -141,7 +141,7 @@ Q-IDE with Construct 3:
 └──────────────────────────────────────────────────────┘
            ↕ WebSocket
 ┌──────────────────────────────────────────────────────┐
-│              Q-IDE Backend (Python)                   │
+│              Top Dog Backend (Python)                   │
 ├──────────────────────────────────────────────────────┤
 │  C3 Runtime Manager    │  Game Debugger              │
 │  Asset Manager         │  Performance Monitor        │
@@ -299,7 +299,7 @@ class GameDebugger:
 
 ## MARKETING & POSITIONING
 
-### Launch Campaign: "Q-IDE: The Construct 3 IDE"
+### Launch Campaign: "Top Dog: The Construct 3 IDE"
 
 **Message**:
 > "First time you can code, design, and debug your Construct 3 game without leaving the editor"
@@ -367,13 +367,13 @@ Nov 15-20: Bug fixes + optimization
 └─ Final polish
 
 Nov 21: Public Launch
-├─ Blog post: "Introducing Q-IDE for Construct 3"
+├─ Blog post: "Introducing Top Dog for Construct 3"
 ├─ Product Hunt post: "Build Construct 3 games like a pro"
 ├─ Reddit r/gamedev, r/construct3
 ├─ Twitter thread showcase
 └─ Email to 500k C3 users (via partnership)
 
-Target: 5,000+ C3 users trying Q-IDE by Dec 1
+Target: 5,000+ C3 users trying Top Dog by Dec 1
 ```
 
 ---
@@ -381,7 +381,7 @@ Target: 5,000+ C3 users trying Q-IDE by Dec 1
 ## COMPETITIVE POSITIONING MATRIX
 
 ```
-                    Q-IDE+C3    GameMaker   Unreal     VS Code+C3
+                    Top Dog+C3    GameMaker   Unreal     VS Code+C3
 ─────────────────────────────────────────────────────────────────
 Price               $50/mo      $39-150/mo  Free       Free
 Professional IDE    ✅          ✅          ✅         ✅
@@ -400,7 +400,7 @@ Learning Path       ⭐⭐⭐⭐⭐    ⭐⭐⭐      ⭐       ⭐⭐
 Professional Use    ⭐⭐⭐⭐     ⭐⭐⭐⭐    ⭐⭐⭐⭐⭐  ⭐⭐⭐
 ```
 
-**Winner for Indie Game Dev**: Q-IDE + Construct 3 ✅
+**Winner for Indie Game Dev**: Top Dog + Construct 3 ✅
 
 ---
 
@@ -409,13 +409,13 @@ Professional Use    ⭐⭐⭐⭐     ⭐⭐⭐⭐    ⭐⭐⭐⭐⭐  ⭐⭐⭐
 ### Pricing Strategy
 
 ```
-Q-IDE Free Tier:
+Top Dog Free Tier:
 ├─ Includes C3 integration (basic)
 ├─ 5 AI suggestions/day
 ├─ Community support
 └─ Export limit: 5 games/month
 
-Q-IDE Pro Tier ($25-50/month):
+Top Dog Pro Tier ($25-50/month):
 ├─ All C3 features
 ├─ Unlimited AI suggestions
 ├─ Priority support
@@ -448,7 +448,7 @@ Month 1: 100 game dev users × $75 = $7.5k MRR
 Month 3: 1,000 game dev users × $75 = $75k MRR
 Month 6: 5,000 game dev users × $75 = $375k MRR
 
-Total Q-IDE Revenue (Month 6):
+Total Top Dog Revenue (Month 6):
 ├─ Free tier → Pro conversions: $250k
 ├─ Game dev tier: $375k
 ├─ Enterprise: $150k
@@ -470,7 +470,7 @@ Benefits:
 ├─ Expanded market reach (game devs who want IDE)
 ├─ Revenue share (passive income)
 ├─ Joint marketing (reach both audiences)
-└─ Competitive advantage (Q-IDE is THE C3 IDE)
+└─ Competitive advantage (Top Dog is THE C3 IDE)
 
 What we ask:
 ├─ C3 runtime access (WebAssembly module)
@@ -484,7 +484,7 @@ What we ask:
 ```
 Week of Nov 3 (Start of development):
 ├─ Email Construct 3 partnership team
-├─ Explain: "Q-IDE + Construct 3 partnership opportunity"
+├─ Explain: "Top Dog + Construct 3 partnership opportunity"
 ├─ Show: Technical architecture (preview)
 ├─ Propose: Revenue share model
 │
@@ -500,7 +500,7 @@ Week of Nov 15:
 Week of Nov 21:
 ├─ Joint announcement of partnership
 ├─ Co-launch of Construct 3 integration
-└─ Email to C3 users: "Try Q-IDE (built for Construct 3)"
+└─ Email to C3 users: "Try Top Dog (built for Construct 3)"
 ```
 
 ---
@@ -515,19 +515,19 @@ Week of Nov 21:
 - [x] 100 beta testers (invitation only)
 
 ### By Month 1 (Nov 30):
-- [x] 1,000+ C3 users trying Q-IDE
+- [x] 1,000+ C3 users trying Top Dog
 - [x] 50+ reviews on ProductHunt (4.5+ rating)
 - [x] Partnership signed with C3 team
 - [x] $7.5k MRR from game dev tier
 
 ### By Month 3 (Jan 31):
-- [x] 10,000 C3 users on Q-IDE
+- [x] 10,000 C3 users on Top Dog
 - [x] 1,000+ game dev tier subscribers
-- [x] 100+ game projects created in Q-IDE
+- [x] 100+ game projects created in Top Dog
 - [x] $75k MRR from game dev segment
 
 ### By Month 6 (Apr 30):
-- [x] 50,000+ C3 users on Q-IDE (10% of active C3 base)
+- [x] 50,000+ C3 users on Top Dog (10% of active C3 base)
 - [x] 5,000+ game dev tier subscribers
 - [x] 10,000+ games created (showcase library)
 - [x] $375k MRR from game dev segment
@@ -537,7 +537,7 @@ Week of Nov 21:
 
 ## CONSTRUCT 3 DIFFERENTIATOR SUMMARY
 
-**Q-IDE owns game development** because:
+**Top Dog owns game development** because:
 
 1. **Unified Experience** - Code + design + debug in one window
 2. **Professional Debugger** - Breakpoints, inspections, profiling
@@ -550,7 +550,7 @@ Week of Nov 21:
 - Only IDE with integrated C3 runtime
 - Exclusive partnership with Construct 3 team
 - Game dev community lock-in (switching costs high)
-- Revenue share keeps C3 aligned with Q-IDE
+- Revenue share keeps C3 aligned with Top Dog
 
 **Timeline**: Construct 3 integration launches Nov 21, 2025  
 **Target**: Own 30% of indie game dev market by Dec 2026  

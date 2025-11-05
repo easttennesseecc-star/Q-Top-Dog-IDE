@@ -1,0 +1,132 @@
+name: Incident auto-issue on CI failure
+
+on:
+  workflow_run:
+    workflows: ["Build and Release", "Python Quality", "Overwatch CI Gate", "kubec CI"]
+    types: [completed]
+  check_run:
+    types: [completed]
+
+jobs:
+  open-incident-on-failure:
+    if: >-
+      (github.event_name == 'workflow_run' && github.event.workflow_run.conclusion == 'failure') ||
+      (github.event_name == 'check_run' && github.event.check_run.conclusion == 'failure')
+    runs-on: ubuntu-latest
+    permissions:
+      issues: write
+      actions: read
+    steps:
+      - name: Create or update incident issue
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const { github, context, core } = require('@actions/github');
+
+            async function ensureIncidentIssue({ title, body }) {
+              const { owner, repo } = context.repo;
+              const issues = await github.rest.search.issuesAndPullRequests({
+                q: `repo:${owner}/${repo} is:issue in:title "${title}" state:open`,
+                per_page: 5,
+              });
+              const existing = issues.data.items.find(i => i.title === title);
+              if (existing) {
+                await github.rest.issues.createComment({ owner, repo, issue_number: existing.number, body });
+                core.info(`Commented on existing incident issue #${existing.number}`);
+                return existing.number;
+              }
+              const created = await github.rest.issues.create({ owner, repo, title, body, labels: ['incident','triage'] });
+              core.info(`Opened incident issue #${created.data.number}`);
+              return created.data.number;
+            }
+
+            function renderArtifacts(arts, { owner, repo, runId }) {
+              if (!arts || arts.length === 0) return '\n(No artifacts uploaded by the failed run)\n';
+              return arts.map(a => {
+                const webUrl = `https://github.com/${owner}/${repo}/actions/runs/${runId}/artifacts/${a.id}`;
+                return `- ${a.name} (expires: ${a.expires_at}) — [download](${webUrl})`;
+              }).join('\n');
+            }
+
+            if (context.eventName === 'workflow_run') {
+              const run = context.payload.workflow_run;
+              const { owner, repo } = context.repo;
+              // List artifacts for the failed run
+              const arts = await github.rest.actions.listWorkflowRunArtifacts({ owner, repo, run_id: run.id, per_page: 100 });
+              const artifactsList = renderArtifacts(arts.data.artifacts, { owner, repo, runId: run.id });
+              const hasJUnit = arts.data.artifacts.some(a => /junit|pytest-results/i.test(a.name));
+              const hasSummary = arts.data.artifacts.some(a => /pytest-summary/i.test(a.name));
+              const title = `Incident: CI failure on ${run.name} #${run.id}`;
+              const body = `A workflow failed.\n\n` +
+                `- Workflow: ${run.name}\n` +
+                `- Status: ${run.status}\n` +
+                `- Conclusion: ${run.conclusion}\n` +
+                `- Branch: ${run.head_branch}\n` +
+                `- Commit: ${run.head_sha}\n` +
+                `- Run URL: ${run.html_url}\n` +
+                `\nArtifacts:\n${artifactsList}\n` +
+                `${hasJUnit ? '\nJUnit results above include direct download links.' : ''}` +
+                `${hasSummary ? '\nPytest summary artifact uploaded with top failures.' : ''}` +
+                `\n\nFollow the Failure Review Process and use the incident template to capture RCA.`;
+              await ensureIncidentIssue({ title, body });
+            } else if (context.eventName === 'check_run') {
+              const check = context.payload.check_run;
+              const { owner, repo } = context.repo;
+              const title = `Incident: CI failure on check ${check.name} #${check.id}`;
+              const body = `A check failed.\n\n` +
+                `- Check: ${check.name}\n` +
+                `- Status: ${check.status}\n` +
+                `- Conclusion: ${check.conclusion}\n` +
+                `- Details URL: ${check.details_url}\n` +
+                `- Started at: ${check.started_at}\n` +
+                `- Completed at: ${check.completed_at}\n` +
+                `\nNote: Artifact listing is only available for workflow_run events.\n` +
+                `\nFollow the Failure Review Process and use the incident template to capture RCA.`;
+              await ensureIncidentIssue({ title, body });
+            } else {
+              core.info('Event not handled.');
+            }
+      - name: Notify Slack webhook
+        if: ${{ always() && secrets.SLACK_WEBHOOK_URL }}
+        shell: bash
+        env:
+          WORKFLOW_NAME: ${{ github.event_name == 'workflow_run' && github.event.workflow_run.name || github.event_name }}
+          RUN_URL: ${{ github.event_name == 'workflow_run' && github.event.workflow_run.html_url || format('{0}/{1}/actions/runs/{2}', github.server_url, github.repository, github.run_id) }}
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+        run: |
+          printf '{"text":"CI failure: %s — %s"}\n' "${WORKFLOW_NAME}" "${RUN_URL}" > slack_payload.json
+          curl -sS -X POST -H "Content-Type: application/json" --data @slack_payload.json "${SLACK_WEBHOOK_URL}"
+
+      - name: Notify Microsoft Teams webhook
+        if: ${{ always() && secrets.TEAMS_WEBHOOK_URL }}
+        shell: bash
+        env:
+          WORKFLOW_NAME: ${{ github.event_name == 'workflow_run' && github.event.workflow_run.name || github.event_name }}
+          RUN_URL: ${{ github.event_name == 'workflow_run' && github.event.workflow_run.html_url || format('{0}/{1}/actions/runs/{2}', github.server_url, github.repository, github.run_id) }}
+          TEAMS_WEBHOOK_URL: ${{ secrets.TEAMS_WEBHOOK_URL }}
+        run: |
+          cat > teams_card.json << 'EOF'
+          {"@type":"MessageCard","@context":"https://schema.org/extensions","summary":"CI Failure","themeColor":"FF0000","title":"CI Failure","text":"Workflow failed: ${WORKFLOW_NAME}. <a href='${RUN_URL}'>Open run</a>"}
+          EOF
+          # Substitute env vars inside JSON (simple replace)
+          sed -i "s|\${WORKFLOW_NAME}|${WORKFLOW_NAME}|g; s|\${RUN_URL}|${RUN_URL}|g" teams_card.json
+          curl -sS -X POST -H "Content-Type: application/json" --data @teams_card.json "${TEAMS_WEBHOOK_URL}"
+      # Optional: Slack/Teams notifications (uncomment and set secrets to enable)
+      # - name: Notify Slack webhook
+      #   if: always()
+      #   run: |
+      #     node -e "const payload = { text: `CI failure on ${process.env.WORKFLOW_NAME} (${process.env.RUN_URL})` }; console.log(JSON.stringify(payload));" > slack_payload.json
+      #     curl -X POST -H "Content-Type: application/json" --data @slack_payload.json "${{ secrets.SLACK_WEBHOOK_URL }}"
+      #   env:
+      #     WORKFLOW_NAME: ${{ github.event_name == 'workflow_run' && github.event.workflow_run.name || github.event_name }}
+      #     RUN_URL: ${{ github.event_name == 'workflow_run' && github.event.workflow_run.html_url || github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+
+      # - name: Notify Microsoft Teams webhook
+      #   if: always()
+      #   run: |
+      #     node -e "const card = { '@type':'MessageCard','@context':'https://schema.org/extensions','summary':'CI Failure','themeColor':'FF0000','title':'CI Failure','text':`Workflow failed: ${process.env.WORKFLOW_NAME}. [Open run](${process.env.RUN_URL})` }; console.log(JSON.stringify(card));" > teams_card.json
+      #     curl -X POST -H "Content-Type: application/json" --data @teams_card.json "${{ secrets.TEAMS_WEBHOOK_URL }}"
+      #   env:
+      #     WORKFLOW_NAME: ${{ github.event_name == 'workflow_run' && github.event.workflow_run.name || github.event_name }}
+      #     RUN_URL: ${{ github.event_name == 'workflow_run' && github.event.workflow_run.html_url || github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}

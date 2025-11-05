@@ -62,12 +62,12 @@ Start-Process "Q-IDE_0.1.0_x64_en-US.msi"
 ## 5️⃣ LAUNCH (Anytime)
 
 From Windows:
-- Start Menu → Q-IDE → Click
-- Desktop → Double-click Q-IDE shortcut
+- Start Menu → Top Dog → Click
+- Desktop → Double-click Top Dog shortcut
 
 Or PowerShell:
 ```powershell
-& "C:\Users\$env:USERNAME\AppData\Local\Programs\Q-IDE\Q-IDE.exe"
+& "C:\Users\$env:USERNAME\AppData\Local\Programs\Top Dog\Top Dog.exe"
 ```
 
 ---
@@ -194,5 +194,5 @@ Then follow steps 3-7 above.
 
 ---
 
-**Built with ❤️ by Quellum Team - Q-IDE v0.1.0 - October 25, 2025**
+**Built with ❤️ by Quellum Team - Top Dog v0.1.0 - October 25, 2025**
 

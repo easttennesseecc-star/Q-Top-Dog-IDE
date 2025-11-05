@@ -11,7 +11,7 @@ Endpoints for:
 from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel
 from typing import Dict, List, Optional
-from llm_config import (
+from backend.llm_config import (
     CLOUD_LLMS, LOCAL_MODELS, LLM_ROLES,
     load_api_keys, save_api_key, delete_api_key, get_api_key,
     load_role_assignments, save_role_assignment, get_model_for_role,
@@ -19,7 +19,7 @@ from llm_config import (
     validate_api_key, get_setup_instructions, format_provider_status,
     get_q_assistant_llm
 )
-from llm_auto_auth import (
+from backend.llm_auto_auth import (
     check_all_llm_authentication, get_startup_auth_prompt,
     get_auto_setup_candidates, handle_missing_credentials_action,
     get_auth_status_for_startup

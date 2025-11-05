@@ -1,4 +1,4 @@
-# 📋 Q-IDE Tier System - FULL IMPLEMENTATION CHECKLIST
+# 📋 Top Dog Tier System - FULL IMPLEMENTATION CHECKLIST
 
 ## ✅ COMPLETE (Phase 1-3)
 

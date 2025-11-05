@@ -33,7 +33,7 @@ PROVIDER_OAUTH_URLS = {
 }
 ```
 
-**Storage**: `~/.q-ide/llm_credentials.json`
+**Storage**: `~/.Top Dog/llm_credentials.json`
 
 ---
 
@@ -279,7 +279,7 @@ Backend exchanges code for token
     └─ Receives: access_token, expires_in, etc.
     ↓
 Backend stores token locally
-    └─ ~/.q-ide/llm_credentials.json
+    └─ ~/.Top Dog/llm_credentials.json
     ↓
 OAuthCallback posts success message to parent
     ├─ message.type = 'oauth_success'
@@ -302,7 +302,7 @@ saveApiKey()
     └─ Shows success message
     ↓
 Backend stores in credentials file
-    └─ ~/.q-ide/llm_credentials.json
+    └─ ~/.Top Dog/llm_credentials.json
     ↓
 Auth status checked
     └─ GET /llm_auth/status
@@ -335,7 +335,7 @@ Auth status checked
 ## Deployment Checklist
 
 ### Local Development
-- [x] Backend creates ~/.q-ide/ directory
+- [x] Backend creates ~/.Top Dog/ directory
 - [x] Credentials file auto-created on first auth
 - [x] Frontend dev server proxies /llm_auth and /llm_config
 - [x] OAuth callback route works at /oauth/callback

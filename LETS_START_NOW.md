@@ -305,7 +305,7 @@ UPDATED:
 
 ## 🚀 FINAL WORD
 
-You have built Q-IDE with:
+You have built Top Dog with:
 - Multi-LLM orchestration (unique)
 - 5 coordinated AI agents (unique)
 - Media synthesis (unique)
@@ -334,7 +334,7 @@ You have built Q-IDE with:
 
 **In 90 days, someone says:**
 
-> "Q-IDE is insanely good. Fast, smart, collaborative, and free. I switched from VS Code."
+> "Top Dog is insanely good. Fast, smart, collaborative, and free. I switched from VS Code."
 
 **That's your win condition.**
 

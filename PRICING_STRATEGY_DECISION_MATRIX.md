@@ -1,6 +1,6 @@
 # PRICING STRATEGY DECISION MATRIX
 
-**Decision Point**: How should Q-IDE be positioned in market strategy docs?
+**Decision Point**: How should Top Dog be positioned in market strategy docs?
 
 ---
 
@@ -72,7 +72,7 @@ NEW: "Premium IDE for professionals - priced accordingly"
 
 **Pros**:
 - ✅ Maximizes Year 1 profitability (+$8-15M additional revenue)
-- ✅ Positions Q-IDE as premium/quality from day 1
+- ✅ Positions Top Dog as premium/quality from day 1
 - ✅ Creates pricing power/defensibility
 - ✅ Reduces competitor price war incentives
 - ✅ Better for investor positioning (premium economics)
@@ -193,13 +193,13 @@ FUTURE: "Early adopters locked in at launch pricing through Q1 2026.
 ## WHAT TO SAY IN MARKET DOCUMENTS
 
 ### If you choose Conservative:
-> "Q-IDE Pro is $20/month—same as GitHub Copilot. But you get a full IDE, not just an extension. Plus 53 LLM options, game engine integration, and media synthesis built-in. That's 10x more value at the same price."
+> "Top Dog Pro is $20/month—same as GitHub Copilot. But you get a full IDE, not just an extension. Plus 53 LLM options, game engine integration, and media synthesis built-in. That's 10x more value at the same price."
 
 ### If you choose Aggressive:
-> "Q-IDE Pro is $25/month. Yes, that's $5 more than GitHub Copilot. But you're getting a complete IDE with game engines and AI integration. For teams, that's $1,000-5,000 in annual productivity savings. Premium pricing for premium product."
+> "Top Dog Pro is $25/month. Yes, that's $5 more than GitHub Copilot. But you're getting a complete IDE with game engines and AI integration. For teams, that's $1,000-5,000 in annual productivity savings. Premium pricing for premium product."
 
 ### If you choose Hybrid (Recommended):
-> "Q-IDE Pro launches at $20/month—market-competitive pricing that rewards early adopters. We're locking prices at launch rates through Q1 2026, then increasing to $25 for new users as we add Phase 14 features. Early adopters stay at $20 permanently."
+> "Top Dog Pro launches at $20/month—market-competitive pricing that rewards early adopters. We're locking prices at launch rates through Q1 2026, then increasing to $25 for new users as we add Phase 14 features. Early adopters stay at $20 permanently."
 
 ---
 

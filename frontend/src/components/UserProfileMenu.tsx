@@ -38,11 +38,14 @@ export const UserProfileMenu: React.FC<UserProfileMenuProps> = ({ user = { name:
       </button>
       {open && (
         <div
-          className="absolute right-0 top-full mt-2 w-48 max-h-72 overflow-auto rounded-md shadow-lg bg-white dark:bg-gray-800 ring-1 ring-black ring-opacity-5 focus:outline-none z-40 transition-all duration-200 opacity-100 translate-y-0"
+          className="absolute top-full mt-2 min-w-[12rem] max-w-[calc(100vw-2rem)] max-h-72 overflow-auto rounded-md shadow-lg bg-white dark:bg-gray-800 ring-1 ring-black ring-opacity-5 focus:outline-none z-40 transition-all duration-200 opacity-100 translate-y-0"
           role="menu"
           aria-orientation="vertical"
           aria-labelledby="user-menu"
-          style={{ maxWidth: 'calc(100vw - 2rem)' }}
+          style={{ 
+            right: 0,
+            left: 'auto'
+          }}
         >
           <div className="py-1">
             <button

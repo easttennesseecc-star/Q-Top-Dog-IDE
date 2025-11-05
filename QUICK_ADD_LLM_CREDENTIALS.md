@@ -2,10 +2,10 @@
 
 ## The Simple Workflow
 
-### In Q-IDE UI:
+### In Top Dog UI:
 
 ```
-1. Open Q-IDE
+1. Open Top Dog
    ↓
 2. Go to "LLM Setup" tab
    ↓
@@ -46,7 +46,7 @@
 2. Click "Get API Key"
 3. Click "Create API key in new Google AI Studio"
 4. **Copy the key** (starts with `AIzaSy`)
-5. In Q-IDE → Auth tab → Find "Google" or "Gemini"
+5. In Top Dog → Auth tab → Find "Google" or "Gemini"
 6. Paste the key, click Save
 7. Go to Roles tab, assign to "Q Assistant"
 8. ✓ Done!
@@ -67,7 +67,7 @@
 3. Add payment method (required by OpenAI)
 4. Click "Create new secret key"
 5. **Copy it** (starts with `sk-`)
-6. In Q-IDE → Auth tab → Find "OpenAI"
+6. In Top Dog → Auth tab → Find "OpenAI"
 7. Paste the key, click Save
 8. Go to Roles tab, assign to "Code Generation"
 9. ✓ Now you have GPT-4 for coding!
@@ -87,7 +87,7 @@
 3. Add payment method
 4. Click "Create Key"
 5. **Copy it** (starts with `sk-ant-`)
-6. In Q-IDE → Auth tab → Find "Anthropic" or "Claude"
+6. In Top Dog → Auth tab → Find "Anthropic" or "Claude"
 7. Paste the key, click Save
 8. Go to Roles tab, assign to "Code Review"
 9. ✓ Now you have Claude for analysis!
@@ -107,9 +107,9 @@
 1. Download: https://ollama.ai
 2. Run: `ollama pull mistral` (or `llama2`)
 3. Start Ollama: `ollama serve`
-4. In Q-IDE → Providers tab → Find Ollama
+4. In Top Dog → Providers tab → Find Ollama
 5. Click "Setup"
-6. Q-IDE auto-detects it
+6. Top Dog auto-detects it
 7. Go to Roles tab, assign to "Q Assistant"
 8. ✓ Works locally, no payment needed!
 
@@ -133,7 +133,7 @@
 
 1. **Minute 0-1:** Go to Google AI Studio, click "Get API Key"
 2. **Minute 1-2:** Copy your key from Google
-3. **Minute 2-3:** Paste in Q-IDE Auth tab, click Save
+3. **Minute 2-3:** Paste in Top Dog Auth tab, click Save
 4. **Minute 3-4:** Go to Roles tab, assign Gemini to Q Assistant
 5. **Minute 4-5:** Ask Q Assistant: "I want to build a mobile app"
 
@@ -203,6 +203,6 @@ Q Assistant will:
 
 1. Pick one LLM above (Google Gemini recommended)
 2. Get your API key (2-5 minutes)
-3. Add to Q-IDE (1 minute)
+3. Add to Top Dog (1 minute)
 4. Assign to Q Assistant (30 seconds)
 5. Start building your app! 🎯

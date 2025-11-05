@@ -1,8 +1,8 @@
-# 🏗️ Q-IDE Windows Build & Deployment Guide
+# 🏗️ Top Dog Windows Build & Deployment Guide
 
 ## Overview
 
-This guide covers everything needed to build, test, and deploy Q-IDE as a production-ready Windows MSI installer.
+This guide covers everything needed to build, test, and deploy Top Dog as a production-ready Windows MSI installer.
 
 ---
 
@@ -37,8 +37,8 @@ rustc --version    # 1.70+
 cargo --version    # matches rustc
 
 # 3. Clone repository
-git clone https://github.com/quellum/q-ide.git
-cd q-ide
+git clone https://github.com/quellum/Top Dog.git
+cd Top Dog
 ```
 
 ---
@@ -109,7 +109,7 @@ $msi = Get-ChildItem -Path "frontend/src-tauri/target/release/bundle/msi" -Filte
 Start-Process $msi.FullName
 
 # 3. Follow installation wizard
-# 4. Verify Q-IDE launches successfully
+# 4. Verify Top Dog launches successfully
 # 5. Test key features:
 #    - Sign in with OAuth
 #    - Change background
@@ -162,7 +162,7 @@ git push origin v0.1.0
 # 3. GitHub Actions automatically creates release
 
 # 4. Upload MSI to release page
-# 5. Users download from: https://github.com/quellum/q-ide/releases
+# 5. Users download from: https://github.com/quellum/Top Dog/releases
 ```
 
 ### Option 2: Direct Download Link
@@ -170,7 +170,7 @@ git push origin v0.1.0
 
 ```powershell
 # 1. Host MSI on web server
-# 2. Create download link: https://downloads.q-ide.com/Q-IDE_0.1.0_x64.msi
+# 2. Create download link: https://downloads.Top Dog.com/Q-IDE_0.1.0_x64.msi
 
 # Users download and install locally
 # Can use deployment scripts below
@@ -183,8 +183,8 @@ git push origin v0.1.0
 # Silent installation via Group Policy or deployment tools:
 
 # Deploy via SCCM
-$app = New-CMApplication -Name "Q-IDE 0.1.0"
-$app.SetLocalProperty("DisplayName", "Q-IDE (TopDog)")
+$app = New-CMApplication -Name "Top Dog 0.1.0"
+$app.SetLocalProperty("DisplayName", "Top Dog (TopDog)")
 
 # Or via batch script
 @echo off
@@ -247,7 +247,7 @@ Before shipping to users:
 
 ### Release Notes Template
 ```
-## Q-IDE v0.1.0 - Production Release
+## Top Dog v0.1.0 - Production Release
 
 ### ✨ Features
 - Background customization with gradients and particles
@@ -273,16 +273,16 @@ Before shipping to users:
 - 200MB disk space
 
 ### 🔗 Links
-- [Installation Guide](https://github.com/quellum/q-ide/blob/main/WINDOWS_INSTALLATION_GUIDE.md)
-- [Full Documentation](https://github.com/quellum/q-ide/wiki)
-- [Report a Bug](https://github.com/quellum/q-ide/issues)
+- [Installation Guide](https://github.com/quellum/Top Dog/blob/main/WINDOWS_INSTALLATION_GUIDE.md)
+- [Full Documentation](https://github.com/quellum/Top Dog/wiki)
+- [Report a Bug](https://github.com/quellum/Top Dog/issues)
 
 ### 🙏 Contributors
 - Quellum Team
 - Community contributors
 
 ---
-**Download:** [Q-IDE_0.1.0_x64_en-US.msi](https://github.com/quellum/q-ide/releases/download/v0.1.0/Q-IDE_0.1.0_x64_en-US.msi)
+**Download:** [Q-IDE_0.1.0_x64_en-US.msi](https://github.com/quellum/Top Dog/releases/download/v0.1.0/Q-IDE_0.1.0_x64_en-US.msi)
 
 **Hash:** SHA256: abc123def456...
 ```
@@ -409,7 +409,7 @@ git tag -a v0.2.0 -m "Release v0.2.0"
 git push origin main v0.2.0
 
 # 4. GitHub Actions builds new MSI automatically
-# 5. Download from: https://github.com/quellum/q-ide/releases/v0.2.0
+# 5. Download from: https://github.com/quellum/Top Dog/releases/v0.2.0
 ```
 
 ### Backward Compatibility
@@ -465,8 +465,8 @@ git push origin main v0.2.0
 Have questions? Check these first:
 - See `WINDOWS_INSTALLATION_GUIDE.md` for user help
 - See troubleshooting section above
-- Open issue: https://github.com/quellum/q-ide/issues
-- Email: support@q-ide.com
+- Open issue: https://github.com/quellum/Top Dog/issues
+- Email: support@Top Dog.com
 
 ---
 

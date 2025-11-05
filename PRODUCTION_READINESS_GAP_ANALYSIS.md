@@ -9,7 +9,7 @@
 
 ## Executive Summary
 
-Q-IDE is functionally complete and ready for MVP deployment. The remaining 20% is **infrastructure, deployment, and monitoring** - not core features. This document maps the exact gaps and provides an actionable roadmap to production.
+Top Dog is functionally complete and ready for MVP deployment. The remaining 20% is **infrastructure, deployment, and monitoring** - not core features. This document maps the exact gaps and provides an actionable roadmap to production.
 
 ### Current State ✅
 - ✅ **Backend**: Fully functional with FastAPI, OAuth, LLM integration
@@ -199,16 +199,16 @@ Blocker: Database schema review
 ```
 Task: Move from .env file to secrets vault
 ├─ AWS Secrets Manager / GCP Secret Manager
-├─ Rotate Q-IDE's OWN API keys (OpenAI for backend, GitHub OAuth)
+├─ Rotate Top Dog's OWN API keys (OpenAI for backend, GitHub OAuth)
 ├─ Remove secrets from code
 ├─ Add key rotation schedule
 └─ Update docs
 
 IMPORTANT: User-provided API keys are DIFFERENT
-├─ User API keys stored in user's ~/.q-ide/llm_keys.json
+├─ User API keys stored in user's ~/.Top Dog/llm_keys.json
 ├─ User keys are encrypted using system keyring
-├─ User keys are NEVER sent to Q-IDE servers
-├─ User keys are NEVER stored in Q-IDE's vault
+├─ User keys are NEVER sent to Top Dog servers
+├─ User keys are NEVER stored in Top Dog's vault
 ├─ BYOK model: User manages their own keys
 └─ See API_KEY_RESPONSIBILITY_MODEL.md for details
 
@@ -439,11 +439,11 @@ If you want to launch in **2 weeks** instead of 4, here's the critical path:
 
 ### After Week 1 ✅
 - Production environment live
-- Real users can access Q-IDE
+- Real users can access Top Dog
 - Database persists data
 - Basic monitoring working
 
-**You can announce**: "Q-IDE is live in beta"
+**You can announce**: "Top Dog is live in beta"
 
 ### After Week 2 ✅
 - Secure production environment
@@ -451,21 +451,21 @@ If you want to launch in **2 weeks** instead of 4, here's the critical path:
 - Backup procedures tested
 - Performance baseline established
 
-**You can announce**: "Q-IDE MVP is production-ready"
+**You can announce**: "Top Dog MVP is production-ready"
 
 ### After Week 3 ✅
 - Full observability
 - Error tracking
 - Performance optimization
 
-**You can announce**: "Q-IDE enterprise features launching"
+**You can announce**: "Top Dog enterprise features launching"
 
 ### After Week 4 ✅
 - Disaster recovery tested
 - Complete documentation
 - Ready for scale
 
-**You can announce**: "Q-IDE is ready for enterprise"
+**You can announce**: "Top Dog is ready for enterprise"
 
 ---
 
@@ -637,7 +637,7 @@ Blocker: Cloud platform chosen
 
 ### Priority 3: Start Week 1 Tasks (Tomorrow)
 ```
-Task: Dockerize Q-IDE
+Task: Dockerize Top Dog
 Time: 8 hours
 Owner: DevOps/Backend lead
 Blocker: Docker knowledge needed
@@ -732,7 +732,7 @@ LAUNCH READINESS
 
 ## Conclusion
 
-**Q-IDE is 80% production-ready.** The remaining 20% is infrastructure and operational work, not feature development.
+**Top Dog is 80% production-ready.** The remaining 20% is infrastructure and operational work, not feature development.
 
 ### The Bottom Line
 - ✅ **Features**: Complete and working
@@ -755,7 +755,7 @@ LAUNCH READINESS
 ### Expected Outcome
 By end of Week 4, you'll have:
 - ✅ Production environment running
-- ✅ Real users accessing Q-IDE
+- ✅ Real users accessing Top Dog
 - ✅ Full observability
 - ✅ Secure and compliant
 - ✅ Ready for enterprise

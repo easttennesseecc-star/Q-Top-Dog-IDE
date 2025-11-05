@@ -1,0 +1,36 @@
+[tool.ruff]
+line-length = 120
+target-version = "py311"
+exclude = [
+    "frontend",
+    "tools",
+]
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I"]
+
+[tool.ruff.lint.per-file-ignores]
+"backend/tests/**.py" = ["F401", "F841", "F811"]
+
+[tool.mypy]
+python_version = "3.11"
+ignore_missing_imports = true
+warn_unused_ignores = false
+follow_imports = "skip"
+exclude = [
+    "frontend",
+    "tools",
+]
+
+# Silence legacy modules that mypy follows via imports from focused files
+[[tool.mypy.overrides]]
+module = ["backend.orchestration.*"]
+ignore_errors = true
+
+[[tool.mypy.overrides]]
+module = ["backend.models.*"]
+ignore_errors = true
+
+[[tool.mypy.overrides]]
+module = ["backend.services.orchestration_service"]
+ignore_errors = false

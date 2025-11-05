@@ -1,6 +1,6 @@
 # 💳 Stripe Monetization Setup Guide
 
-**Objective**: Build a complete SaaS payment system in Q-IDE using Stripe  
+**Objective**: Build a complete SaaS payment system in Top Dog using Stripe  
 **Timeline**: 1 week to integrate (can happen in parallel with Heroku deployment)  
 **Revenue Model**: Subscription tiers + usage-based billing  
 **Complexity**: Medium (straightforward API integration)
@@ -9,7 +9,7 @@
 
 ## Executive Summary
 
-You're going to add **professional payment processing** to Q-IDE using Stripe. This allows you to:
+You're going to add **professional payment processing** to Top Dog using Stripe. This allows you to:
 
 ✅ Charge users monthly subscriptions  
 ✅ Offer multiple pricing tiers  
@@ -18,7 +18,7 @@ You're going to add **professional payment processing** to Q-IDE using Stripe. T
 ✅ Handle failed payments automatically  
 ✅ Generate revenue reports  
 
-**After this week**: Q-IDE becomes a revenue-generating SaaS 💰
+**After this week**: Top Dog becomes a revenue-generating SaaS 💰
 
 ---
 
@@ -103,12 +103,12 @@ heroku config:set \
   STRIPE_SECRET_KEY="sk_test_..." \
   STRIPE_PUBLISHABLE_KEY="pk_test_..." \
   STRIPE_WEBHOOK_SECRET="whsec_..." \
-  --app q-ide-backend
+  --app Top Dog-backend
 
 # Frontend environment variables to set (Heroku):
 heroku config:set \
   VITE_STRIPE_PUBLISHABLE_KEY="pk_test_..." \
-  --app q-ide-frontend
+  --app Top Dog-frontend
 ```
 
 ### Set Up Products in Stripe Dashboard
@@ -119,14 +119,14 @@ STRIPE DASHBOARD STEPS:
 1. Go to: https://dashboard.stripe.com/products
 
 2. Create product "Pro Plan"
-   ├─ Name: "Q-IDE Pro"
+   ├─ Name: "Top Dog Pro"
    ├─ Description: "Professional features"
    ├─ Billing: Recurring
    ├─ Price: $12.00/month
    └─ Save
 
 3. Create product "Teams Plan"
-   ├─ Name: "Q-IDE Teams"
+   ├─ Name: "Top Dog Teams"
    ├─ Description: "Team collaboration"
    ├─ Billing: Recurring
    ├─ Price: $25.00/month per seat
@@ -484,7 +484,7 @@ async def handle_webhook(
 # Go to: https://dashboard.stripe.com/webhooks
 
 # Click "Add Endpoint"
-# Endpoint URL: https://q-ide-backend.herokuapp.com/api/billing/webhook
+# Endpoint URL: https://Top Dog-backend.herokuapp.com/api/billing/webhook
 # Select events:
 #   ├─ customer.subscription.created
 #   ├─ customer.subscription.updated
@@ -495,7 +495,7 @@ async def handle_webhook(
 # Click "Create Endpoint"
 # Copy "Signing Secret"
 # Add to Heroku:
-heroku config:set STRIPE_WEBHOOK_SECRET="whsec_..." --app q-ide-backend
+heroku config:set STRIPE_WEBHOOK_SECRET="whsec_..." --app Top Dog-backend
 ```
 
 ---
@@ -845,7 +845,7 @@ class EmailService:
     @staticmethod
     def send_invoice_receipt(email: str, invoice_data: dict):
         """Send payment receipt email"""
-        subject = "Q-IDE Invoice Receipt"
+        subject = "Top Dog Invoice Receipt"
         
         html_content = f"""
         <h1>Thank you for your payment!</h1>
@@ -860,7 +860,7 @@ class EmailService:
     @staticmethod
     def send_payment_failed(email: str, error: str):
         """Send payment failure email"""
-        subject = "Q-IDE Payment Failed"
+        subject = "Top Dog Payment Failed"
         
         html_content = f"""
         <h1>Payment Failed</h1>
@@ -1125,7 +1125,7 @@ heroku config:set \
   STRIPE_PUBLISHABLE_KEY="pk_live_..." \
   STRIPE_WEBHOOK_SECRET="whsec_live_..." \
   ENVIRONMENT="production" \
-  --app q-ide-backend
+  --app Top Dog-backend
 ```
 
 ---
@@ -1177,7 +1177,7 @@ YEAR 3:
 **Solution**: 
 - Check webhook endpoint is accessible from internet
 - Verify signing secret in Heroku matches Stripe dashboard
-- Check logs: `heroku logs --tail --app q-ide-backend`
+- Check logs: `heroku logs --tail --app Top Dog-backend`
 
 ### Issue: Checkout Redirects to Wrong URL
 **Solution**:
@@ -1211,7 +1211,7 @@ YEAR 3:
 **Timeline**: 1 week to integrate  
 **Effort**: ~50 hours (1-2 developers)  
 **Complexity**: Medium  
-**Revenue Impact**: 💰 Turns Q-IDE into a revenue-generating SaaS
+**Revenue Impact**: 💰 Turns Top Dog into a revenue-generating SaaS
 
 **You're ready to monetize!** 🚀💰
 

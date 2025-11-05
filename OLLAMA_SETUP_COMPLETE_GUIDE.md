@@ -1,6 +1,6 @@
 # 🚀 Ollama Installation & Setup - Step by Step
 
-**Objective**: Get Ollama running so Q-IDE auto-detects it  
+**Objective**: Get Ollama running so Top Dog auto-detects it  
 **Time**: 15-20 minutes  
 **Cost**: Free  
 **Difficulty**: Very Easy
@@ -162,11 +162,11 @@ Options:
 
 ---
 
-## Step 6: Refresh Q-IDE (2 minutes)
+## Step 6: Refresh Top Dog (2 minutes)
 
 ### Refresh Your Browser
 ```
-1. Go to Q-IDE window
+1. Go to Top Dog window
 2. Press F5 to refresh
 3. Wait 3-5 seconds for page to load
 ```
@@ -211,7 +211,7 @@ After selecting:
 ├─ Notification: "LLM selected" ✅
 ├─ Ollama is now your active LLM
 ├─ Q Assistant will use it for responses
-└─ Ready to start using Q-IDE!
+└─ Ready to start using Top Dog!
 ```
 
 ---
@@ -222,7 +222,7 @@ You now have:
 ```
 ✅ Ollama installed locally
 ✅ llama2 model downloaded
-✅ Q-IDE auto-detected it
+✅ Top Dog auto-detected it
 ✅ Ollama selected as LLM
 ✅ Ready to use Q Assistant
 ```
@@ -233,7 +233,7 @@ You now have:
 
 ### Test 1: Open Q Assistant
 ```
-In Q-IDE:
+In Top Dog:
 1. Look for chat icon or "Q Assistant" button
 2. Click it
 3. Open chat panel
@@ -278,10 +278,10 @@ If slower: Check your internet connection speed
 Alternative: Use smaller model (mistral-7b is faster)
 ```
 
-### Issue: Q-IDE still shows "0 available LLMs"
+### Issue: Top Dog still shows "0 available LLMs"
 ```
 Solution:
-1. Close and reopen Q-IDE completely
+1. Close and reopen Top Dog completely
 2. Or: Open new tab, go to http://localhost:5173
 3. Wait 5 seconds
 4. Refresh page (F5)
@@ -331,8 +331,8 @@ Use when: You want to work offline
 ```
 When you're ready (later):
 1. Get API key from: https://makersuite.google.com/app/apikey
-2. Add to Q-IDE: Providers → [Setup] → paste
-3. Q-IDE will have both Ollama + Google
+2. Add to Top Dog: Providers → [Setup] → paste
+3. Top Dog will have both Ollama + Google
 4. Can switch between them
 
 Pros:
@@ -349,7 +349,7 @@ ollama pull neural-chat  # Compact, good quality
 ollama pull orca-mini    # Fast, small
 ollama pull openhermes   # Good reasoning
 
-Switch in Q-IDE: Pool tab → select different one
+Switch in Top Dog: Pool tab → select different one
 ```
 
 ---
@@ -359,7 +359,7 @@ Switch in Q-IDE: Pool tab → select different one
 ```
 ✅ Installed Ollama
 ✅ Downloaded llama2 model  
-✅ Q-IDE auto-detected it
+✅ Top Dog auto-detected it
 ✅ Selected Ollama as LLM
 ✅ Tested with Q Assistant
 ✅ Ready to build with AI!
@@ -368,7 +368,7 @@ Switch in Q-IDE: Pool tab → select different one
 **You're now ready to:**
 - 🤖 Use Q Assistant for code generation
 - 💬 Have conversations with your AI
-- 🔧 Start using Q-IDE for development
+- 🔧 Start using Top Dog for development
 - 🚀 (Later) Build collaboration features
 
 ---
@@ -379,9 +379,9 @@ If anything doesn't work:
 1. Check "Troubleshooting" section above
 2. Make sure `ollama --version` works in PowerShell
 3. Make sure `ollama list` shows your downloaded model
-4. Try refreshing Q-IDE (F5) or restarting browser
+4. Try refreshing Top Dog (F5) or restarting browser
 5. If still stuck, restart your computer (forces everything to reload)
 
 ---
 
-**Ready? Follow the steps above and you'll have Ollama + Q-IDE working in ~15 minutes!**
+**Ready? Follow the steps above and you'll have Ollama + Top Dog working in ~15 minutes!**

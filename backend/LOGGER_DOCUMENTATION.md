@@ -1,4 +1,4 @@
-# 📊 Centralized Logging System - Q-IDE TopDog
+# 📊 Centralized Logging System - Top Dog TopDog
 
 ## Overview
 
@@ -124,14 +124,14 @@ api_metrics = logger.get_metrics("api")
 
 ### Console Output (Brief)
 ```
-2025-10-26 08:05:25 [INFO] q-ide: Application started | [user_id=123; action=build]
-2025-10-26 08:05:25 [ERROR] q-ide: Build failed | [user_id=123; action=build]
+2025-10-26 08:05:25 [INFO] Top Dog: Application started | [user_id=123; action=build]
+2025-10-26 08:05:25 [ERROR] Top Dog: Build failed | [user_id=123; action=build]
 ```
 
 ### File Output (Detailed)
 ```
-2025-10-26 08:05:25 [INFO] q-ide [Thread-1:process_data:145] Processing data | [user_id=123]
-2025-10-26 08:05:26 [ERROR] q-ide [MainThread:main:156] Unexpected error | [user_id=123]
+2025-10-26 08:05:25 [INFO] Top Dog [Thread-1:process_data:145] Processing data | [user_id=123]
+2025-10-26 08:05:26 [ERROR] Top Dog [MainThread:main:156] Unexpected error | [user_id=123]
   File "./app.py", line 156, in main
     result = process_data(items)
 ```
@@ -141,7 +141,7 @@ api_metrics = logger.get_metrics("api")
 {
   "timestamp": "2025-10-26T12:05:25.123456",
   "level": "ERROR",
-  "logger": "q-ide",
+  "logger": "Top Dog",
   "message": "Build failed",
   "module": "build",
   "function": "execute_build",
@@ -238,11 +238,11 @@ All logs are stored in `./logs/` directory:
 
 ```
 logs/
-├── q-ide-topdog.log          # Detailed rotating log (10 MB max, 5 backups)
-├── q-ide-topdog.log.1        # Rotated backups
-├── q-ide-topdog.log.2
-├── q-ide-topdog.json         # Structured JSON logs
-└── q-ide-topdog.json.1       # JSON backups
+├── Top Dog-topdog.log          # Detailed rotating log (10 MB max, 5 backups)
+├── Top Dog-topdog.log.1        # Rotated backups
+├── Top Dog-topdog.log.2
+├── Top Dog-topdog.json         # Structured JSON logs
+└── Top Dog-topdog.json.1       # JSON backups
 ```
 
 ## Performance Tracking

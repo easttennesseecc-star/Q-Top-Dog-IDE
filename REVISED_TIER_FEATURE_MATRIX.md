@@ -1,4 +1,4 @@
-# Q-IDE Membership Tier Structure - REVISED
+# Top Dog Membership Tier Structure - REVISED
 
 ## Progressive Value Ladder Model
 
@@ -61,7 +61,7 @@ SUPPORT
 
 #### **FREE ($0/month)**
 - **Who**: Hobbyists, learners, evaluators
-- **Value**: Try Q-IDE risk-free for 7 days (trial)
+- **Value**: Try Top Dog risk-free for 7 days (trial)
 - **Limitations**: 20 API calls/day (≈ 2-3 small projects/day), no code execution
 - **Conversion hook**: "Upgrade to PRO to execute your code"
 - **Expected conversion**: 5-10% (those who actually want to build things)

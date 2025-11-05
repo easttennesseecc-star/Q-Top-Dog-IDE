@@ -30,6 +30,18 @@ LLM_ROLES = {
         "capabilities": ["code_review", "documentation_analysis", "intent_parsing"],
         "recommended_models": ["copilot", "gpt-4", "gemini-pro", "claude-3"]
     },
+    "security": {
+        "name": "Security Review",
+        "description": "Finds vulnerable patterns, unsafe configs, dependency risks",
+        "capabilities": ["dependency_audit", "vulnerability_scan", "secure_coding_review"],
+        "recommended_models": ["gpt-4", "claude-3", "copilot", "gemini-pro"]
+    },
+    "testing": {
+        "name": "Testing & QA",
+        "description": "Writes tests, refactors for testability, inspects coverage gaps",
+        "capabilities": ["test_generation", "refactoring_for_testability", "coverage_analysis"],
+        "recommended_models": ["copilot", "gpt-4", "gemini-pro", "claude-3"]
+    },
     "coding": {
         "name": "Code Generation",
         "description": "Generates code, fixes bugs, writes tests",
@@ -110,6 +122,15 @@ CLOUD_LLMS = {
         "auth_type": "api_key",
         "requires_key": True,
         "notes": "Excellent reasoning. Requires Anthropic API key."
+    },
+    "claude-3.5-sonnet": {
+        "name": "Claude 3.5 Sonnet",
+        "provider": "anthropic",
+        "api_endpoint": "https://api.anthropic.com/v1/messages",
+        "auth_type": "api_key",
+        "requires_key": True,
+        "enabled": True,
+        "notes": "Latest Anthropic model with enhanced reasoning and coding. Available for all clients."
     },
     "grok": {
         "name": "xAI Grok",
@@ -366,8 +387,12 @@ def get_setup_instructions(provider: str) -> str:
 
 def get_q_assistant_llm() -> Optional[Dict]:
     """Get the LLM currently assigned to the Q Assistant."""
-    # Q Assistant uses the "coding" role by default (most versatile)
-    assigned_model = get_model_for_role("coding")
+    # Q Assistant uses the "q_assistant" role (new system) or "coding" role (legacy fallback)
+    assigned_model = get_model_for_role("q_assistant")
+    
+    # Fallback to "coding" role for backwards compatibility
+    if not assigned_model:
+        assigned_model = get_model_for_role("coding")
     
     if not assigned_model:
         # Try to find best available LLM
@@ -379,7 +404,7 @@ def get_q_assistant_llm() -> Optional[Dict]:
                 "name": best[0].get("name"),
                 "source": best[0].get("source"),
                 "status": "auto_selected",
-                "assigned_role": "coding (auto-selected)",
+                "assigned_role": "q_assistant (auto-selected)",
                 "priority_score": best[0].get("priority_score", 0)
             }
         return None
@@ -395,7 +420,7 @@ def get_q_assistant_llm() -> Optional[Dict]:
             "name": config["name"],
             "type": "cloud",
             "source": config["provider"],
-            "assigned_role": "coding",
+            "assigned_role": "q_assistant",
             "has_credentials": bool(get_api_key(config["provider"])),
             "endpoint": config["api_endpoint"]
         }
@@ -408,7 +433,7 @@ def get_q_assistant_llm() -> Optional[Dict]:
             "name": config["name"],
             "type": "local",
             "source": config["type"],
-            "assigned_role": "coding",
+            "assigned_role": "q_assistant",
             "download_url": config["download_url"]
         }
     

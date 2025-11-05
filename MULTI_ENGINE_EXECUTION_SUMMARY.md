@@ -63,7 +63,7 @@ You asked to integrate **Unity, Unreal Engine, Godot, and Docker containers**. H
 | **TOTAL** | **ALL 4** | **6M+** | **All segments** | **$30-1.5k/mo** | **$840k** |
 
 **Strategic Positioning**: 
-- Q-IDE = **only IDE supporting all 4 engines** at professional level
+- Top Dog = **only IDE supporting all 4 engines** at professional level
 - Competitors focused on 1 engine or general development
 - **Unassailable competitive moat**: Network effects + high switching costs
 
@@ -81,10 +81,10 @@ AAA Studio: Visual Studio + Unreal Editor + Perforce + Slack
 
 **Pain Points**: Context-switching, no unified debugging, no asset sharing, poor collaboration
 
-### Q-IDE Unified Workflow
+### Top Dog Unified Workflow
 ```
 ALL Developers:
-├─ Q-IDE (one IDE for all engines)
+├─ Top Dog (one IDE for all engines)
 ├─ Unified debugging (all engines)
 ├─ Shared asset manager (all engines)
 ├─ Real-time collaboration (all engines)
@@ -144,12 +144,12 @@ Frontend:
 3. **Custom Games**: Any game runtime packaged as container
 4. **Cloud Ready**: Deploy containers to AWS/GCP for scalable builds
 
-### Docker Architecture in Q-IDE
+### Docker Architecture in Top Dog
 
 ```
 User Project Files
   ↓
-Q-IDE IDE Interface
+Top Dog IDE Interface
   ├─ Construct 3: WebAssembly (runs in browser, no container)
   ├─ Godot: Docker Container (port 6006 debugger, 8006 preview)
   ├─ Unity: Direct attach to Editor (no container needed)
@@ -215,7 +215,7 @@ Month 12: $1.6M MRR  (+10% growth, Year 1 finish = $19.2M/yr)
 ### Tier 1: Full Partnership (Revenue Share - 15-20%)
 
 **Construct 3**
-- Co-branded launch: "Q-IDE Official Construct 3 IDE"
+- Co-branded launch: "Top Dog Official Construct 3 IDE"
 - Joint marketing: Construct 3 newsletter, Discord, webinars
 - Revenue share: 20% to Construct 3 team
 - Launch: Nov 21, 2025
@@ -409,7 +409,7 @@ Month 12: $1.6M MRR  (+10% growth, Year 1 finish = $19.2M/yr)
 
 ### What This Strategy Delivers
 
-Q-IDE transforms from **competitive IDE** to **category-defining platform**:
+Top Dog transforms from **competitive IDE** to **category-defining platform**:
 
 ✅ **Unified Game Development**: Single IDE for indie devs, professionals, AAA studios  
 ✅ **Unassailable Moat**: No competitor can replicate (network effects + switching costs)  

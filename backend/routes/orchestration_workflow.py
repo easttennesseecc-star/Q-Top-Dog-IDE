@@ -20,7 +20,7 @@ from backend.orchestration.workflow_state_machine import (
     WorkflowStateTransition,
 )
 from backend.services.orchestration_service import OrchestrationService
-from middleware.tier_validator import require_tier_access
+from backend.middleware.tier_validator import require_tier_access
 
 logger = logging.getLogger(__name__)
 
@@ -246,7 +246,7 @@ async def get_workflow_status(
     request: Request = None,
 ):
     """
-    Get comprehensive status of a workflow from database.
+    Get comprehensive status of a workflow from backend.database.
     
     Returns current state, progress, completed phases, and next expectations.
     

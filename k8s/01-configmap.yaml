@@ -1,0 +1,70 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: q-ide-config
+  namespace: q-ide
+  labels:
+    app: q-ide
+    component: config
+data:
+  ENVIRONMENT: "production"
+  DEBUG: "false"
+  LOG_LEVEL: "info"
+  ENABLE_REGULATED_DOMAINS: "true"
+  # Overwatch defaults per edition
+  DEFAULT_OVERWATCH_LLM_DEV: ""
+  REQUIRE_OVERWATCH_DEV: "false"
+  BLOCK_ON_OVERWATCH_FAIL_DEV: "false"
+  # Worker LLM defaults by edition
+  DEV_PRIMARY_LLM: ""
+  DEV_SECONDARY_LLM: ""
+  DEFAULT_PRIMARY_LLM_REGULATED: ""
+  DEFAULT_SECONDARY_LLM_REGULATED: ""
+  BANNER_DEV: "Developer profile: fast path, Overwatch optional."
+  BANNER_REGULATED: "Regulated profile active: medical/scientific safeguards enforced."
+  
+  # Frontend URLs
+  FRONTEND_URL: "https://q-ide.com"
+  FRONTEND_HOST: "0.0.0.0"
+  FRONTEND_PORT: "3000"
+  NODE_ENV: "production"
+  # Workspace profile gating (default|medical|science)
+  WORKSPACE_PROFILE: "default"
+  
+  # Backend URLs
+  BACKEND_URL: "https://api.q-ide.com"
+  BACKEND_HOST: "0.0.0.0"
+  BACKEND_PORT: "8000"
+  
+  # Database
+  DATABASE_HOST: "postgres"
+  DATABASE_PORT: "5432"
+  DATABASE_NAME: "q_ide_prod"
+  DATABASE_USER: "q_ide_user"
+  
+  # CORS
+  CORS_ORIGINS: |
+    https://q-ide.com
+    https://www.q-ide.com
+    https://api.q-ide.com
+    http://q-ide.com
+    http://www.q-ide.com
+    http://api.q-ide.com
+    http://localhost:3000
+    http://localhost:8000
+
+  # Content Security Policy (can be overridden per environment)
+  CSP_POLICY: |
+    default-src 'self'; connect-src 'self' https://q-ide.com https://api.q-ide.com https: wss:; img-src 'self' data: https:; font-src 'self' https: data:; style-src 'self' 'unsafe-inline' https:; script-src 'self' 'unsafe-inline' https:; frame-ancestors 'self'; base-uri 'self'; form-action 'self'
+
+  # Domain triads (primary, secondary, overwatch) for LLM selection
+  # Medical domain
+  MED_PRIMARY_LLM: "gpt-4o-mini"           # e.g., OpenAI model name or provider-qualified
+  MED_SECONDARY_LLM: "claude-3-haiku"      # fallback worker for medical
+  MED_OVERWATCH_LLM: "gemini-1.5-pro"      # reviewer model for verification
+
+  # Science domain
+  SCIENCE_PRIMARY_LLM: "gemini-1.5-pro"
+  SCIENCE_SECONDARY_LLM: "gpt-4o-mini"
+  SCIENCE_OVERWATCH_LLM: "claude-3-opus"

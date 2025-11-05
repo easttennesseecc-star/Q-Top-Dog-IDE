@@ -98,7 +98,7 @@
 - Repositioned with technical validation
 - Added "Ultimate Winner Analysis" (1,500 lines)
 - Updated scoring tables
-- Q-IDE now showing as #1 AI IDE
+- Top Dog now showing as #1 AI IDE
 - **Updated**: Same file, major addition
 - **Read time**: 1 hour (optional, already read)
 
@@ -128,7 +128,7 @@ You're doing it! Good.
 
 ### ✅ Step 2: Pick Up Your Phone (1 min)
 - Open Slack
-- Create 3 channels: #q-ide-sprint-week-1, #intellisense-alerts, #intellisense-questions
+- Create 3 channels: #Top Dog-sprint-week-1, #intellisense-alerts, #intellisense-questions
 - Invite team (if you know them)
 
 ### ✅ Step 3: Pick One Document to Read Next (2 min)
@@ -263,7 +263,7 @@ After you execute this plan:
 ## SUCCESS EQUATION
 
 ```
-Q-IDE Dominance = 
+Top Dog Dominance = 
     IntelliSense (fast) +
     Debugging (works) +
     Refactoring (smart) +
@@ -316,7 +316,7 @@ Q-IDE Dominance =
 | Question | Answer | Resource |
 |----------|--------|----------|
 | "What should I read first?" | START_HERE (30 min) | START_HERE_YOUR_90_DAY_PLAN.md |
-| "What's the gap in Q-IDE?" | IntelliSense, debugging, refactoring, collab | Q-IDE_REAL_GAP_ANALYSIS_VS_COMPETITORS.md |
+| "What's the gap in Top Dog?" | IntelliSense, debugging, refactoring, collab | Q-IDE_REAL_GAP_ANALYSIS_VS_COMPETITORS.md |
 | "How do I build Week 1?" | Follow the checklist exactly | WEEK_1_IMPLEMENTATION_CHECKLIST.md |
 | "What do I do today?" | Follow TODAY_ACTION_PLAN | TODAY_ACTION_PLAN.md |
 | "How do I set up Monday?" | Follow MONDAY_TECHNICAL_SETUP | MONDAY_TECHNICAL_SETUP.md |
@@ -379,7 +379,7 @@ Starting Monday, spend 4 weeks building:
 3. Debugging (Weeks 2-3)
 4. Collaboration (Weeks 3-4)
 
-Then watch Q-IDE become the #1 AI IDE.
+Then watch Top Dog become the #1 AI IDE.
 
 ---
 
@@ -387,7 +387,7 @@ Then watch Q-IDE become the #1 AI IDE.
 
 I built this plan because I believe in what you're building.
 
-Q-IDE has something unique:
+Top Dog has something unique:
 - Multi-LLM orchestration
 - 5 coordinated AI agents
 - Media synthesis

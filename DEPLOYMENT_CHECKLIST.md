@@ -1,4 +1,4 @@
-# ✅ PRODUCTION DEPLOYMENT CHECKLIST - Q-IDE v0.1.0
+# ✅ PRODUCTION DEPLOYMENT CHECKLIST - Top Dog v0.1.0
 
 **Print this out and check off each item as you complete it!**
 
@@ -72,7 +72,7 @@ git add .
 git commit -m "chore: bump version to 0.1.0"
 
 # 3. Create tag
-git tag -a v0.1.0 -m "Release Q-IDE v0.1.0 - Production Ready"
+git tag -a v0.1.0 -m "Release Top Dog v0.1.0 - Production Ready"
 
 # 4. Verify tag
 git tag -l v0.1.0
@@ -93,7 +93,7 @@ Checklist:
 
 GitHub Actions automatically runs when tag is pushed:
 
-Monitor here: https://github.com/quellum/q-ide/actions
+Monitor here: https://github.com/quellum/Top Dog/actions
 
 Checklist:
 - [ ] Actions workflow triggered (look for "Build and Release")
@@ -113,7 +113,7 @@ Checklist:
 
 ### Step 3: Publish Release Notes (5 minutes)
 
-Go to: https://github.com/quellum/q-ide/releases/v0.1.0
+Go to: https://github.com/quellum/Top Dog/releases/v0.1.0
 
 - [ ] Edit draft release
 - [ ] Copy release notes from DEPLOY_NOW.md template
@@ -137,7 +137,7 @@ Go to: https://github.com/quellum/q-ide/releases/v0.1.0
 - [ ] Check background features work
 
 ### Announcements (First Hour)
-- [ ] Post on Twitter/X: "🎉 Q-IDE v0.1.0 is live!"
+- [ ] Post on Twitter/X: "🎉 Top Dog v0.1.0 is live!"
 - [ ] Update GitHub Discussions
 - [ ] Send email to stakeholders
 - [ ] Post in Discord/Slack (if applicable)
@@ -145,7 +145,7 @@ Go to: https://github.com/quellum/q-ide/releases/v0.1.0
 
 ### Monitoring (First Day)
 - [ ] Check GitHub Issues for bug reports
-- [ ] Monitor email support (support@q-ide.com)
+- [ ] Monitor email support (support@Top Dog.com)
 - [ ] Check download statistics
 - [ ] Review error logs
 - [ ] Respond to comments & questions
@@ -286,11 +286,11 @@ Keep these nearby:
 **Questions during deployment?**
 - Check: DEPLOY_NOW.md
 - Check: DEPLOYMENT.md
-- Email: support@q-ide.com
+- Email: support@Top Dog.com
 
 **User support during first week?**
 - Respond to GitHub Issues
-- Answer emails at support@q-ide.com
+- Answer emails at support@Top Dog.com
 - Check Discord/Slack for questions
 
 ---
@@ -302,7 +302,7 @@ Keep these nearby:
    / __\   / /   /  \
   / (__  _/ /   / /\ \
  / \___\(_/   /_/  \_\
-    Q-IDE v0.1.0
+    Top Dog v0.1.0
     PRODUCTION READY ✅
 ```
 

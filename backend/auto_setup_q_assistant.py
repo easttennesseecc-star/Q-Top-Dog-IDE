@@ -7,7 +7,7 @@ import os
 import json
 import logging
 from typing import Optional, Dict, Any
-from llm_config import get_q_assistant_llm
+from backend.llm_config import get_q_assistant_llm
 
 logger = logging.getLogger("q-ide-topdog")
 

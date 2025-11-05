@@ -1,6 +1,6 @@
 # 📅 180-DAY DOMINATION ROADMAP: Week-by-Week Execution Plan
 
-**Mission**: Transform Q-IDE from "competitive" to "unbeatable"  
+**Mission**: Transform Top Dog from "competitive" to "unbeatable"  
 **Timeline**: 26 weeks (180 days)  
 **Target**: #1 IDE globally with unassailable market position  
 **Current Date**: October 29, 2025  
@@ -16,19 +16,19 @@ PHASE 1: CORE IDE DOMINANCE (Weeks 1-6, Nov 3 - Dec 14)
 ├─ Week 1-2: Refactoring suite completion (50+ ops) + IntelliSense <50ms
 ├─ Week 3-4: Browser debugging + mobile debugging
 ├─ Week 5-6: Performance optimization (5x speed improvements)
-└─ GOAL: "Q-IDE has features GitHub doesn't have"
+└─ GOAL: "Top Dog has features GitHub doesn't have"
 
 PHASE 2: COLLABORATION MOAT (Weeks 7-10, Dec 16 - Jan 10)
 ├─ Week 7-8: Real-time editing with Yjs CRDT
 ├─ Week 9-10: Cursor presence + shared debugging + team chat
-└─ GOAL: "Teams choose Q-IDE for collaboration alone"
+└─ GOAL: "Teams choose Top Dog for collaboration alone"
 
 PHASE 3: ECOSYSTEM LOCK-IN (Weeks 11-18, Jan 13 - Mar 2)
 ├─ Week 11-12: Extension marketplace + VS Code compatibility
 ├─ Week 13-14: Integration ecosystem (50+ integrations)
 ├─ Week 15-16: AI agent marketplace
 ├─ Week 17-18: Developer tools + analytics
-└─ GOAL: "Q-IDE is the hub, not just an IDE"
+└─ GOAL: "Top Dog is the hub, not just an IDE"
 
 PHASE 4: ENTERPRISE DOMINANCE (Weeks 19-22, Mar 3 - Mar 31)
 ├─ Week 19-20: SOC2 Type II compliance + enterprise features
@@ -38,7 +38,7 @@ PHASE 4: ENTERPRISE DOMINANCE (Weeks 19-22, Mar 3 - Mar 31)
 PHASE 5: MARKET LOCK-IN (Weeks 23-26, Apr 1 - Apr 28)
 ├─ Week 23-24: Learning platform + certifications + community
 ├─ Week 25-26: Network effects unleashed
-└─ GOAL: "Q-IDE becomes synonymous with 'IDE'"
+└─ GOAL: "Top Dog becomes synonymous with 'IDE'"
 ```
 
 ---
@@ -46,7 +46,7 @@ PHASE 5: MARKET LOCK-IN (Weeks 23-26, Apr 1 - Apr 28)
 ## PHASE 1: CORE IDE DOMINANCE + UNIVERSAL GAME DEV (6 weeks)
 
 ### STRATEGIC ADVANTAGE: Multi-Engine Game Development
-> **Q-IDE becomes THE IDE for ALL game developers**
+> **Top Dog becomes THE IDE for ALL game developers**
 > - First IDE supporting 4 major game engines (Construct 3, Godot, Unity, Unreal)
 > - Serves indie devs (C3), hobbyists (Godot), professionals (Unity), AAA studios (Unreal)
 > - Unified debugging, asset management, preview panel across all engines
@@ -302,7 +302,7 @@ Backend (Python)
 - [ ] Low-latency streaming (real-time step)
 
 **Deliverables**:
-- WebRTC P2P connection between iPhone and Q-IDE
+- WebRTC P2P connection between iPhone and Top Dog
 - Mobile-optimized breakpoint UI
 - iPad-specific debug layout
 - Demo video showing iPhone debugging
@@ -391,14 +391,14 @@ Memory per 100k LOC    50MB       10MB        5x
 
 **Demo Content**:
 ```
-"Q-IDE Week 1-6 Achievements" video (5min):
+"Top Dog Week 1-6 Achievements" video (5min):
 ├─ [0:00] Intro: "We built something faster than VS Code"
 ├─ [0:30] IntelliSense demo (show <50ms latency)
 ├─ [1:00] Refactoring demo (50+ operations)
 ├─ [1:30] Mobile debugging demo (iPhone + iPad)
 ├─ [2:00] Performance comparison (chart vs GitHub)
 ├─ [2:30] Team reaction (developers testing)
-├─ [3:00] Conclusion: "Q-IDE is the fastest IDE"
+├─ [3:00] Conclusion: "Top Dog is the fastest IDE"
 └─ [5:00] CTA: "Try free today"
 ```
 
@@ -474,7 +474,7 @@ intellisense_refactoring = {
 
 ```
 Architecture:
-├─ C3 Runtime (embedded in Q-IDE)
+├─ C3 Runtime (embedded in Top Dog)
 │  ├─ Wasm module (C3 game engine compiled to WebAssembly)
 │  ├─ Canvas renderer (2D game rendering)
 │  ├─ Physics engine (Chipmunk physics)
@@ -512,7 +512,7 @@ Task 1.9: C3 Runtime Integration
 ├─ Create: backend/services/construct3_runtime.py
 ├─ Lines: 400-500
 ├─ Implement: WebAssembly C3 engine, game state management
-├─ Acceptance: C3 game loads in Q-IDE, renders at 60fps
+├─ Acceptance: C3 game loads in Top Dog, renders at 60fps
 ├─ Est: 3 days
 
 Task 1.10: Live Preview Panel
@@ -553,7 +553,7 @@ Game Debugger Latency       N/A       <100ms    Real-time debug
 - QA Lead: C3 testing framework
 
 **Acceptance Criteria**:
-- [x] C3 runtime loads in Q-IDE
+- [x] C3 runtime loads in Top Dog
 - [x] Game preview renders at 60fps
 - [x] Asset manager functional
 - [x] Game debugger working (breakpoints, inspection)
@@ -585,7 +585,7 @@ Construct 3 Features Complete:
 ├─ Multiplayer events (real-time sync for games)
 └─ C3 community marketplace (browse + import projects)
 
-Q-IDE Features Complete:
+Top Dog Features Complete:
 ├─ 50 refactorings (all types)
 ├─ IntelliSense <50ms (5+ languages)
 ├─ Game debugger (full breakpoint support)
@@ -594,23 +594,23 @@ Q-IDE Features Complete:
 ```
 
 **Construct 3 Integration Marketing**:
-> "Q-IDE is the first IDE where you can build AND debug your Construct 3 games without leaving the editor"
+> "Top Dog is the first IDE where you can build AND debug your Construct 3 games without leaving the editor"
 
 **Why This Matters**:
 ```
 Current workflow:
-1. Write code in Q-IDE
+1. Write code in Top Dog
 2. Switch to Construct 3 (separate app)
 3. Test game
 4. Debug in Construct 3
-5. Switch back to Q-IDE
+5. Switch back to Top Dog
 6. Repeat
 
-Q-IDE workflow (NEW):
-1. Write code + design game in Q-IDE (all in one place)
+Top Dog workflow (NEW):
+1. Write code + design game in Top Dog (all in one place)
 2. Test game (live preview in side panel)
-3. Debug game (breakpoints in Q-IDE)
-4. Done (never leave Q-IDE)
+3. Debug game (breakpoints in Top Dog)
+4. Done (never leave Top Dog)
 ```
 
 **Performance Targets**: IntelliSense <50ms, C3 debugging <100ms
@@ -692,7 +692,7 @@ Code Review:
 - Marketplace website
 - Extension API SDK
 - 500 VS Code extensions ported
-- Revenue sharing system (15% to Q-IDE, 85% to developer)
+- Revenue sharing system (15% to Top Dog, 85% to developer)
 
 **Extension Categories**:
 ```
@@ -819,7 +819,7 @@ Developer Services (7):
 - [ ] Publish Q's 5 agents to marketplace
 - [ ] Agent API for custom development
 - [ ] Community voting system
-- [ ] Revenue sharing (80% developer, 20% Q-IDE)
+- [ ] Revenue sharing (80% developer, 20% Top Dog)
 
 **Q's Standard Agents**:
 ```
@@ -868,7 +868,7 @@ Custom Agents Developers Will Build:
 - [ ] Team productivity dashboard
 - [ ] Code metrics (commits, tests, deploys)
 - [ ] Learning platform with certification
-- [ ] Q-IDE Developer & Expert certifications
+- [ ] Top Dog Developer & Expert certifications
 
 **Analytics Dashboard**:
 ```
@@ -885,22 +885,22 @@ Metrics Tracked:
 Insights Generated:
 ├─ "Your team is 3x more productive than average"
 ├─ "Test coverage increased by 15% this month"
-├─ "Deployment frequency up 2x with Q-IDE"
+├─ "Deployment frequency up 2x with Top Dog"
 ├─ "Average code review time: 2 hours (down from 4)"
 └─ "Pair programming adoption: 40% of developers"
 ```
 
 **Certification Path**:
 ```
-Q-IDE Developer Certification:
-├─ Module 1: Q-IDE Basics (IDE features)
+Top Dog Developer Certification:
+├─ Module 1: Top Dog Basics (IDE features)
 ├─ Module 2: AI Assistance (LLM integration)
 ├─ Module 3: Collaboration (team features)
 ├─ Module 4: Debugging (debugging workflow)
 ├─ Module 5: Deployment (CI/CD integration)
 └─ Exam: 60 questions, 80% pass
 
-Q-IDE Expert Certification:
+Top Dog Expert Certification:
 ├─ Module 1-5 (above) +
 ├─ Module 6: Extension Development
 ├─ Module 7: Team Leadership
@@ -912,7 +912,7 @@ Q-IDE Expert Certification:
 Badging:
 ├─ LinkedIn badge (shareable)
 ├─ Resume badge (PDF certificate)
-├─ Community badge (Q-IDE platform)
+├─ Community badge (Top Dog platform)
 └─ Employer verification (employers can verify)
 ```
 
@@ -926,7 +926,7 @@ Badging:
 
 ## GROWTH STRATEGY: PRODUCT-LED (No Sales Team)
 
-### Why Product-Led Growth Works for Q-IDE
+### Why Product-Led Growth Works for Top Dog
 
 **Traditional Model** (GitHub, VS Code competitors):
 ```
@@ -941,9 +941,9 @@ Enterprise contract signed
 Slow adoption (requires IT approval, training)
 ```
 
-**Your Model** (Q-IDE):
+**Your Model** (Top Dog):
 ```
-Developer discovers Q-IDE
+Developer discovers Top Dog
     ↓
 Uses free tier (no pitch needed)
     ↓
@@ -959,7 +959,7 @@ Fast adoption (team already knows product)
 ### Viral Loops That Drive Growth
 
 **Loop 1: Developer → Team**
-- Developer uses Q-IDE at home
+- Developer uses Top Dog at home
 - Shares with team (Discord, Slack)
 - Team tries → loves → adopts
 - Result: Team of 5-10 becomes paying customers
@@ -977,14 +977,14 @@ Fast adoption (team already knows product)
 - Result: 2M users by Month 6 organically
 
 **Loop 4: Learning Platform → Community**
-- Developers get certified in Q-IDE
-- Certified developers recommend Q-IDE to others
+- Developers get certified in Top Dog
+- Certified developers recommend Top Dog to others
 - Community grows (network effect)
 - Result: Self-sustaining ecosystem
 
 ### Why You Don't Need Sales Team
 
-1. **Product is defensible** - Q-IDE is legitimately faster/better
+1. **Product is defensible** - Top Dog is legitimately faster/better
 2. **Word of mouth is powerful** - Developers trust other developers more than salesmen
 3. **Pricing is transparent** - No negotiation needed = faster deals
 4. **Support-driven, not sales-driven** - Teams adopt, support keeps them happy
@@ -1165,10 +1165,10 @@ Enterprise Tier (Self-Serve):
 **How Enterprise Customers Find You**:
 ```
 Path to Enterprise Adoption (No Sales):
-├─ Developer uses Q-IDE at home (free tier)
+├─ Developer uses Top Dog at home (free tier)
 ├─ Developer loves it, shows team
 ├─ Team adopts on free/pro tier
-├─ Team lead evaluates Q-IDE for company
+├─ Team lead evaluates Top Dog for company
 ├─ Company sees cost/productivity gains
 ├─ Company signs enterprise contract (website self-serve)
 ├─ Support team handles onboarding (automated workflows)
@@ -1195,10 +1195,10 @@ Support Team (Small, Efficient):
 ```
 
 **Why This Works**:
-1. **Reviews will destroy competitors** - "Q-IDE is 3x faster and cheaper than GitHub"
+1. **Reviews will destroy competitors** - "Top Dog is 3x faster and cheaper than GitHub"
 2. **Viral adoption** - Developers share with teams → companies adopt
 3. **Better margins** - No sales team overhead = higher profit
-4. **Authentic** - Companies choose Q-IDE because it's better, not because of salesman pressure
+4. **Authentic** - Companies choose Top Dog because it's better, not because of salesman pressure
 5. **Sustainable** - Once reputation is set, organic growth continues
 
 **Acceptance Criteria**:
@@ -1314,10 +1314,10 @@ Business Metrics:
 **PR Blitz**:
 ```
 Press Targets:
-├─ TechCrunch: "Q-IDE Becomes #1 IDE in 6 Months"
-├─ Forbes: "How Q-IDE Disrupted Developer Tools"
+├─ TechCrunch: "Top Dog Becomes #1 IDE in 6 Months"
+├─ Forbes: "How Top Dog Disrupted Developer Tools"
 ├─ MIT Technology Review: "The Future of Programming IDEs"
-├─ Wall Street Journal: "Q-IDE Challenges Microsoft"
+├─ Wall Street Journal: "Top Dog Challenges Microsoft"
 ├─ Fast Company: "Most Innovative Developer Tool"
 └─ Podcasts: Dev.fm, Changelog, Syntax, etc.
 
@@ -1362,7 +1362,7 @@ Month 1-2: Developers discover (free tier adoption)
 Month 3: Teams adopt (organic sharing)
 Month 4-5: Companies evaluate (reputation building)
 Month 6: Enterprise contracts signed (inbound inquiry model)
-├─ Company finds Q-IDE via Google/reviews
+├─ Company finds Top Dog via Google/reviews
 ├─ Company signs up self-serve
 ├─ Support handles onboarding
 ├─ Company expands across org
@@ -1433,7 +1433,7 @@ Month 6: Enterprise contracts signed (inbound inquiry model)
 
 ## CONCLUSION
 
-**This is the plan to make Q-IDE #1 IDE in the market.**
+**This is the plan to make Top Dog #1 IDE in the market.**
 
 **No guessing. No pivoting. Just execution.**
 

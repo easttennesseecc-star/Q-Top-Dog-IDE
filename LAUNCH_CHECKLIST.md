@@ -12,7 +12,7 @@
 - [ ] In folder: `c:\Quellum-topdog-ide\`
 
 ### Files Verification ✓
-- [ ] `🚀_LAUNCH_Q-IDE.bat` exists
+- [ ] `🚀_LAUNCH_Top Dog.bat` exists
 - [ ] `START.bat` exists
 - [ ] `backend\` folder exists
 - [ ] `frontend\` folder exists
@@ -36,7 +36,7 @@
 - [ ] You can see all the files
 
 ### Step 2: Launch
-- [ ] Find: `🚀_LAUNCH_Q-IDE.bat` (look for rocket emoji 🚀)
+- [ ] Find: `🚀_LAUNCH_Top Dog.bat` (look for rocket emoji 🚀)
 - [ ] Double-click it
 - [ ] First command window opens
 
@@ -50,7 +50,7 @@
 ### Step 4: Confirm
 - [ ] Check backend window shows FastAPI running
 - [ ] Check frontend window shows Vite dev server
-- [ ] Browser shows Q-IDE interface at http://localhost:1431
+- [ ] Browser shows Top Dog interface at http://localhost:1431
 - [ ] Setup wizard appears
 
 ---
@@ -78,7 +78,7 @@
 [OK] Frontend started - waiting for startup...
 
 ✓ BOTH SERVERS STARTED SUCCESSFULLY!
-✓ Opening Q-IDE in your browser...
+✓ Opening Top Dog in your browser...
 ```
 
 ### Backend Window
@@ -99,7 +99,7 @@ INFO:     Uvicorn running on http://127.0.0.1:8000
 
 ### Browser Window
 - URL shows: `http://localhost:1431`
-- Q-IDE interface loads
+- Top Dog interface loads
 - Setup wizard appears
 - Ready for configuration
 
@@ -111,13 +111,13 @@ INFO:     Uvicorn running on http://127.0.0.1:8000
 - [ ] Complete Setup Wizard
   - [ ] Choose LLM provider (OpenAI/Anthropic/Google/Mistral)
   - [ ] Get API key from provider website
-  - [ ] Paste API key into Q-IDE
+  - [ ] Paste API key into Top Dog
   - [ ] Verify connection works
-  - [ ] Q-IDE auto-assigns models to roles
+  - [ ] Top Dog auto-assigns models to roles
 
 ### Short Term (Next 30 minutes)
 - [ ] Describe your app idea
-- [ ] Watch Q-IDE generate code
+- [ ] Watch Top Dog generate code
 - [ ] Review generated codebase
 - [ ] Download project files
 
@@ -133,7 +133,7 @@ INFO:     Uvicorn running on http://127.0.0.1:8000
 
 | URL | Purpose | When |
 |-----|---------|------|
-| http://localhost:1431 | Main Q-IDE app | Immediately after launch |
+| http://localhost:1431 | Main Top Dog app | Immediately after launch |
 | http://localhost:8000 | Backend API | For direct API testing |
 | http://localhost:8000/docs | API documentation | For API reference |
 
@@ -176,7 +176,7 @@ INFO:     Uvicorn running on http://127.0.0.1:8000
 ## Keep & Reference Checklist
 
 ### Launcher Files to Keep
-- [ ] `🚀_LAUNCH_Q-IDE.bat` - Daily launcher
+- [ ] `🚀_LAUNCH_Top Dog.bat` - Daily launcher
 - [ ] `START.bat` - Alternative launcher
 
 ### Documentation to Reference
@@ -193,17 +193,17 @@ INFO:     Uvicorn running on http://127.0.0.1:8000
 
 ## Daily Use Checklist
 
-### Every Day You Use Q-IDE
+### Every Day You Use Top Dog
 
 #### Morning
 - [ ] Open: `c:\Quellum-topdog-ide\`
-- [ ] Double-click: `🚀_LAUNCH_Q-IDE.bat` (or desktop icon)
+- [ ] Double-click: `🚀_LAUNCH_Top Dog.bat` (or desktop icon)
 - [ ] Wait: 15-20 seconds
-- [ ] Browser opens: Q-IDE ready
+- [ ] Browser opens: Top Dog ready
 - [ ] Start building!
 
 #### Evening (Before Closing)
-- [ ] Save any projects in Q-IDE
+- [ ] Save any projects in Top Dog
 - [ ] Close browser window
 - [ ] Close backend window (press Ctrl+C)
 - [ ] Close frontend window (press Ctrl+C)
@@ -234,7 +234,7 @@ INFO:     Uvicorn running on http://127.0.0.1:8000
 - Shows "Local: http://localhost:1431"
 
 ✓ **Browser**
-- Shows Q-IDE interface
+- Shows Top Dog interface
 - Shows Setup Wizard
 - Ready for configuration
 
@@ -299,10 +299,10 @@ When you've checked all boxes above:
 
 ```
 Location: c:\Quellum-topdog-ide\
-Launcher: 🚀_LAUNCH_Q-IDE.bat
+Launcher: 🚀_LAUNCH_Top Dog.bat
 Action: Double-click
 Time: 15-20 seconds
-Result: Q-IDE Running! ✓
+Result: Top Dog Running! ✓
 ```
 
 **Let's build something amazing! 🎉**

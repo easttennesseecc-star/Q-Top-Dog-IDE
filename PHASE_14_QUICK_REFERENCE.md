@@ -1,7 +1,7 @@
 # Phase 14: Quick Reference Card
 
 ## The Vision
-**Transform Q-IDE into the most advanced, intuitive IDE in the world**
+**Transform Top Dog into the most advanced, intuitive IDE in the world**
 
 ---
 
@@ -110,7 +110,7 @@
 ## Competitive Advantage Matrix
 
 ```
-                         VSCode  JetBrains  Q-IDE
+                         VSCode  JetBrains  Top Dog
 ─────────────────────────────────────────────────
 AI Integration            ✓✓       ✓         ✓✓✓
 Speed to productive       ✓✓       ✓         ✓✓✓
@@ -302,7 +302,7 @@ Tailwind CSS     ← Modern styling
 
 ## Success Quote
 
-> "In 6 months, Q-IDE will be the IDE that developers choose not because they have to,  
+> "In 6 months, Top Dog will be the IDE that developers choose not because they have to,  
 > but because they can't imagine working any other way." 
 
 ---

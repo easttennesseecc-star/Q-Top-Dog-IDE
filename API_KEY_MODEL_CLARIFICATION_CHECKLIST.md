@@ -19,14 +19,14 @@
 - [x] Paid users add their own API keys
 - [x] Each user/team directly responsible for their keys
 - [x] Direct billing from provider (OpenAI, Google, etc.)
-- [x] Q-IDE does NOT charge for LLM usage
+- [x] Top Dog does NOT charge for LLM usage
 - **Document**: `PRICING_AND_MONETIZATION_STRATEGY.md` (lines 783-810)
 
-### Rule 3: Q-IDE Never Handles Your Keys ✅
+### Rule 3: Top Dog Never Handles Your Keys ✅
 - [x] Keys stored ONLY on user's machine
 - [x] Keys encrypted using system keyring
-- [x] Keys NEVER sent to Q-IDE servers
-- [x] Keys NEVER logged or monitored by Q-IDE
+- [x] Keys NEVER sent to Top Dog servers
+- [x] Keys NEVER logged or monitored by Top Dog
 - [x] Keys NEVER used for any purpose except calling the provider
 - **Document**: `API_KEY_RESPONSIBILITY_MODEL.md` (all sections)
 
@@ -64,22 +64,22 @@
 
 ### Pro Tier ($12/month)
 - [x] User adds their own API key (optional)
-- [x] Direct billing from provider, not Q-IDE
+- [x] Direct billing from provider, not Top Dog
 - [x] User responsible for managing their key
 - [x] Can still use free models if preferred
 - **Documented in**: `PRICING_AND_MONETIZATION_STRATEGY.md` (lines 783-800)
 
 ### Teams Tier ($25/seat/month)
 - [x] Team manages API keys (shared or individual)
-- [x] Direct billing from provider, not Q-IDE
+- [x] Direct billing from provider, not Top Dog
 - [x] Each team member responsible for their key security
-- [x] Spending limits set on provider, not Q-IDE
+- [x] Spending limits set on provider, not Top Dog
 - **Documented in**: `PRICING_AND_MONETIZATION_STRATEGY.md` (lines 801-825)
 
 ### Enterprise (Custom)
 - [x] BYOK, self-hosted, or managed LLM options
 - [x] Direct billing arrangements
-- [x] User infrastructure or Q-IDE managed
+- [x] User infrastructure or Top Dog managed
 - **Documented in**: `PRICING_AND_MONETIZATION_STRATEGY.md` (lines 826-850)
 
 ---
@@ -88,36 +88,36 @@
 
 ### Billing Separation Confirmed
 
-**Q-IDE Invoice**:
-- [x] Q-IDE subscription cost only
+**Top Dog Invoice**:
+- [x] Top Dog subscription cost only
 - [x] No LLM usage fees
 - [x] Fixed monthly cost
 
 **Provider Invoice** (OpenAI, Google, Anthropic):
 - [x] LLM usage costs ONLY
-- [x] Direct from provider, not Q-IDE
-- [x] Separate invoice from Q-IDE
+- [x] Direct from provider, not Top Dog
+- [x] Separate invoice from Top Dog
 - [x] User controls spending limits
 
 **Sample Invoices**:
 ```
 Free tier user:
-├─ Q-IDE: $0
+├─ Top Dog: $0
 ├─ OpenAI: N/A
 └─ Total: $0
 
 Pro tier user (light usage):
-├─ Q-IDE: $12/month
+├─ Top Dog: $12/month
 ├─ OpenAI: $15/month
 └─ Total: $27/month
 
 Teams tier (5 devs, moderate usage):
-├─ Q-IDE: $125/month ($25 × 5)
+├─ Top Dog: $125/month ($25 × 5)
 ├─ OpenAI: $150/month (shared key)
 └─ Total: $275/month
 
 Enterprise (100 devs, self-hosted):
-├─ Q-IDE: $5,000/month
+├─ Top Dog: $5,000/month
 ├─ Self-hosted LLM: $1,500/month
 └─ Total: $6,500/month
 ```
@@ -129,24 +129,24 @@ Enterprise (100 devs, self-hosted):
 ## Security Model Clarified ✅
 
 ### Key Storage
-- [x] User keys stored in `~/.q-ide/llm_keys.json`
+- [x] User keys stored in `~/.Top Dog/llm_keys.json`
 - [x] Encrypted using system keyring
 - [x] Only accessible by the user on their machine
-- [x] Not synced to Q-IDE servers
+- [x] Not synced to Top Dog servers
 - **Documented in**: `API_KEY_RESPONSIBILITY_MODEL.md` (Security & Privacy)
 
 ### Key Usage
 - [x] Decrypted only when user invokes AI feature
 - [x] Sent directly to provider (OpenAI, Google, etc.)
-- [x] Q-IDE never logs or stores requests
+- [x] Top Dog never logs or stores requests
 - [x] Response returned and displayed
-- [x] Q-IDE doesn't persist response on servers
+- [x] Top Dog doesn't persist response on servers
 - **Documented in**: `API_KEY_RESPONSIBILITY_MODEL.md` (Key Usage - Private)
 
 ### Data Protection
-- [x] Q-IDE does not store user's API keys on servers
-- [x] Q-IDE cannot access keys after they're saved
-- [x] Even if Q-IDE is hacked, keys are safe
+- [x] Top Dog does not store user's API keys on servers
+- [x] Top Dog cannot access keys after they're saved
+- [x] Even if Top Dog is hacked, keys are safe
 - [x] User can revoke at any time
 - **Documented in**: `API_KEY_RESPONSIBILITY_MODEL.md` (Security section)
 
@@ -162,7 +162,7 @@ Enterprise (100 devs, self-hosted):
 ### Pro/Teams User Responsibility
 - [x] Create OpenAI/Google/Anthropic account
 - [x] Generate API key on provider's website
-- [x] Add key to Q-IDE settings
+- [x] Add key to Top Dog settings
 - [x] Monitor usage on provider's dashboard
 - [x] Set spending limits on provider's dashboard
 - [x] Rotate key periodically for security
@@ -193,18 +193,18 @@ Enterprise (100 devs, self-hosted):
 - Free models: Completely free, offline capable
 - **Documented in**: `API_KEY_RESPONSIBILITY_MODEL.md` (Free Tier section)
 
-### Q: "Q-IDE handles billing?" ❌
-**Answer**: NO. Q-IDE only bills for Q-IDE features.
+### Q: "Top Dog handles billing?" ❌
+**Answer**: NO. Top Dog only bills for Top Dog features.
 - LLM costs: Billed directly by provider
-- Q-IDE costs: Billed by Q-IDE
+- Top Dog costs: Billed by Top Dog
 - Separate invoices, separate relationships
 - **Documented in**: `API_KEY_RESPONSIBILITY_MODEL.md` (Cost Breakdown)
 
-### Q: "Q-IDE stores API keys on servers?" ❌
+### Q: "Top Dog stores API keys on servers?" ❌
 **Answer**: NO. Never.
 - Keys stored on user's machine only
 - Keys encrypted with system keyring
-- Q-IDE servers never see the keys
+- Top Dog servers never see the keys
 - **Documented in**: `API_KEY_RESPONSIBILITY_MODEL.md` (Security & Privacy)
 
 ---
@@ -212,7 +212,7 @@ Enterprise (100 devs, self-hosted):
 ## Implementation Checklist ✅
 
 ### Backend Implementation
-- [x] User API keys stored locally in ~/.q-ide/llm_keys.json
+- [x] User API keys stored locally in ~/.Top Dog/llm_keys.json
 - [x] Keys encrypted using system keyring
 - [x] Keys used only for user requests
 - [x] No key logging or monitoring
@@ -267,7 +267,7 @@ def test_pro_tier_can_add_api_keys():
     user.add_api_key('openai', 'sk-...')
     assert user.has_openai_key() == True
 
-# Test 3: Keys not sent to Q-IDE servers
+# Test 3: Keys not sent to Top Dog servers
 def test_keys_never_sent_to_servers():
     # Add key to user's local config
     user.add_api_key('openai', 'sk-...')
@@ -280,7 +280,7 @@ def test_keys_never_sent_to_servers():
 def test_keys_encrypted_locally():
     user.add_api_key('openai', 'sk-1234567890')
     # Read from disk
-    stored = read_file('~/.q-ide/llm_keys.json')
+    stored = read_file('~/.Top Dog/llm_keys.json')
     # Should not contain plain text key
     assert 'sk-1234567890' not in stored
 
@@ -330,10 +330,10 @@ def test_user_keys_isolated():
 
 ### Terms of Service Items to Include
 - [ ] Users responsible for their own API keys
-- [ ] Q-IDE not liable for API key loss
+- [ ] Top Dog not liable for API key loss
 - [ ] Users directly responsible for LLM billing
 - [ ] API keys are encrypted locally
-- [ ] Q-IDE doesn't bill for LLM usage
+- [ ] Top Dog doesn't bill for LLM usage
 - [ ] Each provider's ToS applies to that provider
 
 **Location**: `/legal/TERMS_OF_SERVICE.md` (to be created)
@@ -360,9 +360,9 @@ def test_user_keys_isolated():
 - ✅ Each user/team brings their own API key
 - ✅ Each user/team directly responsible for their key
 - ✅ Each user/team pays OpenAI (or provider) directly
-- ✅ Q-IDE does NOT bill for LLM usage
-- ✅ Q-IDE does NOT store keys on servers
-- ✅ Q-IDE only bills for Q-IDE features ($0-25/seat/month)
+- ✅ Top Dog does NOT bill for LLM usage
+- ✅ Top Dog does NOT store keys on servers
+- ✅ Top Dog only bills for Top Dog features ($0-25/seat/month)
 
 **Q: "Free tier is all free models - right?"**
 
@@ -383,7 +383,7 @@ def test_user_keys_isolated():
 |------|--------|-----------|------------|----------|
 | Free tier = free models | ✅ | Yes | Yes | Pending |
 | Paid users = BYOK | ✅ | Yes | Yes | Pending |
-| Q-IDE doesn't handle keys | ✅ | Yes | Yes | Pending |
+| Top Dog doesn't handle keys | ✅ | Yes | Yes | Pending |
 | Direct provider billing | ✅ | Yes | Yes | Pending |
 | Cost separation | ✅ | Yes | Yes | Pending |
 | Security model | ✅ | Yes | Yes | Pending |
@@ -396,8 +396,8 @@ def test_user_keys_isolated():
 
 1. ✅ Free tier = free local models only
 2. ✅ Paid tiers = users bring their own API keys
-3. ✅ Direct provider billing = not Q-IDE
-4. ✅ Q-IDE only bills for Q-IDE features
+3. ✅ Direct provider billing = not Top Dog
+4. ✅ Top Dog only bills for Top Dog features
 5. ✅ Users fully responsible for key management and security
 
 **Ready for**: Production launch, user communication, legal review

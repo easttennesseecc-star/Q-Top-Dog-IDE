@@ -158,7 +158,7 @@ Revenue: $120k+ MRR ✨
 ```
 Agenda:
 ├─ Overview: What we're building
-│  └─ Q-IDE becoming universal AI hub
+│  └─ Top Dog becoming universal AI hub
 ├─ Timeline: 10-day sprint (Nov 10-20)
 ├─ Team assignments:
 │  ├─ Person 1: Backend (1,700 lines)
@@ -364,22 +364,22 @@ Update progress
 
 **Before Marketplace**:
 ```
-Q-IDE vs VS Code:
+Top Dog vs VS Code:
 ├─ VS Code: #1 IDE (IntelliSense, Debugging, Refactoring)
-├─ Q-IDE: #2 IDE (same features + Game engines)
+├─ Top Dog: #2 IDE (same features + Game engines)
 └─ Result: VS Code still wins on IDE features
 ```
 
 **After Marketplace**:
 ```
-Q-IDE vs VS Code:
+Top Dog vs VS Code:
 ├─ VS Code: Best IDE
-├─ Q-IDE: Best IDE + ONLY IDE with 50+ AI models
-├─ Result: Q-IDE has unique selling point
-└─ Winner: Q-IDE (for developers who want AI)
+├─ Top Dog: Best IDE + ONLY IDE with 50+ AI models
+├─ Result: Top Dog has unique selling point
+└─ Winner: Top Dog (for developers who want AI)
 ```
 
-**Bottom Line**: Marketplace makes Q-IDE UNIQUE. VS Code can't easily copy this (would break their business model).
+**Bottom Line**: Marketplace makes Top Dog UNIQUE. VS Code can't easily copy this (would break their business model).
 
 ---
 
@@ -470,7 +470,7 @@ By December 31:
 
 **All files are in**: `c:\Quellum-topdog-ide\`
 
-**All ready?** Let's go build Q-IDE's marketplace. 🎉
+**All ready?** Let's go build Top Dog's marketplace. 🎉
 
 ---
 

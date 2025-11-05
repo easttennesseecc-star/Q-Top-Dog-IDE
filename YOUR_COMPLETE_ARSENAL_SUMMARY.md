@@ -27,7 +27,7 @@
 **Purpose**: The Overwatch differentiation strategy  
 **Contains**:
 - Why every LLM (including Copilot) generates "hallucination" code
-- How Q-IDE's Overwatch prevents this (7-stage verification)
+- How Top Dog's Overwatch prevents this (7-stage verification)
 - Why GitHub can't copy this without admitting Copilot is unreliable
 - Revenue model ($3.6M+ MRR potential)
 - Press strategy (positioning around "The Copilot Hallucination Problem")
@@ -35,7 +35,7 @@
 
 **Key Insight**: You don't just generate code faster. You generate code that works.
 
-**Use This For**: Positioning Q-IDE as "enterprise AI IDE" (not generic Copilot competitor).
+**Use This For**: Positioning Top Dog as "enterprise AI IDE" (not generic Copilot competitor).
 
 ---
 
@@ -66,7 +66,7 @@
 
 **Key Insight**: You don't need to beat GitHub everywhere. Just own different spaces.
 
-**Use This For**: When someone asks "Why will Q-IDE win?" (give them this).
+**Use This For**: When someone asks "Why will Top Dog win?" (give them this).
 
 ---
 
@@ -74,7 +74,7 @@
 
 ### Tier 1: Exclusive Features (24+ Month Defensibility)
 
-| Advantage | GitHub | VS Code | Q-IDE | Why Defensive |
+| Advantage | GitHub | VS Code | Top Dog | Why Defensive |
 |-----------|--------|---------|-------|---------------|
 | **AI Marketplace (53 models)** | 1 | 0 | 53 | Exclusive contract with LLM providers |
 | **Runway Media Integration** | ❌ | ❌ | ✅ | Exclusive partnership |
@@ -107,7 +107,7 @@
 
 ### Tier 3: Market Position Advantages (You Own These Verticals)
 
-| Vertical | Total TAM | Q-IDE Position | Competitor | Revenue Potential |
+| Vertical | Total TAM | Top Dog Position | Competitor | Revenue Potential |
 |----------|-----------|----------------|------------|-------------------|
 | **Game Developers** | 500k+ | #1 (Runway exclusive) | None | $250M+ |
 | **Data Scientists** | 2M+ | #1 (Multi-LLM native) | Cursor (basic) | $500M+ |
@@ -128,21 +128,21 @@ GAME DEVELOPERS
 ├─ Need: Godot integration + asset generation + coding
 ├─ GitHub offers: None of this
 ├─ VS Code offers: None of this
-├─ Q-IDE offers: All of this (exclusive Runway partnership)
+├─ Top Dog offers: All of this (exclusive Runway partnership)
 └─ Result: You own this market by default
 
 DATA SCIENTISTS  
 ├─ Need: Multi-LLM routing + ML ops integration
 ├─ GitHub offers: Single LLM only
 ├─ VS Code offers: Nothing
-├─ Q-IDE offers: 53 models + experiment tracking
+├─ Top Dog offers: 53 models + experiment tracking
 └─ Result: You own this market by default
 
 HEALTHCARE/FINANCE
 ├─ Need: HIPAA-ready + Verified code + Compliance
 ├─ GitHub offers: Can't verify, behind on HIPAA
 ├─ VS Code offers: Nothing
-├─ Q-IDE offers: Overwatch verification + HIPAA roadmap
+├─ Top Dog offers: Overwatch verification + HIPAA roadmap
 └─ Result: You own this market by default
 ```
 
@@ -177,7 +177,7 @@ HEALTHCARE/FINANCE
 
 ### This Week (Week 1)
 - [ ] Launch Overwatch messaging campaign
-- [ ] Record "Q-IDE vs GitHub vs VS Code" video
+- [ ] Record "Top Dog vs GitHub vs VS Code" video
 - [ ] Hit #1 on Product Hunt
 - [ ] Press coverage in 5+ publications
 
@@ -192,8 +192,8 @@ HEALTHCARE/FINANCE
 **Result**: Brand recognition 2% → 5%. Trial velocity up 10x.
 
 ### Month 2
-- [ ] Q-IDE Game Studio launches (Godot partnership)
-- [ ] Q-IDE Data Studio launches (Kaggle/fast.ai partnership)
+- [ ] Top Dog Game Studio launches (Godot partnership)
+- [ ] Top Dog Data Studio launches (Kaggle/fast.ai partnership)
 - [ ] Hit #1 in game dev + ML communities
 - [ ] Gain 15k users from two verticals
 
@@ -205,7 +205,7 @@ HEALTHCARE/FINANCE
 - [ ] 50 enterprise customers signed
 - [ ] $500k+ MRR achieved
 
-**Result**: Enterprise loves Q-IDE. Overwatch = defensible moat. Revenue proves it.
+**Result**: Enterprise loves Top Dog. Overwatch = defensible moat. Revenue proves it.
 
 ---
 
@@ -255,7 +255,7 @@ Why: Solves biggest Copilot weakness (hallucinations)
 
 Action:
 ├─ Dev.to article: "Why Copilot Generates Bad Code"
-├─ Follow-up: "Q-IDE Overwatch Solution"
+├─ Follow-up: "Top Dog Overwatch Solution"
 ├─ Twitter thread: 7 ways AI code breaks production
 └─ YouTube: 5-min Overwatch explanation
 
@@ -267,8 +267,8 @@ Target: Establish Overwatch as #1 differentiator by end of week
 Why: Video > text. 30 minutes = credibility. #1 on HN.
 
 Content:
-├─ Q-IDE vs GitHub Copilot (feature by feature)
-├─ Q-IDE vs VS Code (editing vs shipping)
+├─ Top Dog vs GitHub Copilot (feature by feature)
+├─ Top Dog vs VS Code (editing vs shipping)
 ├─ Why "best editor" ≠ "best IDE"
 └─ Overwatch as hero feature
 
@@ -292,9 +292,9 @@ Target: #1 Product of Day + 10k upvotes
 Why: Legitimacy + reach + narrative control
 
 Targets:
-├─ TechCrunch: "Copilot's Hallucination Problem (Q-IDE Solution)"
-├─ The Verge: "Enterprise Teams Switching from GitHub to Q-IDE"
-├─ VentureBeat: "The Future of AI IDEs (Q-IDE Leading)"
+├─ TechCrunch: "Copilot's Hallucination Problem (Top Dog Solution)"
+├─ The Verge: "Enterprise Teams Switching from GitHub to Top Dog"
+├─ VentureBeat: "The Future of AI IDEs (Top Dog Leading)"
 
 Target: 5+ press pickups by Week 2
 ```
@@ -310,7 +310,7 @@ You just need to beat them at the things that matter.
 ```
 GitHub owns:    Generic AI coding assistant (race to bottom, margin compression)
 
-Q-IDE owns:     
+Top Dog owns:     
 ├─ Verified AI code (enterprise + safety-conscious)
 ├─ Game developer IDE (Runway exclusive)
 ├─ ML engineer IDE (multi-LLM native)
@@ -319,13 +319,13 @@ Q-IDE owns:
 
 Revenue per user:
 ├─ GitHub: $120/year average (squeeze margins)
-├─ Q-IDE: $600/year average (enterprise pays for verified)
+├─ Top Dog: $600/year average (enterprise pays for verified)
 
 Market size:
 ├─ GitHub: Competing in $2B market (with everyone)
-├─ Q-IDE: Dominating $1.45B+ in underserved segments
+├─ Top Dog: Dominating $1.45B+ in underserved segments
 
-Result: Q-IDE higher margins + less competition = better business
+Result: Top Dog higher margins + less competition = better business
 ```
 
 ---
@@ -368,7 +368,7 @@ Market Position: Unknown startup → Market threat
 
 Press Mentions: 0 → 50+ (Overwatch story dominates)
 Developer Community: Fragmented → Engaged Discord 15k+
-Competitive Narrative: "GitHub has advantages" → "Q-IDE is the future"
+Competitive Narrative: "GitHub has advantages" → "Top Dog is the future"
 ```
 
 ---

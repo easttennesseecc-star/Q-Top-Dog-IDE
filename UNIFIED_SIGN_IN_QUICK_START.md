@@ -72,14 +72,14 @@ API_URL=http://localhost:8000
 1. Go: https://github.com/settings/developers
 2. "New OAuth App"
 3. Fill in:
-   - App name: Q-IDE
+   - App name: Top Dog
    - Homepage: http://localhost:3000
    - Callback: http://localhost:3000/auth/oauth/callback
 4. Copy Client ID & Secret → `.env`
 
 ### Google
 1. Go: https://console.cloud.google.com/
-2. Create project: "Q-IDE"
+2. Create project: "Top Dog"
 3. Enable Google+ API
 4. OAuth 2.0 credentials → "Web application"
 5. Redirect URI: http://localhost:3000/auth/oauth/callback
@@ -104,7 +104,7 @@ API_URL=http://localhost:8000
 1. Already signed in with GitHub ✓
 2. Have Copilot subscription?
    YES → Create token at https://github.com/settings/tokens/new
-        Paste in Q-IDE UI
+        Paste in Top Dog UI
    NO → Skip or use free Gemini instead
 ```
 
@@ -114,7 +114,7 @@ API_URL=http://localhost:8000
 2. Go: https://ai.google.dev
 3. Click "Get API Key"
 4. Create free key (no card needed)
-5. Paste in Q-IDE
+5. Paste in Top Dog
 6. ✅ Free AI model activated!
 ```
 
@@ -123,7 +123,7 @@ API_URL=http://localhost:8000
 1. Go: https://platform.openai.com/api/keys
 2. Create API key
 3. Get $5 free credits first
-4. Paste key in Q-IDE UI
+4. Paste key in Top Dog UI
 5. ✅ GPT-4 ready to use!
 ```
 
@@ -132,7 +132,7 @@ API_URL=http://localhost:8000
 1. Download: https://ollama.ai
 2. Run: ollama run llama2
 3. Wait for download (~4GB)
-4. In Q-IDE: Add Ollama endpoint
+4. In Top Dog: Add Ollama endpoint
 5. ✅ Offline model ready!
 ```
 
@@ -221,7 +221,7 @@ frontend/src/
 ### When You Click "Sign in with GitHub"
 
 ```
-Q-IDE
+Top Dog
   ↓ POST /auth/oauth/init
 Backend
   ↓ Creates session
@@ -234,9 +234,9 @@ User's Browser
 GitHub
   ↓ User logs in
   ↓ Grants permission
-  ↓ Redirects back to Q-IDE
+  ↓ Redirects back to Top Dog
   ↓ POST /auth/oauth/callback
-Q-IDE Backend
+Top Dog Backend
   ↓ Exchanges code for token
   ↓ Fetches user info
   ↓ Creates user profile
@@ -251,13 +251,13 @@ User sees their profile ✅
 ```
 User pastes API key
   ↓ POST /auth/credentials/add
-Q-IDE Backend
+Top Dog Backend
   ↓ Stores key (encrypted)
   ↓ Marks service as "active"
   ↓
 Returns success
 User sees green checkmark ✅
-Q-IDE can now use Copilot
+Top Dog can now use Copilot
 ```
 
 ---

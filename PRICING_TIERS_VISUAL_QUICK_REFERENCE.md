@@ -1,10 +1,10 @@
-# Q-IDE Pricing Tiers: Visual Quick Reference
+# Top Dog Pricing Tiers: Visual Quick Reference
 
 ## 4-Tier Pricing Model
 
 ```
 ┌─────────────────────────────────────────────────────────────────────┐
-│                    Q-IDE PRICING STRUCTURE                          │
+│                    Top Dog PRICING STRUCTURE                          │
 ├─────────────────────────────────────────────────────────────────────┤
 │                                                                       │
 │  🎓 FREE              💼 PRO              👥 TEAMS          🏢 ENT  │

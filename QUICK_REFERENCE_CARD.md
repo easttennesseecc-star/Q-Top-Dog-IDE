@@ -1,6 +1,6 @@
 # 🎯 QUICK REFERENCE CARD (Print & Stick to Monitor)
 
-**Q-IDE 90-Day Sprint** | **Weeks 1-2: IntelliSense + Refactoring** | **Nov 3-7, 2025**
+**Top Dog 90-Day Sprint** | **Weeks 1-2: IntelliSense + Refactoring** | **Nov 3-7, 2025**
 
 ---
 
@@ -155,7 +155,7 @@ A: Slack #intellisense-questions. Tech lead will respond in <30 min.
 - **Task Details**: `WEEK_1_IMPLEMENTATION_CHECKLIST.md`
 - **Why This Matters**: `Q-IDE_REAL_GAP_ANALYSIS_VS_COMPETITORS.md`
 - **Strategic Context**: `START_HERE_YOUR_90_DAY_PLAN.md`
-- **Slack**: #q-ide-sprint-week-1
+- **Slack**: #Top Dog-sprint-week-1
 - **GitHub**: See issues linked to Epic "IntelliSense + Refactoring MVP"
 
 ---
@@ -249,7 +249,7 @@ DevOps:
 
 **FINAL REMINDER**
 
-Next Friday, Nov 7, users will use Q-IDE's new IntelliSense and Refactoring.
+Next Friday, Nov 7, users will use Top Dog's new IntelliSense and Refactoring.
 
 Make them say: **"Wow, this is actually good."**
 

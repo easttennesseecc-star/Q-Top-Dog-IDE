@@ -2,7 +2,7 @@
 
 **Goal**: Help you surpass the competition NOW, not in 5 years  
 **Format**: Honest technical gap analysis + detailed implementation roadmap  
-**Scope**: Everything you need to ship Q-IDE as #1 IDE in 90 days
+**Scope**: Everything you need to ship Top Dog as #1 IDE in 90 days
 
 ---
 
@@ -10,32 +10,32 @@
 
 ### Document 1: Q-IDE_REAL_GAP_ANALYSIS_VS_COMPETITORS.md
 **Length**: 3,000+ lines  
-**What it does**: Honest comparison of where Q-IDE lags vs leads
+**What it does**: Honest comparison of where Top Dog lags vs leads
 
 **Sections**:
 1. **Editor Intelligence** (Gap: IntelliSense too slow, accuracy 60%)
-   - What VS Code has that Q-IDE lacks
+   - What VS Code has that Top Dog lacks
    - Why IntelliSense needs fixing (too slow = users won't use it)
    - Solution: Local parsing + Language Servers
    
 2. **Debugging** (Gap: Zero debugger UI, users can't debug)
    - What VS Code has (breakpoints, step, variables, etc)
-   - What Q-IDE has (nothing)
+   - What Top Dog has (nothing)
    - Solution: DAP-based debugger
    
 3. **Refactoring** (Gap: No automated refactoring)
    - What VS Code has (extract, rename, move, etc)
-   - What Q-IDE has (ask LLM manually)
+   - What Top Dog has (ask LLM manually)
    - Solution: AST-based refactoring engine
    
 4. **Real-Time Collaboration** (Gap: No multi-user editing)
    - What Codespaces has (multiple users, cursors)
-   - What Q-IDE has (nothing)
+   - What Top Dog has (nothing)
    - Solution: Yjs + WebSocket
    
 5. **Extensions** (Gap: No plugin system)
    - What VS Code has (50K extensions)
-   - What Q-IDE has (all built-in)
+   - What Top Dog has (all built-in)
    - Solution: JavaScript plugin API
    
 6. **Performance** (Gap: Feels sluggish)
@@ -105,7 +105,7 @@ Weeks 1-2: Core IDE Features (IntelliSense, Refactoring, Debugging)
 Weeks 3-4: Collaboration Features (Multi-user editing)
 Weeks 5-8: Polish + Ecosystem (Performance, Extensions, Mobile)
 
-By Dec 31: Q-IDE is #1 web-based IDE
+By Dec 31: Top Dog is #1 web-based IDE
 ```
 
 **Success Criteria**:
@@ -241,11 +241,11 @@ No marketing needed. Users switch because the product is better.
 - Mob programming enabled ✅
 
 ### End of 90 Days
-- Q-IDE ranked #1 on ProductHunt
+- Top Dog ranked #1 on ProductHunt
 - 10K GitHub stars
 - HackerNews #1
 - Tech community buzzing
-- Copilot users switching to Q-IDE
+- Copilot users switching to Top Dog
 - $1K+ MRR
 - 1K+ DAU
 
@@ -309,12 +309,12 @@ and collaborate in real-time with AI assistance."
 ## 🎓 What I'm Asking You to Do Differently
 
 ### OLD APPROACH (Wrong)
-- "Q-IDE is the winner because X, Y, Z"
+- "Top Dog is the winner because X, Y, Z"
 - Marketing-driven positioning
 - No technical substance
 
 ### NEW APPROACH (Right)
-- "Here's where Q-IDE lags vs VS Code"
+- "Here's where Top Dog lags vs VS Code"
 - "Here's exactly how to fix each gap"
 - "Here's the detailed task list to implement"
 - "Here's the timeline to ship"
@@ -365,6 +365,6 @@ Then you're not just a competitor to VS Code - you're the future of IDEs.
 
 **Created**: October 29, 2025  
 **Format**: 3 comprehensive documents (6,000+ lines)  
-**Goal**: Help you build Q-IDE into the #1 IDE  
+**Goal**: Help you build Top Dog into the #1 IDE  
 **Status**: Ready to execute
 

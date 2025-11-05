@@ -2,7 +2,7 @@
 
 ## What You Asked For ✅
 
-> "I want to do a one sign-in thing for all components like llm models and any lite llm models for coding that are free. Can I sign into github and copilot as well that way I can integrate copilot and be able to use the repository from the Q-IDE"
+> "I want to do a one sign-in thing for all components like llm models and any lite llm models for coding that are free. Can I sign into github and copilot as well that way I can integrate copilot and be able to use the repository from the Top Dog"
 
 ## What You're Getting 🎉
 
@@ -108,7 +108,7 @@
 ### For Users
 
 ```
-1. User visits Q-IDE
+1. User visits Top Dog
 2. Click "Sign in with GitHub" button
 3. OAuth popup appears
 4. User logs in to GitHub

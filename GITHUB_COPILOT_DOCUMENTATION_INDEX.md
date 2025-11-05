@@ -4,7 +4,7 @@
 
 You asked: *"Why can't I use GitHub sign-in for Copilot? Why do I need an API key?"*
 
-**Answer:** GitHub OAuth is only for official software like VS Code. Q-IDE (a local app) needs an explicit API key. It's actually more secure!
+**Answer:** GitHub OAuth is only for official software like VS Code. Top Dog (a local app) needs an explicit API key. It's actually more secure!
 
 ---
 
@@ -20,7 +20,7 @@ You asked: *"Why can't I use GitHub sign-in for Copilot? Why do I need an API ke
 
 **Understand WHY API keys are needed**
 → Read: `GITHUB_COPILOT_API_KEY_EXPLAINED.md`
-   - Why OAuth doesn't work for Q-IDE
+   - Why OAuth doesn't work for Top Dog
    - Security implications
    - Technical architecture
    - Real-world analogies
@@ -56,7 +56,7 @@ You asked: *"Why can't I use GitHub sign-in for Copilot? Why do I need an API ke
 
 **Contains:**
 - ✅ Step 1: Create API token (2 minutes)
-- ✅ Step 2: Add to Q-IDE (1 minute)
+- ✅ Step 2: Add to Top Dog (1 minute)
 - ✅ Step 3: Verify it works (automatic)
 - ✅ Common issues and fixes
 - ✅ Token management
@@ -187,25 +187,25 @@ You asked: *"Why can't I use GitHub sign-in for Copilot? Why do I need an API ke
 ### Before You Start:
 - [ ] GitHub account (logged in)
 - [ ] Copilot subscription OR use free Gemini
-- [ ] Q-IDE open
+- [ ] Top Dog open
 
 ### Step 1: Create Token (2 min)
 - [ ] Go to https://github.com/settings/tokens/new
-- [ ] Name: "Q-IDE Copilot API"
+- [ ] Name: "Top Dog Copilot API"
 - [ ] Scopes: user:read, write:packages, read:packages
 - [ ] Generate token
 - [ ] Copy the token (you only see it once!)
 
-### Step 2: Add to Q-IDE (1 min)
-- [ ] Q-IDE → LLM Setup → Auth tab
+### Step 2: Add to Top Dog (1 min)
+- [ ] Top Dog → LLM Setup → Auth tab
 - [ ] Find "GitHub Copilot" card
 - [ ] Paste token in API Key field
 - [ ] Click Save
 - [ ] See green checkmark ✓
 
 ### Step 3: Done! (0 min)
-- [ ] Close Q-IDE
-- [ ] Restart Q-IDE
+- [ ] Close Top Dog
+- [ ] Restart Top Dog
 - [ ] No modal should appear (token is valid)
 - [ ] Copilot is ready to use!
 
@@ -226,7 +226,7 @@ Result: You have access while wearing the badge
 Problem: Badge is tied to Microsoft's verification
 ```
 
-**API Key (Q-IDE):**
+**API Key (Top Dog):**
 ```
 You: "I want to use my Netflix account in a new app"
 Netflix: "OK, but first confirm you really want to"
@@ -264,7 +264,7 @@ Benefit: You can control when to revoke it
 
 After reading these guides, you'll understand:
 
-✅ Why OAuth doesn't work for Q-IDE
+✅ Why OAuth doesn't work for Top Dog
 ✅ Why API keys are needed
 ✅ Why this is actually more secure
 ✅ How to set up Copilot in 3 minutes
@@ -352,7 +352,7 @@ You asked why API keys instead of OAuth.
 
 **Answer:** 
 - GitHub OAuth is for official software (VS Code)
-- Q-IDE is local software
+- Top Dog is local software
 - Requires explicit API key for security
 - Actually MORE secure (revocable by you)
 - Takes 3 minutes to set up
@@ -362,6 +362,6 @@ You asked why API keys instead of OAuth.
 ---
 
 **Version:** October 2025
-**Project:** Q-IDE (Intelligent Development Environment)
+**Project:** Top Dog (Intelligent Development Environment)
 **Copyright:** © 2025 Quellum Technologies
 **License:** MIT

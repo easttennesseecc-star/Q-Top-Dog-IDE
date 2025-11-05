@@ -1,4 +1,6 @@
-# 💰 Q-IDE Pricing & Monetization Strategy
+# 💰 [Archived] Top Dog Pricing & Monetization Strategy
+
+This document has been archived. The marketplace runs in Directory (BYOK) mode and uses flat subscriptions. See `PRICING_FLAT_SUBSCRIPTIONS.md`.
 
 **Status**: Comprehensive Pricing Model Ready  
 **Model**: Freemium + Enterprise  
@@ -9,7 +11,7 @@
 
 ## Executive Summary
 
-Q-IDE will adopt a **freemium model** with four tiers designed to:
+Top Dog will adopt a **freemium model** with four tiers designed to:
 
 1. **Maximize adoption** (Free tier attracts millions)
 2. **Generate revenue** (Pro tier converts power users)
@@ -817,20 +819,20 @@ Smart pricing strategy:
 
 ### The BYOK Model: Bring Your Own Key
 
-**Q-IDE does NOT provide API keys.** Each user/team is directly responsible for their own LLM credentials.
+**Top Dog does NOT provide API keys.** Each user/team is directly responsible for their own LLM credentials.
 
 #### How It Works
 
 ```
 User brings their own key
         ↓
-Q-IDE stores it securely in user's local config
+Top Dog stores it securely in user's local config
         ↓
 User's API key is used directly with the LLM provider
         ↓
 User is directly billed by the provider (OpenAI, Google, etc.)
         ↓
-Q-IDE never touches the payment or API costs
+Top Dog never touches the payment or API costs
 ```
 
 #### Why This Model?
@@ -875,19 +877,19 @@ Q-IDE never touches the payment or API costs
 - ✅ Still use free local models (Ollama, Llama)
 
 **Pro/Teams tier API key responsibility:**
-- Each user/team manages their own API keys in Q-IDE settings
+- Each user/team manages their own API keys in Top Dog settings
 - Each user/team directly pays their provider (separate invoice)
-- Q-IDE does not store, process, or pass through your keys
-- Q-IDE stores keys only encrypted in the user's local config directory
+- Top Dog does not store, process, or pass through your keys
+- Top Dog stores keys only encrypted in the user's local config directory
 
 #### How to Add Your API Key (Pro/Teams)
 
 ```
-1. Open Q-IDE → Settings → LLM Configuration
+1. Open Top Dog → Settings → LLM Configuration
 2. Click "Add LLM Provider"
 3. Choose OpenAI, Google Gemini, Claude, etc.
 4. Paste your API key
-5. Q-IDE encrypts it locally
+5. Top Dog encrypts it locally
 6. Start using immediately
 
 Your costs:
@@ -904,7 +906,7 @@ Your costs:
 **Enterprises can:**
 - ✅ Use BYOK (same as Pro/Teams)
 - ✅ OR: Deploy their own LLM server (on-prem)
-- ✅ OR: Use Q-IDE's optional managed LLM service (additional cost)
+- ✅ OR: Use Top Dog's optional managed LLM service (additional cost)
 
 **Enterprise LLM options:**
 
@@ -912,7 +914,7 @@ Your costs:
 |--------|------|---------|---------|
 | **BYOK** | Your provider's cost | High | You |
 | **Self-hosted** | Infrastructure cost | Very high | You |
-| **Q-IDE Managed LLM** | Custom pricing | High | Shared |
+| **Top Dog Managed LLM** | Custom pricing | High | Shared |
 
 ---
 
@@ -925,22 +927,22 @@ Your costs:
 - Nothing stored
 
 **Pro/Teams/Enterprise:**
-- Keys stored in user's local config: `~/.q-ide/llm_keys.json`
+- Keys stored in user's local config: `~/.Top Dog/llm_keys.json`
 - Keys encrypted at rest using system keyring
-- Keys NEVER transmitted to Q-IDE servers
-- Keys NEVER logged or monitored by Q-IDE
+- Keys NEVER transmitted to Top Dog servers
+- Keys NEVER logged or monitored by Top Dog
 - Keys NEVER used for any purpose except calling the provider
 
 #### Key Handling Policy
 
 ```
-WHAT Q-IDE DOES:
+WHAT Top Dog DOES:
 ✅ Encrypt keys locally in system keyring
 ✅ Use keys ONLY to call provider APIs on YOUR behalf
 ✅ Keep keys for duration of user session
 ✅ Allow users to revoke keys anytime
 
-WHAT Q-IDE DOES NOT DO:
+WHAT Top Dog DOES NOT DO:
 ❌ Send keys to our servers
 ❌ Log or monitor your API usage
 ❌ Store keys in plain text
@@ -951,13 +953,13 @@ WHAT Q-IDE DOES NOT DO:
 
 #### API Key Responsibility Agreement
 
-By using Q-IDE's Pro/Teams tier with your own API key:
+By using Top Dog's Pro/Teams tier with your own API key:
 
 1. **You own your API key** - It's your responsibility to keep it safe
 2. **You manage your costs** - Your usage = your bill from the provider
-3. **You revoke if needed** - Delete the key from Q-IDE anytime
+3. **You revoke if needed** - Delete the key from Top Dog anytime
 4. **You understand pricing** - Read the provider's pricing carefully
-5. **Q-IDE is not responsible for** - Unexpected charges, key theft, lost keys
+5. **Top Dog is not responsible for** - Unexpected charges, key theft, lost keys
 
 ---
 
@@ -965,14 +967,14 @@ By using Q-IDE's Pro/Teams tier with your own API key:
 
 #### Free Tier User
 ```
-Q-IDE cost: $0
+Top Dog cost: $0
 LLM cost: $0 (using local Ollama)
 Total: $0/month
 ```
 
 #### Pro Tier User (Using GPT-4)
 ```
-Q-IDE cost: $12/month
+Top Dog cost: $12/month
 LLM cost: Depends on usage
   ├─ Light user: ~$5-10/month
   ├─ Medium user: ~$20-50/month
@@ -982,7 +984,7 @@ Total: $12 + LLM usage
 
 #### Teams Tier (5 developers, Using GPT-4)
 ```
-Q-IDE cost: $25/seat × 5 = $125/month
+Top Dog cost: $25/seat × 5 = $125/month
 LLM cost per developer: ~$20-50/month
   └─ Total LLM: ~$100-250/month
 Total: $125 + $100-250 = $225-375/month
@@ -990,20 +992,20 @@ Total: $125 + $100-250 = $225-375/month
 
 #### Enterprise (100 developers, Self-hosted LLM)
 ```
-Q-IDE cost: Custom (typically $3-5K/month)
+Top Dog cost: Custom (typically $3-5K/month)
 LLM cost: $0 (self-hosted on their infrastructure)
-Total: Custom Q-IDE pricing only
+Total: Custom Top Dog pricing only
 ```
 
 ---
 
 ### Honest FAQ About API Keys
 
-**Q: "Will Q-IDE ever provide API keys?"**  
+**Q: "Will Top Dog ever provide API keys?"**  
 A: No. We're a product company, not a payment processor. This keeps us focused on building great tools, not managing billing for 1000 LLM providers.
 
 **Q: "What if I lose my API key?"**  
-A: Delete it from Q-IDE, generate a new one on the provider's dashboard. Takes 2 minutes.
+A: Delete it from Top Dog, generate a new one on the provider's dashboard. Takes 2 minutes.
 
 **Q: "What if someone steals my API key?"**  
 A: They have access to your usage until you revoke it. Revoke immediately on the provider's dashboard. This is why we recommend setting spending limits.
@@ -1011,20 +1013,20 @@ A: They have access to your usage until you revoke it. Revoke immediately on the
 **Q: "Can I use free models AND paid models?"**  
 A: Yes! You can assign different LLMs to different roles. Use Ollama for local work, GPT-4 for complex tasks.
 
-**Q: "Does Q-IDE see my API usage?"**  
+**Q: "Does Top Dog see my API usage?"**  
 A: No. We never see, monitor, or log your API calls. You see your usage on the provider's dashboard.
 
 **Q: "Can I share an API key with my team?"**  
 A: Not recommended (security risk), but technically yes. Better approach: each team member gets their own key, and you manage a shared budget on the provider's side.
 
 **Q: "What if the LLM provider goes down?"**  
-A: Q-IDE continues working with local models. Cloud features are unavailable until the provider recovers.
+A: Top Dog continues working with local models. Cloud features are unavailable until the provider recovers.
 
 ---
 
 ## 🏁 Conclusion
 
-Q-IDE's pricing model is designed to:
+Top Dog's pricing model is designed to:
 
 1. **Build massive user base** (Free tier = network effect)
 2. **Monetize professionals** (Pro tier = individual revenue)

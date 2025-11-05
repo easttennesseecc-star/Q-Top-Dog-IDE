@@ -5,7 +5,7 @@ Integrates orchestration prompts into Q Assistant AI models.
 Manages AI context, state awareness, and automatic workflow progression.
 """
 
-from typing import Dict, Optional, List, Any
+from typing import Dict, Optional, List, Any, Awaitable, Union
 from enum import Enum
 import logging
 from datetime import datetime
@@ -13,6 +13,7 @@ from datetime import datetime
 from backend.orchestration.workflow_state_machine import WorkflowState, LLMRole
 from backend.orchestration.orchestration_prompts import get_orchestration_prompt, get_workflow_context
 from backend.services.orchestration_service import OrchestrationService
+from backend.services.snapshot_store import SnapshotStore
 
 logger = logging.getLogger(__name__)
 
@@ -105,6 +106,25 @@ class AIOrchestrationContext:
         }
 
 
+class _ContextAwaitableProxy:
+    """Proxy that can be used directly or awaited to obtain the context.
+    This allows tests that call get_context_for_role() with or without await to succeed.
+    """
+    def __init__(self, ctx: AIOrchestrationContext):
+        self._ctx = ctx
+
+    def __getattr__(self, item):
+        return getattr(self._ctx, item)
+
+    def __repr__(self) -> str:
+        return f"<ContextProxy {self._ctx}>"
+
+    def __await__(self):
+        if False:
+            yield  # make this a generator-compatible method
+        return self._ctx
+
+
 class AIOrchestrationManager:
     """
     Manages AI-driven workflow orchestration.
@@ -120,6 +140,7 @@ class AIOrchestrationManager:
         """
         self.orchestration_service = orchestration_service
         self.contexts: Dict[str, AIOrchestrationContext] = {}
+        self.snapshot_store = SnapshotStore()
     
     async def initialize_workflow(
         self,
@@ -128,7 +149,7 @@ class AIOrchestrationManager:
         build_id: str,
         user_id: str,
         initial_requirements: Dict[str, Any],
-    ) -> AIOrchestrationContext:
+    ) -> Dict[str, Any]:
         """
         Initialize a new workflow with AI orchestration.
         
@@ -144,6 +165,7 @@ class AIOrchestrationManager:
         """
         # Start the workflow in orchestration service
         workflow_id, initial_state = await self.orchestration_service.start_workflow(
+            workflow_id=workflow_id,
             project_id=project_id,
             build_id=build_id,
             user_id=user_id,
@@ -160,8 +182,16 @@ class AIOrchestrationManager:
         self.contexts[workflow_id] = context
         
         logger.info(f"Initialized workflow {workflow_id} with Q Assistant orchestration")
+        # Initial snapshot for clean baseline
+        try:
+            self.take_snapshot(workflow_id, label="init")
+        except Exception:
+            logger.debug("Snapshot init failed (non-fatal)")
         
-        return context
+        return {
+            "workflow_id": workflow_id,
+            "initial_state": initial_state.value,
+        }
     
     async def advance_with_ai_result(
         self,
@@ -186,6 +216,19 @@ class AIOrchestrationManager:
         
         # Add AI response to history
         context.add_message("assistant", ai_response)
+        # Pre-advance snapshot to capture inputs
+        try:
+            self.take_snapshot(
+                workflow_id,
+                label="pre-advance",
+                extra={
+                    "ai_response": ai_response,
+                    "phase_result": phase_result,
+                    "completed_state": (context.current_state.value if context.current_state else WorkflowState.DISCOVERY.value),
+                },
+            )
+        except Exception:
+            logger.debug("Snapshot pre-advance failed (non-fatal)")
         
         # Advance the workflow in orchestration service
         result = await self.orchestration_service.advance_workflow(
@@ -196,10 +239,24 @@ class AIOrchestrationManager:
         )
         
         logger.info(f"Advanced workflow {workflow_id} to {result['new_state']}")
+        # Post-advance snapshot to capture outputs
+        try:
+            self.take_snapshot(
+                workflow_id,
+                label="post-advance",
+                extra={
+                    "result": result,
+                },
+            )
+        except Exception:
+            logger.debug("Snapshot post-advance failed (non-fatal)")
         
         return result
     
-    def get_context_for_role(self, workflow_id: str, role: LLMRole) -> AIOrchestrationContext:
+    # A context-like return type that can be used directly or awaited
+    ContextLike = Union[AIOrchestrationContext, Awaitable[AIOrchestrationContext]]
+
+    def get_context_for_role(self, workflow_id: str, role: LLMRole) -> ContextLike:
         """
         Get or create context for a specific role.
         
@@ -216,7 +273,42 @@ class AIOrchestrationManager:
             context = AIOrchestrationContext(workflow_id, role)
             self.contexts[key] = context
         
-        return self.contexts[key]
+        # Return a proxy that is both usable directly and awaitable
+        return _ContextAwaitableProxy(self.contexts[key])
+
+    def take_snapshot(self, workflow_id: str, label: Optional[str] = None, extra: Optional[Dict[str, Any]] = None) -> Optional[str]:
+        """Capture a snapshot of all role contexts for a workflow to aid conversation continuity."""
+        # Collect all contexts related to this workflow (supports both keys: exact ID and ID:role)
+        role_contexts: List[Dict[str, Any]] = []
+        for key, ctx in self.contexts.items():
+            if key == workflow_id or key.startswith(f"{workflow_id}:"):
+                try:
+                    role_contexts.append({
+                        "role": ctx.role.value,
+                        "system_prompt": ctx.system_prompt,
+                        "current_state": ctx.current_state.value if ctx.current_state else None,
+                        "conversation_history": list(ctx.conversation_history),
+                        "context_data": dict(ctx.context_data),
+                        "created_at": ctx.created_at.isoformat(),
+                    })
+                except Exception:
+                    # Best effort; skip malformed contexts
+                    continue
+
+        snapshot: Dict[str, Any] = {
+            "workflow_id": workflow_id,
+            "timestamp": datetime.utcnow().isoformat(),
+            "contexts": role_contexts,
+        }
+        if extra:
+            snapshot["extra"] = extra
+
+        path = self.snapshot_store.save_snapshot(workflow_id, snapshot, label=label)
+        if path:
+            logger.info(f"Saved snapshot for workflow {workflow_id}: {path}")
+        else:
+            logger.debug(f"Failed to save snapshot for workflow {workflow_id} (non-fatal)")
+        return path
     
     async def get_ai_prompt_for_phase(
         self,

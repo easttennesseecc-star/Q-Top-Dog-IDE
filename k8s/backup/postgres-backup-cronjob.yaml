@@ -1,0 +1,68 @@
+---
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: postgres-backup
+  namespace: q-ide
+  labels:
+    app: q-ide
+    component: backup
+spec:
+  schedule: "0 3 * * *" # daily at 03:00 UTC
+  successfulJobsHistoryLimit: 3
+  failedJobsHistoryLimit: 3
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          serviceAccountName: default
+          restartPolicy: OnFailure
+          containers:
+            - name: pgdump
+              image: ghcr.io/groundcover-com/postgres-backup:latest # replace with your trusted image
+              imagePullPolicy: IfNotPresent
+              envFrom:
+                - secretRef:
+                    name: postgres-backup-secrets
+              env:
+                - name: PGPASSWORD
+                  valueFrom:
+                    secretKeyRef:
+                      name: postgres-backup-secrets
+                      key: POSTGRES_PASSWORD
+              args:
+                - "/bin/sh"
+                - "-c"
+                - |
+                  set -euo pipefail
+                  TS=$(date +%Y%m%d-%H%M%S)
+                  FILE="backup-$TS.sql.gz"
+                  echo "Starting pg_dump..."
+                  pg_dump -h "$POSTGRES_HOST" -U "$POSTGRES_USER" -d "$POSTGRES_DB" --no-owner --no-acl | gzip > "$FILE"
+                  echo "Uploading to S3..."
+                  aws s3 cp "$FILE" "s3://$S3_BUCKET/postgres/$FILE" --endpoint-url "$S3_ENDPOINT"
+                  echo "Backup complete: $FILE"
+          # Optional resource limits
+          # resources:
+          #   requests: { cpu: "100m", memory: "256Mi" }
+          #   limits:   { cpu: "500m", memory: "512Mi" }
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: postgres-backup-secrets
+  namespace: q-ide
+  labels:
+    app: q-ide
+    component: backup
+type: Opaque
+stringData:
+  # Fill these in or manage via External Secrets
+  POSTGRES_HOST: "postgres"
+  POSTGRES_DB: "q_ide_prod"
+  POSTGRES_USER: "q_ide_user"
+  POSTGRES_PASSWORD: "CHANGEME"
+  S3_ENDPOINT: "https://s3.amazonaws.com" # or DO Spaces endpoint
+  S3_BUCKET: "your-backup-bucket"
+  AWS_ACCESS_KEY_ID: "CHANGEME"
+  AWS_SECRET_ACCESS_KEY: "CHANGEME"

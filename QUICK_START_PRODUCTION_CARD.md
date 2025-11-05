@@ -1,4 +1,4 @@
-# 🚀 Q-IDE Production Launch: Quick Start Card
+# 🚀 Top Dog Production Launch: Quick Start Card
 
 **Print this out. Use it as your checklist.**
 
@@ -412,7 +412,7 @@ You didn't come this far to only come this far.
 
 *Print this card. Tape it to your monitor. Follow it daily.*
 
-*In 4 weeks, Q-IDE will be live.*
+*In 4 weeks, Top Dog will be live.*
 
 *In 6 weeks, you'll have real users.*
 

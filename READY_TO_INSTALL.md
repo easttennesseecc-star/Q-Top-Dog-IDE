@@ -2,7 +2,7 @@
 
 ## ✅ What's Been Done
 
-Your Q-IDE now has a **fully automated** one-click Ollama installer that:
+Your Top Dog now has a **fully automated** one-click Ollama installer that:
 
 ### **Automated Installation:**
 - ✅ Downloads Ollama automatically
@@ -26,7 +26,7 @@ Your Q-IDE now has a **fully automated** one-click Ollama installer that:
 ## 🚀 3-Step Installation
 
 ### **Step 1: Find the Installer**
-In your Q-IDE folder, look for:
+In your Top Dog folder, look for:
 ```
 INSTALL_OLLAMA_AUTO.bat
 ```
@@ -58,7 +58,7 @@ User double-clicks INSTALL_OLLAMA_AUTO.bat
               ↓
         "Installation Complete! 🎉"
               ↓
-        Refresh Q-IDE in browser
+        Refresh Top Dog in browser
               ↓
         Ollama appears in LLM Pool!
 ```
@@ -170,7 +170,7 @@ Before you start, read (in this order):
 4. See: "Installation Complete! 🎉"
 
 ### **To Verify (After Installation):**
-1. Go back to Q-IDE browser
+1. Go back to Top Dog browser
 2. Press: `F5` to refresh
 3. Wait: 3-5 seconds
 4. Look for: Green box "Auto-Selected Best Options"
@@ -184,7 +184,7 @@ Before you start, read (in this order):
 3. Sign in: Your Google account
 4. Click: "Create API Key"
 5. Copy: The blue key
-6. In Q-IDE: Providers tab → Google → Paste → Save
+6. In Top Dog: Providers tab → Google → Paste → Save
 7. Now you have: Both Ollama + Google!
 
 ---
@@ -202,9 +202,9 @@ Before you start, read (in this order):
 → Check: Internet connection, disk space, admin rights
 → Try: Running the BAT file again
 
-### **"Q-IDE doesn't see Ollama after refresh"**
+### **"Top Dog doesn't see Ollama after refresh"**
 → Try: Restart your computer (Windows needs to see new PATH)
-→ Try: Refresh Q-IDE again (F5)
+→ Try: Refresh Top Dog again (F5)
 → Check: Ollama is running (`ollama list` in PowerShell)
 
 ---
@@ -216,7 +216,7 @@ Before you start, read (in this order):
 - [ ] Ollama service running (task bar check: `tasklist | findstr ollama`)
 - [ ] llama2 model cached (`ollama list` shows llama2)
 
-### **Q-IDE Integration Complete When:**
+### **Top Dog Integration Complete When:**
 - [ ] Browser shows: Green box "Auto-Selected Best Options"
 - [ ] Ollama listed with llama2 model
 - [ ] You can select Ollama as your AI provider
@@ -226,7 +226,7 @@ Before you start, read (in this order):
 
 ## 🚀 Next Phase (After This Works)
 
-Once Ollama is working in Q-IDE, we move to:
+Once Ollama is working in Top Dog, we move to:
 
 ### **Phase 1: Collaboration Features** (6-8 week roadmap)
 - Pair programming mode
@@ -272,7 +272,7 @@ Make sure you have:
 - [ ] 5 GB free disk space
 - [ ] Internet connection
 - [ ] ~20 minutes of time
-- [ ] Q-IDE browser tab open
+- [ ] Top Dog browser tab open
 - [ ] All unnecessary programs closed
 
 ---
@@ -300,7 +300,7 @@ Make sure you have:
 **To start:**
 1. Double-click `INSTALL_OLLAMA_AUTO.bat`
 2. Wait ~20 minutes
-3. Refresh Q-IDE
+3. Refresh Top Dog
 4. Select Ollama
 5. Done!
 

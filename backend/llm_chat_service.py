@@ -331,7 +331,7 @@ To get started:
 
 async def get_q_assistant_chat_service() -> Optional[LLMChatService]:
     """Get initialized chat service for Q Assistant"""
-    from llm_config import get_q_assistant_llm
+    from backend.llm_config import get_q_assistant_llm
     
     llm_config = get_q_assistant_llm()
     if not llm_config:

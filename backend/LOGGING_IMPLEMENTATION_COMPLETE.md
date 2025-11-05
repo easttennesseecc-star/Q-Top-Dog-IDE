@@ -85,9 +85,9 @@ async def my_api():
 
 ### Console Output
 ```
-2025-10-26 08:05:25 [INFO] q-ide-topdog: Q-IDE Backend starting up...
-2025-10-26 08:05:25 [INFO] q-ide-topdog: Fetching LLM pool report... | [endpoint=/llm_pool]
-2025-10-26 08:05:25 [INFO] q-ide-topdog: LLM pool fetched successfully | [endpoint=/llm_pool; available=4; excluded=0]
+2025-10-26 08:05:25 [INFO] Top Dog-topdog: Top Dog Backend starting up...
+2025-10-26 08:05:25 [INFO] Top Dog-topdog: Fetching LLM pool report... | [endpoint=/llm_pool]
+2025-10-26 08:05:25 [INFO] Top Dog-topdog: LLM pool fetched successfully | [endpoint=/llm_pool; available=4; excluded=0]
 ```
 
 ### JSON Structured Logs
@@ -95,7 +95,7 @@ async def my_api():
 {
   "timestamp": "2025-10-26T12:05:25.123456",
   "level": "INFO",
-  "logger": "q-ide-topdog",
+  "logger": "Top Dog-topdog",
   "message": "LLM pool fetched successfully",
   "module": "main",
   "function": "get_llm_pool",
@@ -119,8 +119,8 @@ backend/
 ├── LOGGER_DOCUMENTATION.md      # Full documentation
 ├── main.py                      # Updated with logger integration
 └── logs/                        # Auto-created log directory
-    ├── q-ide-topdog.log        # Detailed rotating log
-    ├── q-ide-topdog.json       # Structured JSON logs
+    ├── Top Dog-topdog.log        # Detailed rotating log
+    ├── Top Dog-topdog.json       # Structured JSON logs
     └── (backups...)
 ```
 
@@ -242,14 +242,14 @@ except Exception as e:
 
 ```
 logs/
-├── q-ide-topdog.log           # Main log (10 MB, rotates to .1)
-├── q-ide-topdog.log.1         # Backup 1
-├── q-ide-topdog.log.2         # Backup 2
-├── q-ide-topdog.log.3         # Backup 3
-├── q-ide-topdog.log.4         # Backup 4
-├── q-ide-topdog.log.5         # Backup 5 (oldest)
-├── q-ide-topdog.json          # JSON structured logs (10 MB, rotates)
-└── q-ide-topdog.json.1        # JSON backup 1-3
+├── Top Dog-topdog.log           # Main log (10 MB, rotates to .1)
+├── Top Dog-topdog.log.1         # Backup 1
+├── Top Dog-topdog.log.2         # Backup 2
+├── Top Dog-topdog.log.3         # Backup 3
+├── Top Dog-topdog.log.4         # Backup 4
+├── Top Dog-topdog.log.5         # Backup 5 (oldest)
+├── Top Dog-topdog.json          # JSON structured logs (10 MB, rotates)
+└── Top Dog-topdog.json.1        # JSON backup 1-3
 ```
 
 ---

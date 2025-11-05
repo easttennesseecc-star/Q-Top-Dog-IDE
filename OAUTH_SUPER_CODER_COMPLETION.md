@@ -338,7 +338,7 @@ agent.continuous_learning_loop()
 ```
 Google OAuth:
   1. Go to Google Cloud Console
-  2. Create project "Q-IDE"
+  2. Create project "Top Dog"
   3. Enable Google+ API
   4. Create OAuth 2.0 credentials
   5. Add redirect URI: http://127.0.0.1:8000/auth/google/callback
@@ -418,7 +418,7 @@ builds = client.get_builds()
 
 ## 🎉 CONCLUSION
 
-Your Q-IDE is now equipped with:
+Your Top Dog is now equipped with:
 - ✅ Enterprise-grade OAuth 2.0 (Google + GitHub)
 - ✅ PAT token management
 - ✅ Build tracking and analysis

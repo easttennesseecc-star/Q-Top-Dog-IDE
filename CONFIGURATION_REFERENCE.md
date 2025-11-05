@@ -55,11 +55,41 @@ ENABLE_AUDIT_LOG=true
 ENABLE_RATE_LIMITING=true
 MAX_REQUESTS_PER_HOUR=1000
 
+# Marketplace mode (Directory vs Broker)
+# Directory = BYOK only, no commissions, links to provider signup pages.
+# Broker (legacy) = re-sell usage and bill through the platform.
+MARKETPLACE_MODE=directory
+
 # ====================
 # DEPLOYMENT
 # ====================
 ENVIRONMENT=development  # development, staging, production
 SENTRY_DSN=  # Error tracking
+
+# ====================
+# TOPDOG IDE SEGMENTS & PLANS (Observability & SLAs)
+# ====================
+# Controls for regulated domains and default labels used in Prometheus metrics.
+# Headers can override these per-request (see below).
+ENABLE_REGULATED_DOMAINS=true         # when true -> edition=regulated; else dev
+DEFAULT_PLAN=Pro                      # Starter | Pro | Enterprise (used when header missing)
+DEFAULT_DATA_SEGMENT=general          # general | medical | scientific (fallback)
+DEFAULT_REGULATED_SEGMENT=medical     # default segment when edition=regulated
+
+# ====================
+# LLM BOOTSTRAP (OPTIONAL)
+# ====================
+# Enable platform-managed provider keys to start without tenant BYOK.
+# Prefer BYOK long-term for margins; use secrets manager in production.
+PLATFORM_MANAGED_LLM_ENABLED=false
+OPENAI_API_KEY=                       # set if using platform-managed OpenAI
+ANTHROPIC_API_KEY=                    # set if using platform-managed Anthropic
+GOOGLE_API_KEY=                       # optional
+COHERE_API_KEY=                       # optional
+
+# Spend guardrails for managed keys (per-tenant defaults; tune per plan)
+SPEND_ALERT_TCU_WARN=200000
+SPEND_ALERT_TCU_HARD=300000
 ```
 
 ## Docker Compose (Optional - for local development)
@@ -116,6 +146,30 @@ Then start with:
 ```bash
 docker-compose up -d
 ```
+
+## TopDog IDE: Plan and Data Segment Labels
+
+The backend emits Prometheus metrics labeled by customer plan and data segment.
+
+- Request headers to set explicitly per-call:
+  - `X-Plan`: Starter | Pro | Enterprise
+  - `X-Data-Segment`: general | medical | scientific
+- If headers are not present, defaults are taken from environment:
+  - `DEFAULT_PLAN`, `DEFAULT_DATA_SEGMENT`; when `ENABLE_REGULATED_DOMAINS=true`, the segment falls back to `DEFAULT_REGULATED_SEGMENT`.
+
+These labels appear on metrics like `CONSISTENCY_SCORE` and `HALLUCINATION_SEVERITY` to drive tier/segment-specific SLO alerts.
+
+Example (PowerShell):
+
+```powershell
+Invoke-RestMethod -Method POST `
+  -Uri http://localhost:8000/consistency/sli `
+  -Headers @{ 'X-Plan'='Pro'; 'X-Data-Segment'='scientific' } `
+  -Body (@{ score = 0.92 } | ConvertTo-Json) `
+  -ContentType 'application/json'
+```
+
+Prometheus alert groups expect these labels and are defined under `observability/prometheus/alerts.yml` (e.g., `topdog-slo-gates-tiered`, `topdog-slo-gates-segments`).
 
 ## Docker Image (Optional - for production)
 

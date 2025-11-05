@@ -1,0 +1,56 @@
+name: Canary/Blue-Green Deploy
+
+on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: "Target environment (staging|prod)"
+        required: true
+        default: "staging"
+      strategy:
+        description: "Deployment strategy (canary|blue-green)"
+        required: true
+        default: "canary"
+      slo_burn_rate_threshold:
+        description: "Max allowed SLO burn rate before auto-rollback"
+        required: true
+        default: "2.0"
+
+jobs:
+  canary_deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Deploy (placeholder)
+        run: |
+          echo "Deploying ${{ github.event.inputs.strategy }} to ${{ github.event.inputs.environment }}..."
+          # TODO: Add your real deploy steps here (kubectl/helm/tauri updater/etc.)
+
+      - name: Export Prometheus credentials (if provided)
+        env:
+          PROM_URL_SECRET: ${{ secrets.PROMETHEUS_URL }}
+          PROM_TOKEN_SECRET: ${{ secrets.PROMETHEUS_TOKEN }}
+        shell: bash
+        run: |
+          if [[ -n "${PROM_URL_SECRET}" ]]; then echo "PROM_URL=${PROM_URL_SECRET}" >> "$GITHUB_ENV"; fi
+          if [[ -n "${PROM_TOKEN_SECRET}" ]]; then echo "PROM_TOKEN=${PROM_TOKEN_SECRET}" >> "$GITHUB_ENV"; fi
+
+      - name: SLO Burn Rate Gate
+        env:
+          SLO_BURN_RATE_THRESHOLD: ${{ github.event.inputs.slo_burn_rate_threshold }}
+        run: |
+          python -m pip install --upgrade pip
+          python -c "import sys; print(sys.version)"
+          python tools/slo_burn_rate_gate.py --threshold "$SLO_BURN_RATE_THRESHOLD"
+
+      - name: Promote rollout
+        if: success()
+        run: |
+          echo "Promoting rollout for ${{ github.event.inputs.strategy }} to ${{ github.event.inputs.environment }}"
+
+      - name: Auto-rollback
+        if: failure()
+        run: |
+          echo "Auto-rollback triggered due to SLO burn rate gate failure"
+          # TODO: add rollback command(s)

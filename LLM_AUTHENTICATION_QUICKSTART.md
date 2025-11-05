@@ -33,7 +33,7 @@ You should see:
 Local: http://localhost:1431
 ```
 
-### Step 3: Open Q-IDE
+### Step 3: Open Top Dog
 1. Open browser to http://localhost:1431
 2. Click "LLM Setup" tab (bottom of right panel)
 3. Click "Auth" tab in LLM Setup panel
@@ -51,7 +51,7 @@ You should see 5 cloud providers:
 2. A new browser window opens
 3. You'll be taken to OpenAI's OAuth consent page
 4. Authenticate with your OpenAI account
-5. Grant permission to Q-IDE
+5. Grant permission to Top Dog
 6. You'll be redirected back automatically
 7. The popup closes
 8. Auth status shows "✓ Signed in as [your-email]"
@@ -75,7 +75,7 @@ OAuthCallback component receives code
     ↓
 Backend exchanges code for token
     ↓
-Token stored in ~/.q-ide/llm_credentials.json
+Token stored in ~/.Top Dog/llm_credentials.json
     ↓
 Popup notifies parent window & closes
     ↓
@@ -85,7 +85,7 @@ Auth status updated in Auth tab
 ### Credential Storage
 Your credentials are stored locally at:
 ```
-~/.q-ide/llm_credentials.json
+~/.Top Dog/llm_credentials.json
 ```
 
 Contents example:
@@ -189,15 +189,15 @@ curl -X POST http://localhost:8000/llm_auth/revoke \
 3. Check redirect_uri matches OAuth app settings
 
 ### Credentials Not Saving
-1. Verify `~/.q-ide/` directory exists
-2. Check file permissions on `~/.q-ide/llm_credentials.json`
+1. Verify `~/.Top Dog/` directory exists
+2. Check file permissions on `~/.Top Dog/llm_credentials.json`
 3. Check backend logs for write errors
 
 ### "Not authenticated" After Sign-In
 1. Check browser console for OAuth callback errors
 2. Verify OAuth window was closed automatically
 3. Try signing in again
-4. Check `~/.q-ide/llm_credentials.json` for saved credentials
+4. Check `~/.Top Dog/llm_credentials.json` for saved credentials
 
 ### Provider Not Showing as Authenticated
 1. Click the Auth tab again to refresh
@@ -217,7 +217,7 @@ curl -X POST http://localhost:8000/llm_auth/revoke \
 1. Sign in to OpenAI
 2. Sign in to Claude
 3. Both should show as authenticated
-4. Check `~/.q-ide/llm_credentials.json` has both entries
+4. Check `~/.Top Dog/llm_credentials.json` has both entries
 
 ### Scenario 3: Revocation
 1. Sign in to a provider
@@ -301,7 +301,7 @@ Once you've set up authentication:
 
 ## Security Considerations
 
-✅ Credentials stored locally only (never sent to Q-IDE servers)
+✅ Credentials stored locally only (never sent to Top Dog servers)
 ✅ OAuth code exchange happens server-side (client never sees token)
 ✅ CORS validation on callback (origin check)
 ✅ State parameter prevents CSRF attacks
@@ -314,7 +314,7 @@ For issues or questions:
 1. Check browser console (F12) for errors
 2. Check backend logs for API errors
 3. Open GitHub issue with error message
-4. Include `~/.q-ide/llm_credentials.json` (with tokens redacted) for debugging
+4. Include `~/.Top Dog/llm_credentials.json` (with tokens redacted) for debugging
 
 ---
 

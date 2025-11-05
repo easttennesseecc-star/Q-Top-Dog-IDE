@@ -316,7 +316,7 @@ Response:
 
 ## Configuration Files
 
-### ~/.q-ide/llm_roles.json
+### ~/.Top Dog/llm_roles.json
 ```json
 {
   "coding": {

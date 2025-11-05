@@ -30,7 +30,7 @@ You have:
 - Refactoring (extract, rename, move)
 - Advanced debugging
 
-**Why First**: These are table-stakes. Without them, users won't use Q-IDE for daily work.
+**Why First**: These are table-stakes. Without them, users won't use Top Dog for daily work.
 
 **Files to Read**:
 1. `Q-IDE_REAL_GAP_ANALYSIS_VS_COMPETITORS.md` (sections 1-3)
@@ -53,7 +53,7 @@ You have:
 ---
 
 ### 📍 WEEKS 5-8: Polish & Ecosystem (FLYWHEEL)
-**Goal**: Make Q-IDE production-ready at scale  
+**Goal**: Make Top Dog production-ready at scale  
 **Deliverables**:
 - Performance optimization (10x faster)
 - Extension system (ecosystem growth)
@@ -71,7 +71,7 @@ You have:
 ```
 TODAY:                          AFTER 90 DAYS:
 
-VS Code      #1 ────────────   Q-IDE      #1 🏆
+VS Code      #1 ────────────   Top Dog      #1 🏆
 ├─ Editor               ├─────  ├─ Editor (AI-enhanced)
 ├─ Extensions           ├─────  ├─ Debugging
 ├─ Ecosystem            ├─────  ├─ Refactoring
@@ -219,7 +219,7 @@ Review: Friday EOD (demo + merge to main)
 | **Nov 20** (Week 4 EOW) | Collaboration shipped | Multi-user editing working |
 | **Dec 1** | Performance peak | 5-10x faster than today |
 | **Dec 15** | Mobile PWA ready | iOS/Android usable |
-| **Dec 31** | Public launch | "Q-IDE is the #1 AI IDE" |
+| **Dec 31** | Public launch | "Top Dog is the #1 AI IDE" |
 
 ---
 
@@ -237,7 +237,7 @@ Review: Friday EOD (demo + merge to main)
 - HackerNews #1 when you launch
 - Twitter: Tech community buzzing
 - Users: "This is better than VS Code"
-- Copilot users: Switching to Q-IDE for cost
+- Copilot users: Switching to Top Dog for cost
 
 ### Business Validation
 - DAU: 1K+ (vs current 100)
@@ -288,7 +288,7 @@ Review: Friday EOD (demo + merge to main)
 ## SUCCESS FORMULA
 
 ```
-Q-IDE Dominance = 
+Top Dog Dominance = 
     Editor Speed (IntelliSense fixed) +
     Debugging (Works out of box) +
     Refactoring (Faster than VS Code) +
@@ -308,7 +308,7 @@ You're not trying to beat VS Code at being an editor.
 You're trying to beat it at being an **intelligent coding partner**.
 
 - VS Code: Mature IDE (hard to catch)
-- Q-IDE: AI-First IDE (easy to win with)
+- Top Dog: AI-First IDE (easy to win with)
 
 **Focus**: Leverage your LLM agents and orchestration that VS Code can never match.
 
@@ -331,7 +331,7 @@ What's missing is the basic IDE stuff that users do every day:
 
 **Fix those 4 things in 90 days = You're #1.**
 
-No marketing needed. Users will switch because Q-IDE just works better.
+No marketing needed. Users will switch because Top Dog just works better.
 
 ---
 
@@ -345,7 +345,7 @@ No marketing needed. Users will switch because Q-IDE just works better.
 
 **By Friday EOW**: First version of IntelliSense shipped to beta users
 
-**By Dec 31**: Q-IDE is the #1 web-based AI IDE
+**By Dec 31**: Top Dog is the #1 web-based AI IDE
 
 ---
 

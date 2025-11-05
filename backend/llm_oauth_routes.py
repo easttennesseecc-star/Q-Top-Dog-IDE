@@ -19,7 +19,7 @@ from fastapi.responses import RedirectResponse, JSONResponse
 from pydantic import BaseModel
 from typing import Dict, Optional
 
-from llm_oauth_auth import get_oauth_handler, OAUTH_PROVIDERS
+from backend.llm_oauth_auth import get_oauth_handler, OAUTH_PROVIDERS
 
 router = APIRouter(prefix="/llm_auth", tags=["llm_oauth_auth"])
 

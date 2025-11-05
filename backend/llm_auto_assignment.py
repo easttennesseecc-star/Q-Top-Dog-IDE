@@ -6,7 +6,7 @@ Automatically discovers available LLM models and assigns them to the best roles
 import logging
 from typing import Dict, List, Optional
 from enum import Enum
-from llm_roles_descriptor import LLMRole, ROLE_SPECIFICATIONS
+from backend.llm_roles_descriptor import LLMRole, ROLE_SPECIFICATIONS
 
 logger = logging.getLogger("q-ide-topdog")
 
@@ -329,7 +329,7 @@ def register_auto_assignment_routes(app):
         """
         try:
             # Get authenticated providers
-            from llm_auth import get_authenticated_providers
+            from backend.llm_auth import get_authenticated_providers
             providers = get_authenticated_providers()
             
             # Auto-assign

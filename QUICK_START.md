@@ -1,4 +1,4 @@
-# 🚀 Q-IDE Quick Start - 3 Steps to Building Apps with AI
+# 🚀 Top Dog Quick Start - 3 Steps to Building Apps with AI
 
 ## Step 1: Prerequisites (5 minutes)
 
@@ -18,7 +18,7 @@ Should show version numbers, not "command not found"
 
 ---
 
-## Step 2: Install Q-IDE (5 minutes)
+## Step 2: Install Top Dog (5 minutes)
 
 ### Option A: Click & Go (Easiest)
 1. Open `c:\Quellum-topdog-ide\` folder
@@ -54,7 +54,7 @@ This opens **two windows**:
 http://localhost:1431
 ```
 
-You'll see: "Welcome to Q-IDE! Set up your AI team"
+You'll see: "Welcome to Top Dog! Set up your AI team"
 
 ---
 
@@ -75,11 +75,11 @@ You'll see: "Welcome to Q-IDE! Set up your AI team"
    - Google: https://makersuite.google.com/app/apikey
    - Mistral: https://console.mistral.ai/
 
-4. **Paste** your API key into Q-IDE
+4. **Paste** your API key into Top Dog
 
 5. **Click** "Complete Setup"
 
-Q-IDE automatically:
+Top Dog automatically:
 - ✅ Tests your API
 - ✅ Assigns best models to roles
 - ✅ Shows cost estimate
@@ -90,7 +90,7 @@ Q-IDE automatically:
 1. **Click** "Create New Project"
 2. **Describe** what you want to build
    - Example: "A project management tool with tasks, teams, and real-time updates"
-3. **Q-IDE Orchestrates:**
+3. **Top Dog Orchestrates:**
    - 🎯 Q Assistant extracts requirements
    - 💻 Code Writer generates implementation
    - ✅ Test Auditor creates tests

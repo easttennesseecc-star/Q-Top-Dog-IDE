@@ -1,4 +1,4 @@
-# 🚀 PRODUCT-LED GROWTH PLAYBOOK: How Q-IDE Wins Without Sales
+# 🚀 PRODUCT-LED GROWTH PLAYBOOK: How Top Dog Wins Without Sales
 
 **Status**: Active Strategy (November 2025 - April 2026)  
 **Goal**: $867k MRR by Month 6 with **zero sales team**  
@@ -8,13 +8,13 @@
 
 ## THE THESIS
 
-> "Q-IDE is so much better than GitHub Copilot + VS Code, developers won't need a salesman to convince them. Reviews will do it."
+> "Top Dog is so much better than GitHub Copilot + VS Code, developers won't need a salesman to convince them. Reviews will do it."
 
 **Your assumptions**:
 - ✅ Product quality > competitor product (speed, features, collaboration)
 - ✅ Developers share tools organically (Slack, Discord, Twitter)
 - ✅ Teams adopt tools their developers use (they value dev happiness)
-- ✅ Companies want to cut costs + increase production (they'll buy Q-IDE)
+- ✅ Companies want to cut costs + increase production (they'll buy Top Dog)
 - ✅ Word of mouth > sales pitches (authenticity wins)
 
 **If all true**: You don't need a sales team. You need a great product + great support.
@@ -76,23 +76,23 @@ Why it works:
 
 **Week 2-3**: Viral Adoption Among Developers
 ```
-Action: Developers try Q-IDE on free tier
+Action: Developers try Top Dog on free tier
 ├─ Experience: "Wow, this is way faster than what I use"
 ├─ Reaction: Share with team on Slack/Discord
 ├─ Result: Teammates try → love it → adopt
 
 Developer journey:
-├─ Dev 1: Discovers Q-IDE (Product Hunt)
+├─ Dev 1: Discovers Top Dog (Product Hunt)
 ├─ Dev 1: Uses free tier (no commitment)
 ├─ Dev 1: Loves speed + features
 ├─ Dev 1: Demos to Dev 2-5 (team Slack)
 ├─ Dev 2-5: Try → Love → Use daily
-└─ Team starts having Q-IDE as default IDE
+└─ Team starts having Top Dog as default IDE
 ```
 
 **Month 1 Targets**:
 - 50k free tier sign-ups
-- 100+ teams using Q-IDE
+- 100+ teams using Top Dog
 - 5 companies evaluating for enterprise
 
 ---
@@ -116,17 +116,17 @@ Why it works:
 
 **Week 7-8**: Companies Get Interested
 ```
-Action: CTO hears from developers "We should use Q-IDE"
-├─ Context: Team is 2x more productive with Q-IDE
+Action: CTO hears from developers "We should use Top Dog"
+├─ Context: Team is 2x more productive with Top Dog
 ├─ CTO question: "What does it cost for whole company?"
-├─ Company visits q-ide.com → sees enterprise pricing
+├─ Company visits Top Dog.com → sees enterprise pricing
 ├─ Company signs up → support handles it
 ├─ Result: First 3-5 enterprise customers
 
 Path:
 ├─ Individual dev: Uses free → loves → tells team
 ├─ Team lead: Sees productivity gains → tells CTO
-├─ CTO: Evaluates Q-IDE → sees cost savings
+├─ CTO: Evaluates Top Dog → sees cost savings
 ├─ CTO: Approves purchase → company signs enterprise contract
 ├─ Support: Handles onboarding → company expands
 ```
@@ -144,7 +144,7 @@ Path:
 **Week 9-10**: Learning Platform + Certifications Launch
 ```
 Action: Free learning platform drives engagement
-├─ Benefit: Users get certified in Q-IDE
+├─ Benefit: Users get certified in Top Dog
 ├─ Result: Certified developers become advocates
 ├─ Effect: Each certified dev brings 5-10 new users
 
@@ -158,14 +158,14 @@ Why it works:
 **Week 11-12**: Extension Marketplace + AI Agents
 ```
 Action: 1,000+ extensions available
-├─ Effect: Q-IDE becomes the platform
-├─ Developer motivation: "I can build on Q-IDE"
+├─ Effect: Top Dog becomes the platform
+├─ Developer motivation: "I can build on Top Dog"
 ├─ Network effect: More extensions → more users
 ├─ Creator incentive: 15% of sales goes to creators
 
 Why it works:
 ├─ Extensions = features without your team building them
-├─ Creators = advocates = tell their audiences about Q-IDE
+├─ Creators = advocates = tell their audiences about Top Dog
 ├─ Users = loyal (invested in extensions they use)
 └─ Community = self-sustaining ecosystem
 ```
@@ -185,7 +185,7 @@ Why it works:
 ```
 Action: First 100 extension creators earn money
 ├─ Creator 1 makes $1,000 → tells their audience
-├─ Creators advocate for Q-IDE
+├─ Creators advocate for Top Dog
 ├─ Their audiences try → like → adopt
 ├─ Result: Viral loop powered by creators
 
@@ -199,9 +199,9 @@ Effect:
 **Month 5**: Enterprise Reaches Critical Mass
 ```
 Action: 50+ enterprise customers
-├─ Fortune 500 mentions Q-IDE in press releases
-├─ Industry analysts start tracking Q-IDE
-├─ Gartner adds Q-IDE to "Cool Vendors" list
+├─ Fortune 500 mentions Top Dog in press releases
+├─ Industry analysts start tracking Top Dog
+├─ Gartner adds Top Dog to "Cool Vendors" list
 ├─ Media coverage increases (TechCrunch, Forbes)
 
 Effect:
@@ -288,7 +288,7 @@ Tasks:
 ├─ Tag dev influencers (Fireship, ThePrimeagen, etc)
 ├─ DM select YouTubers (offer early access)
 ├─ Post on Dev.to (technical deep-dive)
-├─ Engage with Q-IDE mentions
+├─ Engage with Top Dog mentions
 │
 Strategy:
 ├─ Tell the story (why you built it, what gap it fills)
@@ -308,7 +308,7 @@ Success metrics:
 (People have time to explore new tools)
 
 Tasks:
-├─ "Q-IDE Holiday Giveaway" (generate buzz)
+├─ "Top Dog Holiday Giveaway" (generate buzz)
 ├─ Limited-time Pro access (free for a month)
 ├─ Referral program (each friend = 1-month free)
 ├─ Discord community (build culture)
@@ -382,7 +382,7 @@ Success metrics:
 Tasks:
 ├─ Launch Discord server
 ├─ Start "Show & Tell" thread (users share projects)
-├─ Host first "Q-IDE Coffee Chat" (live stream)
+├─ Host first "Top Dog Coffee Chat" (live stream)
 ├─ Publish blog post (technical deep-dive)
 ├─ Start GitHub discussions
 │
@@ -455,7 +455,7 @@ Tasks:
 ├─ Publish extension marketplace (website + in-IDE)
 ├─ Port 500 popular VS Code extensions
 ├─ Create extension development guide
-├─ Set up revenue sharing (15% to Q-IDE, 85% to creator)
+├─ Set up revenue sharing (15% to Top Dog, 85% to creator)
 ├─ Create top creator spotlights
 │
 Strategy:
@@ -481,7 +481,7 @@ Target metrics:
 ├─ 10k certified developers
 ├─ 100+ active extension creators
 ├─ $450k MRR total
-└─ Reputation: "Q-IDE is the platform"
+└─ Reputation: "Top Dog is the platform"
 ```
 
 ---
@@ -512,13 +512,13 @@ Target metrics:
 
 ---
 
-## WHAT MAKES PRODUCT-LED GROWTH WORK FOR Q-IDE
+## WHAT MAKES PRODUCT-LED GROWTH WORK FOR Top Dog
 
 ### 1. Product Quality Must Be Real
 ```
-✅ Q-IDE is faster (benchmarks prove it)
-✅ Q-IDE has features competitors lack (collaboration, debugging)
-✅ Q-IDE has better UX (designed from scratch)
+✅ Top Dog is faster (benchmarks prove it)
+✅ Top Dog has features competitors lack (collaboration, debugging)
+✅ Top Dog has better UX (designed from scratch)
 ✅ Users can verify all this in free tier (no risk)
 └─ Result: Reviews will be authentic and positive
 ```

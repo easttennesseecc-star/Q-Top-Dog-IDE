@@ -1,7 +1,7 @@
-# Testing Guide - Q-IDE
+# Testing Guide - Top Dog
 
 ## Overview
-Q-IDE uses a comprehensive testing strategy covering unit tests, integration tests, and end-to-end tests.
+Top Dog uses a comprehensive testing strategy covering unit tests, integration tests, and end-to-end tests.
 
 ## Test Structure
 

@@ -1,8 +1,8 @@
-# Q-IDE: Complete System Architecture Overview
+# Top Dog: Complete System Architecture Overview
 
 ## Executive Summary
 
-Q-IDE is a modern IDE backend built with FastAPI and Python, featuring enterprise-grade OAuth 2.0 authentication, PAT token management, build orchestration, and an LLM learning system that enables your "Super Coder" AI to continuously improve by learning from your codebase and build history.
+Top Dog is a modern IDE backend built with FastAPI and Python, featuring enterprise-grade OAuth 2.0 authentication, PAT token management, build orchestration, and an LLM learning system that enables your "Super Coder" AI to continuously improve by learning from your codebase and build history.
 
 **Status:** ✅ Production Ready for Local Development & Testing
 
@@ -42,7 +42,7 @@ Q-IDE is a modern IDE backend built with FastAPI and Python, featuring enterpris
 
 ```
 ┌─────────────────────────────────────────────────────────────────┐
-│                     Q-IDE Backend (FastAPI)                     │
+│                     Top Dog Backend (FastAPI)                     │
 │                                                                  │
 │  ┌──────────────┐  ┌──────────────┐  ┌──────────────┐          │
 │  │ OAuth Flows  │  │   Builds     │  │ LLM Learning │          │
@@ -62,7 +62,7 @@ Q-IDE is a modern IDE backend built with FastAPI and Python, featuring enterpris
                     HTTP/CORS  │
                               │
 ┌─────────────────────────────────────────────────────────────────┐
-│                   Q-IDE Frontend (React 19)                      │
+│                   Top Dog Frontend (React 19)                      │
 │                                                                  │
 │  ┌──────────────┐  ┌──────────────┐  ┌──────────────┐          │
 │  │ Sign In Flow │  │ Account Link  │  │ Integrations │          │
@@ -384,11 +384,11 @@ npm run dev
 
 ### Option 2: Docker Deployment
 ```bash
-docker build -t q-ide-backend .
+docker build -t Top Dog-backend .
 docker run -p 8000:8000 \
   -e GOOGLE_CLIENT_ID=... \
   -e GOOGLE_CLIENT_SECRET=... \
-  q-ide-backend
+  Top Dog-backend
 ```
 
 ### Option 3: Production Deployment

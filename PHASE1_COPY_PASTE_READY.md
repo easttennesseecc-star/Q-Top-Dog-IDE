@@ -167,7 +167,7 @@ Response (403):
   "detail": "Feature not available in tier",
   "current_tier": "free",
   "required_tier": "pro",
-  "upgrade_url": "https://q-ide.com/pricing",
+  "upgrade_url": "https://Top Dog.com/pricing",
   "upgrade_to": "pro",
   "feature": "code_execution"
 }

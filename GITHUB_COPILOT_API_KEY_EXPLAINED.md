@@ -12,11 +12,11 @@
 - Uses GitHub OAuth login through your browser
 - Microsoft & GitHub handle authentication
 - You **cannot** use this programmatically from your own app
-- Q-IDE cannot access or control this
+- Top Dog cannot access or control this
 
 ### 2. **GitHub Copilot API** ✅ This Is What We Need
-- This is the programmatic API for applications like Q-IDE
-- Allows Q-IDE to make code completion requests
+- This is the programmatic API for applications like Top Dog
+- Allows Top Dog to make code completion requests
 - Requires explicit API key for security
 - This is how other apps integrate Copilot
 
@@ -32,8 +32,8 @@ OAuth Sign-In (VS Code Extension):
   GitHub: "OK, I trust VS Code, here's access"
   Risk: LOW (Microsoft manages it, secure servers)
   
-API Key (Q-IDE):
-  You say: "Let Q-IDE access Copilot API"
+API Key (Top Dog):
+  You say: "Let Top Dog access Copilot API"
   GitHub: "You need an explicit API key"
   Risk: MEDIUM (API key is more like a password)
   Why: Your app runs locally, so needs explicit permission
@@ -46,9 +46,9 @@ API Key (Q-IDE):
 ### Why GitHub Requires API Keys for Apps:
 
 1. **Accountability**
-   - If Q-IDE makes 1,000 requests, GitHub knows exactly which app
+   - If Top Dog makes 1,000 requests, GitHub knows exactly which app
    - Can bill you per-app if needed
-   - Can revoke access to just Q-IDE without affecting VS Code
+   - Can revoke access to just Top Dog without affecting VS Code
 
 2. **Control**
    - You can have different API keys for different apps
@@ -57,8 +57,8 @@ API Key (Q-IDE):
 
 3. **Local Security**
    - VS Code is managed by Microsoft on your computer
-   - Q-IDE is your local development app
-   - GitHub requires explicit API key to confirm you want Q-IDE to have access
+   - Top Dog is your local development app
+   - GitHub requires explicit API key to confirm you want Top Dog to have access
 
 ---
 
@@ -81,9 +81,9 @@ VS Code gets OAuth token
 VS Code can now use Copilot
 ```
 
-### With Q-IDE (Needs API Key)
+### With Top Dog (Needs API Key)
 ```
-You open Q-IDE
+You open Top Dog
   ↓
 Go to LLM Setup → Auth tab
   ↓
@@ -93,9 +93,9 @@ Browser opens → GitHub Settings
   ↓
 Create Personal Access Token (API Key)
   ↓
-Copy key to Q-IDE
+Copy key to Top Dog
   ↓
-Q-IDE can now use Copilot API
+Top Dog can now use Copilot API
 ```
 
 ---
@@ -124,9 +124,9 @@ Must be:
 4. Copy the token (you'll only see it once!)
 ```
 
-**Step 3: Add to Q-IDE**
+**Step 3: Add to Top Dog**
 ```
-1. Go to Q-IDE → LLM Setup → Auth
+1. Go to Top Dog → LLM Setup → Auth
 2. Find "GitHub Copilot"
 3. Paste your token
 4. Click Save
@@ -151,7 +151,7 @@ Look for "Copilot"
 
 ---
 
-## Why Can't Q-IDE Use VS Code Extension's Token?
+## Why Can't Top Dog Use VS Code Extension's Token?
 
 ### Technical Reason:
 ```
@@ -162,7 +162,7 @@ VS Code Extension Token:
   - Transferable: NO
   - Can be shared: NO (security risk)
   
-Q-IDE API Key:
+Top Dog API Key:
   - Scope: Any app you authorize
   - Type: Personal Access Token (programmatic)
   - Managed by: You (via GitHub)
@@ -175,8 +175,8 @@ Q-IDE API Key:
 OAuth Token (VS Code):
   "This token is only for VS Code, signed by Microsoft"
   
-API Key (Q-IDE):
-  "I am authorizing Q-IDE specifically to use my Copilot"
+API Key (Top Dog):
+  "I am authorizing Top Dog specifically to use my Copilot"
 ```
 
 ---
@@ -195,7 +195,7 @@ Steps:
 1. Go to → https://makersuite.google.com/app/apikeys
 2. Click "Create API Key"
 3. Copy key
-4. Paste in Q-IDE Auth tab
+4. Paste in Top Dog Auth tab
 5. Done! (no subscription needed)
 ```
 
@@ -217,26 +217,26 @@ Steps:
 
 ### Why We Can't Auto-Authenticate with GitHub OAuth:
 
-**Q-IDE is a LOCAL APP**
+**Top Dog is a LOCAL APP**
 ```
 Your Computer:
-  ├─ Q-IDE Backend (Python, port 8000)
-  ├─ Q-IDE Frontend (React, port 1431)
+  ├─ Top Dog Backend (Python, port 8000)
+  ├─ Top Dog Frontend (React, port 1431)
   └─ Your credentials (saved locally)
 ```
 
 **GitHub OAuth Flow:**
 ```
-Step 1: Q-IDE → GitHub
+Step 1: Top Dog → GitHub
   "Please let me access user's Copilot"
   
 GitHub: "OK, but this is a LOCAL APP"
   
-GitHub: "I can't verify if this is really the official Q-IDE"
+GitHub: "I can't verify if this is really the official Top Dog"
   
 GitHub: "I need an explicit API key instead"
   
-GitHub: "This way you confirm you want Q-IDE to have access"
+GitHub: "This way you confirm you want Top Dog to have access"
 ```
 
 **vs VS Code OAuth:**
@@ -263,16 +263,16 @@ GitHub: "I'll trust it with OAuth token"
 
 2. **Not committing to Git**
    - Never push API keys to repositories
-   - Q-IDE stores them in `~/.q-ide/llm_credentials.json`
+   - Top Dog stores them in `~/.Top Dog/llm_credentials.json`
    - Not in your project directory
 
 3. **Not posting online**
    - Don't share keys in forums, Discord, etc.
    - Keys can't be easily rotated once shared
 
-### How Q-IDE Protects Your Key:
+### How Top Dog Protects Your Key:
 ```
-✓ Stored in home directory (~/.q-ide/)
+✓ Stored in home directory (~/.Top Dog/)
 ✓ Never sent to Quellum servers
 ✓ Only sent to GitHub servers
 ✓ Encrypted when possible
@@ -292,7 +292,7 @@ GitHub: "I'll trust it with OAuth token"
 3. Verify it has correct scopes
 4. If expired → delete and create new one
 5. Copy entire token (no extra spaces)
-6. Re-paste in Q-IDE
+6. Re-paste in Top Dog
 ```
 
 ### Problem: "Copilot Subscription Required"
@@ -330,15 +330,15 @@ Netflix: "Go ahead, VS Code, use his account"
 Result: VS Code gets Netflix access through OAuth
 ```
 
-**Q-IDE (API Key)**
+**Top Dog (API Key)**
 ```
-You: "Q-IDE, can you use my Copilot account?"
-GitHub: "Q-IDE is a local app I haven't heard of"
+You: "Top Dog, can you use my Copilot account?"
+GitHub: "Top Dog is a local app I haven't heard of"
 GitHub: "I need explicit confirmation"
-You: "Yes, I want Q-IDE to have access"
+You: "Yes, I want Top Dog to have access"
 You: (create explicit API key)
-GitHub: "OK, here's your Q-IDE access key"
-Result: Q-IDE gets Copilot access via API key
+GitHub: "OK, here's your Top Dog access key"
+Result: Top Dog gets Copilot access via API key
 ```
 
 ---
@@ -347,7 +347,7 @@ Result: Q-IDE gets Copilot access via API key
 
 ### GitHub's Security Priorities:
 1. **Prevent Impersonation**
-   - Hackers can't pretend to be Q-IDE
+   - Hackers can't pretend to be Top Dog
    - Your API key proves you authorized it
 
 2. **Enable Revocation**
@@ -355,11 +355,11 @@ Result: Q-IDE gets Copilot access via API key
    - GitHub → Settings → Tokens → Delete
 
 3. **Track Usage**
-   - GitHub can see: Q-IDE made 1,000 requests
+   - GitHub can see: Top Dog made 1,000 requests
    - Can disable specific apps without affecting others
 
 4. **Per-App Control**
-   - Q-IDE token might have limited scope
+   - Top Dog token might have limited scope
    - VS Code token is full access
    - You decide what each app can do
 
@@ -374,10 +374,10 @@ Result: Q-IDE gets Copilot access via API key
 ```
 ✗ Can't: VS Code OAuth is for VS Code only
 ✗ Can't: GitHub doesn't trust local apps with OAuth
-✗ Can't: No way to verify Q-IDE is official software
+✗ Can't: No way to verify Top Dog is official software
 
-✓ Must: Create explicit API key for Q-IDE
-✓ Must: Confirms you want Q-IDE to have access
+✓ Must: Create explicit API key for Top Dog
+✓ Must: Confirms you want Top Dog to have access
 ✓ Must: Allows GitHub to track and control access
 ✓ Must: Lets you revoke access independently
 ```
@@ -385,7 +385,7 @@ Result: Q-IDE gets Copilot access via API key
 ### Next Steps:
 1. **If you have Copilot subscription:**
    - Create API key at https://github.com/settings/tokens/new
-   - Paste in Q-IDE Auth tab
+   - Paste in Top Dog Auth tab
    - Done!
 
 2. **If you don't have Copilot subscription:**

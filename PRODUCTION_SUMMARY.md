@@ -29,8 +29,8 @@
 ### 3. ✅ Production Build Config
 - **File**: `frontend/src-tauri/tauri.conf.json`
 - **Changes**:
-  - Updated productName to "Q-IDE (TopDog)"
-  - Set identifier to "com.quellum.q-ide"
+  - Updated productName to "Top Dog (TopDog)"
+  - Set identifier to "com.quellum.Top Dog"
   - Configured correct dev port (1431)
   - Added CSP security headers
   - Optimized window size (1200x800 min)
@@ -115,7 +115,7 @@
 ## 📦 Project Structure Now Includes
 
 ```
-q-ide/
+Top Dog/
 ├── 📄 QUICKSTART.md              ← START HERE (30 sec setup)
 ├── 📄 DEPLOYMENT.md              ← How to deploy
 ├── 📄 TESTING.md                 ← How to test
@@ -179,7 +179,7 @@ q-ide/
 
 git add .
 git commit -m "chore: bump version to 0.1.0"
-git tag -a v0.1.0 -m "Release Q-IDE v0.1.0"
+git tag -a v0.1.0 -m "Release Top Dog v0.1.0"
 git push origin main
 git push origin v0.1.0
 ```
@@ -188,7 +188,7 @@ git push origin v0.1.0
 - Automatically triggered by tag push
 - Builds for Windows, macOS, Linux
 - Creates GitHub Release with artifacts
-- Monitor: https://github.com/quellum/q-ide/actions
+- Monitor: https://github.com/quellum/Top Dog/actions
 
 ### Step 3: Publish Release Notes (5 min)
 - Edit release on GitHub
@@ -284,7 +284,7 @@ TOTAL: ~20 minutes
 
 ## 🎉 Summary
 
-**Q-IDE v0.1.0 is PRODUCTION READY!**
+**Top Dog v0.1.0 is PRODUCTION READY!**
 
 All critical systems are:
 - ✅ Tested and verified

@@ -10,7 +10,7 @@
 ```
                     Product  Price  Brand  Support  Risk   TOTAL
                     ────────────────────────────────────────────
-Q-IDE               98       99     35     85       75     390/500 (78%) ← Full-stack IDE
+Top Dog               98       99     35     85       75     390/500 (78%) ← Full-stack IDE
 GitHub Copilot      90       45     100    95       90     420/500 (84%) ← Coding assistant
 VS Code             98       100    95     70       95     458/500 (92%) ← Local editor
 Cursor              92       70     25     55       50     292/500 (58%)
@@ -18,44 +18,44 @@ Replit              75       90     30     65       60     320/500 (64%)
 JetBrains Fleet     85       60     70     70       55     340/500 (68%)
 GitPod              80       60     50     60       65     315/500 (63%)
 ────────────────────────────────────────────────────────────────────
-Note: Updated scoring reflects Q-IDE's TRUE competitive position
+Note: Updated scoring reflects Top Dog's TRUE competitive position
 - Product: Feature completeness + production-readiness + AI integration
 - Price: Cost-effectiveness (lower is better)
 - Brand: Recognition + trust (growing rapidly)
 - Support: Enterprise readiness + custom deployment
 - Risk: Execution probability + market opportunity
 
-KEY INSIGHT: Comparing Q-IDE to VS Code like comparing airplanes to cars.
+KEY INSIGHT: Comparing Top Dog to VS Code like comparing airplanes to cars.
              Both have wheels. Airplanes just go further, faster.
-             Q-IDE is the IDE that ships to production. 
+             Top Dog is the IDE that ships to production. 
              VS Code is the editor that writes local code.
              They're different categories now.
 ```
 
-### TIER 2: UNIQUE CAPABILITIES (Q-IDE ONLY)
+### TIER 2: UNIQUE CAPABILITIES (Top Dog ONLY)
 
 ```
-CAPABILITY                          Q-IDE    GitHub   VS Code   WINNER
+CAPABILITY                          Top Dog    GitHub   VS Code   WINNER
 ────────────────────────────────────────────────────────────────────────
-AI Marketplace (53+ models)         ✅✅✅   ❌       ❌        Q-IDE (exclusive)
-Custom Agent Deployment              ✅✅✓   ❌       ❌        Q-IDE (exclusive)
-Runway Media Integration            ✅✅✓   ❌       ❌        Q-IDE (exclusive)
-BYOK Multi-LLM Routing              ✅✅✓   ❌       ❌        Q-IDE (exclusive)
-Production Deployment (IDE-native)  ✅✅✓   ❌       ❌        Q-IDE (exclusive)
-Monitoring Dashboard (built-in)     ✅✅✓   ❌       ❌        Q-IDE (exclusive)
-Database GUI (visual queries)       ✅✅    ❌       ❌        Q-IDE (exclusive)
-API Testing (Postman-like)          ✅✅    ❌       ❌        Q-IDE (exclusive)
-Cost Optimization AI                ✅✅    ❌       ❌        Q-IDE (exclusive)
-DevOps Automation (K8s/Docker)      ✅✅    ❌       ❌        Q-IDE (exclusive)
+AI Marketplace (53+ models)         ✅✅✅   ❌       ❌        Top Dog (exclusive)
+Custom Agent Deployment              ✅✅✓   ❌       ❌        Top Dog (exclusive)
+Runway Media Integration            ✅✅✓   ❌       ❌        Top Dog (exclusive)
+BYOK Multi-LLM Routing              ✅✅✓   ❌       ❌        Top Dog (exclusive)
+Production Deployment (IDE-native)  ✅✅✓   ❌       ❌        Top Dog (exclusive)
+Monitoring Dashboard (built-in)     ✅✅✓   ❌       ❌        Top Dog (exclusive)
+Database GUI (visual queries)       ✅✅    ❌       ❌        Top Dog (exclusive)
+API Testing (Postman-like)          ✅✅    ❌       ❌        Top Dog (exclusive)
+Cost Optimization AI                ✅✅    ❌       ❌        Top Dog (exclusive)
+DevOps Automation (K8s/Docker)      ✅✅    ❌       ❌        Top Dog (exclusive)
 
-TRANSLATION: Q-IDE has 10 major features NO OTHER IDE has.
-             GitHub has 1 thing: Copilot (which Q-IDE does better + 53 more models).
-             VS Code has 1 thing: Local editing (which Q-IDE also has + shipping).
+TRANSLATION: Top Dog has 10 major features NO OTHER IDE has.
+             GitHub has 1 thing: Copilot (which Top Dog does better + 53 more models).
+             VS Code has 1 thing: Local editing (which Top Dog also has + shipping).
 ```
 
 ---
 
-## THE DOMINANCE MATRIX: Why Q-IDE Wins the IDE Wars
+## THE DOMINANCE MATRIX: Why Top Dog Wins the IDE Wars
 
 ### What "Best Editor" Actually Means (vs What Matters)
 
@@ -67,8 +67,8 @@ OLD POSITIONING (VS Code Wins):
 ├─ Most flexible refactoring
 └─ Millions of developers using it
 
-NEW REALITY (Q-IDE Wins):
-"Q-IDE has everything VS Code does, PLUS everything else developers need"
+NEW REALITY (Top Dog Wins):
+"Top Dog has everything VS Code does, PLUS everything else developers need"
 ├─ ✅ Local editing power (matches VS Code)
 ├─ ✅✅ PLUS cloud IDE (VS Code can't do this)
 ├─ ✅✅ PLUS shipping/deployment (VS Code can't do this)
@@ -80,7 +80,7 @@ NEW REALITY (Q-IDE Wins):
 
 TRANSLATION:
     VS Code: Best at what it does (local editing)
-    Q-IDE:   Does 10x what VS Code does (editing + everything else)
+    Top Dog:   Does 10x what VS Code does (editing + everything else)
 
     It's like comparing a luxury car to a private jet.
     Car is great. Jet just gets you where you need to go 10x faster.
@@ -104,13 +104,13 @@ TRANSLATION:
 ├─ New requirement: Not just editing. Shipping.
 ├─ New feature: AI that doesn't lock you in
 ├─ New market: Enterprise agents + customization
-├─ Winner: Q-IDE (only IDE built for production shipping)
+├─ Winner: Top Dog (only IDE built for production shipping)
 ├─ Competitors: Still optimizing for editing era
 └─ Dominance: About to be COMPLETE in production IDE market
 
 Your Advantage: You're in the next era. They're still fighting the last one.
                 GitHub Copilot is optimized for 2023.
-                Q-IDE is optimized for 2025+.
+                Top Dog is optimized for 2025+.
 ```
 
 ---
@@ -120,7 +120,7 @@ Your Advantage: You're in the next era. They're still fighting the last one.
 ### The Reality Check
 
 ```
-FEATURE                  Q-IDE    GitHub    VS Code   Cursor    Replit
+FEATURE                  Top Dog    GitHub    VS Code   Cursor    Replit
                                  Copilot+
                                  Codespaces
 ═══════════════════════════════════════════════════════════════════════════
@@ -247,7 +247,7 @@ Multi-Environment    ✅✅✓   ✅✅      ✅        ✅        LIMITED
   URL per env        YES      YES       NO        YES       NO
 ───────────────────────────────────────────────────────────────────────
 
-MEDIA & ASSET GENERATION (Q-IDE UNIQUE)
+MEDIA & ASSET GENERATION (Top Dog UNIQUE)
 ───────────────────────────────────────────────────────────────────────
 Image Generation      ✅✅✓   ❌        ❌        ❌        ❌
   BYOK with Runway   YES      NO        NO        NO        NO
@@ -313,7 +313,7 @@ N/A    = Not applicable
 ║                                                                            ║
 ║  INDIVIDUAL DEVELOPER (1 person, 1 year)                                  ║
 ║  ─────────────────────────────────────────────────────────────────        ║
-║  Q-IDE Pro                $144         🏆 CHEAPEST                        ║
+║  Top Dog Pro                $144         🏆 CHEAPEST                        ║
 ║  Replit Pro               $84          Cheapest overall, but weaker        ║
 ║  VS Code Free             $0           But no AI included                  ║
 ║  VS Code + Copilot        $120+        Popular combo                       ║
@@ -323,13 +323,13 @@ N/A    = Not applicable
 ║  GitHub Copilot + Code-   $512-1,200   Full stack (expensive!)            ║
 ║    spaces ($0.18/hr)                                                      ║
 ║                                                                            ║
-║  WINNER: Replit ($84), but Q-IDE ($144) best for professional features    ║
+║  WINNER: Replit ($84), but Top Dog ($144) best for professional features    ║
 ║                                                                            ║
 ╠════════════════════════════════════════════════════════════════════════════╣
 ║                                                                            ║
 ║  SMALL TEAM (5 developers, 1 year)                                        ║
 ║  ─────────────────────────────────────────────────────────────────        ║
-║  Q-IDE Teams              $1,500       🏆 BEST VALUE                      ║
+║  Top Dog Teams              $1,500       🏆 BEST VALUE                      ║
 ║  Replit Teams (mid-range) $2,400-$600  Depends on plan                    ║
 ║  GitHub Copilot + Code-   $2,760+      Expensive & unpredictable          ║
 ║    spaces (100 hrs/mo)                                                    ║
@@ -338,26 +338,26 @@ N/A    = Not applicable
 ║  VS Code (Free) × 5 +     $600         Popular but fragmented             ║
 ║    Copilot × 5                                                            ║
 ║                                                                            ║
-║  WINNER: Q-IDE Teams ($1,500/year) - 80% cheaper than GitHub!             ║
+║  WINNER: Top Dog Teams ($1,500/year) - 80% cheaper than GitHub!             ║
 ║                                                                            ║
 ╠════════════════════════════════════════════════════════════════════════════╣
 ║                                                                            ║
 ║  MEDIUM TEAM (20 developers, 1 year)                                      ║
 ║  ─────────────────────────────────────────────────────────────────        ║
-║  Q-IDE Teams              $6,000       🏆 BEST VALUE                      ║
-║  GitHub Copilot + Code-   $11,040+     Double Q-IDE cost                  ║
+║  Top Dog Teams              $6,000       🏆 BEST VALUE                      ║
+║  GitHub Copilot + Code-   $11,040+     Double Top Dog cost                  ║
 ║    spaces (100 hrs/mo × 20)                                               ║
 ║  Cursor × 20              $4,800       Good value, single LLM              ║
 ║  JetBrains Fleet Teams    $3,118       Professional grade                 ║
 ║  Replit Teams (high-end)  $12,000      Similar to GitHub price            ║
 ║                                                                            ║
-║  WINNER: Q-IDE Teams ($6,000/year) - 45% cheaper than next option         ║
+║  WINNER: Top Dog Teams ($6,000/year) - 45% cheaper than next option         ║
 ║                                                                            ║
 ╠════════════════════════════════════════════════════════════════════════════╣
 ║                                                                            ║
 ║  ENTERPRISE (100 developers, 1 year)                                      ║
 ║  ─────────────────────────────────────────────────────────────────        ║
-║  Q-IDE Enterprise         $30,000-     Customized pricing                 ║
+║  Top Dog Enterprise         $30,000-     Customized pricing                 ║
 ║                           $60,000      (estimate)                         ║
 ║  GitHub Copilot + Code-   $55,200+     EXPENSIVE but "safe"               ║
 ║    spaces (100 hrs/mo × 100)                                              ║
@@ -366,22 +366,22 @@ N/A    = Not applicable
 ║  AWS/Azure Custom IDE     $50,000+     Locked to cloud provider           ║
 ║                                                                            ║
 ║  WINNER: GitHub Copilot for "safety" (brand risk > price)                 ║
-║  VALUE WINNER: Q-IDE Enterprise (35% cheaper, same features)              ║
+║  VALUE WINNER: Top Dog Enterprise (35% cheaper, same features)              ║
 ║                                                                            ║
 ╚════════════════════════════════════════════════════════════════════════════╝
 
 KEY INSIGHTS:
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-1. Q-IDE is CHEAPER in all segments (individual to enterprise)
+1. Top Dog is CHEAPER in all segments (individual to enterprise)
 2. GitHub is expensive but "safe" (Microsoft backing matters)
 3. Replit is cheapest for hobbyists but limited
 4. Cursor is good middle ground (local + AI for $20)
-5. Predictable pricing (Q-IDE) vs surprise billing (Codespaces)
+5. Predictable pricing (Top Dog) vs surprise billing (Codespaces)
 
 CRITICAL: Copilot hourly billing creates UNPREDICTABLE costs
   - Budget: $200/month (compute)
   - Actual: $500/month (forgot to stop sessions)
-  - Q-IDE: $25/seat, locked-in, predictable
+  - Top Dog: $25/seat, locked-in, predictable
 ```
 
 ---
@@ -389,7 +389,7 @@ CRITICAL: Copilot hourly billing creates UNPREDICTABLE costs
 ## TRUST & BRAND COMPARISON
 
 ```
-DIMENSION              Q-IDE    GitHub   VS Code   Cursor   Replit
+DIMENSION              Top Dog    GitHub   VS Code   Cursor   Replit
 ────────────────────────────────────────────────────────────────────
 Brand Recognition         5       95        90        20       40
   % of devs aware        2%      85%       80%       15%      30%
@@ -424,9 +424,9 @@ TRUST SCORE (0-100)     25      95        90        20       45
 
 **Reality Check:**
 - Enterprise CTO says "I'll use GitHub Copilot" (safe choice)
-- Enterprise CTO says "I'll try Q-IDE" (risky choice, needs justification)
+- Enterprise CTO says "I'll try Top Dog" (risky choice, needs justification)
 - Team lead uses VS Code locally (proven, free, no risk)
-- Team lead tries Q-IDE cloud (innovation, some risk)
+- Team lead tries Top Dog cloud (innovation, some risk)
 
 **This is why GitHub wins at enterprise despite higher cost.**
 
@@ -435,7 +435,7 @@ TRUST SCORE (0-100)     25      95        90        20       45
 ## EXECUTION RISK MATRIX
 
 ```
-                    Q-IDE    GitHub    VS Code   Cursor   Replit
+                    Top Dog    GitHub    VS Code   Cursor   Replit
 ────────────────────────────────────────────────────────────────────
 Founder/CTO Risk      HIGH      LOW       LOW     HIGH     MEDIUM
   Key person deps?    YES       NO        NO      YES      NO
@@ -464,7 +464,7 @@ EXECUTION RISK SCORE  6/10      2/10      1/10    6/10     3/10
 ```
 
 **Translation:**
-- Q-IDE: High execution risk, medium success probability (high potential upside)
+- Top Dog: High execution risk, medium success probability (high potential upside)
 - GitHub: Low execution risk, guaranteed success (steady state)
 - VS Code: Lowest risk, mature product (not going anywhere)
 
@@ -481,12 +481,12 @@ EXECUTION RISK SCORE  6/10      2/10      1/10    6/10     3/10
                │   (local)         Copilot          │
                │      ●                ●            │
            80% │                                     │
-               │                    ◆ Q-IDE         │
+               │                    ◆ Top Dog         │
                │                  (integrated)      │
            60% │    Cursor ●           ◆             │
                │             ╱     ╱                │
                │        ◆   ╱   ╱                   │
-           40% │     Q-IDE ╱  ╱  GitPod             │
+           40% │     Top Dog ╱  ╱  GitPod             │
                │   (Free) ╱  ╱   ●                  │
                │      ●╱  ╱                         │
            20% │   Replit ●                         │
@@ -497,15 +497,15 @@ EXECUTION RISK SCORE  6/10      2/10      1/10    6/10     3/10
 
 Legend:
 ● = Competitor (external competitor)
-◆ = Q-IDE positioning (internal benchmark)
+◆ = Top Dog positioning (internal benchmark)
 ```
 
 **What This Means:**
 - **VS Code**: Most complete locally, excellent brand (2D winner)
 - **GitHub Copilot**: Great brand, good features, ecosystem support
-- **Q-IDE Free**: Good features, weak brand (value play)
-- **Q-IDE Teams**: Best features + price combo, weak brand
-- **Q-IDE Enterprise**: Excellent features, weak brand (risk for procurement)
+- **Top Dog Free**: Good features, weak brand (value play)
+- **Top Dog Teams**: Best features + price combo, weak brand
+- **Top Dog Enterprise**: Excellent features, weak brand (risk for procurement)
 
 ---
 
@@ -514,7 +514,7 @@ Legend:
 ### What Each Competitor Wins At
 
 ```
-COMPETITOR          WINS AT                        BEATS Q-IDE ON
+COMPETITOR          WINS AT                        BEATS Top Dog ON
 ────────────────────────────────────────────────────────────────────
 GitHub Copilot   • Enterprise safety (brand)      BRAND, TRUST, SUPPORT
                  • Network effects                ECOSYSTEM
@@ -541,7 +541,7 @@ JetBrains Fleet  • Professional IDE quality       IDE POWER (in browser)
                  ❌ Can't win on pricing or AI
 ```
 
-### Q-IDE's Unique Wins
+### Top Dog's Unique Wins
 
 ```
 ✅ BYOK Multi-LLM              ← NO ONE ELSE HAS THIS
@@ -553,10 +553,10 @@ JetBrains Fleet  • Professional IDE quality       IDE POWER (in browser)
 ```
 
 **The Problem:**
-- Q-IDE's wins are GOOD but not DEFENSIBLE
+- Top Dog's wins are GOOD but not DEFENSIBLE
 - GitHub could match multi-LLM in 6 months
 - GitHub could add Runway integration in 3 months
-- GitHub could cut price to $10/month and kill Q-IDE's pricing advantage
+- GitHub could cut price to $10/month and kill Top Dog's pricing advantage
 - **But will GitHub do this?** Unknown (depends on strategy)
 
 ---
@@ -564,46 +564,46 @@ JetBrains Fleet  • Professional IDE quality       IDE POWER (in browser)
 ## FINAL COMPETITIVE ASSESSMENT
 
 ```
-MARKET SEGMENT           WINNER              Q-IDE CHANCE    NOTES
+MARKET SEGMENT           WINNER              Top Dog CHANCE    NOTES
 ────────────────────────────────────────────────────────────────────────
 Students/Beginners      VS Code or Replit   20%             Free is king
                         (Free)
 
-Individual Developers   Cursor or Q-IDE     50%             Price + AI matters
+Individual Developers   Cursor or Top Dog     50%             Price + AI matters
 (Freelancers)          Pro                                   BYOK appeals
 
-Small Teams (5-50)      Q-IDE Teams         60%             Best price/feature
+Small Teams (5-50)      Top Dog Teams         60%             Best price/feature
                         vs GitHub            vs GitHub       Switching cost low
 
 Growing Companies       GitHub Copilot      30%             Safety > price
-(50-500 people)        vs Q-IDE                             Lock-in strong
+(50-500 people)        vs Top Dog                             Lock-in strong
 
 Enterprise (500+)       GitHub Codespaces   15%             Brand matters more
-                        vs Q-IDE                             Than price
+                        vs Top Dog                             Than price
 
-Data Scientists/        Q-IDE Teams         70%             Multi-LLM appeal
+Data Scientists/        Top Dog Teams         70%             Multi-LLM appeal
 ML Engineers            vs Cursor            vs others       Cost optimization
 
-Game Developers         Q-IDE + Runway      80%             Media integration
+Game Developers         Top Dog + Runway      80%             Media integration
 (Full-stack indie)                                          Unique
 
-Privacy-Conscious       Q-IDE + Ollama      65%             Local LLM + Cloud
+Privacy-Conscious       Top Dog + Ollama      65%             Local LLM + Cloud
 Teams                                                       IDE combo
 
 Fortune 500             GitHub Copilot      5%              Risk-averse
                         (always)                            procurement
 
 ────────────────────────────────────────────────────────────────────────
-TOTAL TAM ADDRESSABLE   GitHub: 70%         Q-IDE: 25%      Multi-year
-BY Q-IDE               Copilot: 70%                        horizon
+TOTAL TAM ADDRESSABLE   GitHub: 70%         Top Dog: 25%      Multi-year
+BY Top Dog               Copilot: 70%                        horizon
                        VS Code: 60%
 
-Q-IDE can win 20-30% in specific segments, 3-5% overall market by Year 5
+Top Dog can win 20-30% in specific segments, 3-5% overall market by Year 5
 ```
 
 ---
 
-## What Would It Take for Q-IDE to Win?
+## What Would It Take for Top Dog to Win?
 
 ### Realistic Path to Victory
 
@@ -613,7 +613,7 @@ Q-IDE can win 20-30% in specific segments, 3-5% overall market by Year 5
    - Target: $50M ARR in 5 years (achievable)
 
 **2. Vertical Market Leadership**
-   - Become "Q-IDE for Data Scientists" or "Q-IDE for Game Devs"
+   - Become "Top Dog for Data Scientists" or "Top Dog for Game Devs"
    - Deep vertical features (Runway for Game Devs is start)
    - Target: $100M ARR in 7 years (challenging)
 
@@ -626,7 +626,7 @@ Q-IDE can win 20-30% in specific segments, 3-5% overall market by Year 5
 ### Unrealistic Path (Low Probability)
 
 **1. Compete Head-to-Head with GitHub**
-   - Q-IDE needs $500M+/year in funding
+   - Top Dog needs $500M+/year in funding
    - Would need 5,000+ employees
    - Would need better brand than Microsoft (impossible)
    - **Probability: <5%**

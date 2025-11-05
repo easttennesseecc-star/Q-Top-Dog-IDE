@@ -26,9 +26,9 @@
 4. Done!
 ```
 
-### Verify in Q-IDE
+### Verify in Top Dog
 ```
-1. Refresh Q-IDE (F5)
+1. Refresh Top Dog (F5)
 2. Go to LLM Pool Management tab
 3. Should see green section: "✨ Auto-Selected Best Options"
 4. Ollama should be listed
@@ -52,9 +52,9 @@
 4. Done!
 ```
 
-### Add to Q-IDE
+### Add to Top Dog
 ```
-1. In Q-IDE, find LLM Setup panel
+1. In Top Dog, find LLM Setup panel
 2. Click "Providers" tab
 3. Click [Setup] next to Google Gemini
 4. Dialog appears
@@ -80,7 +80,7 @@ Do both Ollama AND Google:
 **Benefits:**
 - ✅ Ollama always available (no internet needed)
 - ✅ Google as backup (higher quality)
-- ✅ Q-IDE auto-selects Ollama (faster locally)
+- ✅ Top Dog auto-selects Ollama (faster locally)
 - ✅ You can manually switch to Google if needed
 
 **Time**: 15-20 minutes total
@@ -96,7 +96,7 @@ Open PowerShell and run:
 ollama --version
 # If this works, you're good for Option 1
 
-# Test 2: Check Q-IDE LLM Pool
+# Test 2: Check Top Dog LLM Pool
 curl http://localhost:8000/llm_pool
 # If response shows more than just download suggestions, you're good
 
@@ -145,20 +145,20 @@ If you don't see this, check the diagnostic guide.
 **Q: Do I need BOTH Ollama AND a Google API key?**  
 A: No, pick one. Both is better but not required.
 
-**Q: Will Q-IDE download models for me?**  
+**Q: Will Top Dog download models for me?**  
 A: No, you download them via `ollama pull` command or get API key from provider.
 
 **Q: Why isn't this automatic?**  
 A: Models are huge (~4 GB), can't download without permission. You must choose what to install.
 
 **Q: Can I use both?**  
-A: Yes! Install Ollama + add Google API key. Q-IDE will find both and auto-select the best one.
+A: Yes! Install Ollama + add Google API key. Top Dog will find both and auto-select the best one.
 
 **Q: What if I see "0 available" even after installing Ollama?**  
-A: Restart Q-IDE or refresh the browser (F5). System scans on startup.
+A: Restart Top Dog or refresh the browser (F5). System scans on startup.
 
-**Q: Is my API key sent to Q-IDE servers?**  
-A: NO! Q-IDE stores it locally encrypted in `~/.q-ide/llm_credentials.json`. Never sent externally (BYOK model).
+**Q: Is my API key sent to Top Dog servers?**  
+A: NO! Top Dog stores it locally encrypted in `~/.Top Dog/llm_credentials.json`. Never sent externally (BYOK model).
 
 **Q: Can I switch LLMs later?**  
 A: Yes! Go to LLM Pool tab, click different option to select it.
@@ -175,8 +175,8 @@ A: Switch to Google (faster cloud) or add more VRAM to your GPU.
 ```
 1. Go to: https://makersuite.google.com/app/apikey
 2. Create API key (30 seconds)
-3. Add to Q-IDE: Providers → [Setup] → paste → [Save]
-4. Refresh Q-IDE (F5)
+3. Add to Top Dog: Providers → [Setup] → paste → [Save]
+4. Refresh Top Dog (F5)
 5. Should see Google Gemini in pool
 6. Done in 2 minutes! ✅
 ```
@@ -186,9 +186,9 @@ A: Switch to Google (faster cloud) or add more VRAM to your GPU.
 ```
 1. Install Ollama from https://ollama.ai (5 min install)
 2. Run: ollama pull llama2 (5-10 min download)
-3. Refresh Q-IDE (F5)
+3. Refresh Top Dog (F5)
 4. Should see both Ollama and Google in pool
-5. Q-IDE will auto-use Ollama (faster locally)
+5. Top Dog will auto-use Ollama (faster locally)
 6. Perfect setup! ⭐
 ```
 
@@ -204,4 +204,4 @@ Choose one and go:
 
 ---
 
-**Once you have ONE working, come back and tell me which you chose! Then we can start using Q-IDE for collaboration features.**
+**Once you have ONE working, come back and tell me which you chose! Then we can start using Top Dog for collaboration features.**

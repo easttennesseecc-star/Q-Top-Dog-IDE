@@ -34,7 +34,7 @@ Previously, Q Assistant didn't have an assigned LLM. Now:
 
 **For Cloud Providers:**
 
-1. Open Q-IDE frontend → **LLM Setup** panel (bottom right)
+1. Open Top Dog frontend → **LLM Setup** panel (bottom right)
 2. Click **Providers** tab
 3. Click setup button for your chosen provider
 4. Follow instructions to get API key
@@ -45,7 +45,7 @@ Previously, Q Assistant didn't have an assigned LLM. Now:
 
 1. Install Ollama from https://ollama.ai
 2. Run: `ollama pull mistral` (or other model)
-3. In Q-IDE, LLM Pool will auto-detect it
+3. In Top Dog, LLM Pool will auto-detect it
 
 ### Step 3: Assign to Q Assistant
 
@@ -181,8 +181,8 @@ Header now shows:
 ## Configuration Locations
 
 **Stored Locally At:**
-- `~/.q-ide/llm_roles.json` - Role assignments
-- `~/.q-ide/llm_keys.json` - API keys (for cloud providers)
+- `~/.Top Dog/llm_roles.json` - Role assignments
+- `~/.Top Dog/llm_keys.json` - API keys (for cloud providers)
 
 ## Troubleshooting
 
@@ -214,10 +214,10 @@ Header now shows:
 Q Assistant Role: "coding" (Code Generation)
 ├─ Falls back to: Best available LLM from pool
 ├─ Supports: Cloud providers + local LLMs
-└─ Data: Stored in ~/.q-ide/llm_roles.json
+└─ Data: Stored in ~/.Top Dog/llm_roles.json
 ```
 
-Example `~/.q-ide/llm_roles.json`:
+Example `~/.Top Dog/llm_roles.json`:
 ```json
 {
   "coding": "gpt-4",

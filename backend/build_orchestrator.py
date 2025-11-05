@@ -9,7 +9,7 @@ from datetime import datetime
 from enum import Enum
 import json
 from pathlib import Path
-from llm_roles_descriptor import LLMRole, get_role_by_name
+from backend.llm_roles_descriptor import LLMRole, get_role_by_name
 
 
 class BuildPhase(Enum):

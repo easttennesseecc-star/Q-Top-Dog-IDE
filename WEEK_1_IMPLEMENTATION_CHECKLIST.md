@@ -1,6 +1,6 @@
 # ✅ WEEK 1 IMPLEMENTATION CHECKLIST: Real-Time IntelliSense + Refactoring
 
-**Goal**: Ship competitive code intelligence features that VS Code has, but Q-IDE currently lacks  
+**Goal**: Ship competitive code intelligence features that VS Code has, but Top Dog currently lacks  
 **Timeline**: 5 business days  
 **Team Size**: 2-3 developers recommended  
 **Success Criteria**: Users report <100ms completions, feature parity with VS Code on top 5 refactorings
@@ -663,7 +663,7 @@ Tests:
 ### Week 3
 - [ ] Public release on main branch
 - [ ] Product announcement
-- [ ] Video: "Q-IDE now faster than VS Code"
+- [ ] Video: "Top Dog now faster than VS Code"
 
 ---
 

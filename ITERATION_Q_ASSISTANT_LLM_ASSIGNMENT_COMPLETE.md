@@ -204,8 +204,8 @@ if (!llmConfig?.ready) {
   - Real-time messaging
 
 ### Configuration
-- ✅ Role assignments stored at: `~/.q-ide/llm_roles.json`
-- ✅ API keys stored at: `~/.q-ide/llm_keys.json`
+- ✅ Role assignments stored at: `~/.Top Dog/llm_roles.json`
+- ✅ API keys stored at: `~/.Top Dog/llm_keys.json`
 - ✅ Credentials loaded on startup
 
 ### Features Ready
@@ -246,7 +246,7 @@ if (!llmConfig?.ready) {
 
 **View Role Assignment:**
 ```bash
-cat ~/.q-ide/llm_roles.json
+cat ~/.Top Dog/llm_roles.json
 ```
 
 Expected output:
@@ -260,7 +260,7 @@ Expected output:
 
 **View API Keys:**
 ```bash
-cat ~/.q-ide/llm_keys.json
+cat ~/.Top Dog/llm_keys.json
 ```
 
 Expected (masked):
@@ -404,7 +404,7 @@ curl http://127.0.0.1:8000/llm_config/roles
         │                         │
         ▼                         ▼
    LLM Pool               Role Assignments
-   (llm_pool.py)          (~/.q-ide/llm_roles.json)
+   (llm_pool.py)          (~/.Top Dog/llm_roles.json)
    - Discover LLMs        {"coding": "gpt-4"}
    - Score by priority    {"analysis": "gemini-pro"}
    - Auto-select best

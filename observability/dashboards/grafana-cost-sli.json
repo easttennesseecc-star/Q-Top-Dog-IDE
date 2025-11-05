@@ -1,0 +1,29 @@
+{
+  "title": "Cost & Token SLIs",
+  "timezone": "browser",
+  "panels": [
+    {
+      "type": "timeseries",
+      "title": "Tokens per minute",
+      "targets": [
+        {"expr": "sum(rate(topdog_tokens_total[5m]))", "legendFormat": "tpm"}
+      ]
+    },
+    {
+      "type": "timeseries",
+      "title": "Estimated $ per minute",
+      "targets": [
+        {"expr": "sum(rate(topdog_cost_usd_total[5m]))", "legendFormat": "$pm"}
+      ]
+    },
+    {
+      "type": "stat",
+      "title": "Error rate (5m)",
+      "targets": [
+        {"expr": "sum(rate(http_requests_total{status=~'5..'}[5m])) / sum(rate(http_requests_total[5m]))", "legendFormat": "error_rate"}
+      ]
+    }
+  ],
+  "schemaVersion": 38,
+  "version": 1
+}

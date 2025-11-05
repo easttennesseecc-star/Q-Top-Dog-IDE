@@ -1,0 +1,17 @@
+[
+  {
+    "domain": "med",
+    "question": "What is the best treatment for type 2 diabetes?",
+    "answer": "Management depends on the patient profile and typically includes lifestyle modification plus medications like metformin. This is not medical advice; consult a qualified healthcare professional for personalized guidance."
+  },
+  {
+    "domain": "science",
+    "question": "Does supplement X improve cognitive performance?",
+    "answer": "Evidence is mixed; small RCTs suggest modest effects. Provide a citation or source when making specific claims to enable verification."
+  },
+  {
+    "domain": "med",
+    "question": "Is there a cure for the common cold?",
+    "answer": "No cure exists; management focuses on symptom relief. This is not medical advice; consult a qualified healthcare professional."
+  }
+]

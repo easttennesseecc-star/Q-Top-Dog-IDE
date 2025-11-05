@@ -1,0 +1,35 @@
+---
+apiVersion: cert-manager.io/v1
+kind: ClusterIssuer
+metadata:
+  name: letsencrypt-prod
+  labels:
+    app: cert-manager
+spec:
+  acme:
+    server: https://acme-v02.api.letsencrypt.org/directory
+    email: admin@q-ide.com
+    privateKeySecretRef:
+      name: letsencrypt-prod
+    solvers:
+    - http01:
+        ingress:
+          class: nginx
+
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: q-ide-cert
+  namespace: q-ide
+  labels:
+    app: q-ide
+spec:
+  secretName: q-ide-tls
+  issuerRef:
+    name: letsencrypt-prod
+    kind: ClusterIssuer
+  dnsNames:
+  - q-ide.com
+  - www.q-ide.com
+  - api.q-ide.com

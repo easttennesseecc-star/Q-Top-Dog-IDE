@@ -1,4 +1,4 @@
-# Q-IDE Monetization: Complete Business Model
+# Top Dog Monetization: Complete Business Model
 
 **Status**: Comprehensive Monetization Strategy Complete  
 **Model**: Freemium + Enterprise  
@@ -9,7 +9,7 @@
 
 ## Executive Summary
 
-Q-IDE will generate revenue through a **freemium model** designed to maximize both market penetration and profitability.
+Top Dog will generate revenue through a **freemium model** designed to maximize both market penetration and profitability.
 
 ### The Strategy in One Sentence
 > Build the world's best IDE with a free tier that attracts millions, then monetize the professionals and enterprises who need advanced collaboration and custom deployment options.
@@ -347,7 +347,7 @@ Company-wide: ~115% NRR (excellent)
 | **GitHub Copilot** | $10-20/mo | More features, collaboration, cheaper |
 | **VSCode** | Free | Equal (we're free too!) |
 | **JetBrains IDE** | $200-700/yr | 10-20x cheaper |
-| **Slack** | $5-12.50/user | Collab included in Q-IDE |
+| **Slack** | $5-12.50/user | Collab included in Top Dog |
 | **Linear/Jira** | $5-7/user | Simplified, included |
 
 ### Why Our Pricing Works
@@ -550,7 +550,7 @@ Company-wide: ~115% NRR (excellent)
 
 ## Conclusion
 
-Q-IDE's monetization strategy is built on three principles:
+Top Dog's monetization strategy is built on three principles:
 
 1. **Ethical**: Free tier is genuinely useful, no dark patterns
 2. **Sustainable**: Profitable from year 1, scales with product

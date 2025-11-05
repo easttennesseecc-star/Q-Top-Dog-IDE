@@ -1,0 +1,89 @@
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: q-ide-network-policy
+  namespace: q-ide
+spec:
+  podSelector: {}
+  policyTypes:
+  - Ingress
+  - Egress
+  ingress:
+  - from:
+    - namespaceSelector:
+        matchLabels:
+          name: ingress-nginx
+    - podSelector: {}
+  egress:
+  - to:
+    - namespaceSelector: {}
+  - to:
+    - podSelector: {}
+  - ports:
+    - protocol: TCP
+      port: 53
+    - protocol: UDP
+      port: 53
+
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: q-ide-ingress
+  namespace: q-ide
+  labels:
+    app: q-ide
+  annotations:
+    cert-manager.io/cluster-issuer: "letsencrypt-prod"
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+    nginx.ingress.kubernetes.io/proxy-body-size: "50m"
+    nginx.ingress.kubernetes.io/proxy-connect-timeout: "600"
+    nginx.ingress.kubernetes.io/proxy-send-timeout: "600"
+    nginx.ingress.kubernetes.io/proxy-read-timeout: "600"
+    # Server-Sent Events (SSE) for chat streaming require buffering off
+    nginx.ingress.kubernetes.io/proxy-buffering: "off"
+    # Basic rate limiting to protect backend (tune for your traffic profile)
+    nginx.ingress.kubernetes.io/limit-rps: "10"
+    nginx.ingress.kubernetes.io/limit-burst-multiplier: "2"
+    nginx.ingress.kubernetes.io/limit-connections: "100"
+    # Enable request size limiting and sane timeouts already set above
+spec:
+  ingressClassName: nginx
+  tls:
+  - hosts:
+    - q-ide.com
+    - www.q-ide.com
+    - api.q-ide.com
+    secretName: q-ide-tls
+  rules:
+  - host: q-ide.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: frontend
+            port:
+              number: 3000
+  - host: www.q-ide.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: frontend
+            port:
+              number: 3000
+  - host: api.q-ide.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: backend
+            port:
+              number: 8000

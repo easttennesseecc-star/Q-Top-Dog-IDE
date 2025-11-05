@@ -10,9 +10,9 @@ Use the **SUPER SIMPLE** launcher!
 
 ## 👉 USE THIS FILE:
 
-### **`RUN_Q-IDE.bat`**
+### **`RUN_Top Dog.bat`**
 
-That's it. Just double-click `RUN_Q-IDE.bat`
+That's it. Just double-click `RUN_Top Dog.bat`
 
 It:
 - ✅ Kills old processes
@@ -21,7 +21,7 @@ It:
 - ✅ Opens browser automatically
 - ✅ If something fails → Window stays open showing the error
 
-**Takes ~20 seconds from double-click to running Q-IDE**
+**Takes ~20 seconds from double-click to running Top Dog**
 
 ---
 
@@ -29,15 +29,15 @@ It:
 
 | File | Status | Use When |
 |------|--------|----------|
-| `RUN_Q-IDE.bat` | ✅ **USE THIS ONE** | Always - simplest, most reliable |
-| `🚀_LAUNCH_Q-IDE.bat` | ⚠️ Complex | If RUN_Q-IDE.bat fails |
-| `START.bat` | ⚠️ Complex | If RUN_Q-IDE.bat fails |
+| `RUN_Top Dog.bat` | ✅ **USE THIS ONE** | Always - simplest, most reliable |
+| `🚀_LAUNCH_Top Dog.bat` | ⚠️ Complex | If RUN_Top Dog.bat fails |
+| `START.bat` | ⚠️ Complex | If RUN_Top Dog.bat fails |
 | `INSTALL.bat` | 📦 Setup only | First time if dependencies missing |
-| `QUICK_LAUNCH.bat` | 🟡 Medium complexity | If RUN_Q-IDE.bat fails |
+| `QUICK_LAUNCH.bat` | 🟡 Medium complexity | If RUN_Top Dog.bat fails |
 
 ---
 
-## Why RUN_Q-IDE.bat is Better
+## Why RUN_Top Dog.bat is Better
 
 **Before (Complex Launchers):**
 - 6 verification steps
@@ -47,7 +47,7 @@ It:
 - → If Python/pnpm not in PATH → Silent failure
 - → PowerShell closes before you see the error
 
-**After (RUN_Q-IDE.bat - Ultra Simple):**
+**After (RUN_Top Dog.bat - Ultra Simple):**
 - Stop old processes (3 seconds)
 - Start backend (5 second wait)
 - Start frontend (7 second wait)
@@ -60,7 +60,7 @@ It:
 
 ```batch
 @echo off
-1. Change to Q-IDE folder
+1. Change to Top Dog folder
 2. Kill any running python.exe
 3. Kill any running python3.11.exe
 4. Kill any running node.exe
@@ -80,14 +80,14 @@ Super simple. No error checking. Just runs.
 
 ✅ Backend running on http://127.0.0.1:8000
 ✅ Frontend running on http://127.0.0.1:1431
-✅ Q-IDE interface open in browser
+✅ Top Dog interface open in browser
 ✅ Ready to use!
 
 ---
 
-## Next Time You Want to Launch Q-IDE
+## Next Time You Want to Launch Top Dog
 
-**Just double-click: `RUN_Q-IDE.bat`**
+**Just double-click: `RUN_Top Dog.bat`**
 
 That's all you need to do.
 
@@ -110,7 +110,7 @@ This way we can fix the actual problem instead of guessing.
 
 ```
 c:\Quellum-topdog-ide\
-  RUN_Q-IDE.bat  ← CLICK THIS
+  RUN_Top Dog.bat  ← CLICK THIS
 ```
 
 Double-click it. Done! 🎯

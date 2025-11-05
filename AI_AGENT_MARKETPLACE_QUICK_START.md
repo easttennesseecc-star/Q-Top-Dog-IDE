@@ -3,17 +3,17 @@
 **Status**: Ready to build (Nov 3, 2025)  
 **Timeline**: 10 working days (Week 2-3)  
 **Investment**: 2 developers, ~3,500 lines of code  
-**Revenue**: $130k+ MRR by Month 6  
+**Marketplace Mode**: Directory (BYOK; no commissions)  
 
 ---
 
 ## 🎯 WHAT YOU'RE BUILDING
 
 ```
-Q-IDE becomes the universal AI agent hub:
+Top Dog becomes the universal AI agent hub:
 
 ┌─────────────────────────────────────────────┐
-│  Q-IDE IDE                                  │
+│  Aura Development (Top Dog IDE)             │
 ├─────────────────────────────────────────────┤
 │ ┌─────────────┐ ┌─────────────┐ ┌─────────┐│
 │ │   Code      │ │ Game Dev    │ │   AI    ││
@@ -34,9 +34,9 @@ Q Assistant: "I recommend Claude 3 Opus"
     ↓
 User clicks marketplace → Selects Claude
     ↓
-Chat opens in IDE → Type query → Get instant response
+Click “Get API Key” → Opens provider signup → Paste key into Top Dog (BYOK)
     ↓
-Cost: $0.015/1K tokens deducted from balance
+Chat opens in IDE → Type query → Get instant response using your own provider account
 ```
 
 ---
@@ -155,6 +155,13 @@ Balance: $4.96 remaining
 ```
 
 ---
+
+## 🧪 Regulated Segments (Medical & Scientific) — Quick Notes
+
+- Some agents/models offer regulated modes for medical (PHI/HIPAA) or scientific data.
+- Select your data segment at project/API‑key level: general | medical | scientific.
+- Regulated segments include added protections (policy packs, provenance, residency) and stricter SLAs; pricing reflects this (see MONETIZATION_V2 and Spec).
+- Look for badges on model/agent cards: Medical, Scientific.
 
 ## 🔄 USER FLOW
 
@@ -407,7 +414,7 @@ Revenue (Month 1)
 ├─ Paid queries: 80% of 30 users × 60/day × 30 days = 43,200
 ├─ Average cost: $0.02 per query
 ├─ Gross revenue: $864
-├─ Q-IDE commission (30%): $259
+├─ Top Dog commission (30%): $259
 └─ Month 1 MRR projection: $1.8k
 
 Growth
@@ -516,16 +523,16 @@ Monday Nov 18:
 
 This isn't building from scratch. You have:
 
-✅ **Foundation**: Q-IDE already exists  
+✅ **Foundation**: Top Dog already exists  
 ✅ **Architecture**: Spec is complete  
 ✅ **Code templates**: All provided  
 ✅ **Timeline**: 10 working days  
 ✅ **Team**: 2 developers  
 ✅ **Revenue**: $130k+ MRR potential  
 
-**You're just adding one more layer to Q-IDE: Universal AI Agent Access.**
+**You're just adding one more layer to Top Dog: Universal AI Agent Access.**
 
-By Nov 15, Q-IDE becomes the IDE for developers who want:
+By Nov 15, Top Dog becomes the IDE for developers who want:
 - 💻 Great code editing (IntelliSense, debugging, refactoring)
 - 🎮 Game dev support (all 4 engines)
 - 🤖 AI agent access (50+ models)

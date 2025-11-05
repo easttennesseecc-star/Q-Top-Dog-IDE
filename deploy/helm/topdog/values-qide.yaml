@@ -1,0 +1,104 @@
+# Overrides for deploying Top Dog (Aura) on q-ide.com and q-ide.net
+
+replicaCount: 2
+
+image:
+  repository: registry.digitalocean.com/topdog-registry/topdog
+  tag: v1.0.7
+  pullPolicy: IfNotPresent
+
+imagePullSecrets:
+  - name: docr-secret
+
+service:
+  type: ClusterIP
+  port: 8000
+
+env:
+  MARKETPLACE_MODE: "directory"
+
+extraEnv:
+  - name: ENABLE_HOST_REDIRECT
+    value: "true"
+  - name: CANONICAL_HOST
+    value: "www.topdog-ide.com"
+  - name: SITEMAP_HOSTS
+    value: "q-ide.net,www.q-ide.net,q-ide.com,www.q-ide.com,topdog-ide.com,www.topdog-ide.com,topdog-usa.com,www.topdog-usa.com"
+  - name: ALTERNATE_HOSTS
+    value: "q-ide.com,www.q-ide.com,q-ide.net,www.q-ide.net,topdog-ide.com,topdog-usa.com,www.topdog-usa.com"
+  - name: CORS_ORIGINS
+    value: "https://www.topdog-ide.com,https://q-ide.com,https://www.q-ide.com,https://q-ide.net,https://www.q-ide.net,https://topdog-ide.com,https://topdog-usa.com,https://www.topdog-usa.com"
+  # If you want to restrict redirects only from specific alternates:
+  # - name: ALTERNATE_HOSTS
+  #   value: "q-ide.net,www.q-ide.com"
+
+livenessProbe:
+  path: /health
+  initialDelaySeconds: 10
+  periodSeconds: 10
+
+readinessProbe:
+  path: /health
+  initialDelaySeconds: 5
+  periodSeconds: 10
+
+autoscaling:
+  enabled: true
+  minReplicas: 2
+  maxReplicas: 10
+  targetCPUUtilizationPercentage: 70
+  targetMemoryUtilizationPercentage: 80
+
+ingress:
+  enabled: true
+  className: "nginx"
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+  hosts:
+    - host: q-ide.com
+      paths:
+        - path: /
+          pathType: Prefix
+    - host: q-ide.net
+      paths:
+        - path: /
+          pathType: Prefix
+    - host: www.q-ide.com
+      paths:
+        - path: /
+          pathType: Prefix
+    - host: www.q-ide.net
+      paths:
+        - path: /
+          pathType: Prefix
+    - host: topdog-ide.com
+      paths:
+        - path: /
+          pathType: Prefix
+    - host: www.topdog-ide.com
+      paths:
+        - path: /
+          pathType: Prefix
+    - host: topdog-usa.com
+      paths:
+        - path: /
+          pathType: Prefix
+    - host: www.topdog-usa.com
+      paths:
+        - path: /
+          pathType: Prefix
+  tls:
+    - secretName: topdog-tls
+      hosts:
+        - q-ide.com
+        - q-ide.net
+        - www.q-ide.com
+        - www.q-ide.net
+        - topdog-ide.com
+        - www.topdog-ide.com
+        - topdog-usa.com
+        - www.topdog-usa.com
+
+extraEnvFrom:
+  - secretRef:
+      name: provider-api-keys

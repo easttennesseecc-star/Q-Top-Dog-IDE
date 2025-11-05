@@ -76,11 +76,11 @@ The Answer:
     └─ GitHub trusts it with certificates
   
   GitHub Copilot API Key:
-    ├─ For local applications (Q-IDE)
+    ├─ For local applications (Top Dog)
     └─ You explicitly grant permission
   
   Why the difference:
-    ├─ GitHub doesn't know if Q-IDE is real
+    ├─ GitHub doesn't know if Top Dog is real
     ├─ Could be a malicious app
     └─ Requires explicit API key for security
   
@@ -101,7 +101,7 @@ GITHUB TOKEN CREATION (2 MIN)
 │ Go: https://github.com/settings/     │
 │     tokens/new                       │
 │                                      │
-│ Name: "Q-IDE Copilot API"            │
+│ Name: "Top Dog Copilot API"            │
 │ Scopes: ✓ user:read                  │
 │         ✓ write:packages             │
 │         ✓ read:packages              │
@@ -110,10 +110,10 @@ GITHUB TOKEN CREATION (2 MIN)
 │ Copy: THE TOKEN (only shown once!)   │
 └──────────────────────────────────────┘
   ↓
-Q-IDE SETUP (1 MIN)
+Top Dog SETUP (1 MIN)
   ↓
 ┌──────────────────────────────────────┐
-│ Q-IDE → LLM Setup → Auth             │
+│ Top Dog → LLM Setup → Auth             │
 │ Find: GitHub Copilot                 │
 │ Paste: Your token                    │
 │ Click: Save                          │
@@ -182,14 +182,14 @@ DONE! ✓
 └─────────────────────────────────────────┘
 
 ┌─────────────────────────────────────────┐
-│ API KEY (Q-IDE)                         │
+│ API KEY (Top Dog)                         │
 ├─────────────────────────────────────────┤
-│ You explicitly authorize Q-IDE          │
+│ You explicitly authorize Top Dog          │
 │   └─ Create personal access token       │
 │   └─ You control the token              │
 │   └─ You can revoke anytime             │
 │                                         │
-│ Result: Q-IDE gets API key access       │
+│ Result: Top Dog gets API key access       │
 │ Security: Higher (YOU control it)       │
 └─────────────────────────────────────────┘
 ```
@@ -362,7 +362,7 @@ OPTION C (Visual):
 ```
 WHY API KEY:
   • GitHub OAuth = for official apps only
-  • Q-IDE = local app, not official
+  • Top Dog = local app, not official
   • Solution = explicit API key
 
 WHY IT'S BETTER:
@@ -373,7 +373,7 @@ WHY IT'S BETTER:
 
 HOW TO USE IT:
   • Create token on GitHub (2 min)
-  • Paste in Q-IDE (1 min)
+  • Paste in Top Dog (1 min)
   • Done! (3 min total)
 
 IF NO COPILOT:
@@ -401,7 +401,7 @@ IF NO COPILOT:
 │                                          │
 │ Next: Pick a guide and follow it         │
 │ Time: 5-20 minutes reading + 3 min setup │
-│ Then: Using Copilot in Q-IDE ✓           │
+│ Then: Using Copilot in Top Dog ✓           │
 └──────────────────────────────────────────┘
 ```
 

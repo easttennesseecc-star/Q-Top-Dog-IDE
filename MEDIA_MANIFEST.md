@@ -361,7 +361,7 @@ POST http://localhost:8000/api/media/generate
 ## Version & Date
 
 - **Created:** 2024
-- **System:** Q-IDE Media Generation v1.0
+- **System:** Top Dog Media Generation v1.0
 - **Status:** Production Ready ✅
 - **Tested:** ✅
 - **Documented:** ✅

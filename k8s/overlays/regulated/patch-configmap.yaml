@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: q-ide-config
+  namespace: q-ide
+  labels:
+    app: q-ide
+    component: config
+data:
+  ENABLE_REGULATED_DOMAINS: "true"
+  REQUIRE_OVERWATCH: "true"
+  BLOCK_ON_OVERWATCH_FAIL: "true"
+  DEFAULT_OVERWATCH_LLM: "gemini-1.5-pro"
+  FORCE_DISCLAIMER_TEXT: "This assistant is not a medical professional. Do not use responses for diagnosis or treatment. Always consult a licensed clinician and verify sources."
+  # Regulated defaults when no domain triad is specified
+  DEFAULT_PRIMARY_LLM_REGULATED: "gemini-1.5-pro"
+  DEFAULT_SECONDARY_LLM_REGULATED: "claude-3-opus"

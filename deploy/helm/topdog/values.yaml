@@ -1,0 +1,77 @@
+# Default values for Top Dog (Aura) chart.
+
+replicaCount: 2
+
+image:
+  repository: ghcr.io/your-org/topdog
+  tag: "latest"
+  pullPolicy: IfNotPresent
+  # pullSecrets:
+  #   - name: regcred
+
+# Image pull secrets for private registries (e.g., GHCR/DOCR)
+imagePullSecrets: []
+
+service:
+  type: ClusterIP
+  port: 8080
+
+env:
+  # Core app env vars
+  MARKETPLACE_MODE: "directory"
+  # Add provider keys via Kubernetes secrets and map in extraEnvFrom
+
+resources:
+  requests:
+    cpu: 100m
+    memory: 256Mi
+  limits:
+    cpu: 500m
+    memory: 512Mi
+
+livenessProbe:
+  path: /healthz
+  initialDelaySeconds: 10
+  periodSeconds: 10
+
+readinessProbe:
+  path: /readyz
+  initialDelaySeconds: 5
+  periodSeconds: 10
+
+autoscaling:
+  enabled: true
+  minReplicas: 2
+  maxReplicas: 10
+  targetCPUUtilizationPercentage: 70
+  targetMemoryUtilizationPercentage: 80
+
+ingress:
+  enabled: true
+  className: "nginx"
+  annotations: {}
+  hosts:
+    - host: topdog.example.com
+      paths:
+        - path: /
+          pathType: Prefix
+  tls:
+    - secretName: topdog-tls
+      hosts:
+        - topdog.example.com
+
+podAnnotations: {}
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}
+
+extraEnv: []
+# - name: LOG_LEVEL
+#   value: info
+
+extraEnvFrom: []
+# - secretRef:
+#     name: provider-api-keys

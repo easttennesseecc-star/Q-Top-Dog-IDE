@@ -11,13 +11,13 @@ Endpoints for:
 from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel
 from typing import Dict, List, Optional
-from llm_auth import (
+from backend.llm_auth import (
     get_provider_auth_status, get_all_auth_status, get_authenticated_providers,
     store_api_key, retrieve_api_key, store_oauth_token, retrieve_oauth_token,
     exchange_oauth_code, revoke_provider_auth, validate_provider_access,
     get_oauth_config
 )
-from logger_utils import get_logger
+from backend.logger_utils import get_logger
 
 logger = get_logger(__name__)
 

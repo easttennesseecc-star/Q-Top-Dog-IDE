@@ -1,23 +1,23 @@
-# 🔐 Q-IDE LLM Credentials Guide
+# 🔐 Top Dog LLM Credentials Guide
 
 ## Overview
 
-Q-IDE uses your LLM credentials to authenticate with AI services **on your behalf**. You provide your API keys or authentication tokens, and Q-IDE sends them with requests to the LLM services. Your credentials are **stored locally** and never sent to Q-IDE servers.
+Top Dog uses your LLM credentials to authenticate with AI services **on your behalf**. You provide your API keys or authentication tokens, and Top Dog sends them with requests to the LLM services. Your credentials are **stored locally** and never sent to Top Dog servers.
 
 ## How It Works
 
 ```
-You → Enter API Key → Q-IDE Stores Locally → Q-IDE Sends to LLM Service → Get AI Response
+You → Enter API Key → Top Dog Stores Locally → Top Dog Sends to LLM Service → Get AI Response
                            ↓
-                    ~/.q-ide/llm_credentials.json
+                    ~/.Top Dog/llm_credentials.json
                     (Encrypted, Local Only)
 ```
 
 **Key Points:**
 - ✅ Credentials stored on **your machine only**
-- ✅ Q-IDE uses credentials to call LLM APIs
+- ✅ Top Dog uses credentials to call LLM APIs
 - ✅ You can revoke/update anytime
-- ✅ No account creation needed for Q-IDE itself
+- ✅ No account creation needed for Top Dog itself
 - ❌ Your credentials never leave your computer
 
 ---
@@ -26,7 +26,7 @@ You → Enter API Key → Q-IDE Stores Locally → Q-IDE Sends to LLM Service �
 
 ### Step 1: Go to LLM Setup
 
-In Q-IDE:
+In Top Dog:
 1. Click **LLM Setup** tab
 2. Click **Auth** tab (🔐 LLM Provider Credentials)
 3. You'll see all available LLM providers
@@ -64,7 +64,7 @@ Once authenticated:
 2. **Login** with your OpenAI account (create one if needed)
 3. Click **"Create new secret key"**
 4. Copy the key (it starts with `sk-`)
-5. Paste in Q-IDE
+5. Paste in Top Dog
 
 **Cost:** Pay-as-you-go ($0.03-0.20 per 1K tokens, varies by model)
 
@@ -83,7 +83,7 @@ Once authenticated:
 3. **Choose or create a project**
 4. Click **"Create API key in new project"**
 5. Copy the key (it starts with `AIzaSy`)
-6. Paste in Q-IDE
+6. Paste in Top Dog
 
 **Cost:** Free tier (60 requests/minute), then pay-as-you-go
 
@@ -103,7 +103,7 @@ Once authenticated:
 2. **Login** with your Anthropic account (sign up if needed)
 3. Click **"Create Key"**
 4. Copy the key (it starts with `sk-ant-`)
-5. Paste in Q-IDE
+5. Paste in Top Dog
 
 **Cost:** Pay-as-you-go ($0.80-3.00 per 1M tokens)
 
@@ -119,10 +119,10 @@ Once authenticated:
 
 GitHub Copilot requires OAuth (different from API key):
 
-1. In Q-IDE, click **Sign In** button for GitHub
+1. In Top Dog, click **Sign In** button for GitHub
 2. You'll be redirected to GitHub
-3. **Authorize Q-IDE** to access Copilot
-4. You'll be sent back to Q-IDE
+3. **Authorize Top Dog** to access Copilot
+4. You'll be sent back to Top Dog
 5. ✓ GitHub Copilot is now authenticated
 
 **Cost:** $10/month or included in GitHub Pro ($4/month student)
@@ -140,7 +140,7 @@ GitHub Copilot requires OAuth (different from API key):
 1. Download Ollama: https://ollama.ai
 2. Run: `ollama pull llama2` (or your preferred model)
 3. Start Ollama: `ollama serve`
-4. In Q-IDE, go to **Providers** tab
+4. In Top Dog, go to **Providers** tab
 5. Click **"Setup"** for Ollama
 6. Ollama will auto-detect at localhost:11434
 
@@ -185,7 +185,7 @@ Done! New requests will use the new key.
 1. Go to **Auth** tab
 2. Find the provider
 3. Click **"Clear"** button
-4. ✓ Removed from Q-IDE (but still active at the provider)
+4. ✓ Removed from Top Dog (but still active at the provider)
 
 ### 🔒 Keeping Your Keys Safe
 
@@ -194,7 +194,7 @@ Done! New requests will use the new key.
 - ✅ Don't share them in messages or emails
 - ✅ Rotate keys periodically
 - ✅ Use provider's console to revoke suspicious keys
-- ✅ Keep Q-IDE on your personal machine
+- ✅ Keep Top Dog on your personal machine
 
 **DON'T:**
 - ❌ Paste your key in emails or Slack
@@ -213,7 +213,7 @@ Done! New requests will use the new key.
 **Fix:**
 1. Go to the provider's console
 2. Copy the key again (make sure you got the whole thing)
-3. Clear Q-IDE and paste again
+3. Clear Top Dog and paste again
 
 ### ❌ "API key saved but still says 'Not authenticated'"
 
@@ -241,7 +241,7 @@ Done! New requests will use the new key.
 **Fix:**
 1. Check provider's dashboard for errors
 2. Generate a new key
-3. Update in Q-IDE's Auth tab
+3. Update in Top Dog's Auth tab
 
 ---
 
@@ -287,7 +287,7 @@ Ollama      Llama 2            All roles (local only)
 
 1. **Pick Your LLM** - Choose one from the guide above (GPT-4 or Gemini recommended)
 2. **Get Your API Key** - Follow the provider-specific steps
-3. **Add to Q-IDE** - Go to Auth tab and paste your key
+3. **Add to Top Dog** - Go to Auth tab and paste your key
 4. **Assign Role** - Go to Roles tab and pick which LLM for each task
 5. **Start Building** - Tell Q Assistant about your app idea!
 
@@ -295,22 +295,22 @@ Ollama      Llama 2            All roles (local only)
 
 ## FAQ
 
-**Q: Do I need to pay for Q-IDE to use LLMs?**
-A: No! Q-IDE is free. You only pay the LLM services directly (OpenAI, Google, etc.).
+**Q: Do I need to pay for Top Dog to use LLMs?**
+A: No! Top Dog is free. You only pay the LLM services directly (OpenAI, Google, etc.).
 
-**Q: Can Q-IDE see my credentials?**
-A: No. Q-IDE stores them locally on your machine. We never see or store your keys.
+**Q: Can Top Dog see my credentials?**
+A: No. Top Dog stores them locally on your machine. We never see or store your keys.
 
 **Q: Can I use the same key on multiple machines?**
-A: Yes, but you'd need to add it to each Q-IDE installation separately.
+A: Yes, but you'd need to add it to each Top Dog installation separately.
 
 **Q: What if I lose my API key?**
 A: Go to the provider's console and revoke the key. Generate a new one.
 
 **Q: Can I use multiple keys from the same provider?**
-A: Currently Q-IDE stores one key per provider, but you can rotate them anytime.
+A: Currently Top Dog stores one key per provider, but you can rotate them anytime.
 
-**Q: Does Q-IDE work without internet?**
+**Q: Does Top Dog work without internet?**
 A: Yes, if you use local Ollama. Cloud providers require internet.
 
 ---
@@ -323,4 +323,4 @@ Having trouble? Check:
 3. **Try Q Assistant** - Ask a simple question to test it's working
 4. **Check provider status** - Visit provider's status page (service might be down)
 
-Still stuck? Check the provider's documentation or Q-IDE logs.
+Still stuck? Check the provider's documentation or Top Dog logs.

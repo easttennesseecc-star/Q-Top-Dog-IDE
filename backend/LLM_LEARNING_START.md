@@ -394,7 +394,7 @@ A: Agent can run as systemd service, Docker container, or background process in 
 
 ## 🎉 You're Ready!
 
-Your Q-IDE backend is now equipped with a complete LLM learning system. Your coding LLM can:
+Your Top Dog backend is now equipped with a complete LLM learning system. Your coding LLM can:
 
 ✅ Access full build history and logs  
 ✅ Analyze project structure and dependencies  

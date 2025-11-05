@@ -205,6 +205,31 @@ class AIMarketplaceRegistry:
         ))
         
         self.add_model(AIModel(
+            id="claude-sonnet-3.5",
+            name="Claude 3.5 Sonnet",
+            provider=ModelProvider.ANTHROPIC,
+            description="Latest Anthropic model with enhanced reasoning and coding. Available for all clients.",
+            version="3.5",
+            capabilities=[
+                ModelCapability.CODE_GENERATION,
+                ModelCapability.CODE_EXPLANATION,
+                ModelCapability.REASONING,
+                ModelCapability.DOCUMENTATION,
+                ModelCapability.REFACTORING,
+                ModelCapability.DEBUGGING
+            ],
+            pricing=ModelPricing(
+                input_cost_per_1k_tokens=0.003,
+                output_cost_per_1k_tokens=0.015
+            ),
+            context_window=200000,
+            max_output_tokens=8192,
+            rating=4.9,
+            usage_count=185000,
+            monthly_active_users=72000
+        ))
+        
+        self.add_model(AIModel(
             id="claude-haiku",
             name="Claude 3 Haiku",
             provider=ModelProvider.ANTHROPIC,
@@ -224,6 +249,54 @@ class AIMarketplaceRegistry:
             rating=4.4,
             usage_count=180000,
             monthly_active_users=78000
+        ))
+        
+        self.add_model(AIModel(
+            id="claude-opus",
+            name="Claude 3 Opus",
+            provider=ModelProvider.ANTHROPIC,
+            description="Most powerful Claude model. Best for complex reasoning and analysis.",
+            version="3.0",
+            capabilities=[
+                ModelCapability.CODE_GENERATION,
+                ModelCapability.CODE_EXPLANATION,
+                ModelCapability.REASONING,
+                ModelCapability.DOCUMENTATION,
+                ModelCapability.REFACTORING,
+                ModelCapability.BUG_DETECTION
+            ],
+            pricing=ModelPricing(
+                input_cost_per_1k_tokens=0.015,
+                output_cost_per_1k_tokens=0.075
+            ),
+            context_window=200000,
+            max_output_tokens=4096,
+            rating=4.9,
+            usage_count=165000,
+            monthly_active_users=68000
+        ))
+        
+        self.add_model(AIModel(
+            id="claude-3.5-haiku",
+            name="Claude 3.5 Haiku",
+            provider=ModelProvider.ANTHROPIC,
+            description="Fastest Claude model with 3.5 enhancements. Excellent for real-time tasks.",
+            version="3.5",
+            capabilities=[
+                ModelCapability.CODE_COMPLETION,
+                ModelCapability.CODE_GENERATION,
+                ModelCapability.TEXT_ANALYSIS,
+                ModelCapability.CODE_EXPLANATION
+            ],
+            pricing=ModelPricing(
+                input_cost_per_1k_tokens=0.0008,
+                output_cost_per_1k_tokens=0.004
+            ),
+            context_window=200000,
+            max_output_tokens=8192,
+            rating=4.6,
+            usage_count=195000,
+            monthly_active_users=85000
         ))
         
         # GOOGLE GEMINI MODELS

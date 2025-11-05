@@ -11,8 +11,8 @@ Apply these patterns to your actual routes:
 
 from fastapi import APIRouter, Header, Depends, HTTPException
 from pydantic import BaseModel
-from middleware.tier_validator import require_tier_access, FEATURE_REQUIREMENTS
-from services.rate_limiter import RateLimiter
+from backend.middleware.tier_validator import require_tier_access, FEATURE_REQUIREMENTS
+from backend.services.rate_limiter import RateLimiter
 from datetime import datetime, date
 
 router = APIRouter(prefix="/api", tags=["Protected APIs"])

@@ -1,6 +1,6 @@
-# Q-IDE Membership Tier Implementation Guide
+# Top Dog Membership Tier Implementation Guide
 
-Complete walkthrough for implementing membership tier restrictions, rate limiting, and monetization on your Q-IDE backend.
+Complete walkthrough for implementing membership tier restrictions, rate limiting, and monetization on your Top Dog backend.
 
 ---
 
@@ -269,9 +269,9 @@ const job = schedule.scheduleJob('0 0 * * *', async () => {
             
             // Send email notification
             await sendEmail(trial.user_id, {
-                subject: 'Your Q-IDE FREE trial has expired',
+                subject: 'Your Top Dog FREE trial has expired',
                 template: 'trial-expired',
-                upgradeUrl: 'https://q-ide.com/upgrade'
+                upgradeUrl: 'https://Top Dog.com/upgrade'
             });
         }
         
@@ -405,12 +405,12 @@ router.post('/register', async (req, res) => {
         // Send welcome email
         await sendWelcomeEmail(email, {
             trialDays: 7,
-            upgradeUrl: 'https://q-ide.com/upgrade/pro'
+            upgradeUrl: 'https://Top Dog.com/upgrade/pro'
         });
         
         res.json({ 
             success: true, 
-            message: 'Welcome to Q-IDE! You have 7 days free access.',
+            message: 'Welcome to Top Dog! You have 7 days free access.',
             userId 
         });
     } catch (error) {
@@ -436,7 +436,7 @@ $monitoringScript = @"
 # Monitor user tier compliance
 
 # Run every hour
-\$job = Register-ScheduledJob -Name "Q-IDE-Tier-Monitor" -ScriptBlock {
+\$job = Register-ScheduledJob -Name "Top Dog-Tier-Monitor" -ScriptBlock {
     
     \$connString = "Server=YOUR_SERVER;Database=Q_IDE;User Id=sa;Password=YOUR_PASSWORD"
     \$connection = New-Object System.Data.SqlClient.SqlConnection(\$connString)
@@ -711,17 +711,17 @@ app.post('/api/code/execute', tierValidator, codeExecutor);
 **Solution**:
 ```powershell
 # Check if scheduled job is running
-Get-ScheduledJob -Name "Q-IDE-Trial-Expiry" | Get-ScheduledJobOption
+Get-ScheduledJob -Name "Top Dog-Trial-Expiry" | Get-ScheduledJobOption
 
 # If not running, restart:
-Stop-ScheduledJob -Name "Q-IDE-Trial-Expiry"
-Remove-ScheduledJob -Name "Q-IDE-Trial-Expiry"
+Stop-ScheduledJob -Name "Top Dog-Trial-Expiry"
+Remove-ScheduledJob -Name "Top Dog-Trial-Expiry"
 
 # Re-register the job
-Register-ScheduledJob -Name "Q-IDE-Trial-Expiry" -ScriptBlock { ... } -Trigger (New-JobTrigger -Daily -At 00:00)
+Register-ScheduledJob -Name "Top Dog-Trial-Expiry" -ScriptBlock { ... } -Trigger (New-JobTrigger -Daily -At 00:00)
 
 # Verify it's running
-Get-ScheduledJob -Name "Q-IDE-Trial-Expiry"
+Get-ScheduledJob -Name "Top Dog-Trial-Expiry"
 ```
 
 ### Issue 4: Database Connection String Issues

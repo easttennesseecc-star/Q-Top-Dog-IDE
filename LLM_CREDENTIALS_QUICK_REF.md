@@ -1,15 +1,15 @@
-# 🎯 Quick Reference: LLM Credentials in Q-IDE
+# 🎯 Quick Reference: LLM Credentials in Top Dog
 
 ## In 30 Seconds
 
 ```
-Q-IDE → LLM Setup → Auth tab
+Top Dog → LLM Setup → Auth tab
         ↓
       Enter your API keys for Google, OpenAI, etc.
         ↓
-      Q-IDE stores them locally
+      Top Dog stores them locally
         ↓
-      Q-IDE uses them to call LLM services
+      Top Dog uses them to call LLM services
         ↓
       You get AI responses without creating accounts
 ```
@@ -76,7 +76,7 @@ Q-IDE → LLM Setup → Auth tab
 Visit provider → Create API key → Copy (Ctrl+C)
 ```
 
-### Step 2: Paste in Q-IDE
+### Step 2: Paste in Top Dog
 ```
 Auth tab → Paste key → Click Save
 ```
@@ -126,12 +126,12 @@ Roles tab → Select your LLM → Done ✓
 ```
 🔒 Your keys stay on your computer
    └─ Never sent to anyone but LLM service
-   └─ Never visible to Q-IDE developers
+   └─ Never visible to Top Dog developers
    └─ Treat like passwords
 
-⚡ Q-IDE uses them on your behalf
+⚡ Top Dog uses them on your behalf
    └─ You don't sign into LLM websites
-   └─ Q-IDE signs in using your key
+   └─ Top Dog signs in using your key
    └─ You get AI responses
 
 🎯 You control everything
@@ -158,7 +158,7 @@ Roles tab → Select your LLM → Done ✓
 ```
 START
   ↓
-Open Q-IDE
+Open Top Dog
   ↓
 Go to LLM Setup tab
   ↓
@@ -174,7 +174,7 @@ Follow steps to get API key
   ↓
 Copy the key
   ↓
-Return to Q-IDE
+Return to Top Dog
   ↓
 Paste in the text field
   ↓
@@ -205,4 +205,4 @@ Get AI response
 
 ---
 
-**Ready? Open Q-IDE, go to LLM Setup → Auth tab. Let's go! 🚀**
+**Ready? Open Top Dog, go to LLM Setup → Auth tab. Let's go! 🚀**

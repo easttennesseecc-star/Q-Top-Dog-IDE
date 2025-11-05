@@ -1,14 +1,14 @@
 # OAuth Client Configuration Guide
 
-**Q-IDE - Professional OAuth Sign-In Setup**
+**Top Dog - Professional OAuth Sign-In Setup**
 
-This guide helps you configure OAuth credentials for professional sign-in experience in Q-IDE.
+This guide helps you configure OAuth credentials for professional sign-in experience in Top Dog.
 
 ---
 
 ## 🎯 Overview
 
-Q-IDE supports OAuth sign-in with:
+Top Dog supports OAuth sign-in with:
 - **Google** - Use your Google account
 - **GitHub** - Use your GitHub account  
 - **OpenAI** - Use your OpenAI account
@@ -20,8 +20,8 @@ Each provider requires OAuth client credentials (Client ID and Secret).
 
 ## 📋 Prerequisites
 
-- Q-IDE backend running on `http://localhost:8000`
-- Q-IDE frontend running on `http://localhost:1431`
+- Top Dog backend running on `http://localhost:8000`
+- Top Dog frontend running on `http://localhost:1431`
 - Administrator access to each OAuth provider's console
 
 ---
@@ -40,7 +40,7 @@ Each provider requires OAuth client credentials (Client ID and Secret).
    - Go to "APIs & Services" → "Credentials"
    - Click "Create Credentials" → "OAuth client ID"
    - Choose "Web application"
-   - Name it "Q-IDE"
+   - Name it "Top Dog"
    - Add authorized redirect URIs:
      ```
      http://localhost:8000/llm_auth/callback?provider=google
@@ -72,7 +72,7 @@ QIDE_GOOGLE_CLIENT_SECRET=your_client_secret_here
 1. Go to [GitHub Developer Settings](https://github.com/settings/developers)
 2. Click "New OAuth App"
 3. Fill in details:
-   - **Application name**: Q-IDE
+   - **Application name**: Top Dog
    - **Homepage URL**: `http://localhost:1431`
    - **Authorization callback URL**: `http://localhost:8000/llm_auth/callback?provider=github`
 4. Click "Register application"
@@ -100,7 +100,7 @@ QIDE_GITHUB_CLIENT_SECRET=your_client_secret_here
 1. Go to [OpenAI Platform](https://platform.openai.com/account/apps)
 2. Click "Create new OAuth app"
 3. Fill in details:
-   - **Application name**: Q-IDE
+   - **Application name**: Top Dog
    - **Redirect URI**: `http://localhost:8000/llm_auth/callback?provider=openai`
 4. Copy your **Client ID** and **Client Secret**
 
@@ -126,7 +126,7 @@ QIDE_OPENAI_CLIENT_SECRET=your_client_secret_here
 1. Go to [Anthropic Console](https://console.anthropic.com/)
 2. Navigate to "API Keys" or "OAuth Applications"
 3. Create new OAuth application:
-   - **Application name**: Q-IDE
+   - **Application name**: Top Dog
    - **Redirect URI**: `http://localhost:8000/llm_auth/callback?provider=anthropic`
 4. Copy your **Client ID** and **Client Secret**
 
@@ -183,12 +183,12 @@ export QIDE_OPENAI_CLIENT_ID=xxx
 export QIDE_OPENAI_CLIENT_SECRET=xxx
 export QIDE_ANTHROPIC_CLIENT_ID=xxx
 export QIDE_ANTHROPIC_CLIENT_SECRET=xxx
-export QIDE_BACKEND_URL=https://api.q-ide.com
+export QIDE_BACKEND_URL=https://api.Top Dog.com
 ```
 
 ### Option 3: Config File (Advanced)
 
-Create `~/.q-ide/oauth_config.json`:
+Create `~/.Top Dog/oauth_config.json`:
 
 ```json
 {
@@ -223,7 +223,7 @@ Create `~/.q-ide/oauth_config.json`:
 - [ ] Frontend showing OAuth buttons in Auth tab
 - [ ] Test Google sign-in works
 - [ ] Test GitHub sign-in works
-- [ ] Tokens stored in `~/.q-ide/llm_credentials.json`
+- [ ] Tokens stored in `~/.Top Dog/llm_credentials.json`
 - [ ] Can refresh page and stay authenticated
 
 ---
@@ -243,7 +243,7 @@ Create `~/.q-ide/oauth_config.json`:
    npm start
    ```
 
-2. **Access Q-IDE**
+2. **Access Top Dog**
    - Open browser: `http://localhost:1431`
 
 3. **Test Google OAuth**
@@ -252,14 +252,14 @@ Create `~/.q-ide/oauth_config.json`:
    - Sign in with your Google account
    - Grant permission
    - See success message
-   - Verify token saved: `cat ~/.q-ide/llm_credentials.json | grep google`
+   - Verify token saved: `cat ~/.Top Dog/llm_credentials.json | grep google`
 
 4. **Test GitHub OAuth**
    - Click "Sign in with GitHub" button
    - Sign in with your GitHub account
-   - Authorize Q-IDE
+   - Authorize Top Dog
    - See success message
-   - Verify token saved: `cat ~/.q-ide/llm_credentials.json | grep github`
+   - Verify token saved: `cat ~/.Top Dog/llm_credentials.json | grep github`
 
 5. **Test Other Providers**
    - Repeat for OpenAI and Anthropic
@@ -282,7 +282,7 @@ Create `~/.q-ide/oauth_config.json`:
 2. Verify .env file exists in project root
 3. Restart backend after setting env vars
 4. Check browser console for errors
-5. Check backend logs: `tail -f backend/logs/q-ide-topdog.log`
+5. Check backend logs: `tail -f backend/logs/Top Dog-topdog.log`
 
 ### Popup Doesn't Open
 
@@ -301,7 +301,7 @@ Create `~/.q-ide/oauth_config.json`:
 **Solutions:**
 1. Check redirect URI exactly matches in OAuth provider console
 2. For development: `http://localhost:8000/llm_auth/callback?provider=google`
-3. For production: `https://api.q-ide.com/llm_auth/callback?provider=google`
+3. For production: `https://api.Top Dog.com/llm_auth/callback?provider=google`
 4. Make sure no trailing slashes unless expected
 
 ### Token Not Saving
@@ -309,10 +309,10 @@ Create `~/.q-ide/oauth_config.json`:
 **Problem:** Sign in succeeds but token not found in storage
 
 **Solutions:**
-1. Check `~/.q-ide/` directory exists: `ls -la ~/.q-ide/`
-2. Create directory if missing: `mkdir -p ~/.q-ide`
-3. Check permissions: `ls -la ~/.q-ide/llm_credentials.json`
-4. Should be readable/writable: `chmod 0600 ~/.q-ide/llm_credentials.json`
+1. Check `~/.Top Dog/` directory exists: `ls -la ~/.Top Dog/`
+2. Create directory if missing: `mkdir -p ~/.Top Dog`
+3. Check permissions: `ls -la ~/.Top Dog/llm_credentials.json`
+4. Should be readable/writable: `chmod 0600 ~/.Top Dog/llm_credentials.json`
 5. Check backend logs for storage errors
 
 ### Token Expired
@@ -339,7 +339,7 @@ Create `~/.q-ide/oauth_config.json`:
 
 ## 📱 Mobile/Remote Access
 
-For accessing Q-IDE from other machines:
+For accessing Top Dog from other machines:
 
 1. Update redirect URI in OAuth providers:
    - Change `localhost` to actual hostname/IP
@@ -364,8 +364,8 @@ For accessing Q-IDE from other machines:
 3. **Use environment variables** for production
 4. **Rotate secrets regularly** in OAuth provider consoles
 5. **Monitor API usage** in provider dashboards
-6. **Tokens are stored locally** in `~/.q-ide/llm_credentials.json` with 0o600 permissions
-7. **Users can revoke** tokens anytime in Q-IDE Auth tab
+6. **Tokens are stored locally** in `~/.Top Dog/llm_credentials.json` with 0o600 permissions
+7. **Users can revoke** tokens anytime in Top Dog Auth tab
 
 ---
 
@@ -383,9 +383,9 @@ For accessing Q-IDE from other machines:
 ## 💡 Pro Tips
 
 - **Quick Restart**: `pkill -f "python main.py"` then `python main.py`
-- **Check Tokens**: `jq . ~/.q-ide/llm_credentials.json` (requires jq)
-- **Clear Tokens**: `rm ~/.q-ide/llm_credentials.json` to reset
-- **Debug Logs**: `tail -f backend/logs/q-ide-topdog.log` to see detailed logs
+- **Check Tokens**: `jq . ~/.Top Dog/llm_credentials.json` (requires jq)
+- **Clear Tokens**: `rm ~/.Top Dog/llm_credentials.json` to reset
+- **Debug Logs**: `tail -f backend/logs/Top Dog-topdog.log` to see detailed logs
 - **Test Endpoints**: `curl http://localhost:8000/llm_auth/providers` to check backend
 
 ---
@@ -405,5 +405,5 @@ For OAuth setup issues:
 
 ---
 
-**Last Updated**: Q-IDE Phase 13 - OAuth Integration
+**Last Updated**: Top Dog Phase 13 - OAuth Integration
 **Status**: ✅ Production Ready

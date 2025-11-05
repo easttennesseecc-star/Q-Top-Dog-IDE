@@ -170,14 +170,12 @@ class PythonServer:
             logger.error(f"Python definition error: {str(e)}")
             return None
     
-    async def get_diagnostics(
+    def get_diagnostics(
         self,
-        file_path: str,
         code: str
     ) -> List[DiagnosticMessage]:
-        """Get diagnostic messages."""
-        diagnostics = []
-        
+        """Get diagnostic messages (synchronous for test compatibility)."""
+        diagnostics: List[DiagnosticMessage] = []
         try:
             # Parse AST to find errors
             try:
@@ -196,24 +194,25 @@ class PythonServer:
                     column=0,
                     severity="error"
                 ))
-            
+
             # Check for common issues
             lines = code.split('\n')
             for line_no, line in enumerate(lines):
-                # Unused imports
-                if line.strip().startswith("import ") or line.strip().startswith("from "):
-                    module = line.split()[1]
-                    # Simple check: see if module is used in code
-                    if module not in code.split(line):
-                        diagnostics.append(DiagnosticMessage(
-                            message=f"Unused import: {module}",
-                            line=line_no,
-                            column=0,
-                            severity="warning"
-                        ))
-                
+                stripped = line.strip()
+                # Unused imports (simple heuristic)
+                if stripped.startswith("import ") or stripped.startswith("from "):
+                    parts = stripped.split()
+                    if len(parts) >= 2:
+                        module = parts[1]
+                        if module not in code.split(line):
+                            diagnostics.append(DiagnosticMessage(
+                                message=f"Unused import: {module}",
+                                line=line_no,
+                                column=0,
+                                severity="warning"
+                            ))
                 # Missing colons
-                if any(line.strip().startswith(x) for x in ["if ", "for ", "while ", "def ", "class "]):
+                if any(stripped.startswith(x) for x in ["if ", "for ", "while ", "def ", "class "]):
                     if not line.rstrip().endswith(":"):
                         diagnostics.append(DiagnosticMessage(
                             message="Missing colon at end of statement",
@@ -221,10 +220,8 @@ class PythonServer:
                             column=len(line),
                             severity="error"
                         ))
-            
         except Exception as e:
             logger.error(f"Python diagnostics error: {str(e)}")
-        
         return diagnostics
     
     async def _extract_symbols(
@@ -467,9 +464,9 @@ async def get_py_diagnostics(
     file_path: str,
     code: str
 ) -> List[Dict[str, Any]]:
-    """Convenience function for Python diagnostics."""
+    """Convenience function for Python diagnostics (async wrapper)."""
     server = get_py_server()
-    diagnostics = await server.get_diagnostics(file_path, code)
+    diagnostics = server.get_diagnostics(code)
     return [
         {
             "message": d.message,

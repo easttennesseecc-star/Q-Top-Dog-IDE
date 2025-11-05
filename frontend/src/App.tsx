@@ -1,5 +1,6 @@
 ﻿import { useEffect, useState, useRef, type ReactNode } from "react";
 import "./App.css";
+import "./styles/tier-system.css";
 import { Toast } from "./components/Toast";
 import { UserProfileMenu } from "./components/UserProfileMenu";
 import QAssistantChat from "./components/QAssistantChat";
@@ -13,12 +14,25 @@ import LLMStartupAuth from "./components/LLMStartupAuth";
 import PhoneLinkPanel from "./components/PhoneLinkPanel";
 import BackgroundManager from "./components/BackgroundManager";
 import { schedulePrune } from './lib/idbStorage';
+import MedicalPanel from "./components/MedicalPanel";
+import SciencePanel from "./components/SciencePanel";
 // HMR ping - no-op comment to trigger live reloads when needed
 import React from 'react';
+import TierInfo from "./components/TierInfo";
+import UsageBar from "./components/UsageBar";
+import TrialCountdown from "./components/TrialCountdown";
+import UpgradeButton from "./components/UpgradeButton";
+import FeatureLockedOverlay from "./components/FeatureLockedOverlay";
+import PricingComparison from "./components/PricingComparison";
+import UpgradeModal from "./components/UpgradeModal";
+import PricingPage from "./pages/PricingPage";
+import RulesManagement from "./pages/RulesManagement";
+import "./styles/pricing-page.css";
 const BackgroundSettings = React.lazy(() => import('./components/BackgroundSettings'));
 const OAuthCallback = React.lazy(() => import('./components/OAuthCallback'));
 
-type SelectedTab = "viewer" | "builds" | "extensions" | "settings" | "learning" | "llm" | "config" | "phone";
+type SelectedTab = "viewer" | "builds" | "extensions" | "settings" | "learning" | "llm" | "config" | "phone" | "billing" | "pricing" | "medical" | "science" | "rules";
+type WorkspaceProfile = 'default' | 'medical' | 'science';
 
 function App() {
   // Check if we're on the OAuth callback page
@@ -40,6 +54,75 @@ function App() {
   const micRef = useRef<HTMLButtonElement>(null);
   const [builds, setBuilds] = useState<Array<{ id: string; status: string; log?: string }>>([]);
   const [logsMap, setLogsMap] = useState<Record<string, string[]>>({});
+  // Workspace profile gating
+  const workspaceProfile = ((window as any).__WORKSPACE_PROFILE || 'default') as WorkspaceProfile;
+  const allowedTabsByProfile: Record<WorkspaceProfile, SelectedTab[]> = {
+    default: ['viewer','builds','extensions','settings','learning','llm','config','phone','billing','pricing','rules'],
+    medical: ['viewer','medical','builds','llm','config','billing','settings','learning','pricing','rules'],
+    science: ['viewer','science','builds','llm','config','billing','settings','learning','pricing','rules'],
+  };
+  const isTabAllowed = (t: SelectedTab) => allowedTabsByProfile[workspaceProfile].includes(t);
+
+  // Resolve backend base URL for API calls
+  const backendBase = (
+    (window as any).__VITE_BACKEND_URL ||
+    (import.meta as any)?.env?.VITE_BACKEND_URL ||
+    (import.meta as any)?.env?.VITE_API_URL ||
+    (process as any)?.env?.REACT_APP_BACKEND_URL ||
+    ""
+  ) as string;
+  const toApi = (path: string) => `${backendBase.replace(/\/$/, "")}${path.startsWith("/") ? path : "/" + path}`;
+
+  // Edition/profile selection (Dev vs Regulated) and banner
+  const [edition, setEdition] = useState<'dev' | 'regulated'>('dev');
+  const [banner, setBanner] = useState<{ text: string; style: 'info' | 'warning' } | null>(null);
+
+  useEffect(() => {
+    let canceled = false;
+    const load = async () => {
+      try {
+        const eRes = await fetch(toApi('/ui/edition'));
+        let ed: 'dev' | 'regulated' = edition;
+        if (eRes.ok) {
+          const ej = await eRes.json();
+          if (ej?.edition === 'regulated' || ej?.edition === 'dev') ed = ej.edition;
+          if (!canceled) setEdition(ed);
+        }
+        const bRes = await fetch(toApi('/ui/banner'), { headers: { 'X-Edition': ed } });
+        if (!canceled && bRes.ok) {
+          const bj = await bRes.json();
+          setBanner({ text: bj?.text || '', style: (bj?.style === 'warning' ? 'warning' : 'info') });
+        }
+      } catch (_) {
+        /* ignore */
+      }
+    };
+    load();
+    return () => { canceled = true; };
+  }, []);
+
+  const changeEdition = async (next: 'dev' | 'regulated') => {
+    try {
+      const res = await fetch(toApi('/ui/edition'), {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ edition: next })
+      });
+      if (res.ok) {
+        setEdition(next);
+        // Refresh banner
+        fetch(toApi('/ui/banner'), { headers: { 'X-Edition': next } })
+          .then(r => r.json())
+          .then(bj => setBanner({ text: bj?.text || '', style: (bj?.style === 'warning' ? 'warning' : 'info') }))
+          .catch(() => {});
+        setToast({ message: `Profile set to ${next === 'dev' ? 'Developer' : 'Regulated'}`, type: 'success' });
+      } else {
+        setToast({ message: 'Failed to change profile', type: 'error' });
+      }
+    } catch (e) {
+      setToast({ message: 'Failed to change profile', type: 'error' });
+    }
+  };
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -72,7 +155,7 @@ function App() {
     let canceled = false;
     const load = async () => {
       try {
-        const res = await fetch("/llm/learning/builds");
+        const res = await fetch(toApi("/llm/learning/builds"));
         const j = await res.json();
         if (canceled) return;
         const bs = (j?.builds ?? []) as Array<{ id: string; status: string; log?: string }>;
@@ -140,6 +223,24 @@ function App() {
         <path d="M11 19h2" />
       </svg>
     ),
+    Billing: (
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+        <rect x="2" y="4" width="20" height="16" rx="2" />
+        <path d="M2 10h20M6 14h3M6 18h3" />
+      </svg>
+    ),
+    Pricing: (
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+        <path d="M6 9h12M6 9a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2V9z" />
+        <path d="M9 13h6M9 17h3" />
+      </svg>
+    ),
+    Rules: (
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+        <path d="M3 6h18M3 12h18M3 18h18" />
+        <path d="M9 6v12M15 6v12" />
+      </svg>
+    ),
     Mic: (active: boolean) => (
       <svg width="18" height="18" viewBox="0 0 24 24" fill={active ? 'currentColor' : 'none'} stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
         <rect x="9" y="3" width="6" height="11" rx="3" />
@@ -150,6 +251,10 @@ function App() {
 
   return (
     <div className="w-full h-screen bg-[#0b0f16] text-slate-100 overflow-hidden dark flex flex-col">
+  {/* SEO: Accessible heading for search engines with brand variations */}
+  <h1 className="sr-only" style={{position:'absolute',left:'-9999px'}}>
+    Top Dog IDE — also known as Q‑IDE — an AI IDE for developers. Aura Development by Top Dog.
+  </h1>
   {/* Background manager (gradient / animated / image / particles) */}
   <BackgroundManager />
 
@@ -164,6 +269,19 @@ function App() {
           </div>
 
           <div className="flex items-center gap-6">
+            {/* Edition selector */}
+            <div className="flex items-center gap-2">
+              <span className="text-[11px] text-slate-300/70">Profile</span>
+              <select
+                value={edition}
+                onChange={(e)=>changeEdition(e.target.value as 'dev'|'regulated')}
+                className="text-xs bg-black/30 border border-white/10 rounded-md px-2 py-1 text-slate-200 focus:outline-none focus:ring-2 focus:ring-cyan-400"
+                aria-label="Select profile edition"
+              >
+                <option value="dev">Developer</option>
+                <option value="regulated">Regulated</option>
+              </select>
+            </div>
             <BuildHealthIndicator />
             <button
               ref={micRef}
@@ -189,28 +307,44 @@ function App() {
           </div>
         </div>
 
+        {/* Edition banner */}
+        {banner && (
+          <div className={`h-9 flex items-center px-6 text-xs ${banner.style === 'warning' ? 'bg-yellow-500/10 text-yellow-200 border-b border-yellow-400/30' : 'bg-cyan-500/10 text-cyan-200 border-b border-cyan-400/30'}`}
+               role="status" aria-live="polite">
+            <span className="font-medium mr-2">{edition === 'regulated' ? 'Regulated' : 'Developer'}:</span>
+            <span className="opacity-90">{banner.text}</span>
+          </div>
+        )}
+
         {/* Single tall panel: left = Q Assistant, right = viewer with tabs */}
         <div className="flex-1 overflow-hidden relative">
           <div className="w-full h-full grid grid-cols-1 md:grid-cols-2 gap-0">
             {/* Left: Q Assistant (chat only) */}
             <div className="h-full border-r border-white/5 p-4">
               <div className="h-full panel-elevated glass">
-                <QAssistantChat activePanel={null} setActivePanel={() => {}} showViewer={false} />
+                <QAssistantChat activePanel={null} setActivePanel={() => {}} showViewer={false} edition={edition} />
               </div>
             </div>
             {/* Right: Viewer with tabs */}
             <div className="h-full flex flex-col panel-elevated glass overflow-hidden">
               <div className="h-10 flex items-stretch gap-1 border-b border-white/5 px-2">
-                {([
+                {(([
                   { key: 'viewer', label: 'Viewer', icon: null },
                   { key: 'builds', label: 'Builds', icon: Icon.Builds },
                   { key: 'llm', label: 'LLM Pool', icon: Icon.LLM },
                   { key: 'config', label: 'LLM Setup', icon: Icon.Settings },
+                  { key: 'rules', label: 'Rules', icon: Icon.Rules },
+                  { key: 'medical', label: 'Medical', icon: Icon.Settings },
+                  { key: 'science', label: 'Science', icon: Icon.Settings },
                   { key: 'extensions', label: 'Extensions', icon: Icon.Extensions },
                   { key: 'phone', label: 'Phone', icon: Icon.Phone },
+                  { key: 'billing', label: 'Billing', icon: Icon.Billing },
+                  { key: 'pricing', label: 'Pricing', icon: Icon.Pricing },
                   { key: 'settings', label: 'Settings', icon: Icon.Settings },
                   { key: 'learning', label: 'Learning', icon: Icon.Learning },
-                ] as Array<{key: SelectedTab; label: string; icon: ReactNode }>).map(t => (
+                ] as Array<{key: SelectedTab; label: string; icon: ReactNode }>)
+                  .filter(t => isTabAllowed(t.key))
+                  ).map(t => (
                   <button key={t.key} onClick={()=>setTab(t.key)} className={`tab-button inline-flex items-center gap-2 text-xs ${tab===t.key ? 'active' : ''}`}>
                     {t.icon}
                     <span>{t.label}</span>
@@ -282,10 +416,48 @@ function App() {
                     </div>
                   </div>
                 )}
+                {tab === 'billing' && (
+                  <div className="h-full w-full overflow-auto">
+                    <div className="max-w-4xl mx-auto p-4 space-y-6">
+                      <div className="space-y-4">
+                        <h2 className="text-lg font-semibold text-cyan-200">Your Subscription</h2>
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                          <TierInfo userId="test-pro" />
+                          <UsageBar userId="test-pro" showPercentage showLabel />
+                        </div>
+                        <TrialCountdown userId="test-pro" onUpgradeClick={() => {}} />
+                      </div>
+                      <div className="bg-black/20 border border-white/5 rounded-lg p-4">
+                        <h3 className="text-sm font-semibold text-cyan-200 mb-4">Available Plans</h3>
+                        <PricingComparison userId="test-pro" compact={false} />
+                      </div>
+                    </div>
+                  </div>
+                )}
+                {tab === 'pricing' && (
+                  <div className="h-full w-full overflow-auto">
+                    <PricingPage userId="test-pro" currentTier="PRO" />
+                  </div>
+                )}
                 {tab === 'learning' && (
                   <div className="h-full w-full">
                     <h2 className="text-sm font-semibold text-cyan-200 mb-2">Learning Model</h2>
                     <p className="text-sm text-slate-300/80">Single learning model is not built yet. This panel will become active once it exists and will only be used for learning.</p>
+                  </div>
+                )}
+                {tab === 'rules' && (
+                  <div className="h-full w-full overflow-auto">
+                    <RulesManagement />
+                  </div>
+                )}
+                {tab === 'medical' && (
+                  <div className="h-full w-full overflow-auto">
+                    <MedicalPanel />
+                  </div>
+                )}
+                {tab === 'science' && (
+                  <div className="h-full w-full overflow-auto">
+                    <SciencePanel />
                   </div>
                 )}
               </div>
@@ -306,7 +478,10 @@ function App() {
             { label: "LLM Pool", action: () => { setTab('llm'); setCommandPaletteOpen(false); } },
             { label: "LLM Setup", action: () => { setTab('config'); setCommandPaletteOpen(false); } },
             { label: "Phone Link", action: () => { setTab('phone'); setCommandPaletteOpen(false); } },
+            { label: "Billing", action: () => { setTab('billing'); setCommandPaletteOpen(false); } },
+            { label: "Pricing Plans", action: () => { setTab('pricing'); setCommandPaletteOpen(false); } },
             { label: "Learning Model", action: () => { setTab('learning'); setCommandPaletteOpen(false); } },
+            { label: "Rules Management", action: () => { setTab('rules'); setCommandPaletteOpen(false); } },
             { label: "Toggle Mic (Ctrl+M)", action: () => { toggleMic(); setCommandPaletteOpen(false); } },
           ]}
         />

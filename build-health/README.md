@@ -1,6 +1,6 @@
 # Build Health Scripts
 
-This folder contains automation scripts for build, test, and health checks to ensure robustness and stability of Q-IDE.
+This folder contains automation scripts for build, test, and health checks to ensure robustness and stability of Top Dog.
 
 - `check_build_health.py`: Checks backend and frontend build/test status.
 - `run_tests.py`: Runs backend and frontend tests for coverage.

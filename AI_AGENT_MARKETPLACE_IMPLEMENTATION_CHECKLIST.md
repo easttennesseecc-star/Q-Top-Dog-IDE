@@ -316,13 +316,13 @@ User selects "Claude 3 Opus"
     ↓
 Router identifies provider: Anthropic
     ↓
-Get user's Anthropic API key (or use Q-IDE default)
+Get user's Anthropic API key (or use Top Dog default)
     ↓
 Transform request to Anthropic format
     ↓
 Send to Anthropic API
     ↓
-Transform response back to Q-IDE format
+Transform response back to Top Dog format
     ↓
 Calculate cost ($0.015/1K input, $0.075/1K output)
     ↓
@@ -1069,7 +1069,7 @@ Revenue (Week 1 of beta):
 ├─ Paid queries: 80% of users × 60 queries × 7 days = 33,600 queries
 ├─ Average cost: $0.02 per query
 ├─ Gross revenue: $672
-└─ Q-IDE commission (30%): $202
+└─ Top Dog commission (30%): $202
 
 Growth Trajectory:
 ├─ Week 1: 30 users

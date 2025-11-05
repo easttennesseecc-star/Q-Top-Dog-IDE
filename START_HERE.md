@@ -1,12 +1,12 @@
-# 🚀 Q-IDE TOPDOG - START HERE
+# 🚀 Top Dog TOPDOG - START HERE
 
-## The Simplest Way to Launch Q-IDE
+## The Simplest Way to Launch Top Dog
 
 ### ⚡ JUST DOUBLE-CLICK ONE OF THESE:
 
 **Option 1: Quick Launch**
 ```
-Double-click: Q-IDE.bat
+Double-click: Top Dog.bat
 ```
 ✅ Fastest way to start  
 ✅ Servers start automatically  
@@ -30,15 +30,15 @@ Double-click: Q-IDE.bat
 2. ✅ Backend server starts (FastAPI on port 8000)
 3. ✅ Frontend server starts (Vite on port 1431)
 4. ✅ Browser opens automatically
-5. ✅ Q-IDE is ready to use!
+5. ✅ Top Dog is ready to use!
 
 **Total time: ~15 seconds**
 
 ---
 
-## 🌐 Where to Find Q-IDE
+## 🌐 Where to Find Top Dog
 
-Once launched, Q-IDE will be at:
+Once launched, Top Dog will be at:
 - **Main App**: http://127.0.0.1:1431
 - **Backend API**: http://127.0.0.1:8000
 - **API Docs**: http://127.0.0.1:8000/docs
@@ -47,11 +47,11 @@ Once launched, Q-IDE will be at:
 
 ## ⚠️ IMPORTANT
 
-Keep the two server windows (Backend and Frontend) open while using Q-IDE.
+Keep the two server windows (Backend and Frontend) open while using Top Dog.
 - You can minimize them
 - You can move them
 - But do NOT close them
-- Q-IDE stops working if you close them
+- Top Dog stops working if you close them
 
 ---
 
@@ -82,7 +82,7 @@ Keep the two server windows (Backend and Frontend) open while using Q-IDE.
 
 | Option | File | Usage |
 |--------|------|-------|
-| **Standard** | Q-IDE.bat | Double-click to start |
+| **Standard** | Top Dog.bat | Double-click to start |
 | **Desktop Shortcut** | CREATE_SHORTCUT.bat | Run once, then use shortcut |
 | **Debug** | START_DEBUG.ps1 | Full troubleshooting output |
 | **System Check** | DIAGNOSE.ps1 | Verify your setup |
@@ -93,7 +93,7 @@ Keep the two server windows (Backend and Frontend) open while using Q-IDE.
 
 ```powershell
 # Standard launch
-.\Q-IDE.bat
+.\Top Dog.bat
 
 # Create desktop shortcut
 .\CREATE_SHORTCUT.bat
@@ -116,7 +116,7 @@ taskkill /F /IM node.exe
 
 ## ✅ READY TO GO!
 
-That's it! Pick an option above and launch Q-IDE.
+That's it! Pick an option above and launch Top Dog.
 
 **Enjoy building! 🚀**
 

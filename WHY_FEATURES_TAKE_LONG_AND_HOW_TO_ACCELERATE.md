@@ -1095,7 +1095,7 @@ When to choose this:
 ### Why Accelerated MVP (6-8 weeks) is Better
 
 ```
-For Q-IDE specifically:
+For Top Dog specifically:
 
 You're NOT racing Google (they have infinite resources)
 You're racing market adoption (get real users before competitors)
@@ -1116,8 +1116,8 @@ Timeline logic:
 ├─ Accelerated: Ship in 6-8 weeks, iterate based on feedback
 ├─ Result: You're the first with pair programming built-in
 ├─ Other teams: They're 2-3 months behind
-├─ Customers: Adopt Q-IDE because features are already there
-├─ When GitHub ships in 6 months: Q-IDE already iterated twice
+├─ Customers: Adopt Top Dog because features are already there
+├─ When GitHub ships in 6 months: Top Dog already iterated twice
 └─ You win on features + price + iteration speed
 
 Traditional: Ship in 12 weeks, perfect

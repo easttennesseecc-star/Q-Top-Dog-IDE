@@ -21,7 +21,7 @@
 | Cursor IDE | $20/mo | Developers | AI code editor |
 | Windsurf IDE | $25/mo | Developers | AI-first IDE |
 | Replit Pro | $15/mo | Students | Cloud IDE |
-| **Q-IDE Pro** | **$15/mo** | Professionals | Full IDE + Marketplace |
+| **Top Dog Pro** | **$15/mo** | Professionals | Full IDE + Marketplace |
 
 **Positioning**: 
 - ✅ COMPETITIVE (same as Replit, cheaper than Cursor/Windsurf)
@@ -45,7 +45,7 @@
 | GitLab Bronze | $29/seat | N/A | $290 | Basic team features |
 | GitLab Silver | $99/seat | N/A | $990 | Advanced team features |
 | Linear | $8/seat | 5+ | $80 | Issue tracking |
-| **Q-IDE Teams Starter** | **$30/seat** | 5+ | **$300** | Full IDE + team collab |
+| **Top Dog Teams Starter** | **$30/seat** | 5+ | **$300** | Full IDE + team collab |
 
 **Positioning**:
 - ✅ COMPETITIVE (cheaper than GitLab Silver, similar to GitLab Bronze)
@@ -69,7 +69,7 @@
 | Atlassian Suite | $8-25/seat | N/A | $160-500 | Full suite |
 | Linear Pro | $20/seat | N/A | $400 | Advanced issues |
 | GitHub Enterprise | $231/seat | N/A | $4,620 | Full enterprise |
-| **Q-IDE Teams Pro** | **$40/seat** | 20+ | **$800** | Full IDE + advanced team |
+| **Top Dog Teams Pro** | **$40/seat** | 20+ | **$800** | Full IDE + advanced team |
 
 **Positioning**:
 - ✅ COMPETITIVE (cheaper than GitHub Enterprise, comparable to Jira + Linear)
@@ -94,7 +94,7 @@
 | GitLab Ultimate | $99/seat | N/A | $4,950 | Full enterprise |
 | Atlassian Marketplace | $10,000/month | N/A | $10,000 | Full suite + add-ons |
 | JetBrains All Suite | $30/seat/mo | N/A | $1,500 | All IDEs |
-| **Q-IDE Teams Ent** | **$50/seat** | 50+ | **$2,500** | Full IDE + enterprise features |
+| **Top Dog Teams Ent** | **$50/seat** | 50+ | **$2,500** | Full IDE + enterprise features |
 
 **Positioning**:
 - ✅ COMPETITIVE (far cheaper than GitHub Enterprise @ $231/seat)
@@ -119,7 +119,7 @@
 | JetBrains Enterprise | $30/seat/mo | N/A | $3,000 | All IDEs |
 | Atlassian Data Center | $8,400/mo | N/A | $8,400 | On-premises |
 | ServiceNow Enterprise | $500+/seat | N/A | $50,000+ | Enterprise platform |
-| **Q-IDE Enterprise (your Q)** | **$200-300/seat** | 100+ | **$20,000-30,000** | Full IDE + custom features |
+| **Top Dog Enterprise (your Q)** | **$200-300/seat** | 100+ | **$20,000-30,000** | Full IDE + custom features |
 
 **Positioning**:
 - ✅ COMPETITIVE WITH GITHUB (GitHub is $231/seat)
@@ -155,8 +155,8 @@ Development Infrastructure:
 ───────────────────────────
 TOTAL: $49,100+/month ($589K+/year)
 
-Your Q-IDE Enterprise (@ $250/seat):
-├─ Q-IDE: $250 × 100 = $25,000/month
+Your Top Dog Enterprise (@ $250/seat):
+├─ Top Dog: $250 × 100 = $25,000/month
 ├─ Replaces GitHub Enterprise ✅
 ├─ Replaces most JetBrains ✅
 ├─ Replaces issue tracking ✅

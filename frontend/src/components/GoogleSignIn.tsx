@@ -9,7 +9,10 @@ export const GoogleSignIn: React.FC<GoogleSignInProps> = ({ onSuccess, onError }
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const BACKEND_URL = import.meta.env?.VITE_BACKEND_URL || 'http://127.0.0.1:8000';
+  const BACKEND_URL =
+    (typeof window !== 'undefined' && (window as any).__VITE_BACKEND_URL) ||
+    import.meta.env?.VITE_BACKEND_URL ||
+    'http://127.0.0.1:8000';
 
   const handleGoogleSignIn = async () => {
     setLoading(true);
