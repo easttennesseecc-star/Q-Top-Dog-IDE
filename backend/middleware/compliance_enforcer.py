@@ -172,6 +172,10 @@ class ComplianceEnforcer:
         
         Raises HTTPException if non-compliant.
         """
+        # Skip compliance checks for health/monitoring endpoints
+        if request.url.path in ["/health", "/health/live", "/health/ready", "/metrics", "/robots.txt", "/sitemap.xml"]:
+            return
+        
         profile = ComplianceEnforcer.get_workspace_profile(request)
         
         # Default workspace: no special requirements
