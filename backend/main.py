@@ -437,9 +437,15 @@ async def canonical_redirect_middleware(request: Request, call_next):
     
     if ENABLE_HOST_REDIRECT and CANONICAL_HOST:
         host = request.headers.get("host", "")
+        hostname = host.split(":")[0] if host else ""
+        
+        # Skip redirect for internal cluster traffic (localhost, pod IPs, service names)
+        if hostname in ("localhost", "127.0.0.1", "topdog", "topdog-topdog") or hostname.startswith("10."):
+            return await call_next(request)
+        
         # Redirect if host doesn't match canonical and we either allow any or it's explicitly listed
-        should_redirect = host and host.split(":")[0] != CANONICAL_HOST and (
-            not ALTERNATE_HOSTS or host.split(":")[0] in ALTERNATE_HOSTS
+        should_redirect = hostname and hostname != CANONICAL_HOST and (
+            not ALTERNATE_HOSTS or hostname in ALTERNATE_HOSTS
         )
         if should_redirect:
             url = request.url.replace(scheme="https", netloc=CANONICAL_HOST)
