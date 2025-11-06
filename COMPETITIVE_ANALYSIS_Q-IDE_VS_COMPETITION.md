@@ -5,6 +5,8 @@
 **Prepared For**: Stakeholders, Investors, Product Team  
 **Status**: Comprehensive Analysis Complete
 
+> Return to Executive Summary: See `PRODUCT_AND_MARKET_ANALYSIS.md` for a concise synthesis linking positioning to pricing and readiness.
+
 ---
 
 ## Table of Contents
@@ -1407,6 +1409,8 @@ See attached files for:
 - Pricing breakdown by use case
 - ROI calculator templates
 - Sales comparison sheets
+
+— Or jump back to the high-level view: `PRODUCT_AND_MARKET_ANALYSIS.md` (Executive synthesis)
 
 ---
 

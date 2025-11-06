@@ -4,7 +4,7 @@ replicaCount: 1  # Start with minimum for cost savings
 
 image:
   repository: registry.digitalocean.com/topdog-registry/topdog
-  tag: v1.0.7
+  tag: v1.1.4
   pullPolicy: IfNotPresent
 
 # Aggressive resource limits for cost optimization

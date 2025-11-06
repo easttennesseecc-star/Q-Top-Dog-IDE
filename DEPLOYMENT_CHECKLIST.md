@@ -111,6 +111,36 @@ Checklist:
 - [ ] Linux AppImage (.AppImage)
 - [ ] Linux DEB package (.deb)
 
+### Step 2.5: Kubernetes Registry Auth (Required for DOKS/Helm pulls)
+
+If deploying the backend image from DigitalOcean Container Registry (DOCR), create the image pull secret in the target namespace before or right after Helm install. Replace placeholders with your values.
+
+PowerShell (Windows):
+
+1) Export a DOCR read-only token to an env var for the session
+
+   $Env:DOCR_TOKEN = "<docr-read-token>"
+
+2) Create or update the secret (namespace must match your release)
+
+   kubectl create secret docker-registry docr-secret `
+     --docker-server=registry.digitalocean.com `
+     --docker-username=doct `
+     --docker-password=$Env:DOCR_TOKEN `
+     --docker-email=dummy@example.com `
+     --namespace=topdog `
+     --dry-run=client -o yaml | kubectl apply -f -
+
+3) Verify and restart the deployment if needed
+
+   kubectl get secret docr-secret -n topdog
+   kubectl rollout restart deploy/topdog -n topdog
+
+Checklist:
+- [ ] docr-secret exists in namespace
+- [ ] Pods are not in ImagePullBackOff
+- [ ] Images pull successfully from DOCR
+
 ### Step 3: Publish Release Notes (5 minutes)
 
 Go to: https://github.com/quellum/Top Dog/releases/v0.1.0

@@ -194,7 +194,26 @@
 
 ---
 
-### 8. **WHAT_I_CREATED_FOR_YOU.md** (Navigation Guide)
+### 8. **PRODUCT_AND_MARKET_ANALYSIS.md** (Executive synthesis)
+**Length**: ~2-3 pages
+**Read time**: 10 min
+**For**: Leadership, product, sales
+**Purpose**: Concise positioning, differentiators (Multi‑LLM BYOK + Runway BYOK), pricing tie‑in, risks, and 90‑day outcomes
+
+**Why read it**: Links competitive analysis to pricing with the operational readiness snapshot.
+
+---
+### 11. **RELIABILITY_CHECKLIST.md** (Operational guardrails)
+**Length**: ~2 pages
+**Read time**: 5–7 min
+**For**: Engineers, SRE, product
+**Purpose**: Verifiable checklist for health, routing, hallucination prevention, CI/self‑healing, and pairing resilience.
+
+**Why read it**: Proves the reliability story end‑to‑end and keeps changes on‑rails.
+
+---
+
+### 9. **WHAT_I_CREATED_FOR_YOU.md** (Navigation Guide)
 **Length**: 500+ lines  
 **Read time**: 10 min  
 **For**: Everyone (first-time orientation)  
@@ -210,7 +229,7 @@
 
 ---
 
-### 9. **COMPETITIVE_ANALYSIS_Q-IDE_VS_COMPETITION.md** (Updated)
+### 10. **COMPETITIVE_ANALYSIS_Q-IDE_VS_COMPETITION.md** (Updated)
 **Length**: 3,000+ lines  
 **Read time**: 1 hour  
 **For**: Leadership, product, sales  
@@ -295,6 +314,7 @@
 | MONDAY_TECHNICAL_SETUP | 1K lines | 1 hr | Tech lead | Monday morning | Setup Monday |
 | QUICK_REFERENCE_CARD | 300 lines | 5 min | Engineers | Daily | Cheat sheet |
 | EXECUTIVE_SUMMARY | 600 lines | 20 min | Leadership | Today | Overview |
+| PRODUCT_AND_MARKET_ANALYSIS | 2-3 pages | 10 min | Leadership, Product | Today | Positioning + pricing |
 | WHAT_I_CREATED | 500 lines | 10 min | Everyone | Today | Navigation |
 | COMPETITIVE_ANALYSIS | 3K lines | 1 hr | Leadership | Optional | Positioning |
 

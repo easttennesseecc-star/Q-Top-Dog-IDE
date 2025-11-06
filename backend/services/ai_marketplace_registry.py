@@ -16,6 +16,7 @@ class ModelCapability(str, Enum):
     CODE_COMPLETION = "code_completion"
     CODE_EXPLANATION = "code_explanation"
     BUG_DETECTION = "bug_detection"
+    DEBUGGING = "debugging"
     REFACTORING = "refactoring"
     DOCUMENTATION = "documentation"
     TEXT_ANALYSIS = "text_analysis"

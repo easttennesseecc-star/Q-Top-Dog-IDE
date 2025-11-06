@@ -90,6 +90,22 @@ COHERE_API_KEY=                       # optional
 # Spend guardrails for managed keys (per-tenant defaults; tune per plan)
 SPEND_ALERT_TCU_WARN=200000
 SPEND_ALERT_TCU_HARD=300000
+
+# ====================
+# PHONE PAIRING: SMS PROVIDERS (Optional)
+# ====================
+# Configure one provider for real SMS sends. If none configured, system runs in MOCK mode
+# and logs SMS contents for development. See backend/services/sms_pairing_service.py.
+
+# Twilio (recommended for easiest setup)
+TWILIO_ACCOUNT_SID=
+TWILIO_AUTH_TOKEN=
+TWILIO_PHONE_NUMBER=+15551234567
+
+# AWS SNS (alternative)
+# Requires AWS credentials via environment/instance profile
+# Region is taken from AWS configuration; set if needed:
+# AWS_REGION=us-east-1
 ```
 
 ## Docker Compose (Optional - for local development)
@@ -170,6 +186,27 @@ Invoke-RestMethod -Method POST `
 ```
 
 Prometheus alert groups expect these labels and are defined under `observability/prometheus/alerts.yml` (e.g., `topdog-slo-gates-tiered`, `topdog-slo-gates-segments`).
+
+## Routing and Health Endpoints
+
+- `/health` is registered before any catch-all routes and is excluded from compliance and canonical host redirects.
+- Frontend SPA catch-all is registered after all API routers to avoid shadowing API paths (e.g., `/snapshots`, `/auth`, `/llm`, `/metrics`).
+- Canonical redirect middleware skips internal/local hosts and never redirects paths prefixed with `/health`, `/metrics`, `/api`, `/ws`, `/_health`, `/readiness`, `/liveness`, or `/snapshots`.
+
+Environment flags:
+- `ENABLE_SNAPSHOT_API` (default: `true`) — toggles the snapshots API.
+- `REQUIRE_SNAPSHOT_AUTH` (default: `false`) — when `true`, requires a valid `session_id` via query or `X-Session-Id` header for snapshot endpoints.
+
+## Phone Pairing and SMS Invites
+
+- Endpoints live under `/phone/*` (see `backend/routes/phone_pairing_api.py`).
+- SMS pairing supports Twilio or AWS SNS. If neither is configured or libs are not installed,
+  the service operates in MOCK mode and logs SMS to the server logs so you can test the flow.
+
+Configure for production SMS:
+- Install provider SDKs in the backend image: `twilio` (for Twilio) or `boto3` (for AWS SNS).
+- Set the environment variables listed above (e.g., `TWILIO_ACCOUNT_SID`, `TWILIO_AUTH_TOKEN`, `TWILIO_PHONE_NUMBER`).
+- Expose a webhook for incoming SMS commands at `/phone/sms/webhook` (Twilio-compatible TwiML response).
 
 ## Docker Image (Optional - for production)
 

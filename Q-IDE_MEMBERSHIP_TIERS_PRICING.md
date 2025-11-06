@@ -6,9 +6,13 @@
 
 See also: `PRICING_TOP_DOG_AURA_9_TIERS.md` for the canonical matrix across Development, Medical, and Scientific verticals.
 
+Recommended context: See `PRODUCT_AND_MARKET_ANALYSIS.md` for positioning, differentiators (Multi‑LLM BYOK + Runway BYOK), and how tiers map to value. For cost comparisons, see `ROI_CALCULATOR.md` (with `scripts/roi_calculator.ps1`). For provider onboarding and model links, see `BYOK_MARKETPLACE_LINKS.md`. For operational guardrails, see `RELIABILITY_CHECKLIST.md`.
+
 ---
 
 ## 🎯 THE 10 TIERS - PREMIUM PRICING
+
+> Reliability: See `RELIABILITY_CHECKLIST.md` for the guardrails that keep costs predictable and prevent hallucinations.
 
 ```
 TIER 1:  FREE                    → $0/month (Trial - 7 Days)
@@ -22,6 +26,15 @@ TIER 8:  ENTERPRISE-STANDARD    → $9,999/month (500 users)
 TIER 9:  ENTERPRISE-PREMIUM     → $24,999/month (2000 users)
 TIER 10: ENTERPRISE-ULTIMATE    → $99,999/month (Unlimited users)
 ```
+
+### Which tier should I choose?
+
+- Evaluating Top Dog (trial): Tier 1 Free (7 days). Explore IDE + AI and confirm it fits your workflow.
+- Solo developer, professional use: Tier 2 Pro or 2B Pro‑Full (adds all engines + full media). Choose 2B if you’ll use Runway BYOK or multiple game engines.
+- Small team shipping features: Tier 3 Teams. Collaboration, RBAC, audit logs, SSO ready; predictable monthly vs hourly surprises.
+- Regulated or large orgs: Tier 4 Enterprise. SSO/SAML, data residency, custom LLM routing, dedicated SLAs, optional on‑prem.
+
+See “Proof of readiness” and market positioning in `PRODUCT_AND_MARKET_ANALYSIS.md`. For cost/TCO, use `ROI_CALCULATOR.md`.
 
 **Why Premium Pricing?**
 - 🔥 **UNIQUE**: BYOK Multi-LLM (53+ providers, no markup - only IDE with this)
@@ -177,7 +190,6 @@ $tier = @{
 - Everything in PRO
 - All 4 game engines
 - All media synthesis (DALL-E 3, Midjourney, Runway)
-- 1TB storage
 - Unlimited private repos
 - Verified code (Overwatch) - 1,000 checks/day
 - Team collaboration features
@@ -198,7 +210,6 @@ $tier = @{
     LLMRequests = 10000
     ConcurrentSessions = 10
     TeamMembers = 5
-    Storage = "1TB"
     GameEngines = 4
     MediaSynthesis = "All"
     VerifiedCodeChecks = 1000
@@ -262,7 +273,7 @@ Daily API Calls            | 20      | 10,000     | 100,000     | Unlimited
 Daily LLM Requests         | 2       | 1,000      | 10,000      | Unlimited
 Concurrent Sessions        | 1       | 5          | 10          | 50+
 Session Length             | 5 min   | Unlimited  | Unlimited   | Unlimited
-Storage                    | 512MB   | 100GB      | 1TB         | Unlimited
+Storage                    | 512MB   | 100GB      | Custom      | Unlimited
 Data Persistence           | ❌      | ✅         | ✅          | ✅
 Code Execution             | ❌      | ✅         | ✅          | ✅
 Team Members               | N/A     | N/A        | 5           | 100+

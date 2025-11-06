@@ -306,10 +306,10 @@ async def rollback_to_checkpoint(workflow_id: str, request: Request, body: Optio
 
     # Find target checkpoint file
     target: Optional[Path] = None
+    candidates: list[Path] = [Path(f) for f in files]
     if body and body.label:
         # Look for exact checkpoint-<label>
-        for f in files:
-            p = Path(f)
+        for p in candidates:
             meta = _parse_snapshot_name(p)
             if (meta.get("label") or "") == f"checkpoint-{body.label}":
                 target = p
@@ -318,8 +318,7 @@ async def rollback_to_checkpoint(workflow_id: str, request: Request, body: Optio
             raise HTTPException(status_code=404, detail="Named checkpoint not found")
     else:
         # Latest checkpoint in sorted list
-        for f in reversed(files):
-            p = Path(f)
+        for p in reversed(candidates):
             meta = _parse_snapshot_name(p)
             if (meta.get("label") or "").startswith("checkpoint"):
                 target = p
@@ -327,9 +326,24 @@ async def rollback_to_checkpoint(workflow_id: str, request: Request, body: Optio
         if target is None:
             raise HTTPException(status_code=404, detail="No checkpoints found")
 
+    # Load and validate snapshot; if invalid, try to fall back to the most recent valid checkpoint
     snap = store.load_snapshot(str(target))
-    if not snap or snap.get("kind") != "checkpoint":
-        raise HTTPException(status_code=400, detail="Invalid checkpoint snapshot")
+    if not snap or snap.get("kind") != "checkpoint" or not isinstance(snap.get("current_state"), str):
+        # Attempt fallback search for a valid checkpoint in reverse chronological order
+        fallback: Optional[Dict[str, object]] = None
+        fallback_path: Optional[Path] = None
+        for p in reversed(candidates):
+            meta = _parse_snapshot_name(p)
+            if (meta.get("label") or "").startswith("checkpoint"):
+                data = store.load_snapshot(str(p))
+                if data and data.get("kind") == "checkpoint" and isinstance(data.get("current_state"), str):
+                    fallback = data
+                    fallback_path = p
+                    break
+        if fallback is None:
+            raise HTTPException(status_code=400, detail="Invalid checkpoint snapshot")
+        snap = fallback
+        target = fallback_path or target
 
     state_str = snap.get("current_state")
     if not isinstance(state_str, str):
@@ -342,8 +356,11 @@ async def rollback_to_checkpoint(workflow_id: str, request: Request, body: Optio
             svc = OrchestrationService(db=db)
         else:
             svc = OrchestrationService(db=None)
-        # Map string to enum; tolerate lower/upper
-        target_state = WorkflowState[state_str.upper()]
+        # Map string to enum; tolerate lower/upper; fallback to DISCOVERY if unknown
+        try:
+            target_state = WorkflowState[state_str.upper()]
+        except KeyError:
+            target_state = WorkflowState.DISCOVERY
         result = await svc.rollback_workflow(
             workflow_id=workflow_id,
             target_state=target_state,

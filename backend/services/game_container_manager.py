@@ -266,6 +266,181 @@ CMD ["cmd.exe", "/c", "C:\\UnrealEngine\\Engine\\Binaries\\Win64\\UnrealEditor-C
             logger.error(f"Failed to start Unreal container: {str(e)}")
             return None
 
+    def start_construct3_container(
+        self, project_id: str, project_path: str, config: Optional[Dict[str, Any]] = None
+    ) -> Optional[ContainerStatus]:
+        """
+        Start a Construct 3 project container
+
+        Construct 3 projects are HTML5/JS bundles. We serve the project via a lightweight
+        Node http-server (or nginx) container for live preview. No compile toolchain needed.
+
+        Args:
+            project_id: Unique project ID
+            project_path: Path to Construct 3 project (exported HTML or src)
+            config: Optional configuration (e.g., preview port)
+
+        Returns:
+            ContainerStatus if successful, None otherwise
+        """
+        if not self.docker_available:
+            logger.error("Docker not available, cannot start Construct 3 container")
+            return None
+
+        try:
+            container_id = str(uuid.uuid4())[:8]
+            config = config or {}
+
+            # Port mapping
+            preview_port = int(config.get("preview_port", 8080))
+            host_preview_port = preview_port + (hash(project_id) % 1000)
+
+            # Use a slim Node image with http-server for static files
+            dockerfile = f"""
+FROM node:18-alpine
+RUN npm i -g http-server
+WORKDIR /project
+VOLUME ["/project"]
+EXPOSE {preview_port}
+CMD ["http-server", ".", "-p", "{preview_port}", "-c-1"]
+            """
+
+            temp_dir = Path("/tmp") / f"construct3_{container_id}"
+            temp_dir.mkdir(exist_ok=True)
+            dockerfile_path = temp_dir / "Dockerfile"
+            dockerfile_path.write_text(dockerfile)
+
+            image_tag = f"q-ide-construct3-{container_id}"
+            build_cmd = ["docker", "build", "-t", image_tag, str(temp_dir)]
+            logger.info(f"Building Construct3 image: {image_tag}")
+            subprocess.run(build_cmd, check=True, capture_output=True)
+
+            run_cmd = [
+                "docker",
+                "run",
+                "-d",
+                "--name",
+                f"construct3-{container_id}",
+                "-v",
+                f"{project_path}:/project:ro",
+                "-p",
+                f"{host_preview_port}:{preview_port}",
+                image_tag,
+            ]
+
+            logger.info(f"Starting Construct3 container: construct3-{container_id}")
+            subprocess.run(run_cmd, check=True, capture_output=True, text=True)
+
+            status = ContainerStatus(
+                container_id=container_id,
+                project_id=project_id,
+                engine="construct3",
+                status="running",
+                created_at=datetime.now().isoformat(),
+                port_mapping={"preview": host_preview_port},
+            )
+
+            self.containers[project_id] = status
+            logger.info(f"Construct3 container started: {container_id}")
+            return status
+
+        except Exception as e:
+            logger.error(f"Failed to start Construct3 container: {str(e)}")
+            return None
+
+    def start_gamemaker_container(
+        self, project_id: str, project_path: str, config: Optional[Dict[str, Any]] = None
+    ) -> Optional[ContainerStatus]:
+        """
+        Attempt to start a GameMaker container.
+
+        Note: GameMaker requires licensed tooling and a Windows build environment.
+        This starter integrates only if the required environment variables and
+        installer artifacts are provided. Otherwise, we return None and log guidance.
+
+        Expected config/env:
+          - GM_SILENT_INSTALLER_URL or mounted installer path
+          - GM_LICENSE (or pre-activated environment)
+
+        Returns:
+            ContainerStatus if successful, None otherwise
+        """
+        if not self.docker_available:
+            logger.error("Docker not available, cannot start GameMaker container")
+            return None
+
+        gm_installer = os.environ.get("GM_SILENT_INSTALLER_URL") or config.get("installer_url") if config else None
+        gm_license = os.environ.get("GM_LICENSE") or config.get("license") if config else None
+
+        if not gm_installer or not gm_license:
+            logger.warning(
+                "GameMaker container prerequisites missing (GM_SILENT_INSTALLER_URL and GM_LICENSE). Skipping."
+            )
+            return None
+
+        try:
+            container_id = str(uuid.uuid4())[:8]
+            debug_port = 6010
+            preview_port = 8010
+            host_debug_port = debug_port + hash(project_id) % 1000
+            host_preview_port = preview_port + hash(project_id) % 1000
+
+            dockerfile = f"""
+FROM mcr.microsoft.com/windows/servercore:ltsc2022
+SHELL ["powershell", "-Command"]
+ENV GM_LICENSE="{gm_license}"
+WORKDIR C:\\project
+VOLUME ["C:/project"]
+# In a real setup, download and silently install GameMaker here using $env:GM_LICENSE
+EXPOSE {debug_port} {preview_port}
+CMD ["cmd.exe", "/c", "echo GameMaker container scaffold running & ping -t 127.0.0.1"]
+            """
+
+            temp_dir = Path("/tmp") / f"gamemaker_{container_id}"
+            temp_dir.mkdir(exist_ok=True)
+            dockerfile_path = temp_dir / "Dockerfile"
+            dockerfile_path.write_text(dockerfile)
+
+            image_tag = f"q-ide-gamemaker-{container_id}"
+            build_cmd = ["docker", "build", "-t", image_tag, str(temp_dir)]
+            logger.info(f"Building GameMaker image: {image_tag}")
+            subprocess.run(build_cmd, check=True, capture_output=True)
+
+            run_cmd = [
+                "docker",
+                "run",
+                "-d",
+                "--name",
+                f"gamemaker-{container_id}",
+                "-v",
+                f"{project_path}:C:\\project",
+                "-p",
+                f"{host_debug_port}:{debug_port}",
+                "-p",
+                f"{host_preview_port}:{preview_port}",
+                image_tag,
+            ]
+
+            logger.info(f"Starting GameMaker container: gamemaker-{container_id}")
+            subprocess.run(run_cmd, check=True, capture_output=True, text=True)
+
+            status = ContainerStatus(
+                container_id=container_id,
+                project_id=project_id,
+                engine="gamemaker",
+                status="running",
+                created_at=datetime.now().isoformat(),
+                port_mapping={"debug": host_debug_port, "preview": host_preview_port},
+            )
+
+            self.containers[project_id] = status
+            logger.info(f"GameMaker container started: {container_id}")
+            return status
+
+        except Exception as e:
+            logger.error(f"Failed to start GameMaker container: {str(e)}")
+            return None
+
     def stop_container(self, project_id: str) -> bool:
         """Stop and remove a container"""
         if project_id not in self.containers:

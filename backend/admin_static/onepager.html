@@ -1,0 +1,213 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Top Dog IDE — One‑Pager</title>
+  <style>
+    :root {
+      --bg: #0b1220; --card: #0f172a; --text: #e5e7eb; --muted:#94a3b8;
+      --brand:#38bdf8; --accent:#22c55e; --warn:#f59e0b; --danger:#ef4444;
+    }
+    html, body { margin:0; padding:0; background:var(--bg); color:var(--text); font-family: Inter, system-ui, Segoe UI, Roboto, Arial, sans-serif; }
+    .wrap { max-width: 1100px; margin: 32px auto; padding: 0 20px; }
+    .hero { display:flex; flex-wrap:wrap; gap:20px; align-items:center; justify-content:space-between; background:linear-gradient(135deg, #0f172a 0%, #0b1220 100%); border:1px solid #1f2937; border-radius:16px; padding:28px; }
+    .hero h1 { margin: 0 0 8px; font-size: 32px; letter-spacing: .2px; }
+    .hero p { margin:6px 0; color:var(--muted); max-width:720px; }
+    .badges { display:flex; gap:8px; flex-wrap:wrap; margin-top:8px; }
+    .badge { background:#111827; border:1px solid #1f2937; color:#cbd5e1; padding:6px 10px; border-radius:999px; font-size:12px; }
+    .cta-row { display:flex; gap:10px; flex-wrap:wrap; margin-top:12px; }
+    a.btn, button.btn { background: var(--brand); color:#00101a; border:none; border-radius:10px; padding:10px 14px; text-decoration:none; font-weight:600; cursor:pointer; }
+    .btn.secondary { background:#0ea5e9; color:#00101a; }
+    .btn.outline { background:transparent; border:1px solid #334155; color:#cbd5e1; }
+    .grid { display:grid; grid-template-columns: repeat(3, 1fr); gap:16px; margin-top:18px; }
+    .card { background: var(--card); border:1px solid #1f2937; border-radius:12px; padding:16px; }
+    .card h3 { margin:0 0 6px; font-size:18px; }
+    .card ul { margin:8px 0 0 18px; color:#cbd5e1; }
+    .muted { color: var(--muted); }
+    .foot { display:flex; gap:10px; align-items:center; justify-content:space-between; margin-top:22px; }
+    .table { width:100%; border-collapse: collapse; margin-top:10px; }
+    .table th, .table td { border:1px solid #1f2937; padding:8px 10px; text-align:left; font-size:14px; }
+    .table th { background:#0d162b; }
+    .ok { color: var(--accent); font-weight:700; }
+    .no { color: #9ca3af; }
+    .section { margin-top:24px; }
+    .pill { display:inline-block; padding:4px 8px; border-radius:999px; background:#0b1220; border:1px solid #1f2937; color:#cbd5e1; font-size:12px; }
+    @media (max-width: 900px) { .grid { grid-template-columns: 1fr; } }
+    @media print {
+      .no-print { display:none !important; }
+      body { background:white; color:black; }
+      .card, .hero { border-color:#ddd; }
+      .table th, .table td { border-color:#ddd; }
+    }
+  </style>
+  <meta name="description" content="Top Dog IDE — safety-first, multi‑LLM, approvals and observability built‑in. One‑pager overview and comparison." />
+</head>
+<body>
+  <div class="wrap">
+    <div class="hero">
+      <div>
+        <h1>Top Dog IDE</h1>
+        <p>Safety‑first, production‑ready AI IDE with multi‑LLM BYOK, human‑in‑the‑loop approvals, medical/scientific routing, and real‑time observability. Remote approvals via SMS, email, and push.</p>
+        <div class="badges">
+          <span class="badge">OverWatch Hallucination Detection</span>
+          <span class="badge">BYOK (53+)</span>
+          <span class="badge">HIPAA/FDA Segments</span>
+          <span class="badge">Prometheus/Grafana</span>
+          <span class="badge">Web + Native Push</span>
+        </div>
+        <div class="cta-row no-print">
+          <a class="btn" href="https://github.com/easttennesseecc-star/Q-Top-Dog-IDE" target="_blank">View Source</a>
+          <a class="btn outline" href="/admin/board.html" target="_blank">Open Message Board</a>
+          <a class="btn outline" href="/admin/push.html" target="_blank">Enable Push</a>
+          <button class="btn secondary" onclick="window.print()">Print to PDF</button>
+        </div>
+      </div>
+      <div class="muted">
+        <div><span class="pill">Updated: Nov 6, 2025</span></div>
+        <div style="margin-top:8px;"><span class="pill">Deployment: Kubernetes + Helm</span></div>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>What makes Top Dog different</h2>
+      <div class="grid">
+        <div class="card">
+          <h3>AI Safety & Reliability</h3>
+          <ul>
+            <li>OverWatch hallucination detection with severity metric</li>
+            <li>Consistency scoring across model runs</li>
+            <li>Snapshot retention with verified RTO/RPO</li>
+            <li>SLO burn‑rate gates in CI/CD</li>
+            <li>PCG guardrails and red‑team runner</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>Compliance & Approvals</h3>
+          <ul>
+            <li>Medical/scientific segment routing (HIPAA/FDA, RWE, multimodal)</li>
+            <li>Human‑in‑the‑loop build plan approvals</li>
+            <li>Program learning with clarifying questions</li>
+            <li>Persistent build rules (Build Manifest)</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>Remote‑First Assistant</h3>
+          <ul>
+            <li>SMS‑first approvals with MMS artifacts</li>
+            <li>Linkless email ACCEPT/DECLINE/MODIFY</li>
+            <li>Web Push + native push (OneSignal/FCM)</li>
+            <li>Message Board with instant triage</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>Multi‑LLM Orchestration</h2>
+      <div class="grid">
+        <div class="card">
+          <h3>BYOK (No Markup)</h3>
+          <ul>
+            <li>Bring your own keys for 53+ providers</li>
+            <li>Avoid hidden per‑token markups</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>Role‑Based Agents</h3>
+          <ul>
+            <li>Assistant, Builder, Tester, Security, Health Monitor</li>
+            <li>Handoffs with validation gates + audit trail</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>Observability</h3>
+          <ul>
+            <li>Prometheus/Grafana dashboards</li>
+            <li>Safety, consistency, and workflow metrics</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>Media & Game Development</h2>
+      <div class="grid">
+        <div class="card">
+          <h3>AI Media Synthesis</h3>
+          <ul>
+            <li>Images, video, audio generation routes</li>
+            <li>Safety checks for content (PCG guardrails)</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>Multi‑Engine Support</h3>
+          <ul>
+            <li>Construct 3, Godot, Unity, Unreal</li>
+            <li>Agent Marketplace (directory model)</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>Approvals that Travel</h3>
+          <ul>
+            <li>MMS artifacts + linkless email approvals</li>
+            <li>15‑minute reminder failsafe</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>Comparison: Top Dog vs GitHub Copilot</h2>
+      <table class="table">
+        <thead><tr><th>Category</th><th>Top Dog IDE</th><th>GitHub Copilot</th></tr></thead>
+        <tbody>
+          <tr><td>Hallucination Detection</td><td class="ok">Yes (OverWatch)</td><td class="no">Not offered</td></tr>
+          <tr><td>Consistency Scoring</td><td class="ok">Yes</td><td class="no">Not offered</td></tr>
+          <tr><td>Medical/Scientific Routing</td><td class="ok">Yes</td><td class="no">Not offered</td></tr>
+          <tr><td>Build Plan Approvals</td><td class="ok">Yes</td><td class="no">Not offered</td></tr>
+          <tr><td>BYOK Multi‑LLM</td><td class="ok">Yes (53+)</td><td class="no">Not the focus</td></tr>
+          <tr><td>Remote Approvals (SMS/Email/Push)</td><td class="ok">Yes</td><td class="no">Not offered</td></tr>
+          <tr><td>Prometheus/Grafana Metrics</td><td class="ok">Yes</td><td class="no">Not offered</td></tr>
+        </tbody>
+      </table>
+      <p class="muted" style="margin-top:6px;">Notes: This comparison highlights built‑in product features. Copilot is strong for GitHub‑centric code suggestions and PR assistance, but does not ship the safety, approvals, compliance, or BYOK orchestration focus shown here.</p>
+    </div>
+
+    <div class="section">
+      <h2>Value & Deployment</h2>
+      <div class="grid">
+        <div class="card">
+          <h3>Cost Control</h3>
+          <ul>
+            <li>BYOK avoids per‑token markups</li>
+            <li>Choose best model per task</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>Production‑Ready</h3>
+          <ul>
+            <li>APIs wired in backend/main.py</li>
+            <li>Tests and docs in repo</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>Run Anywhere</h3>
+          <ul>
+            <li>Kubernetes + Helm deployment</li>
+            <li>Web + native push options</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="foot">
+      <span class="muted">© 2025 Top Dog IDE — Safety • Compliance • Orchestration</span>
+      <div class="no-print">
+        <a class="btn outline" href="/admin/inbox.html" target="_blank">Inbox</a>
+        <button class="btn secondary" onclick="window.print()">Save as PDF</button>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

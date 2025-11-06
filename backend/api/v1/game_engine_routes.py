@@ -257,6 +257,18 @@ def start_container():
                 project_path=project_path,
                 config=config,
             )
+        elif engine.lower() == "construct3":
+            status = container_manager.start_construct3_container(
+                project_id=project_id,
+                project_path=project_path,
+                config=config,
+            )
+        elif engine.lower() == "gamemaker":
+            status = container_manager.start_gamemaker_container(
+                project_id=project_id,
+                project_path=project_path,
+                config=config,
+            )
         else:
             return (
                 jsonify(
@@ -286,10 +298,16 @@ def start_container():
                 201,
             )
         else:
-            return (
-                jsonify({"success": False, "error": "Failed to start container"}),
-                500,
-            )
+            # Provide more specific guidance for engines that require prerequisites
+            msg = "Failed to start container"
+            if engine and engine.lower() == "gamemaker":
+                msg = (
+                    "GameMaker container prerequisites missing or unsupported on this host. "
+                    "Provide GM_SILENT_INSTALLER_URL and GM_LICENSE to enable."
+                )
+                return jsonify({"success": False, "error": msg}), 400
+
+            return jsonify({"success": False, "error": msg}), 500
 
     except Exception as e:
         logger.error(f"Error starting container: {str(e)}")

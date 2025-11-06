@@ -2,8 +2,8 @@
 set -e
 
 # Generate runtime env file for SPA
-BACKEND_URL_VALUE="${BACKEND_URL:-http://api.q-ide.com}"
-FRONTEND_URL_VALUE="${FRONTEND_URL:-http://q-ide.com}"
+BACKEND_URL_VALUE="${BACKEND_URL:-http://api.topdog-ide.com}"
+FRONTEND_URL_VALUE="${FRONTEND_URL:-http://topdog-ide.com}"
 WORKSPACE_PROFILE_VALUE="${WORKSPACE_PROFILE:-}"
 FEATURE_FLAGS_VALUE="${FEATURE_FLAGS:-}" # JSON string e.g. {"llm_overwatch":true}
 

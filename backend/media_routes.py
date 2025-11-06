@@ -13,7 +13,8 @@ from pydantic import BaseModel
 from typing import Optional, List
 import logging
 
-from media_service import get_media_service, MediaType, MediaTier, MediaGenerationResult
+from backend.media_service import get_media_service, MediaType, MediaTier, MediaGenerationResult
+from backend.services.media_requirements_resolver import resolve_requirements
 
 logger = logging.getLogger(__name__)
 router = APIRouter()
@@ -25,6 +26,8 @@ class GenerateRequest(BaseModel):
     media_type: str = "image"
     tier: Optional[str] = None
     project_id: Optional[str] = None
+    resolution: Optional[str] = None  # e.g., "1024x1024" or "1280x720"
+    format: Optional[str] = None      # e.g., "png", "jpg", "mp4"
 
 
 class EstimateRequest(BaseModel):
@@ -42,6 +45,7 @@ class MediaResponse(BaseModel):
     cost: float
     time_ms: int
     timestamp: str
+    format: Optional[str] = None
 
 
 class EstimateResponse(BaseModel):
@@ -115,27 +119,45 @@ async def generate_media(
                     detail=f"Invalid tier. Must be: {', '.join(t.value for t in MediaTier)}"
                 )
         
+        # Resolve missing requirements from plan/heuristics
+        target_resolution = request.resolution
+        target_format = request.format
+        if not target_resolution or not target_format:
+            try:
+                resolved = resolve_requirements(
+                    project_id=request.project_id,
+                    description=request.description,
+                    media_type=media_type.value,
+                )
+                target_resolution = target_resolution or resolved.get("resolution")
+                target_format = target_format or resolved.get("format")
+            except Exception as re:
+                logger.warning(f"Failed to resolve media requirements: {re}")
+
         # Generate media
         service = get_media_service()
         result = await service.generate(
             description=request.description,
             media_type=media_type,
-            tier=selected_tier
+            tier=selected_tier,
+            resolution=target_resolution,
+            format=target_format,
         )
-        
+
         # Log generation for analytics
         logger.info(
             f"Media generated: {result.media_type.value} via {result.tier.value} "
-            f"({result.time_ms}ms, ${result.cost})"
+            f"({result.time_ms}ms, ${result.cost}) res={target_resolution} format={target_format}"
         )
-        
+
         return MediaResponse(
             url=result.url,
             media_type=result.media_type.value,
             tier=result.tier.value,
             cost=result.cost,
             time_ms=result.time_ms,
-            timestamp=result.timestamp.isoformat()
+            timestamp=result.timestamp.isoformat(),
+            format=target_format,
         )
     
     except HTTPException:
@@ -307,13 +329,14 @@ async def get_usage() -> UsageStats:
 async def configure_provider(
     provider: str,
     api_key: str,
-    test: bool = True
+    test: bool = True,
+    endpoint: str | None = None,
 ) -> dict:
     """
     Configure media generation provider
     
     Args:
-        provider: "stable_diffusion" or "runway"
+        provider: "stable_diffusion" | "runway" | "dalle3" | "midjourney"
         api_key: Provider API key
         test: Test key validity before saving
     
@@ -327,10 +350,14 @@ async def configure_provider(
             env_var = "STABLE_DIFFUSION_KEY"
         elif provider == "runway":
             env_var = "RUNWAY_API_KEY"
+        elif provider == "dalle3":
+            env_var = "OPENAI_API_KEY"
+        elif provider == "midjourney":
+            env_var = "MIDJOURNEY_API_KEY"
         else:
             raise HTTPException(
                 status_code=400,
-                detail="Invalid provider. Must be 'stable_diffusion' or 'runway'"
+                detail="Invalid provider. Must be 'stable_diffusion' | 'runway' | 'dalle3' | 'midjourney'"
             )
         
         # Test the key if requested
@@ -344,6 +371,8 @@ async def configure_provider(
         
         # Save to environment (in production, use secrets manager)
         os.environ[env_var] = api_key
+        if provider == "midjourney" and endpoint:
+            os.environ["MIDJOURNEY_ENDPOINT"] = endpoint
         
         logger.info(f"Configured {provider} provider")
         
@@ -386,6 +415,27 @@ async def _test_provider_key(provider: str, api_key: str) -> bool:
             async with aiohttp.ClientSession() as session:
                 async with session.get(url, headers=headers, timeout=aiohttp.ClientTimeout(total=5)) as resp:
                     return resp.status == 200
+        elif provider == "dalle3":
+            # Test OpenAI key by listing models (lightweight)
+            url = "https://api.openai.com/v1/models"
+            headers = {"Authorization": f"Bearer {api_key}"}
+            async with aiohttp.ClientSession() as session:
+                async with session.get(url, headers=headers, timeout=aiohttp.ClientTimeout(total=5)) as resp:
+                    return resp.status == 200
+        elif provider == "midjourney":
+            # If endpoint provided via env, try a lightweight GET
+            import os
+            endpoint = os.getenv("MIDJOURNEY_ENDPOINT")
+            if not endpoint:
+                return bool(api_key)
+            url = f"{endpoint.rstrip('/')}/health"
+            headers = {"Authorization": f"Bearer {api_key}"}
+            try:
+                async with aiohttp.ClientSession() as session:
+                    async with session.get(url, headers=headers, timeout=aiohttp.ClientTimeout(total=5)) as resp:
+                        return resp.status in (200, 404)  # allow 404 if health not implemented
+            except Exception:
+                return bool(api_key)
     
     except Exception as e:
         logger.warning(f"Error testing {provider} key: {str(e)}")

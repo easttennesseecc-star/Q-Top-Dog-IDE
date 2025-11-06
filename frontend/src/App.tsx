@@ -13,6 +13,7 @@ import LLMConfigPanel from "./components/LLMConfigPanel";
 import LLMStartupAuth from "./components/LLMStartupAuth";
 import PhoneLinkPanel from "./components/PhoneLinkPanel";
 import BackgroundManager from "./components/BackgroundManager";
+import { useTheme } from "./components/ThemeContext";
 import { schedulePrune } from './lib/idbStorage';
 import MedicalPanel from "./components/MedicalPanel";
 import SciencePanel from "./components/SciencePanel";
@@ -249,8 +250,10 @@ function App() {
     ),
   } as const;
 
+  const { theme, toggle: toggleTheme, highContrast, toggleContrast } = useTheme();
+
   return (
-    <div className="w-full h-screen bg-[#0b0f16] text-slate-100 overflow-hidden dark flex flex-col">
+    <div className="w-full h-screen bg-[#0b0f16] text-slate-100 overflow-hidden flex flex-col">
   {/* SEO: Accessible heading for search engines with brand variations */}
   <h1 className="sr-only" style={{position:'absolute',left:'-9999px'}}>
     Top Dog IDE — also known as Q‑IDE — an AI IDE for developers. Aura Development by Top Dog.
@@ -282,6 +285,24 @@ function App() {
                 <option value="regulated">Regulated</option>
               </select>
             </div>
+            {/* Theme toggle */}
+            <button
+              onClick={toggleTheme}
+              className="w-9 h-9 grid place-items-center rounded-full hover:bg-cyan-500/10 border border-cyan-400/30 text-cyan-300"
+              title={`Switch to ${theme === 'dark' ? 'Light' : 'Dark'} theme`}
+              aria-label="Toggle theme"
+            >
+              {theme === 'dark' ? (
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+                  <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+                </svg>
+              ) : (
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+                  <circle cx="12" cy="12" r="5" />
+                  <path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42" />
+                </svg>
+              )}
+            </button>
             <BuildHealthIndicator />
             <button
               ref={micRef}
@@ -395,7 +416,11 @@ function App() {
                     <div className="space-y-4">
                       <div className="bg-black/20 border border-white/5 rounded-lg p-4">
                         <h3 className="font-semibold text-cyan-200 mb-2">Appearance</h3>
-                        <div className="text-sm text-slate-300/80">Theme: TopDog</div>
+                        <div className="text-sm text-slate-300/80 mb-2">Theme: {theme === 'dark' ? 'Dark' : 'Light'} {highContrast ? '(High Contrast)' : ''}</div>
+                        <div className="flex items-center gap-2">
+                          <button onClick={toggleTheme} className="px-3 py-1.5 text-xs border border-cyan-400/30 hover:border-cyan-400 text-cyan-300 rounded-lg">Switch to {theme === 'dark' ? 'Light' : 'Dark'}</button>
+                          <button onClick={toggleContrast} className="px-3 py-1.5 text-xs border border-cyan-400/30 hover:border-cyan-400 text-cyan-300 rounded-lg">{highContrast ? 'Disable' : 'Enable'} High Contrast</button>
+                        </div>
                       </div>
                       <div className="bg-black/20 border border-white/5 rounded-lg p-4">
                         <h3 className="font-semibold text-cyan-200 mb-2">Background</h3>

@@ -1,5 +1,13 @@
 # 🎊 AUTOMATED OLLAMA INSTALLER - COMPLETE ✅
 
+## 🔗 Quick Links (Start Here)
+
+- Product & Market Executive Summary: `PRODUCT_AND_MARKET_ANALYSIS.md`
+- ROI Calculator (Top Dog vs Copilot + Codespaces): `ROI_CALCULATOR.md` (script: `scripts/roi_calculator.ps1`)
+- BYOK Marketplace Links (LLMs, Runway, SMS): `BYOK_MARKETPLACE_LINKS.md`
+
+These three links help you explain value, estimate costs quickly, and onboard provider keys fast.
+
 ## Summary of Work Completed
 
 I have successfully created a **fully automated, one-click Ollama installer** for Top Dog that eliminates manual setup and provides comprehensive documentation.

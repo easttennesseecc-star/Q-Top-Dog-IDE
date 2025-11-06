@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Top Dog IDE — Technical Deep Dive (NDA‑Only)</title>
+  <link rel="stylesheet" href="./brand.css" />
+</head>
+<body>
+  <div class="wrap">
+    <div class="hero">
+      <h1>Technical Deep Dive (NDA‑Only)</h1>
+      <p>Confidential. Share only under NDA. Updated Nov 6, 2025.</p>
+      <div class="badges">
+        <span class="badge">Architecture</span>
+        <span class="badge">Safety</span>
+        <span class="badge">Compliance</span>
+        <span class="badge">Observability</span>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>Architecture Overview</h2>
+      <div class="card">
+        <p>FastAPI backend with modular routers and middleware for safety/compliance, orchestration, approvals, inbox triage, messaging, and push. Prometheus metrics and structured logging are built in.</p>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>Safety & Reliability</h2>
+      <div class="card">
+        <ul>
+          <li>Hallucination detection and severity export (OverWatch) — see repository metrics usage.</li>
+          <li>Consistency scoring across invocations; snapshot retention with RTO/RPO.</li>
+          <li>SLO burn‑rate gate tooling, PCG guardrails, red‑team runner.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>Compliance & Data Segments</h2>
+      <div class="card">
+        <ul>
+          <li>Compliance middleware with workspace profiles.</li>
+          <li>Dedicated medical/scientific routes with clear separation.</li>
+          <li>Edition/segment labeling helpers for consistent tagging.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>Orchestration & BYOK</h2>
+      <div class="card">
+        <ul>
+          <li>Multi‑LLM pool and auto‑assignment; role‑based workflow orchestration.</li>
+          <li>Failover/endpoint selection and auditability via workflow events.</li>
+          <li>BYOK flows with environment‑based configuration.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>Approvals & Remote‑First</h2>
+      <div class="card">
+        <ul>
+          <li>Build plan approvals; SMS/email approvals and parsing.</li>
+          <li>Assistant inbox + triage (imperative normalization → action).</li>
+          <li>Admin Message Board UIs (admin protection enforced).</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>Messaging & Push</h2>
+      <div class="card">
+        <ul>
+          <li>Web Push (VAPID) and optional native push providers.</li>
+          <li>Token/subscription registry (file‑backed in dev).</li>
+          <li>Admin push setup (internal only).</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>Observability & Logging</h2>
+      <div class="card">
+        <ul>
+          <li>Prometheus metrics registry and HTTP request metrics.</li>
+          <li>Structured logging with durations and status codes.</li>
+          <li>Health checks and monitoring routes for dashboards.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>Security Highlights</h2>
+      <div class="card">
+        <ul>
+          <li>Admin gating: token‑based or private‑network default; 404 for sensitive pages.</li>
+          <li>No secrets in repo; environment‑only configuration.</li>
+          <li>CORS and CSP driven by environment variables.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>Testing & Deployment</h2>
+      <div class="card">
+        <ul>
+          <li>Focused tests across approvals, push, triage, safety/compliance.</li>
+          <li>Containerized deployment; configure keys via secrets.</li>
+          <li>Set ADMIN_TOKEN to gate /admin; private‑network default without token.</li>
+        </ul>
+      </div>
+      <div class="card">
+        <p class="muted">For full code references and walkthroughs, request the repository mapping deck under NDA.</p>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

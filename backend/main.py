@@ -10,7 +10,7 @@ import urllib.parse
 import logging
 from pathlib import Path
 from datetime import datetime
-from fastapi import FastAPI, Request, BackgroundTasks
+from fastapi import FastAPI, Request, BackgroundTasks, HTTPException
 from fastapi.responses import RedirectResponse, FileResponse, PlainTextResponse, JSONResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.middleware.cors import CORSMiddleware
@@ -34,9 +34,21 @@ from backend.routes.med.trials import router as med_trials_router
 from backend.routes.science.rwe import router as science_rwe_router
 from backend.routes.science.multimodal import router as science_multimodal_router
 from backend.routes.snapshot_routes import router as snapshot_router
+from backend.media_routes import router as media_router
+try:
+    from backend.assistant_routes import router as assistant_router
+except Exception:
+    assistant_router = None
 # from routes.ai_workflow_routes import router as ai_workflow_router  # Temporarily commented - has import issues
 from backend.routes.rules_api import router as rules_api_router
 from backend.routes.phone_pairing_api import router as phone_pairing_router
+from backend.routes.away_api import router as away_router
+from backend.routes.sms_log_api import router as sms_log_router
+from backend.routes.email_inbound_api import router as email_inbound_router
+from backend.routes.push_api import router as push_router
+from backend.routes.assistant_inbox_api import router as assistant_inbox_router
+from backend.routes.assistant_inbox_triage_api import router as assistant_inbox_triage_router
+from backend.routes.tasks_api import router as tasks_router
 from backend.routes.user_notes_routes import router as user_notes_router
 from backend.routes.build_rules_routes import router as build_rules_router
 from backend.routes.build_plan_approval_routes import router as build_plan_approval_router
@@ -47,6 +59,7 @@ from backend.middleware.rules_enforcement import RulesEnforcementMiddleware
 # from services.ai_orchestration import initialize_ai_orchestration  # Temporarily commented - has import issues
 from backend.logger_utils import configure_logger, get_logger
 from contextlib import asynccontextmanager
+import asyncio
 from backend.auto_setup_q_assistant import auto_setup_q_assistant
 from backend.llm_auto_auth import check_all_llm_authentication, get_startup_auth_prompt
 from backend.auth import (
@@ -133,8 +146,51 @@ async def lifespan(app: FastAPI):
     except Exception as e:
         logger.error(f"Error checking LLM authentication: {str(e)}")
 
+    # Start push reminder loop
+    reminder_task = None
+    try:
+        from backend.services.push_reminder import reminder_loop
+        stop_event = asyncio.Event()
+        reminder_task = asyncio.create_task(reminder_loop(stop_event))
+        app.state._reminder_stop = stop_event  # type: ignore[attr-defined]
+        app.state._reminder_task = reminder_task  # type: ignore[attr-defined]
+    except Exception as e:
+        logger.warning(f"Push reminder loop not started: {e}")
+
+    # Start assistant autopilot loop (optional via env)
+    autopilot_task = None
+    try:
+        from backend.services.assistant_inbox_triage import autopilot_loop
+        auto_stop = asyncio.Event()
+        autopilot_task = asyncio.create_task(autopilot_loop(auto_stop))
+        app.state._autopilot_stop = auto_stop  # type: ignore[attr-defined]
+        app.state._autopilot_task = autopilot_task  # type: ignore[attr-defined]
+    except Exception as e:
+        logger.warning(f"Assistant autopilot not started: {e}")
+
     # Yield to run the application
     yield
+
+    # On shutdown, stop reminder loop
+    try:
+        if getattr(app.state, "_reminder_stop", None):  # type: ignore[attr-defined]
+            app.state._reminder_stop.set()  # type: ignore[attr-defined]
+        if reminder_task:
+            reminder_task.cancel()
+            try:
+                await reminder_task
+            except Exception:
+                pass
+        if getattr(app.state, "_autopilot_stop", None):  # type: ignore[attr-defined]
+            app.state._autopilot_stop.set()  # type: ignore[attr-defined]
+        if 'autopilot_task' in locals() and autopilot_task:
+            autopilot_task.cancel()
+            try:
+                await autopilot_task
+            except Exception:
+                pass
+    except Exception:
+        pass
 
 
 app = FastAPI(
@@ -143,6 +199,16 @@ app = FastAPI(
     version="0.1.0",
     lifespan=lifespan,
 )
+
+# Define health endpoint early so it is not shadowed by the frontend catch-all route
+@app.get("/health")
+def health_check():
+    """Simple health check endpoint - returns JSON status"""
+    try:
+        return {"status": "ok"}
+    except Exception as e:
+        logger.error(f"Health check error: {e}", exc_info=True)
+        return {"status": "error", "message": str(e)}
 
 # Custom middleware to allow health checks from any host (required for K8s probes)
 class SelectiveHostMiddleware(BaseHTTPMiddleware):
@@ -173,9 +239,13 @@ class ComplianceMiddleware(BaseHTTPMiddleware):
         try:
             await ComplianceEnforcer.enforce_compliance(request)
             return await call_next(request)
-        except Exception as e:
-            # Compliance violations are already HTTPExceptions
-            raise
+        except HTTPException as he:
+            # Convert compliance exceptions into proper HTTP responses
+            return JSONResponse(status_code=he.status_code, content={"detail": he.detail})
+        except Exception:
+            # Fallback: ensure we don't leak unhandled errors from middleware
+            logger.error("Unhandled error in ComplianceMiddleware", exc_info=True)
+            return JSONResponse(status_code=500, content={"detail": "Internal Server Error"})
 
 app.add_middleware(ComplianceMiddleware)
 
@@ -235,6 +305,37 @@ class LoggingMiddleware(BaseHTTPMiddleware):
                 raise
 
 app.add_middleware(LoggingMiddleware)
+
+# Admin surface protection — prevent accidental public exposure of /admin
+@app.middleware("http")
+async def admin_protect_middleware(request: Request, call_next):
+    path = request.url.path or ""
+    if path.startswith("/admin"):
+        # Specifically block any accidentally included comparison/onepager page
+        if path.lower().endswith("/onepager.html"):
+            return JSONResponse(status_code=404, content={"detail": "Not Found"})
+        # Strategy:
+        # 1) If ADMIN_TOKEN is set, require header X-Admin-Token or cookie admin_token to match
+        # 2) Else, allow only localhost/private networks by default; block public WAN
+        token_env = os.getenv("ADMIN_TOKEN", "").strip()
+        client_ip = request.client.host if request.client else ""
+        def _is_private(ip: str) -> bool:
+            try:
+                return (
+                    ip in ("127.0.0.1", "::1", "localhost") or
+                    ip.startswith("10.") or ip.startswith("192.168.") or ip.startswith("172.16.") or ip.startswith("172.17.") or ip.startswith("172.18.") or ip.startswith("172.19.") or ip.startswith("172.2")
+                )
+            except Exception:
+                return False
+        if token_env:
+            provided = request.headers.get("X-Admin-Token") or request.cookies.get("admin_token") or ""
+            if provided != token_env:
+                return JSONResponse(status_code=403, content={"detail": "Forbidden: admin token required"})
+        else:
+            # Default posture: restrict to private networks
+            if not _is_private(client_ip):
+                return JSONResponse(status_code=403, content={"detail": "Forbidden: /admin restricted to private network"})
+    return await call_next(request)
 def _resolve_edition(request: Request) -> str:
     """Determine current edition: 'regulated' or 'dev'. Order: header, cookie, env."""
     try:
@@ -346,8 +447,8 @@ async def add_security_headers(request, call_next):
     # Content Security Policy (configurable)
     csp = os.getenv("CSP_POLICY")
     if not csp:
-        frontend = os.getenv("FRONTEND_URL", "https://q-ide.com")
-        backend = os.getenv("BACKEND_URL", "https://api.q-ide.com")
+        frontend = os.getenv("FRONTEND_URL", "https://topdog-ide.com")
+        backend = os.getenv("BACKEND_URL", "https://api.topdog-ide.com")
         # Conservative default; adjust 'unsafe-inline' only if required by frontend
         csp = (
             "default-src 'self'; "
@@ -373,22 +474,36 @@ admin_static = Path(__file__).resolve().parent / "admin_static"
 if admin_static.exists():
     app.mount("/admin", StaticFiles(directory=str(admin_static), html=True), name="admin")
 
-# Mount frontend React app
+# Serve artifacts (images/files) for MMS/media sharing
+artifacts_dir = Path(__file__).resolve().parent.parent / "artifacts"
+try:
+    artifacts_dir.mkdir(exist_ok=True)
+except Exception:
+    pass
+app.mount("/artifacts", StaticFiles(directory=str(artifacts_dir)), name="artifacts")
+
+# IMPORTANT: Register critical API routers that shouldn't be shadowed by the
+# frontend catch-all BEFORE mounting the frontend catch-all.
+# Snapshot APIs were previously returning HTML due to catch-all precedence.
+app.include_router(snapshot_router)
+# Also include media and assistant routers early to avoid catch-all shadowing
+app.include_router(media_router, prefix="/api")  # Media generation/config/status
+if assistant_router is not None:
+    app.include_router(assistant_router, prefix="/api")  # Assistant orchestration (plan + UI draft)
+
+# Mount frontend React app (placed AFTER API routers so it does not shadow them)
 frontend_dist = Path(__file__).resolve().parent.parent / "frontend" / "dist"
 if frontend_dist.exists() and (frontend_dist / "index.html").exists():
     app.mount("/assets", StaticFiles(directory=str(frontend_dist / "assets")), name="assets")
-    
-    @app.get("/")
-    async def serve_frontend_root():
-        """Serve React frontend index.html at root"""
-        return FileResponse(str(frontend_dist / "index.html"))
     
     @app.get("/{full_path:path}")
     async def serve_frontend_catchall(full_path: str):
         """Catch-all route to serve React app for client-side routing"""
         from fastapi import HTTPException
         # Don't intercept API routes
-        if full_path.startswith(("api/", "auth/", "llm/", "metrics", "health", "admin/")):
+        if full_path.startswith((
+            "api/", "auth/", "llm/", "metrics", "health", "admin/", "snapshots", "build", "consistency", "pfs", "verification", "assets/"
+        )):
             raise HTTPException(status_code=404, detail="Not found")
         
         file_path = frontend_dist / full_path
@@ -403,7 +518,7 @@ cors_origins = _parse_list_env("CORS_ORIGINS")
 if not cors_origins:
     # Fallback by environment
     if os.getenv("ENVIRONMENT") == "production":
-        cors_origins = [os.getenv("FRONTEND_URL", "https://q-ide.com")]
+        cors_origins = [os.getenv("FRONTEND_URL", "https://topdog-ide.com")]
     else:
         cors_origins = [
             "http://localhost:1431",
@@ -423,10 +538,10 @@ app.add_middleware(
 # Optional canonical host redirect (SEO). Enable with ENABLE_HOST_REDIRECT=true and set CANONICAL_HOST.
 ENABLE_HOST_REDIRECT = os.getenv("ENABLE_HOST_REDIRECT", "false").lower() in {"1", "true", "yes"}
 CANONICAL_HOST = os.getenv("CANONICAL_HOST", "")
-ALTERNATE_HOSTS = _parse_list_env("ALTERNATE_HOSTS")  # e.g. "q-ide.net,www.q-ide.com"
+ALTERNATE_HOSTS = _parse_list_env("ALTERNATE_HOSTS")  # e.g. "www.topdog-ide.com"
 
 # Paths that should never be redirected (health checks, API endpoints, etc.)
-NO_REDIRECT_PATHS = {"/health", "/metrics", "/api", "/ws", "/_health", "/readiness", "/liveness"}
+NO_REDIRECT_PATHS = {"/health", "/metrics", "/api", "/ws", "/_health", "/readiness", "/liveness", "/snapshots", "/.well-known"}
 
 @app.middleware("http")
 async def canonical_redirect_middleware(request: Request, call_next):
@@ -478,13 +593,20 @@ app.include_router(med_diagnostic_router)
 app.include_router(med_trials_router)
 app.include_router(science_rwe_router)
 app.include_router(science_multimodal_router)
-app.include_router(snapshot_router)
 # app.include_router(ai_workflow_router)  # Temporarily commented - has import issues
 app.include_router(rules_api_router)  # Rules management API
 app.include_router(phone_pairing_router)  # Phone pairing & remote control API
+app.include_router(away_router)  # Away mode management (pair/unpair/status)
+app.include_router(sms_log_router)  # SMS conversation logs
 app.include_router(user_notes_router)  # User notes & explanations API
 app.include_router(build_rules_router)  # Build rules & manifest API (QR code concept)
 app.include_router(build_plan_approval_router)  # Build plan generation & approval
+app.include_router(email_inbound_router)  # Email inbound webhook for ACCEPT/DECLINE/MODIFY
+app.include_router(push_router)  # Push registration and notify API
+app.include_router(assistant_inbox_router)  # Assistant inbox API
+app.include_router(assistant_inbox_triage_router)  # Assistant inbox triage & autopilot API
+app.include_router(tasks_router)  # Tasks (persistent todos)
+# media and assistant routers are already included above (pre-catch-all)
 
 # Compliance status endpoint for medical/scientific workspaces
 @app.get("/api/compliance/status")
@@ -646,21 +768,13 @@ def root():
     }
 
 
-@app.get("/health")
-def health_check():
-    """Simple health check endpoint - returns plain text 'ok'"""
-    try:
-        return {"status": "ok"}
-    except Exception as e:
-        logger.error(f"Health check error: {e}", exc_info=True)
-        return {"status": "error", "message": str(e)}
 
 
 # SEO endpoints: robots.txt and sitemap.xml
 @app.get("/robots.txt", response_class=PlainTextResponse)
 def robots_txt():
-    primary = os.getenv("CANONICAL_HOST", "q-ide.com")
-    others = _parse_list_env("SITEMAP_HOSTS", ["q-ide.net"])  # additional hosts for sitemap lines
+    primary = os.getenv("CANONICAL_HOST", "topdog-ide.com")
+    others = _parse_list_env("SITEMAP_HOSTS", ["www.topdog-ide.com"])  # additional hosts for sitemap lines
     lines = [
         "User-agent: *",
         "Allow: /",
@@ -674,9 +788,9 @@ def robots_txt():
 
 @app.get("/sitemap.xml", response_class=PlainTextResponse)
 def sitemap_xml():
-    primary = os.getenv("CANONICAL_HOST", "q-ide.com")
+    primary = os.getenv("CANONICAL_HOST", "topdog-ide.com")
     base_urls = [primary]
-    for h in _parse_list_env("SITEMAP_HOSTS", ["q-ide.net"]):
+    for h in _parse_list_env("SITEMAP_HOSTS", ["www.topdog-ide.com"]):
         if h and h not in base_urls:
             base_urls.append(h)
     # Minimal URL set; extend as needed
@@ -699,11 +813,12 @@ def sitemap_xml():
 # SEO landing pages for brand queries
 @app.get("/top-dog-ide", response_class=PlainTextResponse)
 def top_dog_landing():
+    canonical = os.getenv("CANONICAL_HOST", "topdog-ide.com")
     html = (
         "<!doctype html><html lang=\"en\"><head>"
         "<meta charset=\"utf-8\">"
         "<title>Top Dog IDE (Q‑IDE) — AI Development Environment</title>"
-        "<link rel=\"canonical\" href=\"https://q-ide.com/\">"
+        f"<link rel=\"canonical\" href=\"https://{canonical}/\">"
         "<meta name=\"description\" content=\"Top Dog IDE — also known as Q‑IDE — AI IDE with 53+ LLMs for coding, refactoring, debugging.\">"
         "</head><body>"
         "<h1>Top Dog IDE (Q‑IDE)</h1>"
@@ -716,11 +831,12 @@ def top_dog_landing():
 
 @app.get("/q-ide", response_class=PlainTextResponse)
 def q_ide_landing():
+    canonical = os.getenv("CANONICAL_HOST", "topdog-ide.com")
     html = (
         "<!doctype html><html lang=\"en\"><head>"
         "<meta charset=\"utf-8\">"
         "<title>Q‑IDE (Top Dog IDE) — AI IDE</title>"
-        "<link rel=\"canonical\" href=\"https://q-ide.com/\">"
+        f"<link rel=\"canonical\" href=\"https://{canonical}/\">"
         "<meta name=\"description\" content=\"Q‑IDE (Top Dog IDE): AI development environment with 53+ LLMs.\">"
         "</head><body>"
         "<h1>Q‑IDE (Top Dog IDE)</h1>"

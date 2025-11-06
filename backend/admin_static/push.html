@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Q‑IDE Push Setup</title>
+  <style>
+    body { font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial; margin: 24px; }
+    .card { border: 1px solid #e5e7eb; border-radius: 8px; padding: 16px; max-width: 820px; }
+    .row { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; }
+    .btn { background: #0ea5e9; color: #fff; border: none; border-radius: 6px; padding: 8px 12px; cursor: pointer; text-decoration: none; display: inline-block; }
+    .btn.secondary { background: #374151; }
+    code { background: #f3f4f6; padding: 2px 6px; border-radius: 4px; }
+    .muted { color: #6b7280; }
+  </style>
+</head>
+<body>
+  <h2>Push Notifications — Setup</h2>
+  <div style="position:absolute; right:24px; top:16px;">
+    <a class="btn secondary" href="/admin/inbox.html" target="_blank">Inbox <span id="unread" style="background:#dc2626;color:#fff;border-radius:10px;padding:0 6px;margin-left:4px;">0</span></a>
+  </div>
+  <div class="card">
+    <p>Q‑IDE supports secure, low‑cost <b>Web Push (VAPID)</b> and popular providers. Use the provider links below to create an account and obtain API keys, or ask Q Assistant to set it up for you.</p>
+    <h3>Provider quick links</h3>
+    <div class="row" style="gap:8px; margin-bottom:8px;">
+      <a class="btn" href="https://console.firebase.google.com/" target="_blank">Firebase Console (FCM)</a>
+      <a class="btn secondary" href="https://console.firebase.google.com/project/_/settings/cloudmessaging" target="_blank">FCM: Cloud Messaging Keys</a>
+    </div>
+    <div class="row" style="gap:8px; margin-bottom:8px;">
+      <a class="btn" href="https://app.onesignal.com/signup" target="_blank">OneSignal — Sign up</a>
+      <a class="btn secondary" href="https://app.onesignal.com/" target="_blank">OneSignal Dashboard</a>
+    </div>
+    <div class="row" style="gap:8px; margin-bottom:8px;">
+      <a class="btn" href="https://dash.pusher.com/accounts/sign_up" target="_blank">Pusher Beams — Sign up</a>
+      <a class="btn secondary" href="https://dashboard.pusher.com/" target="_blank">Pusher Dashboard</a>
+    </div>
+    <div class="row" style="gap:8px; margin-bottom:8px;">
+      <a class="btn" href="https://console.aws.amazon.com/sns/v3/home" target="_blank">AWS SNS Console</a>
+      <a class="btn secondary" href="https://aws.amazon.com/sns/" target="_blank">AWS SNS Overview</a>
+    </div>
+    <div class="row" style="gap:8px; margin-bottom:8px;">
+      <a class="btn" href="https://portal.azure.com/" target="_blank">Azure Portal</a>
+      <a class="btn secondary" href="https://azure.microsoft.com/products/notification-hubs/" target="_blank">Azure Notification Hubs</a>
+    </div>
+    <div class="row" style="gap:8px; margin-bottom:8px;">
+      <a class="btn" href="https://developer.apple.com/account/" target="_blank">Apple Developer Account</a>
+      <a class="btn secondary" href="https://developer.apple.com/account/resources/certificates/list" target="_blank">APNs Certificates</a>
+    </div>
+    <hr />
+    <h3>Your VAPID Public Key</h3>
+    <pre id="pubkey" class="muted">Loading…</pre>
+    <div class="row" style="gap:8px; margin:8px 0 16px;">
+      <button class="btn" id="copyPub">Copy Public Key</button>
+      <a class="btn secondary" href="/push/vapid-public" target="_blank">Open Key JSON</a>
+    </div>
+    <p class="muted">Set env vars: <code>VAPID_PUBLIC_KEY</code>, <code>VAPID_PRIVATE_KEY</code>, and <code>VAPID_SUBJECT</code> (mailto or https). Then refresh.</p>
+    <hr />
+    <h3>Ask Q Assistant</h3>
+    <p>Prefer automation? Ask Q Assistant to guide push setup and register this device.</p>
+    <div class="row">
+      <a class="btn" href="/assistant-inbox/add?user_id=__global__&source=api&text=Help%20me%20set%20up%20Web%20Push%20(VAPID)%20and%20register%20this%20browser" target="_blank">Ask for Web Push setup</a>
+      <a class="btn secondary" href="/assistant-inbox/add?user_id=__global__&source=api&text=Help%20me%20set%20up%20Firebase%20Cloud%20Messaging%20(FCM)%20and%20obtain%20API%20keys" target="_blank">Ask for FCM setup</a>
+    </div>
+  </div>
+  <script>
+  fetch('/push/vapid-public').then(r => r.json()).then(j => {
+    document.getElementById('pubkey').textContent = j.publicKey || '(not set)';
+  }).catch(() => {
+    document.getElementById('pubkey').textContent = '(error)';
+  });
+  document.getElementById('copyPub').addEventListener('click', async () => {
+    const txt = document.getElementById('pubkey').textContent || '';
+    try { await navigator.clipboard.writeText(txt); alert('Public key copied'); } catch {}
+  });
+
+  // Web Push subscription
+  async function urlB64ToUint8Array(base64String) {
+    const padding = '='.repeat((4 - base64String.length % 4) % 4);
+    const base64 = (base64String + padding).replace(/-/g, '+').replace(/_/g, '/');
+    const rawData = atob(base64);
+    const outputArray = new Uint8Array(rawData.length);
+    for (let i = 0; i < rawData.length; ++i) outputArray[i] = rawData.charCodeAt(i);
+    return outputArray;
+  }
+
+  async function enableWebPush() {
+    const pub = (await (await fetch('/push/vapid-public')).json()).publicKey;
+    if (!pub) { alert('VAPID public key not set on server'); return; }
+    if (!('serviceWorker' in navigator)) { alert('Service workers not supported'); return; }
+    const perm = await Notification.requestPermission();
+    if (perm !== 'granted') { alert('Notifications permission denied'); return; }
+    const reg = await navigator.serviceWorker.register('/admin/sw.js');
+    const sub = await reg.pushManager.subscribe({ userVisibleOnly: true, applicationServerKey: await urlB64ToUint8Array(pub) });
+    const userId = new URLSearchParams(location.search).get('user_id') || '__global__';
+    await fetch('/push/register', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ user_id: userId, platform: 'webpush', subscription: sub }) });
+    alert('Web Push registered for this browser');
+  }
+
+  const btn = document.createElement('button');
+  btn.className = 'btn';
+  btn.textContent = 'Enable Web Push on this browser';
+  btn.onclick = enableWebPush;
+  document.querySelector('.card').appendChild(document.createElement('hr'));
+  document.querySelector('.card').appendChild(btn);
+
+  // Native token registration (FCM/OneSignal or others)
+  const nativeWrap = document.createElement('div');
+  nativeWrap.innerHTML = `
+    <hr />
+    <h3>Register Native Push Token</h3>
+    <p class="muted">For mobile-native push (FCM/OneSignal), paste your device token. Server will attempt configured providers.</p>
+    <div class="row" style="gap:8px; margin-bottom:8px;">
+      <label>User ID <input id="nativeUserId" placeholder="__global__" style="padding:6px;border:1px solid #e5e7eb;border-radius:6px;"/></label>
+      <label>Platform
+        <select id="nativePlatform" style="padding:6px;border:1px solid #e5e7eb;border-radius:6px;">
+          <option value="ios">iOS</option>
+          <option value="android">Android</option>
+          <option value="other">Other</option>
+        </select>
+      </label>
+    </div>
+    <div class="row" style="gap:8px; margin-bottom:8px;">
+      <input id="nativeToken" placeholder="Paste device token here" style="flex:1; min-width:320px; padding:6px;border:1px solid #e5e7eb;border-radius:6px;" />
+      <button class="btn" id="registerNative">Register Native Token</button>
+    </div>
+  `;
+  document.querySelector('.card').appendChild(nativeWrap);
+  document.getElementById('nativeUserId').value = new URLSearchParams(location.search).get('user_id') || '__global__';
+  document.getElementById('registerNative').onclick = async () => {
+    const userId = document.getElementById('nativeUserId').value || '__global__';
+    const platform = document.getElementById('nativePlatform').value || 'other';
+    const token = document.getElementById('nativeToken').value || '';
+    if (!token) { alert('Enter a device token first'); return; }
+    await fetch('/push/register', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ user_id: userId, platform, token }) });
+    alert('Native token registered');
+  };
+
+  // Unread count badge (not consumed)
+  async function updateUnread(){
+    try{
+      const userId = new URLSearchParams(location.search).get('user_id') || '__global__';
+      const url = new URL(location.origin + '/assistant-inbox/list');
+      url.searchParams.set('user_id', userId);
+      url.searchParams.set('limit', '200');
+      url.searchParams.set('include_consumed', 'false');
+      const j = await (await fetch(url)).json();
+      document.getElementById('unread').textContent = (j.messages||[]).length;
+    } catch {}
+  }
+  updateUnread();
+  setInterval(updateUnread, 10000);
+  </script>
+</body>
+</html>

@@ -1,0 +1,44 @@
+{
+  "plan_wf-mail-cb2a7aae_1762428730.930537": {
+    "workflow_id": "wf-mail-cb2a7aae",
+    "status": "approved",
+    "generated_at": "2025-11-06T06:32:10.930537",
+    "generated_by": "email-reply",
+    "approved_at": "2025-11-06T06:32:10.937049"
+  },
+  "plan_wf-mail-00b4ffab_1762428803.518485": {
+    "workflow_id": "wf-mail-00b4ffab",
+    "status": "approved",
+    "generated_at": "2025-11-06T06:33:23.518485",
+    "generated_by": "email-reply",
+    "approved_at": "2025-11-06T06:33:23.535805"
+  },
+  "plan_wf-mail-4e039144_1762429829.663678": {
+    "workflow_id": "wf-mail-4e039144",
+    "status": "approved",
+    "generated_at": "2025-11-06T06:50:29.663678",
+    "generated_by": "email-reply",
+    "approved_at": "2025-11-06T06:50:29.678286"
+  },
+  "plan_wf-mail-0c7eb2ef_1762431054.448134": {
+    "workflow_id": "wf-mail-0c7eb2ef",
+    "status": "approved",
+    "generated_at": "2025-11-06T07:10:54.448134",
+    "generated_by": "email-reply",
+    "approved_at": "2025-11-06T07:10:54.468502"
+  },
+  "plan_wf-mail-e897c4ee_1762431261.274908": {
+    "workflow_id": "wf-mail-e897c4ee",
+    "status": "approved",
+    "generated_at": "2025-11-06T07:14:21.274908",
+    "generated_by": "email-reply",
+    "approved_at": "2025-11-06T07:14:21.298773"
+  },
+  "plan_wf-mail-5dd7bebb_1762431508.377498": {
+    "workflow_id": "wf-mail-5dd7bebb",
+    "status": "approved",
+    "generated_at": "2025-11-06T07:18:28.377498",
+    "generated_by": "email-reply",
+    "approved_at": "2025-11-06T07:18:28.394436"
+  }
+}

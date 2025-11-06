@@ -176,12 +176,20 @@
   font-size: 14px;
   box-sizing: border-box;
   transition: border-color 0.3s;
+  background: #ffffff;            /* ensure high-contrast on white dialog */
+  color: #0f172a;                 /* readable text on light background */
+  caret-color: #0ea5e9;           /* visible caret */
 }
 
 .form-group input:focus {
   outline: none;
   border-color: #667eea;
   box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+/* Improve placeholder readability on light background */
+.form-group input::placeholder {
+  color: #6b7280; /* slate-500 */
 }
 
 .dialog-content button {

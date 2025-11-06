@@ -56,6 +56,9 @@ class MediaService:
     def __init__(self):
         self.stable_diffusion_key = os.getenv("STABLE_DIFFUSION_KEY")
         self.runway_key = os.getenv("RUNWAY_API_KEY")
+        self.openai_key = os.getenv("OPENAI_API_KEY")  # DALL-E 3 / gpt-image
+        self.midjourney_key = os.getenv("MIDJOURNEY_API_KEY")
+        self.midjourney_endpoint = os.getenv("MIDJOURNEY_ENDPOINT")  # e.g., https://api.your-mj-proxy.com
         self.generation_history = []
     
     def get_provider_status(self) -> Dict[str, Dict[str, Any]]:
@@ -75,11 +78,15 @@ class MediaService:
                 "configured": bool(self.stable_diffusion_key)
             },
             "premium": {
-                "enabled": bool(self.runway_key),
+                "enabled": bool(self.runway_key or self.openai_key or (self.midjourney_key and self.midjourney_endpoint)),
                 "cost_per_image_estimate": 0.05,
                 "generation_time_ms": 5000,
-                "provider": "Runway AI",
-                "configured": bool(self.runway_key)
+                "providers": {
+                    "runway": bool(self.runway_key),
+                    "dalle3": bool(self.openai_key),
+                    "midjourney": bool(self.midjourney_key and self.midjourney_endpoint),
+                },
+                "configured": bool(self.runway_key or self.openai_key or (self.midjourney_key and self.midjourney_endpoint))
             }
         }
     
@@ -154,7 +161,7 @@ class MediaService:
         elif selected_tier == MediaTier.BUDGET:
             return await self._generate_budget(description, media_type)
         elif selected_tier == MediaTier.PREMIUM:
-            return await self._generate_premium(description, media_type)
+            return await self._generate_premium(description, media_type, **kwargs)
     
     async def _generate_free(
         self,
@@ -247,71 +254,133 @@ class MediaService:
     async def _generate_premium(
         self,
         description: str,
-        media_type: MediaType
+        media_type: MediaType,
+        **kwargs
     ) -> MediaGenerationResult:
-        """Generate via Runway AI"""
+        """Generate via Premium providers (DALL·E 3, Runway, Midjourney placeholder)"""
         import time
         start = time.time()
         
-        if not self.runway_key:
-            raise ValueError("Runway API key not configured")
-        
-        # Runway API endpoint varies by media type
-        if media_type == MediaType.IMAGE:
-            endpoint = "https://api.runwayml.com/v1/image_generations"
-            cost = 0.05
-        elif media_type == MediaType.VIDEO:
-            endpoint = "https://api.runwayml.com/v1/video_generations"
-            cost = 0.25
-        elif media_type == MediaType.AUDIO:
-            endpoint = "https://api.runwayml.com/v1/audio_generations"
-            cost = 0.02
-        else:
-            raise ValueError(f"Unsupported media type: {media_type}")
-        
-        headers = {
-            "Authorization": f"Bearer {self.runway_key}",
-            "Content-Type": "application/json"
-        }
-        
-        payload = {
-            "prompt": description,
-            "duration": 5 if media_type == MediaType.VIDEO else None,
-            "resolution": "1280x720" if media_type == MediaType.VIDEO else "1024x1024"
-        }
-        
+        # Prefer DALL·E 3 for images if configured
+        if media_type == MediaType.IMAGE and self.openai_key:
+            return await self._generate_dalle3(description, **kwargs)
+
+        # Otherwise use Runway if configured (supports image/video/audio)
+        if self.runway_key:
+            # Runway API endpoint varies by media type
+            if media_type == MediaType.IMAGE:
+                endpoint = "https://api.runwayml.com/v1/image_generations"
+                cost = 0.05
+            elif media_type == MediaType.VIDEO:
+                endpoint = "https://api.runwayml.com/v1/video_generations"
+                cost = 0.25
+            elif media_type == MediaType.AUDIO:
+                endpoint = "https://api.runwayml.com/v1/audio_generations"
+                cost = 0.02
+            else:
+                raise ValueError(f"Unsupported media type: {media_type}")
+
+            headers = {
+                "Authorization": f"Bearer {self.runway_key}",
+                "Content-Type": "application/json"
+            }
+
+            desired_res = kwargs.get("resolution")
+            payload = {
+                "prompt": description,
+                "duration": 5 if media_type == MediaType.VIDEO else None,
+                "resolution": desired_res or ("1280x720" if media_type == MediaType.VIDEO else "1024x1024"),
+            }
+
+            async with aiohttp.ClientSession() as session:
+                async with session.post(endpoint, json=payload, headers=headers) as resp:
+                    if resp.status == 201:
+                        data = await resp.json()
+                        url = data.get("output", "https://runway.runwayml.com/task-pending")
+                    else:
+                        raise ValueError(f"Runway API error: {resp.status}")
+
+            elapsed = (time.time() - start) * 1000
+            result = MediaGenerationResult(
+                url=url,
+                media_type=media_type,
+                tier=MediaTier.PREMIUM,
+                cost=cost,
+                time_ms=int(elapsed)
+            )
+            self.generation_history.append(result)
+            return result
+
+        # Midjourney proxy integration (requires both key and endpoint)
+        if self.midjourney_key and self.midjourney_endpoint and media_type == MediaType.IMAGE:
+            headers = {"Authorization": f"Bearer {self.midjourney_key}", "Content-Type": "application/json"}
+            payload = {"prompt": description}
+            async with aiohttp.ClientSession() as session:
+                async with session.post(f"{self.midjourney_endpoint.rstrip('/')}/imagine", json=payload, headers=headers) as resp:
+                    if resp.status not in (200, 201):
+                        raise ValueError(f"Midjourney API error: {resp.status}")
+                    data = await resp.json()
+                    # Accept either direct URL or base64 data
+                    url = (
+                        data.get("image_url")
+                        or data.get("url")
+                        or (f"data:image/png;base64,{data.get('b64')}" if data.get("b64") else None)
+                    )
+                    if not url:
+                        raise ValueError("Midjourney response missing image url")
+
+            elapsed = (time.time() - start) * 1000
+            result = MediaGenerationResult(
+                url=url,
+                media_type=MediaType.IMAGE,
+                tier=MediaTier.PREMIUM,
+                cost=0.05,
+                time_ms=int(elapsed),
+            )
+            self.generation_history.append(result)
+            return result
+
+        raise ValueError("No premium provider configured (need OPENAI_API_KEY or RUNWAY_API_KEY, or MIDJOURNEY_API_KEY+MIDJOURNEY_ENDPOINT)")
+
+    async def _generate_dalle3(self, description: str, **kwargs) -> MediaGenerationResult:
+        """Generate an image via OpenAI DALL·E 3 (Images API)."""
+        import time
+        start = time.time()
+        if not self.openai_key:
+            raise ValueError("OpenAI API key not configured for DALL·E 3")
+
+        endpoint = "https://api.openai.com/v1/images/generations"
+        headers = {"Authorization": f"Bearer {self.openai_key}", "Content-Type": "application/json"}
+        size = kwargs.get("resolution") or "1024x1024"
+        payload = {"model": "dall-e-3", "prompt": description, "n": 1, "size": size, "response_format": "b64_json"}
+
         async with aiohttp.ClientSession() as session:
             async with session.post(endpoint, json=payload, headers=headers) as resp:
-                if resp.status == 201:
-                    data = await resp.json()
-                    # Runway returns task_id; typically need polling
-                    # For now, return the task URL
-                    url = data.get("output", "https://runway.runwayml.com/task-pending")
-                else:
-                    raise ValueError(f"Runway API error: {resp.status}")
-        
+                if resp.status != 200:
+                    raise ValueError(f"DALL·E 3 API error: {resp.status}")
+                data = await resp.json()
+                b64 = data["data"][0].get("b64_json")
+                url = f"data:image/png;base64,{b64}" if b64 else data["data"][0].get("url")
+
         elapsed = (time.time() - start) * 1000
-        
         result = MediaGenerationResult(
             url=url,
-            media_type=media_type,
+            media_type=MediaType.IMAGE,
             tier=MediaTier.PREMIUM,
-            cost=cost,
-            time_ms=int(elapsed)
+            cost=0.05,
+            time_ms=int(elapsed),
         )
-        
         self.generation_history.append(result)
         return result
     
     def _select_best_tier(self) -> MediaTier:
         """Auto-select best available tier"""
-        # Prefer budget, fall back to free
+        # Prefer premium if any premium provider is configured, else budget, else free
+        if self.openai_key or self.runway_key or (self.midjourney_key and self.midjourney_endpoint):
+            return MediaTier.PREMIUM
         if self.stable_diffusion_key:
             return MediaTier.BUDGET
-        elif self.runway_key:
-            return MediaTier.PREMIUM
-        else:
-            return MediaTier.FREE
+        return MediaTier.FREE
     
     def get_usage_stats(self) -> Dict[str, Any]:
         """Get usage statistics"""

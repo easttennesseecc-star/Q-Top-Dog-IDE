@@ -1,0 +1,192 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Q Assistant — Message Board</title>
+    <style>
+      body { font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif; margin: 0; background: #0f172a; color: #e5e7eb; }
+      header { display:flex; align-items:center; justify-content:space-between; padding:12px 16px; background:#111827; border-bottom:1px solid #1f2937; }
+      h1 { font-size:16px; margin:0; }
+      .wrap { display:flex; height: calc(100vh - 54px); }
+      aside { width: 280px; border-right: 1px solid #1f2937; padding: 12px; background:#0b1220; }
+      main { flex:1; display:flex; flex-direction:column; }
+      .toolbar { padding: 8px 12px; border-bottom:1px solid #1f2937; background:#0b1220; display:flex; gap:8px; align-items:center; }
+      input, button, select, textarea { background:#111827; border:1px solid #374151; color:#e5e7eb; border-radius:6px; padding:8px; }
+      input:focus, textarea:focus { outline: 2px solid #2563eb; border-color:#2563eb; }
+      button { cursor:pointer; }
+      button.primary { background:#2563eb; border-color:#2563eb; }
+      button.secondary { background:#374151; }
+      .log { flex:1; overflow:auto; padding: 12px; display:flex; flex-direction:column; gap:8px; }
+      .msg { max-width: 80%; padding:10px 12px; border-radius:10px; border:1px solid #1f2937; background:#0b1220; }
+      .msg.meta { color:#94a3b8; font-size:12px; margin-top:2px; }
+      .msg.sms { border-color:#1d4ed8; }
+      .msg.email { border-color:#059669; }
+      .msg.api { border-color:#6d28d9; }
+      .msg.other { border-color:#334155; }
+      .msg-row { display:flex; }
+      .msg-row.right { justify-content:flex-end; }
+      .composer { display:flex; gap:8px; padding:12px; border-top:1px solid #1f2937; background:#0b1220; }
+      .composer textarea { flex:1; min-height:46px; resize:vertical; }
+      .help { font-size:12px; color:#94a3b8; line-height:1.4; }
+      .badge { background:#111827; padding:2px 6px; border-radius:999px; border:1px solid #374151; font-size:12px; }
+      .kv { font-size:12px; color:#a1a1aa; }
+      .kv b { color:#e5e7eb; }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>Q Assistant — Message Board</h1>
+      <div>
+        <a href="/admin/inbox.html" class="badge">Inbox <span id="unreadBadge" style="background:#dc2626;color:#fff;border-radius:10px;padding:0 6px;margin-left:4px;">0</span></a>
+        <a href="/admin/push.html" class="badge">Push Setup</a>
+        <a href="/admin/llm.html" class="badge">LLM Consoles</a>
+      </div>
+    </header>
+    <div class="wrap">
+      <aside>
+        <div style="display:flex; flex-direction:column; gap:8px;">
+          <label class="kv">User ID</label>
+          <input id="userId" placeholder="+15551234567 or workspace id" />
+          <div class="help">Use the paired phone number or your workspace/user id.</div>
+          <label class="kv">Filters</label>
+          <div style="display:flex; gap:8px; align-items:center;">
+            <label class="kv"><input type="checkbox" id="showConsumed" /> show consumed</label>
+          </div>
+          <button class="secondary" id="refresh">Refresh</button>
+          <hr style="border-color:#1f2937;" />
+          <div class="help">
+            Actions classify and execute natural language automatically.
+            Imperatives like “add”, “wire up”, “spin up”, “ship”, “test” will be acted on now.
+          </div>
+          <button class="secondary" id="triage">Triage Now</button>
+        </div>
+      </aside>
+      <main>
+        <div class="toolbar">
+          <span class="kv">Board for <b id="boardFor">—</b></span>
+          <span class="badge" id="count">0</span>
+          <span class="help">Newest first</span>
+        </div>
+        <div class="log" id="log"></div>
+        <div class="composer">
+          <textarea id="text" placeholder="Type a message to Q Assistant — e.g., add a dark settings page with toggles"></textarea>
+          <button class="primary" id="send">Post</button>
+        </div>
+      </main>
+    </div>
+    <script>
+      const $ = (sel) => document.querySelector(sel);
+      const logEl = $('#log');
+      const userEl = $('#userId');
+      const boardForEl = $('#boardFor');
+      const showConsumedEl = $('#showConsumed');
+      const countEl = $('#count');
+      const textEl = $('#text');
+
+      async function listMessages() {
+        const userId = userEl.value.trim();
+        const include = showConsumedEl.checked ? 'true' : 'false';
+        const url = new URL(location.origin + '/assistant-inbox/list');
+        if (userId) url.searchParams.set('user_id', userId);
+        url.searchParams.set('limit', '200');
+        url.searchParams.set('include_consumed', include);
+        const res = await fetch(url);
+        const j = await res.json();
+        renderMessages(j.messages || []);
+        // Update unread badge (not consumed)
+        try {
+          const url2 = new URL(location.origin + '/assistant-inbox/list');
+          if (userId) url2.searchParams.set('user_id', userId);
+          url2.searchParams.set('limit', '200');
+          url2.searchParams.set('include_consumed', 'false');
+          const j2 = await (await fetch(url2)).json();
+          document.getElementById('unreadBadge').textContent = (j2.messages || []).length;
+        } catch {}
+      }
+
+      function renderMessages(items) {
+        boardForEl.textContent = userEl.value.trim() || '—';
+        countEl.textContent = items.length;
+        logEl.innerHTML = '';
+        // items are newest first already
+        for (const m of items) {
+          const row = document.createElement('div');
+          row.className = 'msg-row' + (m.source === 'sms' ? '' : ' right');
+          const div = document.createElement('div');
+          div.className = 'msg ' + (m.source || 'other');
+          div.innerHTML = `
+            <div>${escapeHtml(m.text || '')}</div>
+            <div class="msg meta">${new Date((m.ts || 0) * 1000).toLocaleString()} • ${m.source || 'other'} ${m.consumed ? '(done)' : ''}</div>
+          `;
+          row.appendChild(div);
+          logEl.appendChild(row);
+        }
+        logEl.scrollTop = 0;
+      }
+
+      function escapeHtml(s) {
+        return (s || '').replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+      }
+
+      async function postMessage() {
+        const userId = userEl.value.trim();
+        const text = textEl.value.trim();
+        if (!userId || !text) { alert('Enter user id and message'); return; }
+        await fetch('/assistant-inbox/add', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ user_id: userId, source: 'api', text, metadata: { board: true } })
+        });
+        // Immediately triage so it acts now
+        await fetch('/assistant-inbox/triage', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ user_id: userId, limit: 20 })
+        });
+        textEl.value = '';
+        await listMessages();
+      }
+
+      async function triageNow() {
+        const userId = userEl.value.trim() || undefined;
+        await fetch('/assistant-inbox/triage', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ user_id: userId || null, limit: 50 })
+        });
+        await listMessages();
+      }
+
+      $('#refresh').onclick = listMessages;
+      $('#send').onclick = postMessage;
+      $('#triage').onclick = triageNow;
+      showConsumedEl.onchange = listMessages;
+      userEl.onchange = listMessages;
+      userEl.onkeyup = (e) => { if (e.key === 'Enter') listMessages(); };
+      textEl.onkeyup = (e) => { if (e.key === 'Enter' && !e.shiftKey) postMessage(); };
+
+      // Initial presets
+      try {
+        // Preset user id from query param ?user_id=
+        const u = new URL(location.href);
+        const preset = u.searchParams.get('user_id');
+        if (preset) userEl.value = preset;
+      } catch {}
+      listMessages();
+      // refresh badge periodically
+      setInterval(listMessages, 10000);
+    </script>
+    <div style="position:fixed; right:12px; bottom:12px; background:#111827; border:1px solid #1f2937; border-radius:8px; padding:10px 12px; max-width:320px; color:#e5e7eb; box-shadow:0 6px 16px rgba(0,0,0,0.4);">
+      <div style="font-weight:600; margin-bottom:6px;">Help — Try phrases</div>
+      <ul style="margin:0; padding-left:18px; line-height:1.4;">
+        <li>spin up staging</li>
+        <li>wire up web push (15‑min reminder)</li>
+        <li>ship MVP auth + profile</li>
+        <li>add a dark settings screen with toggles</li>
+        <li>test signup flow and report</li>
+      </ul>
+      <div class="help" style="margin-top:6px;">Imperative messages execute immediately. Use TODO: only when you want backlog.</div>
+    </script>
+  </body>
+  </html>

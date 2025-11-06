@@ -11,6 +11,44 @@
 
 **Top Dog is technically superior but faces structural market disadvantages.**
 
+### Important context: GitHub inside Top Dog (not vs Top Dog)
+
+This is not an anti‑GitHub position. Top Dog integrates GitHub as the default repo/PR/CI surface and works with the same LLM providers (BYOK to OpenAI, Anthropic, etc.). In practice, the best GitHub experience can be “GitHub inside Top Dog,” because you keep:
+
+- Your GitHub repos, PRs, and Actions status in your normal workflow
+- Your choice of LLMs (including the ones Copilot relies on) with multi‑LLM routing and local options
+- Reliability guardrails (hallucination prevention, build‑plan enforcement, snapshot/rollback)
+- Predictable pricing (no hourly compute trap) and media synthesis built into the IDE
+
+So when this doc says “GitHub wins by distribution/brand,” it refers to enterprise procurement dynamics—not a better day‑to‑day experience. For many teams, “GitHub inside Top Dog” > “GitHub alone.”
+
+#### In plain English
+
+Top Dog does everything GitHub Copilot does—and goes further—with multi‑LLM speed, local/offline options, and reliability guardrails that help teams ship faster with confidence.
+
+Copilot‑plus advantages (today):
+
+- Build‑plan enforcement and contract tests to keep changes on‑rails
+- Snapshot/rollback safety for code and config
+- Media synthesis in‑IDE (Runway BYOK) in the same workflow
+- Predictable pricing with BYOK usage control (avoid hourly compute traps)
+- Local models and offline mode when privacy or latency matters
+- Pairing resilience: SMS mock mode and QR fallback built‑in
+
+See `COMPLETE_FEATURE_LIST.md` for the broader list (100+ capabilities).
+
+#### Better together: GitHub Copilot + Top Dog
+
+- Positioning: Complementary, not competitive. Unofficial partner posture today; we’d welcome an official partnership.
+- GitHub stays the system of record: repos, PRs, reviews, and Actions remain GitHub‑native.
+- Top Dog adds: multi‑LLM BYOK and local/offline options, reliability guardrails (build‑plan, tests, snapshot/rollback), cost controls, and media‑in‑IDE.
+- Outcome: Copilot’s strengths + Top Dog’s guardrails = fewer failed PR cycles, faster merges, and more confidence.
+- Compliance and respect: OAuth scopes are minimal, we use official APIs, honor rate limits/ToS, and never scrape private content.
+- Enterprise message: Keep GitHub. Run it inside Top Dog to reduce risk and increase speed.
+- Tagline: Like peanut butter and jelly—we go better together.
+- Partner materials: see `GITHUB_PARTNERSHIP_ONE_SHEET.md` and `GITHUB_PARTNERSHIP_OUTREACH_EMAIL.md`.
+   - Marketplace prep: `GITHUB_MARKETPLACE_LISTING.md` and `GITHUB_APP_SCOPES.md`.
+
 ### Scorecard
 
 | Dimension | Top Dog | GitHub | Verdict |
@@ -19,11 +57,22 @@
 | **Pricing** | ⭐⭐⭐⭐⭐ | ⭐⭐ | Top Dog wins by 73% |
 | **Brand/Trust** | ⭐⭐ | ⭐⭐⭐⭐⭐ | GitHub wins decisively |
 | **Market Position** | ⭐⭐⭐ | ⭐⭐⭐⭐⭐ | GitHub wins by distribution |
-| **Execution Risk** | ⭐⭐ | ⭐⭐⭐⭐⭐ | GitHub wins by resources |
+| **Execution Risk (Procurement lens)** | ⭐⭐ | ⭐⭐⭐⭐⭐ | Procurement: GitHub safer by resources. Experience: mitigated with “GitHub inside Top Dog.” |
 | **Growth Potential** | ⭐⭐⭐⭐ | ⭐⭐⭐ | Top Dog wins by upside |
-| **Overall** | ⭐⭐⭐ (67%) | ⭐⭐⭐⭐ (84%) | GitHub is safer, Top Dog has higher upside |
+| **Overall (Procurement lens)** | ⭐⭐⭐ (67%) | ⭐⭐⭐⭐ (84%) | Procurement: GitHub safer. Experience: “GitHub inside Top Dog” > GitHub alone. |
 
 ---
+*Note:* We integrate GitHub. For most teams, the best day‑to‑day outcome is using your GitHub repos/PRs inside Top Dog with BYOK models and our reliability guardrails. For execution risk, read this as vendor continuity/resources for procurement; day‑to‑day delivery risk is lowered when GitHub runs inside Top Dog with our guardrails.
+
+> GitHub alone vs GitHub inside Top Dog
+>
+> - Repos/PRs/CI: Same GitHub flow, surfaced inside Top Dog panels (no context switching)
+> - LLMs: Copilot’s provider plus any others you choose (BYOK), with multi‑LLM routing + local models
+> - Reliability: Hallucination prevention, build‑plan enforcement, snapshot/rollback hardening
+> - Cost control: Predictable subscription and BYOK usage; avoid hourly compute traps
+> - Media-in-IDE: Runway BYOK for assets in the same workflow
+>
+> Net: For many teams, “GitHub inside Top Dog” > “GitHub alone.”
 
 ## Three Honest Truths
 
@@ -32,14 +81,34 @@
 **What Developers Say:**
 > "Top Dog has better features and is cheaper!"
 
-**What Enterprises Say:**
-> "Is GitHub reliable? Yes? Then GitHub."
+**What Enterprises Say (procurement heuristic, not endorsement):**
+> "Pick the proven, lowest‑risk vendor with enterprise track record."
+
+Clarification: This captures how enterprise buyers often de‑risk purchases. It is NOT our view of developer experience or product quality. Many teams report unreliability and hallucinations from Copilot—that pain is exactly why Top Dog exists.
+
+Our stance (and design response):
+- Hallucination prevention first: see `AI_HALLUCINATION_PREVENTION_FRAMEWORK.md` (guardrails, tests, rollback paths).
+- Multi‑LLM BYOK with fallbacks: route around bad outputs and degraded vendors.
+- Compliance and build‑plan enforcement: middleware plus contract tests to keep changes on‑rails.
+- Local‑first option: run models locally to avoid provider variance when needed.
+
+> Reliability checklist (Top Dog vs Copilot)
+>
+> - Health-first backend: `/health` registered early; redirects and compliance exclude health/metrics.
+> - Route safety: API routers ordered before SPA catch‑all (no shadowing); snapshot/rollback fallback.
+> - Compliance middleware: structured JSON errors; exemptions for health/monitoring.
+> - Hallucination controls: tests + rollbacks; multi‑LLM routing with provider fallbacks (BYOK or local).
+> - CI + smoke: unit/integration in CI; in‑cluster `/health` smoke; HPA/PDB templates for self‑healing.
+> - Pairing resilience: SMS mock mode when providers not configured; QR path always available.
+>
+> See the full checklist: `RELIABILITY_CHECKLIST.md`.
 
 **Why:**
 - Enterprise procurement: **"Safe choice" > "Best choice"**
 - Switching costs: Training, integration, compliance review
 - Brand = Trust = Risk reduction
 - Microsoft backing means "can't lose my job choosing this"
+- Copilot reliability concerns are real in practice; Top Dog is explicitly engineered to mitigate them.
 
 **Impact**: Top Dog's technical superiority matters to 1% of buyers. 99% just want "known brand + good enough."
 

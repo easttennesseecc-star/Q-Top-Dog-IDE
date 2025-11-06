@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Q‑IDE Assistant Inbox</title>
+  <style>
+    body { font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial; margin: 24px; }
+    .msg { border:1px solid #e5e7eb; border-radius: 8px; padding: 12px; margin-bottom: 8px; }
+    .muted { color: #6b7280 }
+    .row { display:flex; gap:8px; align-items:center; }
+    .btn { background:#0ea5e9; color:#fff; border:none; border-radius:6px; padding:6px 10px; cursor:pointer; }
+    .btn.secondary { background:#374151; }
+  </style>
+</head>
+<body>
+  <h2>Assistant Inbox</h2>
+  <div class="row">
+    <input id="user" placeholder="user_id (default: __global__)" />
+    <button class="btn" onclick="refresh()">Refresh</button>
+    <button class="btn secondary" onclick="triageNow()">Triage Now</button>
+  </div>
+  <div id="list"></div>
+  <script>
+  async function refresh(){
+    const uid = document.getElementById('user').value || '__global__';
+    const r = await fetch('/assistant-inbox/list?user_id='+encodeURIComponent(uid));
+    const j = await r.json();
+    const list = document.getElementById('list');
+    list.innerHTML = '';
+    (j.messages||[]).forEach(m => {
+      const d = document.createElement('div');
+      d.className = 'msg';
+      const meta = m.metadata || {};
+      d.innerHTML = `<div class=\"muted\">${new Date(m.ts*1000).toLocaleString()} • ${m.source} • ${m.user_id} • ${m.consumed ? 'consumed' : 'new'}</div><div style=\"margin:6px 0\">${m.text}</div>`;
+      const row = document.createElement('div');
+      row.className = 'row';
+      const btn = document.createElement('button');
+      btn.className = 'btn';
+      btn.textContent = 'Mark Consumed';
+      btn.onclick = async () => {
+        await fetch('/assistant-inbox/consume', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ id: m.id })});
+        refresh();
+      };
+      row.appendChild(btn);
+      // If backend included helpful links, render them
+      if (meta.approve_link) {
+        const a = document.createElement('a');
+        a.className = 'btn secondary';
+        a.href = meta.approve_link; a.target = '_blank'; a.textContent = 'Approve';
+        row.appendChild(a);
+      }
+      if (meta.modify_link) {
+        const a = document.createElement('a');
+        a.className = 'btn secondary';
+        a.href = meta.modify_link; a.target = '_blank'; a.textContent = 'Request Changes';
+        row.appendChild(a);
+      }
+      d.appendChild(row);
+      list.appendChild(d);
+    });
+  }
+  async function triageNow(){
+    const uid = document.getElementById('user').value || null;
+    await fetch('/assistant-inbox/triage', {
+      method: 'POST', headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({ user_id: uid, limit: 50 })
+    });
+    refresh();
+  }
+  refresh();
+  setInterval(refresh, 5000);
+  </script>
+</body>
+</html>

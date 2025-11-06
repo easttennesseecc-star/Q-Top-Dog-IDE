@@ -74,11 +74,11 @@ static_sites:
         match_prefix: true
 
 domains:
-  - domain: q-ide.com
+  - domain: topdog-ide.com
     type: PRIMARY
-  - domain: www.q-ide.com
+  - domain: www.topdog-ide.com
     type: ALIAS
-    target_domain: q-ide.com
+    target_domain: topdog-ide.com
 
 alerts:
   - rule: CPU_UTILIZATION
