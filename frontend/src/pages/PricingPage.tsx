@@ -41,10 +41,12 @@ const PricingPage: React.FC<PricingPageProps> = ({ userId = 'guest', currentTier
           headers['X-User-ID'] = userId;
         }
 
-        const response = await fetch('/api/tiers', { headers });
-        if (!response.ok) throw new Error('Failed to fetch tiers');
-        const data = await response.json();
-        setTiers(data.tiers || []);
+  const response = await fetch('/api/tiers', { headers });
+  if (!response.ok) throw new Error('Failed to fetch tiers');
+  const data = await response.json();
+  // Backend may return an array or { tiers: [...] }
+  const normalized = Array.isArray(data) ? data : (data.tiers || []);
+  setTiers(normalized);
       } catch (err) {
         setError(err instanceof Error ? err.message : 'Error loading pricing');
       } finally {

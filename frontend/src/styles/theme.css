@@ -1,0 +1,54 @@
+/* Theme tokens and accessibility helpers */
+:root {
+  /* Light theme defaults */
+  --bg: #ffffff;
+  --surface: #f5f7fa; /* subtle panels */
+  --text: #0f172a; /* slate-900 */
+  --muted: #495869; /* slate-600-ish */
+  --border: #d5dbe3;
+  --accent: #0ea5e9; /* brand-500 */
+  --on-accent: #0b0f16; /* dark text on accent for 4.5:1 */
+  --focus: #0ea5e9;
+}
+
+.dark {
+  --bg: #0b0f16; /* app background */
+  --surface: #121827; /* elevated panel */
+  --text: #e6edf3; /* high contrast on dark */
+  --muted: #c2c8d0; /* subdued text */
+  --border: rgba(255,255,255,0.08);
+  --accent: #0ea5e9;
+  --on-accent: #07141c; /* ensure >= 4.5:1 on accent */
+  --focus: #22d3ee; /* brighter focus in dark */
+}
+
+/* High-contrast augmentation */
+.hc {
+  --text: #ffffff;
+  --muted: #e5e7eb;
+  --border: rgba(255,255,255,0.18);
+  --focus: #38bdf8;
+}
+
+/* Apply tokens to body for non-tailwind elements */
+html, body, #root { height: 100%; }
+body {
+  background: var(--bg);
+  color: var(--text);
+}
+
+/* Utility: focus ring for keyboard users */
+:where(button, [role="button"], a, input, select, textarea):focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 2px;
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--focus) 30%, transparent);
+}
+
+/* Utility classes for using tokens with Tailwind where needed */
+.token-bg { background-color: var(--bg); }
+.token-surface { background-color: var(--surface); }
+.token-text { color: var(--text); }
+.token-muted { color: var(--muted); }
+.token-border { border-color: var(--border); }
+.token-accent { background-color: var(--accent); color: var(--on-accent); }
+.token-accent-text { color: var(--accent); }

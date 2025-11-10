@@ -1,6 +1,10 @@
 /*
-Q-IDE Phone Pairing Component
-Handles QR code scanning, device pairing, and microphone access
+ Q-IDE Phone Pairing Component
+ Handles QR code scanning, device pairing, and microphone access
+ TypeScript interop: provide a minimal JSDoc typedef for editor hints.
+ @typedef {Object} PairingSession
+ @property {string} id
+ @property {string} state
 */
 
 import React, { useState, useEffect, useRef } from 'react';
@@ -17,16 +21,42 @@ const PhonePairing = () => {
   const [deviceName, setDeviceName] = useState('');
   const mediaStreamRef = useRef(null);
 
+  // Resolve backend base URL (match App.tsx logic)
+  const backendBase = (
+    window.__VITE_BACKEND_URL ||
+    (import.meta?.env?.VITE_BACKEND_URL) ||
+    (import.meta?.env?.VITE_API_URL) ||
+    ''
+  );
+  const toApi = (path) => `${String(backendBase).replace(/\/$/, '')}${path.startsWith('/') ? path : '/' + path}`;
+
+  // Stable local device id
+  useEffect(() => {
+    try {
+      let did = localStorage.getItem('td.deviceId');
+      if (!did) {
+        // simple uuid v4
+        did = ([1e7]+-1e3+-4e3+-8e3+-1e11).replace(/[018]/g, c =>
+          (c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16)
+        );
+        localStorage.setItem('td.deviceId', did);
+      }
+      setDeviceId(did);
+    } catch (_) {}
+  }, []);
+
   // Start phone pairing
   const startPairing = async () => {
     try {
-      const response = await fetch('http://127.0.0.1:8000/api/phone/start-pairing', {
-        method: 'POST'
+      const response = await fetch(toApi('/phone/pairing/generate-qr'), {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ user_id: 'test-pro' })
       });
+      if (!response.ok) throw new Error('Failed to generate QR');
       const data = await response.json();
-      setPairingCode(data.pairing_code);
+      setPairingCode(data.pairing_token);
       setQrCode(data.qr_code_base64);
-      setDeviceId(data.device_id);
       setShowPairingDialog(true);
     } catch (error) {
       console.error('Failed to start pairing:', error);
@@ -41,100 +71,68 @@ const PhonePairing = () => {
     }
 
     try {
-      const response = await fetch('http://127.0.0.1:8000/api/phone/verify-pairing', {
+      const response = await fetch(toApi('/phone/pairing/pair'), {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          pairing_code: manualPairingCode,
-          device_name: deviceName
+          pairing_token: manualPairingCode,
+          device_id: deviceId || 'web-device',
+          device_name: deviceName,
+          device_type: 'web',
+          os_version: navigator.userAgent,
+          app_version: 'web'
         })
       });
 
-      if (response.ok) {
-        const data = await response.json();
-        localStorage.setItem('sessionToken', data.session_token);
-        localStorage.setItem('deviceId', data.device_id);
-        alert('Phone paired successfully!');
-        setManualPairingCode('');
-        setDeviceName('');
-        setShowPairingDialog(false);
-        refreshPairedDevices();
-      } else {
-        alert('Invalid pairing code');
-      }
+      if (!response.ok) throw new Error('Invalid or expired pairing token');
+      const data = await response.json();
+      localStorage.setItem('td.jwt', data.jwt_token);
+      localStorage.setItem('td.deviceId', data.device_id);
+      alert('Phone paired successfully!');
+      setManualPairingCode('');
+      setDeviceName('');
+      setShowPairingDialog(false);
+      refreshPairedDevices();
     } catch (error) {
       console.error('Pairing verification failed:', error);
+      alert('Pairing failed. Ensure the code is correct and not expired.');
     }
   };
 
   // Get paired devices
   const refreshPairedDevices = async () => {
     try {
-      const response = await fetch('http://127.0.0.1:8000/api/phone/paired-devices');
+      const url = new URL(toApi('/phone/devices'));
+      url.searchParams.set('user_id', 'test-pro');
+      const response = await fetch(url.toString());
+      if (!response.ok) throw new Error('failed to fetch devices');
       const devices = await response.json();
       setPairedDevices(devices);
-
-      const micsResponse = await fetch('http://127.0.0.1:8000/api/phone/active-mics');
-      const micsData = await micsResponse.json();
-      setActiveMics(micsData.active_devices);
+      setActiveMics([]); // feature not wired yet
     } catch (error) {
       console.error('Failed to get paired devices:', error);
     }
   };
 
   // Enable microphone for device
-  const enableMicrophone = async (deviceId) => {
-    try {
-      const response = await fetch(`http://127.0.0.1:8000/api/phone/mic/enable/${deviceId}`, {
-        method: 'POST'
-      });
-
-      if (response.ok) {
-        // Start audio stream
-        startAudioStream(deviceId);
-        refreshPairedDevices();
-      }
-    } catch (error) {
-      console.error('Failed to enable microphone:', error);
-    }
+  const enableMicrophone = async (_deviceId) => {
+    alert('Live mic streaming is not enabled in this build.');
   };
 
   // Disable microphone for device
-  const disableMicrophone = async (deviceId) => {
-    try {
-      await fetch(`http://127.0.0.1:8000/api/phone/mic/disable/${deviceId}`, {
-        method: 'POST'
-      });
-      refreshPairedDevices();
-    } catch (error) {
-      console.error('Failed to disable microphone:', error);
-    }
+  const disableMicrophone = async (_deviceId) => {
+    alert('Live mic streaming is not enabled in this build.');
   };
 
   // Start audio stream via WebSocket
-  const startAudioStream = (deviceId) => {
-    const ws = new WebSocket(`ws://127.0.0.1:8000/api/phone/ws/audio/${deviceId}`);
-
-    ws.onmessage = (event) => {
-      const data = JSON.parse(event.data);
-      console.log('Audio received:', data);
-      // Process audio data here
-    };
-
-    ws.onerror = (error) => {
-      console.error('WebSocket error:', error);
-    };
-  };
+  const startAudioStream = (_deviceId) => {};
 
   // Unpair device
   const unpairDevice = async (deviceId) => {
     if (window.confirm('Are you sure you want to unpair this device?')) {
       try {
-        await fetch('http://127.0.0.1:8000/api/phone/unpair', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ device_id: deviceId })
-        });
+        const url = toApi(`/phone/devices/${encodeURIComponent(deviceId)}?user_id=test-pro`);
+        await fetch(url, { method: 'DELETE' });
         refreshPairedDevices();
       } catch (error) {
         console.error('Failed to unpair device:', error);
@@ -239,11 +237,11 @@ const PhonePairing = () => {
                 <div className="device-info">
                   <p>
                     <strong>Paired:</strong>{' '}
-                    {new Date(device.paired_at).toLocaleString()}
+                    {new Date(device.paired_at || device.pairedAt || Date.now()).toLocaleString()}
                   </p>
                   <p>
                     <strong>Last Active:</strong>{' '}
-                    {new Date(device.last_active).toLocaleString()}
+                    {new Date(device.last_seen || device.lastSeen || Date.now()).toLocaleString()}
                   </p>
                 </div>
 
@@ -294,3 +292,6 @@ const PhonePairing = () => {
 };
 
 export default PhonePairing;
+// TypeScript compatibility shim
+// eslint-disable-next-line no-undef
+export const __esModule = true;

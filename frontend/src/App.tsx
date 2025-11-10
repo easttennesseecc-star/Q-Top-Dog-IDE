@@ -11,7 +11,10 @@ import BuildHealthIndicator from "./components/BuildHealthIndicator";
 import LLMPoolPanel from "./components/LLMPoolPanel";
 import LLMConfigPanel from "./components/LLMConfigPanel";
 import LLMStartupAuth from "./components/LLMStartupAuth";
+import AccountStatusPanel from "./components/AccountStatusPanel";
 import PhoneLinkPanel from "./components/PhoneLinkPanel";
+// @ts-ignore - JS component without explicit types
+import PhonePairing from "./components/PhonePairing"; // New full pairing UI
 import BackgroundManager from "./components/BackgroundManager";
 import { useTheme } from "./components/ThemeContext";
 import { schedulePrune } from './lib/idbStorage';
@@ -32,12 +35,14 @@ import "./styles/pricing-page.css";
 const BackgroundSettings = React.lazy(() => import('./components/BackgroundSettings'));
 const OAuthCallback = React.lazy(() => import('./components/OAuthCallback'));
 
-type SelectedTab = "viewer" | "builds" | "extensions" | "settings" | "learning" | "llm" | "config" | "phone" | "billing" | "pricing" | "medical" | "science" | "rules";
+type SelectedTab = "viewer" | "account" | "builds" | "extensions" | "settings" | "learning" | "llm" | "config" | "phone" | "billing" | "pricing" | "medical" | "science" | "rules";
 type WorkspaceProfile = 'default' | 'medical' | 'science';
 
-function App() {
-  // Check if we're on the OAuth callback page
-  const isOAuthCallback = window.location.pathname === '/oauth/callback';
+interface AppProps { initialTab?: SelectedTab }
+
+function App({ initialTab }: AppProps) {
+  // Check if we're on the OAuth callback page (support both legacy and /auth-prefixed)
+  const isOAuthCallback = window.location.pathname === '/oauth/callback' || window.location.pathname === '/auth/oauth/callback';
 
   if (isOAuthCallback) {
     return (
@@ -47,7 +52,8 @@ function App() {
     );
   }
 
-  const [tab, setTab] = useState<SelectedTab>("viewer");
+  const [tab, setTab] = useState<SelectedTab>(initialTab || "viewer");
+  const [founder, setFounder] = useState<boolean | null>(null);
   const [commandPaletteOpen, setCommandPaletteOpen] = useState(false);
   const [toast, setToast] = useState<{ message: string; type: "success" | "error" } | null>(null);
   const [showStartupAuthPrompt, setShowStartupAuthPrompt] = useState(true);
@@ -58,9 +64,9 @@ function App() {
   // Workspace profile gating
   const workspaceProfile = ((window as any).__WORKSPACE_PROFILE || 'default') as WorkspaceProfile;
   const allowedTabsByProfile: Record<WorkspaceProfile, SelectedTab[]> = {
-    default: ['viewer','builds','extensions','settings','learning','llm','config','phone','billing','pricing','rules'],
-    medical: ['viewer','medical','builds','llm','config','billing','settings','learning','pricing','rules'],
-    science: ['viewer','science','builds','llm','config','billing','settings','learning','pricing','rules'],
+    default: ['viewer','account','builds','extensions','settings','learning','llm','config','phone','billing','pricing','rules'],
+    medical: ['viewer','account','medical','builds','llm','config','billing','settings','learning','pricing','rules'],
+    science: ['viewer','account','science','builds','llm','config','billing','settings','learning','pricing','rules'],
   };
   const isTabAllowed = (t: SelectedTab) => allowedTabsByProfile[workspaceProfile].includes(t);
 
@@ -143,6 +149,42 @@ function App() {
     return () => window.removeEventListener("keydown", handleKeyDown);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isMicActive]);
+
+  // Fetch founder status once if authed
+  useEffect(() => {
+    const tok = localStorage.getItem('q_ide_access_token');
+    if (!tok) return;
+    fetch(toApi('/api/v1/auth/me'), { headers: { Authorization: `Bearer ${tok}` } })
+      .then(r => r.ok ? r.json() : null)
+      .then(j => { if (j?.success && typeof j?.data?.is_founder === 'boolean') setFounder(j.data.is_founder); })
+      .catch(() => {});
+  }, []);
+
+  // Listen for OAuth popup result
+  useEffect(() => {
+    const onMsg = (evt: MessageEvent) => {
+      const d = evt.data || {};
+      if (d?.type === 'oauth_success') {
+        if (d?.provider === 'google') {
+          setToast({ message: 'Google login successful', type: 'success' });
+        } else {
+          setToast({ message: `${d?.provider || 'OAuth'} login successful`, type: 'success' });
+        }
+        // Refresh founder flag after OAuth
+        const tok = localStorage.getItem('q_ide_access_token');
+        if (tok) {
+          fetch(toApi('/api/v1/auth/me'), { headers: { Authorization: `Bearer ${tok}` } })
+            .then(r => r.ok ? r.json() : null)
+            .then(j => { if (j?.success && typeof j?.data?.is_founder === 'boolean') setFounder(j.data.is_founder); })
+            .catch(() => {});
+        }
+      } else if (d?.type === 'oauth_error') {
+        setToast({ message: `${d?.provider || 'OAuth'} login failed: ${d?.error || 'Unknown error'}`, type: 'error' });
+      }
+    };
+    window.addEventListener('message', onMsg);
+    return () => window.removeEventListener('message', onMsg);
+  }, []);
 
   // Start maintenance tasks (prune orphaned blobs immediately and daily)
   useEffect(() => {
@@ -252,8 +294,19 @@ function App() {
 
   const { theme, toggle: toggleTheme, highContrast, toggleContrast } = useTheme();
 
+  // Push URL updates on tab change for deep-linking
+  useEffect(() => {
+    const base = '/app';
+    const target = `${base}/${tab}`;
+    if (window.location.pathname !== target) {
+      window.history.replaceState({}, '', target);
+    }
+  }, [tab]);
+
+  const authed = !!localStorage.getItem('q_ide_access_token') || !!localStorage.getItem('oauth_session_id');
+
   return (
-    <div className="w-full h-screen bg-[#0b0f16] text-slate-100 overflow-hidden flex flex-col">
+    <div className="w-full h-screen overflow-hidden flex flex-col bg-[var(--bg)] text-[var(--text)]">
   {/* SEO: Accessible heading for search engines with brand variations */}
   <h1 className="sr-only" style={{position:'absolute',left:'-9999px'}}>
     Top Dog IDE — also known as Q‑IDE — an AI IDE for developers. Aura Development by Top Dog.
@@ -271,7 +324,7 @@ function App() {
             </div>
           </div>
 
-          <div className="flex items-center gap-6">
+            <div className="flex items-center gap-6">
             {/* Edition selector */}
             <div className="flex items-center gap-2">
               <span className="text-[11px] text-slate-300/70">Profile</span>
@@ -324,7 +377,19 @@ function App() {
             >
               Ctrl+Shift+P
             </button>
-            <UserProfileMenu />
+            {authed ? (
+              <div className="flex items-center gap-3">
+                {founder && (
+                  <span className="px-2 py-1 text-[10px] font-semibold rounded bg-gradient-to-r from-cyan-600 to-blue-600 text-white border border-cyan-300/40 shadow-sm" title="Founder bypass active">FOUNDER</span>
+                )}
+                <UserProfileMenu />
+              </div>
+            ) : (
+              <div className="flex items-center gap-2">
+                <a href="/login" className="text-xs px-3 py-1.5 rounded-md border border-cyan-400/30 hover:border-cyan-400 text-cyan-300">Sign in</a>
+                <a href="/signup" className="text-xs px-3 py-1.5 rounded-md bg-cyan-600/20 border border-cyan-400/40 hover:bg-cyan-600/30 text-cyan-200">Sign up</a>
+              </div>
+            )}
           </div>
         </div>
 
@@ -351,6 +416,7 @@ function App() {
               <div className="h-10 flex items-stretch gap-1 border-b border-white/5 px-2">
                 {(([
                   { key: 'viewer', label: 'Viewer', icon: null },
+                  { key: 'account', label: 'Account', icon: Icon.Settings },
                   { key: 'builds', label: 'Builds', icon: Icon.Builds },
                   { key: 'llm', label: 'LLM Pool', icon: Icon.LLM },
                   { key: 'config', label: 'LLM Setup', icon: Icon.Settings },
@@ -376,6 +442,14 @@ function App() {
                 {tab === 'viewer' && (
                   <div className="h-full w-full rounded-lg border border-white/10 bg-white/5 grid place-items-center text-slate-300/80 text-sm select-none">
                     Nothing selected. Choose a tab to view tools here.
+                  </div>
+                )}
+                {tab === 'account' && (
+                  <div className="h-full w-full overflow-auto">
+                    <div className="mb-2 text-sm text-cyan-200 font-semibold">Account Status</div>
+                    <div className="bg-black/20 border border-white/5 rounded-lg p-3">
+                      <AccountStatusPanel />
+                    </div>
                   </div>
                 )}
                 {tab === 'builds' && (
@@ -404,10 +478,21 @@ function App() {
                   </div>
                 )}
                 {tab === 'phone' && (
-                  <div className="h-full w-full">
-                    <PhoneLinkPanel onClose={() => setTab('viewer')} />
-                    <div className="mt-3 text-xs text-slate-300/70">
-                      Open on your phone: <code>/phone-link.html</code>. Paste the offer, create the answer, then paste it back here.
+                  <div className="h-full w-full overflow-auto">
+                    <div className="mb-2 text-sm text-cyan-200 font-semibold">Phone Pairing & Remote</div>
+                    {/* Legacy link panel retained below for advanced/manual flow */}
+                    <div className="grid gap-4 md:grid-cols-2">
+                      <div className="rounded-lg border border-white/10 p-3 bg-black/20">
+                        <h3 className="text-xs font-semibold text-cyan-300 mb-2">Quick Pair</h3>
+                        <PhonePairing />
+                      </div>
+                      <div className="rounded-lg border border-white/10 p-3 bg-black/10">
+                        <h3 className="text-xs font-semibold text-cyan-300 mb-2">Manual / Legacy Link</h3>
+                        <PhoneLinkPanel onClose={() => setTab('viewer')} />
+                        <div className="mt-3 text-xs text-slate-300/70">
+                          Open on your phone: <code>/phone-link.html</code>. Paste the offer, create the answer, then paste it back here.
+                        </div>
+                      </div>
                     </div>
                   </div>
                 )}
@@ -497,6 +582,7 @@ function App() {
           onClose={() => setCommandPaletteOpen(false)}
           commands={[
             { label: "Viewer", action: () => { setTab('viewer'); setCommandPaletteOpen(false); } },
+            { label: "Account Status", action: () => { setTab('account'); setCommandPaletteOpen(false); } },
             { label: "Builds", action: () => { setTab('builds'); setCommandPaletteOpen(false); } },
             { label: "Extensions", action: () => { setTab('extensions'); setCommandPaletteOpen(false); } },
             { label: "Settings", action: () => { setTab('settings'); setCommandPaletteOpen(false); } },

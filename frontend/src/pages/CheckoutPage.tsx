@@ -354,7 +354,7 @@ const CheckoutPageContent: React.FC<CheckoutPageProps> = ({ stripePromise }) => 
           {/* Footer */}
           <div className="checkout-footer">
             <p>
-              Questions? <a href="mailto:support@q-ide.com">Contact support</a>
+              Questions? <a href="mailto:support@topdog-ide.com">Contact support</a>
             </p>
             <p>
               Have a coupon? Apply it during the checkout process.

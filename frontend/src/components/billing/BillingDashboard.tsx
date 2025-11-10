@@ -461,7 +461,7 @@ const BillingDashboard: React.FC = () => {
 
       <div className="dashboard-footer">
         <p>
-          Need help? <a href="mailto:support@q-ide.com">Contact support</a>
+          Need help? <a href="mailto:support@topdog-ide.com">Contact support</a>
         </p>
       </div>
     </div>

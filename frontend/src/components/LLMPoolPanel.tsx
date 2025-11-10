@@ -30,8 +30,15 @@ export default function LLMPoolPanel() {
   async function load() {
     setLoading(true); setError(null);
     try {
-      const res = await fetch('/llm_pool');
+      // Use API-prefixed endpoint defined by backend
+      const res = await fetch('/api/llm_pool');
       if (!res.ok) throw new Error(await res.text());
+      // Guard against HTML catch-all responses
+      const contentType = res.headers.get('content-type') || '';
+      if (!contentType.includes('application/json')) {
+        const text = await res.text();
+        throw new Error(`Unexpected response (not JSON): ${text.slice(0, 120)}...`);
+      }
       const j = await res.json();
       setReport({ available: j.available || [], excluded: j.excluded || [] });
     } catch (e:any) {
@@ -90,6 +97,14 @@ export default function LLMPoolPanel() {
     } catch (e) {
       // ignore
     }
+    // Persist selection server-side so roles honor it across sessions (default role=coding)
+    try {
+      fetch('/llm/select', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ llm_id: (selected.name || '').toLowerCase(), role: 'coding' })
+      }).catch(()=>{});
+    } catch {}
     setConfirmOpen(false);
     setSelected(null);
     // small UI feedback: reload report so selected model can be seen as active by other code

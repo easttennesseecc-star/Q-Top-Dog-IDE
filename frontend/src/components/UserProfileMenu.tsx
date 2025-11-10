@@ -38,7 +38,7 @@ export const UserProfileMenu: React.FC<UserProfileMenuProps> = ({ user = { name:
       </button>
       {open && (
         <div
-          className="absolute top-full mt-2 min-w-[12rem] max-w-[calc(100vw-2rem)] max-h-72 overflow-auto rounded-md shadow-lg bg-white dark:bg-gray-800 ring-1 ring-black ring-opacity-5 focus:outline-none z-40 transition-all duration-200 opacity-100 translate-y-0"
+          className="absolute top-full mt-2 min-w-[12rem] max-w-[calc(100vw-2rem)] max-h-[60vh] overflow-y-auto overflow-x-hidden rounded-md shadow-lg bg-white dark:bg-gray-800 ring-1 ring-black ring-opacity-5 focus:outline-none z-40 transition-all duration-200 opacity-100 translate-y-0"
           role="menu"
           aria-orientation="vertical"
           aria-labelledby="user-menu"

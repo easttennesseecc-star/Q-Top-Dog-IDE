@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { storeToken } from '../services/authClient';
 
 /**
  * OAuthCallback Component
@@ -41,7 +42,11 @@ export default function OAuthCallback() {
           return;
         }
 
-        // Exchange the code for a token
+        // Determine redirect URI variants (support legacy & /auth prefixed)
+        const redirectBase = `${window.location.origin}`;
+        const redirect_uri = `${redirectBase}/oauth/callback`;
+
+        // Exchange the code for a token (unified OAuth exchanger)
         const response = await fetch('/llm_auth/oauth/exchange', {
           method: 'POST',
           headers: {
@@ -50,7 +55,7 @@ export default function OAuthCallback() {
           body: JSON.stringify({
             provider: state,
             code: code,
-            redirect_uri: `${window.location.origin}/oauth/callback`,
+            redirect_uri,
           }),
         });
 
@@ -61,20 +66,32 @@ export default function OAuthCallback() {
 
         const data = await response.json();
 
+        // Persist token if included in exchange payload
+        const token = (data && (data.token || data.access_token || data.data?.token)) as string | undefined;
+        if (token) {
+          storeToken(token);
+          localStorage.setItem('oauth_provider', String(state));
+          localStorage.setItem('oauth_last_success', new Date().toISOString());
+        }
+
         // Success!
-        setStatus('success');
-        setMessage(`Successfully authenticated with ${state}!`);
+  setStatus('success');
+  setMessage(`Successfully authenticated with ${state}!`);
 
         // Notify parent window of success
         if (window.opener) {
           window.opener.postMessage(
-            { type: 'oauth_success', provider: state, token: data },
+            { type: 'oauth_success', provider: state, token: data, stored: !!token },
             window.location.origin
           );
           // Close popup after a short delay
           setTimeout(() => {
             window.close();
           }, 1500);
+        }
+        // If not in popup (direct nav), redirect to app root for tab sync
+        if (!window.opener) {
+          window.location.replace('/app/viewer');
         }
       } catch (err) {
         setStatus('error');

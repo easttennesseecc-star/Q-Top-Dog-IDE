@@ -29,6 +29,49 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <!-- JSON-LD Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "Organization",
+          "name": "Top Dog IDE",
+          "alternateName": "Q-IDE",
+          "url": "https://topdog-ide.com/",
+          "logo": "https://topdog-ide.com/static/logo.png",
+          "sameAs": [
+            "https://github.com/easttennesseecc-star",
+            "https://twitter.com/topdogide"
+          ]
+        },
+        {
+          "@type": "WebSite",
+          "name": "Top Dog IDE",
+          "url": "https://topdog-ide.com/",
+          "potentialAction": {
+            "@type": "SearchAction",
+            "target": "https://topdog-ide.com/search?q={search_term_string}",
+            "query-input": "required name=search_term_string"
+          }
+        },
+        {
+          "@type": "SoftwareApplication",
+          "name": "Top Dog IDE",
+          "alternateName": "Q‑IDE",
+          "applicationCategory": "DeveloperApplication",
+          "operatingSystem": "Windows, macOS, Linux",
+          "description": "AI development environment with 53+ integrated LLMs for coding, refactoring, debugging, and security review.",
+          "softwareVersion": "1.0.0",
+          "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD"
+          }
+        }
+      ]
+    }
+    </script>
   </head>
 
   <body class="dark bg-slate-950 m-0 p-0 overflow-hidden">
