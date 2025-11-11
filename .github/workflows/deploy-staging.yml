@@ -9,11 +9,13 @@ on:
         default: main
   push:
     branches:
+      - main
       - staging
     paths:
       - backend/**
       - frontend/**
       - deploy/k8s/staging/**
+      - .github/workflows/deploy-staging.yml
 
 permissions:
   contents: read
@@ -139,6 +141,15 @@ jobs:
       - name: Apply ingress
         run: |
           kubectl apply -f deploy/k8s/staging/ingress.yaml
+
+      - name: Show ingress address for DNS
+        env:
+          NAMESPACE: ${{ env.NAMESPACE }}
+        run: |
+          echo "Ingress status:" 
+          kubectl -n $NAMESPACE get ingress qide-staging-ingress -o wide || true
+          echo "Resolved ADDRESS (if any):"
+          kubectl -n $NAMESPACE get ingress qide-staging-ingress -o jsonpath='{.status.loadBalancer.ingress[0].ip}{"\n"}{.status.loadBalancer.ingress[0].hostname}{"\n"}' || true
 
       - name: Wait for rollout
         env:

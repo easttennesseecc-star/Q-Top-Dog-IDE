@@ -18,8 +18,22 @@ This runbook describes how to deploy and operate the dedicated staging environme
 
 ## One-time setup
 1. DNS
-   - Point `staging-app.example.com` to your ingress controller LB IP/hostname
-   - Point `staging-api.example.com` to the same LB
+   - Domains to configure:
+     - Frontend: `staging-app.topdog-ide.com`
+     - API: `staging-api.topdog-ide.com`
+   - Find your ingress external address (IP or hostname):
+     - kubectl (from your workstation):
+       - Get Ingress address:
+         - `kubectl -n topdog-staging get ingress qide-staging-ingress -o jsonpath='{.status.loadBalancer.ingress[0].ip}{"\n"}{.status.loadBalancer.ingress[0].hostname}{"\n"}'`
+       - If empty, check your ingress controller Service:
+         - NGINX example: `kubectl -n ingress-nginx get svc ingress-nginx-controller -o jsonpath='{.status.loadBalancer.ingress[0].ip}{"\n"}{.status.loadBalancer.ingress[0].hostname}{"\n"}'`
+   - Create DNS records at your DNS provider:
+     - If you have an external IP: create A records for both hostnames pointing to that IP
+     - If you have a cloud LB hostname: create CNAME records for both hostnames pointing to that LB hostname
+   - Verify DNS propagation from Windows (PowerShell):
+     - `nslookup staging-api.topdog-ide.com`
+     - `nslookup staging-app.topdog-ide.com`
+     - Or: `Resolve-DnsName staging-api.topdog-ide.com` and `Resolve-DnsName staging-app.topdog-ide.com`
 2. Create namespace and base objects
    - From the repo root:
      - kubectl apply -f deploy/k8s/staging/namespace.yaml
@@ -35,12 +49,14 @@ This runbook describes how to deploy and operate the dedicated staging environme
 - Secrets required:
   - STAGING_KUBECONFIG_B64: base64-encoded kubeconfig with access to the cluster
   - GHCR_PAT: Personal Access Token with package:write (optional if images are public)
-- Triggers: Push to `staging` branch or manual “Run workflow”
+- Triggers: Push to `main` or `staging` (for matching paths) or manual “Run workflow”
 - Steps performed:
   - Build and push frontend and backend images to GHCR with `:staging` and `:${{ github.sha }}` tags
   - Apply namespace/config/secrets/services/deployments/ingress
   - Patch deployments to use the `${{ github.sha }}` images
   - Wait for rollout and smoke-test /health
+
+Tip: The workflow prints the Ingress ADDRESS/hostname after applying it. Use that value when creating DNS records if you haven’t already.
 
 ## Manual deployment (optional)
 - Build and push images locally or via scripts
@@ -59,6 +75,7 @@ This runbook describes how to deploy and operate the dedicated staging environme
 ## Health and smoke tests
 - API health: curl -fsS https://staging-api.topdog-ide.com/health
 - Frontend basic check: open https://staging-app.topdog-ide.com in a browser
+- If you see DNS_PROBE_FINISHED_NXDOMAIN, your DNS records aren’t set or haven’t propagated yet. Re-check One-time DNS setup.
 - In-cluster rollout status:
   - kubectl -n topdog-staging rollout status deployment/qide-backend
   - kubectl -n topdog-staging rollout status deployment/qide-frontend
