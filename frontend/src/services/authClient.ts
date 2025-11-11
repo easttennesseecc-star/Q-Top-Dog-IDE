@@ -37,7 +37,8 @@ export const clearToken = () => {
   localStorage.removeItem(sessionKey);
 };
 
-export const isAuthed = (): boolean => !!getToken() || !!localStorage.getItem('oauth_session_id');
+// A user is considered authenticated only if we have a valid access token
+export const isAuthed = (): boolean => !!getToken();
 
 export async function login(email: string, password: string): Promise<LoginResponse> {
   const res = await fetch(toApi('/api/v1/auth/login'), {

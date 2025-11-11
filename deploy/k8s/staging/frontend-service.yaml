@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: qide-frontend-svc
+  namespace: topdog-staging
+  labels:
+    environment: staging
+spec:
+  selector:
+    app: qide-frontend
+  ports:
+    - name: http
+      port: 80
+      targetPort: 3000
+  type: ClusterIP

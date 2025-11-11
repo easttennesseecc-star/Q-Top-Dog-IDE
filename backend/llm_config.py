@@ -395,18 +395,47 @@ def get_q_assistant_llm() -> Optional[Dict]:
         assigned_model = get_model_for_role("coding")
     
     if not assigned_model:
-        # Try to find best available LLM
-        from llm_pool import get_best_llms_for_operations
-        best = get_best_llms_for_operations(1)
-        if best:
-            return {
-                "id": best[0].get("name"),
-                "name": best[0].get("name"),
-                "source": best[0].get("source"),
-                "status": "auto_selected",
-                "assigned_role": "q_assistant (auto-selected)",
-                "priority_score": best[0].get("priority_score", 0)
-            }
+        # BYOK local-first policy: attempt to prefer a local model (ollama or similar) before any cloud
+        try:
+            from backend.llm_pool import build_llm_report, get_best_llms_for_operations
+            report = build_llm_report()
+            available = report.get("available", [])
+            # Prefer explicit local CLI (ollama) if present
+            local_candidate = None
+            for item in available:
+                nm = (item.get("name") or "").lower()
+                if "ollama" in nm or (item.get("source") == "cli" and "ollama" in nm):
+                    local_candidate = item
+                    break
+            # If no Ollama, look for any local cli
+            if not local_candidate:
+                for item in available:
+                    if item.get("source") == "cli":
+                        local_candidate = item
+                        break
+            if local_candidate:
+                return {
+                    "id": local_candidate.get("name"),
+                    "name": local_candidate.get("name"),
+                    "source": local_candidate.get("source", "local"),
+                    "type": "local",
+                    "status": "auto_selected_local",
+                    "assigned_role": "q_assistant (local-first auto-selected)",
+                    "priority_score": local_candidate.get("priority_score", 0)
+                }
+            # Fallback to previous cloud-first heuristic
+            best = get_best_llms_for_operations(1)
+            if best:
+                return {
+                    "id": best[0].get("name"),
+                    "name": best[0].get("name"),
+                    "source": best[0].get("source"),
+                    "status": "auto_selected",
+                    "assigned_role": "q_assistant (auto-selected)",
+                    "priority_score": best[0].get("priority_score", 0)
+                }
+        except Exception:
+            pass
         return None
     
     # Assigned model found - get full details

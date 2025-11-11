@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: qide-staging-app-config
+  namespace: topdog-staging
+  labels:
+    environment: staging
+data:
+  FRONTEND_URL: "https://staging-app.topdog-ide.com"
+  BACKEND_URL: "https://staging-api.topdog-ide.com"
+  WORKSPACE_PROFILE: "staging"

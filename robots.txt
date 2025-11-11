@@ -1,4 +1,4 @@
-# Q-IDE Robots.txt - Allow all search engines
+# TopDog IDE Robots.txt - Allow all search engines
 
 User-agent: *
 Allow: /
@@ -13,10 +13,8 @@ Disallow: /dist
 # Delay between requests (in seconds)
 Crawl-delay: 1
 
-# Sitemap location
-Sitemap: https://q-ide.com/sitemap.xml
-Sitemap: https://topdog.com/sitemap.xml
-Sitemap: https://quellum.com/sitemap.xml
+# Sitemap location (primary domain)
+Sitemap: https://topdog-ide.com/sitemap.xml
 
 # Google-specific
 User-agent: Googlebot

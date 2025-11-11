@@ -75,7 +75,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   }, []);
 
   const founder = !!user?.is_founder;
-  const isAuthed = !!token || !!localStorage.getItem('oauth_session_id');
+  // Only treat presence of an access token as authenticated
+  const isAuthed = !!token;
 
   const ctx = useMemo<AuthContextShape>(() => ({ loading, user, token, isAuthed, founder, refresh, setToken }), [loading, user, token, isAuthed, founder]);
 

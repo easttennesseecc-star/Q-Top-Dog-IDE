@@ -1,0 +1,154 @@
+name: Deploy to Staging
+
+on:
+  workflow_dispatch:
+    inputs:
+      ref:
+        description: Git ref to deploy (branch, tag, or SHA)
+        required: false
+        default: main
+  push:
+    branches:
+      - staging
+    paths:
+      - backend/**
+      - frontend/**
+      - deploy/k8s/staging/**
+
+permissions:
+  contents: read
+  packages: write
+
+env:
+  REGISTRY: ghcr.io
+  IMAGE_FE: ghcr.io/${{ github.repository }}/qide-frontend
+  IMAGE_BE: ghcr.io/${{ github.repository }}/qide-backend
+  NAMESPACE: topdog-staging
+  STAGING_FRONTEND_HOST: staging-app.topdog-ide.com
+  STAGING_API_HOST: staging-api.topdog-ide.com
+
+jobs:
+  build-and-push:
+    name: Build and push images
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.inputs.ref || github.ref }}
+
+      - name: Log in to GHCR
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Extract metadata (tags, labels)
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: |
+            ${{ env.IMAGE_FE }}
+            ${{ env.IMAGE_BE }}
+          tags: |
+            type=sha,format=long
+            type=raw,value=staging
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build and push frontend
+        uses: docker/build-push-action@v6
+        with:
+          context: ./frontend
+          file: ./frontend/Dockerfile
+          push: true
+          tags: ${{ env.IMAGE_FE }}:${{ github.sha }},${{ env.IMAGE_FE }}:staging
+          labels: ${{ steps.meta.outputs.labels }}
+
+      - name: Build and push backend
+        uses: docker/build-push-action@v6
+        with:
+          context: ./backend
+          file: ./backend/Dockerfile
+          push: true
+          tags: ${{ env.IMAGE_BE }}:${{ github.sha }},${{ env.IMAGE_BE }}:staging
+          labels: ${{ steps.meta.outputs.labels }}
+
+  deploy:
+    name: Apply manifests and rollout
+    needs: build-and-push
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup kubectl
+        uses: azure/setup-kubectl@v4
+        with:
+          version: 'latest'
+
+      - name: Write kubeconfig
+        run: |
+          mkdir -p ~/.kube
+          echo "${KUBECONFIG_B64}" | base64 -d > ~/.kube/config
+        env:
+          KUBECONFIG_B64: ${{ secrets.STAGING_KUBECONFIG_B64 }}
+
+      - name: Ensure namespace exists
+        run: |
+          kubectl apply -f deploy/k8s/staging/namespace.yaml
+
+      - name: Create/Update GHCR image pull secret (optional)
+        if: env.GHCR_PAT != ''
+        run: |
+          kubectl -n $NAMESPACE delete secret ghcr-pull --ignore-not-found
+          kubectl -n $NAMESPACE create secret docker-registry ghcr-pull \
+            --docker-server=${REGISTRY} \
+            --docker-username=${GITHUB_ACTOR} \
+            --docker-password='${GHCR_PAT}'
+          kubectl -n $NAMESPACE patch serviceaccount default -p '{"imagePullSecrets":[{"name":"ghcr-pull"}]}' --type=merge
+        env:
+          REGISTRY: ${{ env.REGISTRY }}
+          NAMESPACE: ${{ env.NAMESPACE }}
+          GITHUB_ACTOR: ${{ github.actor }}
+          GHCR_PAT: ${{ secrets.GHCR_PAT }}
+
+      - name: Apply staging config and secrets
+        run: |
+          kubectl apply -f deploy/k8s/staging/configmap.yaml
+          kubectl apply -f deploy/k8s/staging/secrets.yaml
+
+      - name: Apply services and deployments
+        run: |
+          kubectl apply -f deploy/k8s/staging/backend-service.yaml
+          kubectl apply -f deploy/k8s/staging/frontend-service.yaml
+          kubectl apply -f deploy/k8s/staging/backend-deployment.yaml
+          kubectl apply -f deploy/k8s/staging/frontend-deployment.yaml
+
+      - name: Update images to this commit
+        env:
+          IMAGE_FE: ${{ env.IMAGE_FE }}
+          IMAGE_BE: ${{ env.IMAGE_BE }}
+          SHA: ${{ github.sha }}
+        run: |
+          kubectl -n $NAMESPACE set image deployment/qide-frontend frontend=$IMAGE_FE:$SHA
+          kubectl -n $NAMESPACE set image deployment/qide-backend backend=$IMAGE_BE:$SHA
+
+      - name: Apply ingress
+        run: |
+          kubectl apply -f deploy/k8s/staging/ingress.yaml
+
+      - name: Wait for rollout
+        env:
+          NAMESPACE: ${{ env.NAMESPACE }}
+        run: |
+          set -e
+          kubectl -n $NAMESPACE rollout status deployment/qide-backend --timeout=120s
+          kubectl -n $NAMESPACE rollout status deployment/qide-frontend --timeout=120s
+
+      - name: Smoke test API health
+        run: |
+          curl -fsS https://$STAGING_API_HOST/health | tee /tmp/health.json
+          cat /tmp/health.json | jq . >/dev/null 2>&1 || true

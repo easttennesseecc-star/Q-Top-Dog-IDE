@@ -36,7 +36,7 @@ const BackgroundSettings = React.lazy(() => import('./components/BackgroundSetti
 const OAuthCallback = React.lazy(() => import('./components/OAuthCallback'));
 
 type SelectedTab = "viewer" | "account" | "builds" | "extensions" | "settings" | "learning" | "llm" | "config" | "phone" | "billing" | "pricing" | "medical" | "science" | "rules";
-type WorkspaceProfile = 'default' | 'medical' | 'science';
+type WorkspaceProfile = 'default' | 'medical' | 'science' | 'staging';
 
 interface AppProps { initialTab?: SelectedTab }
 
@@ -63,10 +63,12 @@ function App({ initialTab }: AppProps) {
   const [logsMap, setLogsMap] = useState<Record<string, string[]>>({});
   // Workspace profile gating
   const workspaceProfile = ((window as any).__WORKSPACE_PROFILE || 'default') as WorkspaceProfile;
+  const isStaging = workspaceProfile === 'staging' || /(^|\.)staging[-.]|(^|\.)staging\./i.test(window.location.hostname);
   const allowedTabsByProfile: Record<WorkspaceProfile, SelectedTab[]> = {
     default: ['viewer','account','builds','extensions','settings','learning','llm','config','phone','billing','pricing','rules'],
     medical: ['viewer','account','medical','builds','llm','config','billing','settings','learning','pricing','rules'],
     science: ['viewer','account','science','builds','llm','config','billing','settings','learning','pricing','rules'],
+    staging: ['viewer','account','builds','extensions','settings','learning','llm','config','phone','billing','pricing','rules'],
   };
   const isTabAllowed = (t: SelectedTab) => allowedTabsByProfile[workspaceProfile].includes(t);
 
@@ -303,7 +305,8 @@ function App({ initialTab }: AppProps) {
     }
   }, [tab]);
 
-  const authed = !!localStorage.getItem('q_ide_access_token') || !!localStorage.getItem('oauth_session_id');
+  // Only consider a real access token for authenticated UI state
+  const authed = !!localStorage.getItem('q_ide_access_token');
 
   return (
     <div className="w-full h-screen overflow-hidden flex flex-col bg-[var(--bg)] text-[var(--text)]">
@@ -321,6 +324,11 @@ function App({ initialTab }: AppProps) {
             <div className="header-glass flex items-center gap-3">
               <div className="text-xl font-extrabold tracking-tight text-cyan-300">Top Dog</div>
               <div className="text-[10px] text-cyan-400/60 font-mono px-2 py-0.5 rounded">v0.1.0</div>
+              {isStaging && (
+                <span className="ml-1 px-2 py-0.5 text-[10px] font-semibold rounded border border-yellow-400/40 bg-yellow-500/10 text-yellow-200" title="Staging environment">
+                  STAGING
+                </span>
+              )}
             </div>
           </div>
 

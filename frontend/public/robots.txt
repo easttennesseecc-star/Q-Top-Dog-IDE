@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+
+# Disallow private app routes that require authentication
+Disallow: /app/
+
+Sitemap: https://topdog-ide.com/sitemap.xml

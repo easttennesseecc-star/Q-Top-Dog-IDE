@@ -9,8 +9,8 @@ Endpoints for:
 """
 
 from fastapi import APIRouter, HTTPException
-from pydantic import BaseModel
-from typing import Dict, List, Optional
+from pydantic import BaseModel, ConfigDict
+from typing import Dict, List, Optional, Any
 from backend.llm_config import (
     CLOUD_LLMS, LOCAL_MODELS, LLM_ROLES,
     load_api_keys, save_api_key, delete_api_key, get_api_key,
@@ -24,6 +24,7 @@ from backend.llm_auto_auth import (
     get_auto_setup_candidates, handle_missing_credentials_action,
     get_auth_status_for_startup
 )
+from backend.llm_pool import build_llm_report
 
 router = APIRouter(prefix="/llm_config", tags=["llm_config"])
 
@@ -36,6 +37,8 @@ class APIKeyRequest(BaseModel):
 class RoleAssignmentRequest(BaseModel):
     role: str
     model_name: str
+    # Suppress protected namespace warning for field name 'model_name'
+    model_config = ConfigDict(protected_namespaces=())
 
 
 @router.get("/providers")
@@ -51,7 +54,7 @@ async def get_providers():
 @router.get("/roles")
 async def get_roles():
     """Get all available LLM roles and their recommendations."""
-    result = {}
+    result: Dict[str, Any] = {}
     for role_id, role_info in LLM_ROLES.items():
         result[role_id] = {
             **role_info,
@@ -177,7 +180,7 @@ async def get_setup_instructions_endpoint(provider: str):
     if provider not in CLOUD_LLMS and provider not in LOCAL_MODELS:
         raise HTTPException(status_code=404, detail=f"Provider '{provider}' not found")
     
-    config = CLOUD_LLMS.get(provider) or LOCAL_MODELS.get(provider)
+    config: Dict[str, Any] = (CLOUD_LLMS.get(provider) or LOCAL_MODELS.get(provider) or {})
     
     return {
         "provider": provider,
@@ -222,6 +225,40 @@ async def get_q_assistant_config():
         response["warning"] = f"API credentials needed for {llm['name']}"
     
     return response
+
+@router.get("/local_detect")
+async def detect_local_llms():
+    """Detect locally available LLM tooling (BYOK local-first onboarding).
+
+    Returns available local CLI / model entries and suggests an auto-assignment
+    for Q Assistant if none is currently configured.
+    """
+    report = build_llm_report()
+    available = report.get("available", [])
+    local_entries = [i for i in available if (i.get("source") in ("cli", "local", "service", "process")) and ("ollama" in (i.get("name") or "").lower() or i.get("source") == "cli")]
+    suggestion = None
+    # Suggest Ollama first
+    for item in local_entries:
+        if "ollama" in (item.get("name") or "").lower():
+            suggestion = item
+            break
+    if not suggestion and local_entries:
+        suggestion = local_entries[0]
+    # Check if q_assistant already configured
+    from backend.llm_config import get_model_for_role, save_role_assignment
+    already = get_model_for_role("q_assistant") or get_model_for_role("coding")
+    auto_assigned = False
+    if not already and suggestion:
+        # Persist assignment so subsequent calls report configured
+        save_role_assignment("q_assistant", suggestion.get("name"))
+        auto_assigned = True
+    return {
+        "local_llms": local_entries,
+        "total_local": len(local_entries),
+        "suggestion": suggestion,
+        "auto_assigned": auto_assigned,
+        "assigned_model": get_model_for_role("q_assistant") or get_model_for_role("coding")
+    }
 
 
 @router.get("/status")

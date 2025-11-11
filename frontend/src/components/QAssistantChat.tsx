@@ -114,11 +114,31 @@ export default function QAssistantChat({ activePanel, setActivePanel: _setActive
               message: `✓ Q Assistant using: ${config.llm.name}`,
               type: "info"
             });
-          } else if (config.status === "not_configured") {
-            setToast({
-              message: `⚠ Q Assistant needs an LLM. Go to LLM Setup to configure one.`,
-              type: "info"
-            });
+          } else if (config.status === "not_configured" || config.status === "needs_credentials") {
+            // Attempt local detection & auto-assignment (BYOK local-first)
+            try {
+              const detectRes = await fetch(toApi('/llm_config/local_detect'));
+              if (detectRes.ok) {
+                const detect = await detectRes.json();
+                if (detect.auto_assigned && detect.assigned_model) {
+                  setToast({
+                    message: `✓ Local model auto-selected: ${detect.assigned_model} (BYOK)`,
+                    type: 'success'
+                  });
+                  // Re-fetch config now that assignment persisted
+                  const refetch = await fetch(toApi('/llm_config/q_assistant'));
+                  if (refetch.ok) {
+                    const refreshed = await refetch.json() as QAssistantLLMConfig;
+                    setLLMConfig(refreshed);
+                  }
+                } else {
+                  setToast({
+                    message: '⚠ No local model detected. Install Ollama (https://ollama.ai) then reopen Q Assistant.',
+                    type: 'error'
+                  });
+                }
+              }
+            } catch {}
           }
         }
       } catch (e) {

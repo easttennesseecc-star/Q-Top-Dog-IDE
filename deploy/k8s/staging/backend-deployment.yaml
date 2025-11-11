@@ -1,0 +1,79 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: qide-backend
+  namespace: topdog-staging
+  labels:
+    app: qide-backend
+    environment: staging
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: qide-backend
+  template:
+    metadata:
+      labels:
+        app: qide-backend
+        environment: staging
+    spec:
+      containers:
+        - name: backend
+          image: ghcr.io/easttennesseecc-star/Q-Top-Dog-IDE/qide-backend:staging
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8000
+          env:
+            - name: FRONTEND_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: qide-staging-app-config
+                  key: FRONTEND_URL
+            - name: BACKEND_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: qide-staging-app-config
+                  key: BACKEND_URL
+            - name: JWT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: qide-staging-app-secrets
+                  key: JWT_SECRET
+            - name: STRIPE_PUBLIC_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: qide-staging-app-secrets
+                  key: STRIPE_PUBLIC_KEY
+            - name: STRIPE_SECRET_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: qide-staging-app-secrets
+                  key: STRIPE_SECRET_KEY
+            - name: STRIPE_WEBHOOK_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: qide-staging-app-secrets
+                  key: STRIPE_WEBHOOK_SECRET
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 8000
+            initialDelaySeconds: 10
+            periodSeconds: 15
+            timeoutSeconds: 3
+            failureThreshold: 3
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 8000
+            initialDelaySeconds: 20
+            periodSeconds: 30
+            timeoutSeconds: 3
+            failureThreshold: 3
+          resources:
+            requests:
+              cpu: "200m"
+              memory: "256Mi"
+            limits:
+              cpu: "400m"
+              memory: "512Mi"

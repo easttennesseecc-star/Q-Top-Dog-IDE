@@ -188,6 +188,10 @@ export const UnifiedSignInHub: React.FC = () => {
             <p className="text-sm text-slate-400">
               Connect GitHub, Copilot, Gemini, OpenAI, and more
             </p>
+            <div className="mt-4 flex items-center justify-center gap-3">
+              <a href="/login" className="text-xs px-3 py-1.5 rounded-md border border-cyan-400/30 hover:border-cyan-400 text-cyan-300">Sign in with email</a>
+              <a href="/signup" className="text-xs px-3 py-1.5 rounded-md bg-cyan-600/20 border border-cyan-400/40 hover:bg-cyan-600/30 text-cyan-200">Create free account</a>
+            </div>
           </div>
 
           {/* Message */}

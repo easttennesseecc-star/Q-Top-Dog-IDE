@@ -88,3 +88,25 @@ temp/
 .Spotlight-V100
 .Trashes
 ehthumbs.db
+
+# Ephemeral runtime and snapshot artifacts (added by staging/BYOK work)
+backend/snapshots/
+backend/var/spool/
+var/spool/
+data/build_plans/
+data/tasks.json
+data/user_notes/
+*.db
+
+# Ignore skipped test placeholders
+backend/test_*.skip
+
+# Generated helm render outputs
+helm-render-*.yaml
+
+# Local operational state files
+.assistant_inbox.json
+.pending_actions.json
+.sms_logs/
+.email_tokens.json
+backend/.email_tokens.json
