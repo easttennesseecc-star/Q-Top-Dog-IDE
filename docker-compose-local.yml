@@ -68,8 +68,12 @@ services:
       dockerfile: frontend/Dockerfile
     container_name: q-ide-frontend
     environment:
+      # Legacy vars (not required)
       REACT_APP_API_URL: http://localhost:8000
       REACT_APP_ENVIRONMENT: development
+      # Runtime-injected vars for env.js
+      BACKEND_URL: http://localhost:8000
+      FRONTEND_URL: http://localhost:3000
     ports:
       - "3000:3000"
     depends_on:
@@ -89,7 +93,7 @@ services:
     image: dpage/pgadmin4:latest
     container_name: q-ide-pgadmin
     environment:
-      PGADMIN_DEFAULT_EMAIL: admin@q-ide.com
+      PGADMIN_DEFAULT_EMAIL: admin@topdog-ide.com
       PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_PASSWORD:-admin}
     ports:
       - "5050:80"

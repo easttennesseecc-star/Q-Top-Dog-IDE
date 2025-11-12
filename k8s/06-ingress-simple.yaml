@@ -43,7 +43,7 @@ metadata:
 spec:
   ingressClassName: nginx
   rules:
-  - host: q-ide.com
+  - host: topdog-ide.com
     http:
       paths:
       - path: /
@@ -53,7 +53,7 @@ spec:
             name: frontend
             port:
               number: 3000
-  - host: www.q-ide.com
+  - host: www.topdog-ide.com
     http:
       paths:
       - path: /
@@ -63,7 +63,7 @@ spec:
             name: frontend
             port:
               number: 3000
-  - host: api.q-ide.com
+  - host: api.topdog-ide.com
     http:
       paths:
       - path: /

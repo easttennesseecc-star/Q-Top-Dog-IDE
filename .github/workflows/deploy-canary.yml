@@ -1,4 +1,9 @@
 name: Canary/Blue-Green Deploy
+  # trigger: canary-rollout-commit (non-functional change to force pipeline)
+
+concurrency:
+  group: canary-deploy-${{ github.ref }}
+  cancel-in-progress: true
 
 on:
   workflow_dispatch:
@@ -11,21 +16,301 @@ on:
         description: "Deployment strategy (canary|blue-green)"
         required: true
         default: "canary"
+      namespace:
+        description: "Target Kubernetes namespace"
+        required: true
+        default: "topdog"
       slo_burn_rate_threshold:
         description: "Max allowed SLO burn rate before auto-rollback"
         required: true
         default: "2.0"
+      tcu_threshold:
+        description: "Max allowed Total Cost of Unreliability (USD) over window"
+        required: false
+        default: ""
+      consistency_threshold:
+        description: "Min required consistency score (0..1)"
+        required: false
+        default: ""
+      hallucination_threshold:
+        description: "Max allowed hallucination severity (0..1)"
+        required: false
+        default: ""
+      slo_burn_rate_sim:
+        description: "Fallback SLO burn rate value used when PROM_URL is not set"
+        required: false
+        default: "0.0"
+      canary_weight:
+        description: "NGINX canary traffic weight percentage (0-100)"
+        required: false
+        default: "10"
+      prod_confirm:
+        description: "Type EXACTLY: PROCEED-PROD to allow prod deployment"
+        required: false
+        default: ""
+  push:
+    branches: [ main ]
+    tags: [ 'v*' ]
+    paths:
+      - 'backend/**'
+      - 'deploy/**'
+      - 'app.yaml'
+      - '.github/scripts/**'
+      - '.github/workflows/deploy-canary.yml'
+  pull_request:
+    branches: [ main ]
+    paths:
+      - 'backend/**'
+      - 'pyproject.toml'
+      - '.github/workflows/deploy-canary.yml'
+      - 'requirements-dev.txt'
+      - 'backend/requirements.txt'
 
 jobs:
-  canary_deploy:
+  quality:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
 
-      - name: Deploy (placeholder)
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies (runtime + dev)
+        shell: bash
         run: |
-          echo "Deploying ${{ github.event.inputs.strategy }} to ${{ github.event.inputs.environment }}..."
-          # TODO: Add your real deploy steps here (kubectl/helm/tauri updater/etc.)
+          set -euo pipefail
+          python -m pip install --upgrade pip
+          pip install -r backend/requirements.txt
+          if [[ -f requirements-dev.txt ]]; then pip install -r requirements-dev.txt; fi
+
+      - name: Ruff JSON reports (artifact)
+        shell: bash
+        continue-on-error: true
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+        run: |
+          set -euo pipefail
+          ruff check . --output-format=json > ruff-enforced.json || true
+          ruff check . --select B,UP,SIM,C4,RUF --output-format=json > ruff-expanded.json || true
+          python create_ruff_summary.py || true
+
+      - name: Upload Ruff artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: ruff-reports
+          path: |
+            ruff-enforced.json
+            ruff-expanded.json
+            ruff-summary.json
+            ruff-report.md
+
+      - name: Ruff lint (fail-fast)
+        shell: bash
+        run: |
+          set -euo pipefail
+          echo "Ruff version: $(ruff --version)"
+          START=$(date +%s)
+          set +e
+          ruff check . --output-format=github
+          STATUS=$?
+          set -e
+          END=$(date +%s)
+          echo "Ruff duration: $((END-START))s"
+          exit $STATUS
+
+      - name: "Ruff expanded rules (enforced: B, UP, SIM, C4, RUF)"
+        shell: bash
+        run: |
+          set -euo pipefail
+          ruff check . --select B,UP,SIM,C4,RUF --output-format=github
+
+      - name: Mypy typecheck (fail-fast)
+        shell: bash
+        run: |
+          set -euo pipefail
+          START=$(date +%s)
+          set +e
+          python -m mypy backend/services backend/routes backend/models
+          STATUS=$?
+          set -e
+          END=$(date +%s)
+          echo "Mypy duration: $((END-START))s"
+          exit $STATUS
+
+  canary_deploy:
+    needs: [quality]
+    runs-on: ubuntu-latest
+    if: github.event_name == 'workflow_dispatch' || github.event_name == 'push'
+    env:
+      STRATEGY: ${{ github.event.inputs.strategy || 'canary' }}
+      NS: ${{ github.event.inputs.namespace || 'topdog' }}
+      ENV_INPUT: ${{ github.event.inputs.environment || 'staging' }}
+      CANARY_WEIGHT: ${{ github.event.inputs.canary_weight || '10' }}
+      PROD_CONFIRM: ${{ github.event.inputs.prod_confirm }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies (runtime + dev)
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m pip install --upgrade pip
+          pip install -r backend/requirements.txt
+          if [[ -f requirements-dev.txt ]]; then pip install -r requirements-dev.txt; fi
+
+      
+
+      - name: Set up Helm
+        uses: azure/setup-helm@v4
+
+      - name: Set up kubectl
+        uses: azure/setup-kubectl@v4
+
+      - name: Configure kubeconfig
+        shell: bash
+        env:
+          KUBE_CONFIG_B64: ${{ secrets.KUBE_CONFIG_B64 }}
+          KUBE_CONFIG: ${{ secrets.KUBE_CONFIG }}
+        run: |
+          set -euo pipefail
+          mkdir -p "$HOME/.kube"
+          if [[ -n "${KUBE_CONFIG_B64:-}" ]]; then
+            echo "$KUBE_CONFIG_B64" | base64 -d > "$HOME/.kube/config"
+          elif [[ -n "${KUBE_CONFIG:-}" ]]; then
+            echo "$KUBE_CONFIG" > "$HOME/.kube/config"
+          else
+            echo "KUBE_CONFIG[_B64] secret not provided" >&2
+            exit 1
+          fi
+          chmod 600 "$HOME/.kube/config"
+
+      - name: Select values file by environment and derive hosts
+        id: select_values
+        shell: bash
+        run: |
+          set -euo pipefail
+          ENV_INPUT="${ENV_INPUT:-staging}"
+          # If this is a version tag like v1.2.3, treat as production deploy
+          if [[ "${GITHUB_REF:-}" == refs/tags/v* ]]; then
+            ENV_INPUT="prod"
+            echo "ENV_INPUT=prod" >> "$GITHUB_ENV"
+            IS_TAG_PROD=1
+          else
+            IS_TAG_PROD=0
+          fi
+          # Require explicit confirmation for prod when not using a tag
+          if [[ "$ENV_INPUT" == "prod" && "$IS_TAG_PROD" -ne 1 ]]; then
+            if [[ "${PROD_CONFIRM}" != "PROCEED-PROD" ]]; then
+              echo "Prod deployment blocked: confirmation token missing or incorrect." >&2
+              exit 1
+            fi
+          fi
+          if [[ "$ENV_INPUT" == "staging" ]]; then
+            # Use canonical TopDog hosts for staging (drop legacy q-ide* domains)
+            echo "values_file=deploy/helm/topdog/values-topdog.yaml" >> "$GITHUB_OUTPUT"
+            echo "hosts_csv=topdog-ide.com,www.topdog-ide.com" >> "$GITHUB_OUTPUT"
+          else
+            echo "values_file=deploy/helm/topdog/values-topdog.yaml" >> "$GITHUB_OUTPUT"
+            echo "hosts_csv=topdog-ide.com,www.topdog-ide.com" >> "$GITHUB_OUTPUT"
+          fi
+          echo "canary_values=deploy/helm/topdog/values-canary.yaml" >> "$GITHUB_OUTPUT"
+
+      - name: Helm dry-run render
+        shell: bash
+        run: |
+          set -euo pipefail
+          helm upgrade --install topdog-canary deploy/helm/topdog \
+            -f "${{ steps.select_values.outputs.values_file }}" \
+            -f "${{ steps.select_values.outputs.canary_values }}" \
+            --namespace "$NS" \
+            --create-namespace \
+            --dry-run --debug | sed -n '1,200p'
+
+      - name: Deploy release (canary or blue-green)
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [[ "$STRATEGY" == "canary" ]]; then
+            RELEASE="topdog-canary"
+          else
+            RELEASE="topdog-green"
+          fi
+          helm upgrade --install "$RELEASE" deploy/helm/topdog \
+            -f "${{ steps.select_values.outputs.values_file }}" \
+            -f "${{ steps.select_values.outputs.canary_values }}" \
+            --namespace "$NS" --create-namespace
+
+      - name: "Slack thread start (optional)"
+        shell: bash
+        env:
+          SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+          SLACK_CHANNEL: ${{ secrets.SLACK_CHANNEL }}
+        run: |
+          set -euo pipefail
+          if [[ -n "${SLACK_BOT_TOKEN:-}" && -n "${SLACK_CHANNEL:-}" ]]; then
+            python .github/scripts/slack_post.py --bot-token "$SLACK_BOT_TOKEN" --channel "$SLACK_CHANNEL" \
+              --text "🚀 Canary started: ${GITHUB_REPOSITORY}@${GITHUB_SHA::7} ns=${NS} strategy=${STRATEGY} env=${ENV_INPUT}" > slack_ts.txt || true
+            TS=$(cat slack_ts.txt 2>/dev/null || true)
+            if [[ -n "$TS" ]]; then echo "SLACK_THREAD_TS=$TS" >> "$GITHUB_ENV"; fi
+          fi
+
+      - name: Wait for rollout readiness
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [[ "$STRATEGY" == "canary" ]]; then
+            RELEASE="topdog-canary"
+          else
+            RELEASE="topdog-green"
+          fi
+          DEPLOY="${RELEASE}-topdog"
+          kubectl -n "$NS" rollout status deployment "$DEPLOY" --timeout=300s
+
+      - name: "Canary health re-check (pre-promotion)"
+        shell: bash
+        env:
+          SLO_BURN_RATE_THRESHOLD: ${{ github.event.inputs.slo_burn_rate_threshold || '2.0' }}
+        run: |
+          set -euo pipefail
+          echo "Re-checking canary health up to 3x..."
+          ATTEMPTS=3
+          for i in $(seq 1 $ATTEMPTS); do
+            echo "Attempt $i"
+            if python tools/slo_burn_rate_gate.py --threshold "${SLO_BURN_RATE_THRESHOLD}"; then
+              echo "Health OK"
+              exit 0
+            fi
+            if [[ $i -lt $ATTEMPTS ]]; then sleep 30; fi
+          done
+          echo "Health check failed after ${ATTEMPTS} attempts"
+          exit 1
+
+      - name: Smoke test canary/green service
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [[ "$STRATEGY" == "canary" ]]; then RELEASE="topdog-canary"; else RELEASE="topdog-green"; fi
+          SERVICE_NAME="${RELEASE}-topdog"
+          bash .github/scripts/smoke_test.sh "$NS" "$SERVICE_NAME" /health
+
+      - name: Configure NGINX weighted canary ingress
+        if: ${{ env.STRATEGY == 'canary' || env.STRATEGY == 'blue-green' }}
+        shell: bash
+        env:
+          NS: ${{ env.NS }}
+          HOSTS_CSV: ${{ steps.select_values.outputs.hosts_csv }}
+          WEIGHT: ${{ env.CANARY_WEIGHT }}
+        run: |
+          set -euo pipefail
+          RELEASE="${{ env.STRATEGY == 'canary' && 'topdog-canary' || 'topdog-green' }}"
+          bash .github/scripts/create_canary_ingress.sh "$NS" "$RELEASE" "$HOSTS_CSV" "$WEIGHT"
 
       - name: Export Prometheus credentials (if provided)
         env:
@@ -35,22 +320,73 @@ jobs:
         run: |
           if [[ -n "${PROM_URL_SECRET}" ]]; then echo "PROM_URL=${PROM_URL_SECRET}" >> "$GITHUB_ENV"; fi
           if [[ -n "${PROM_TOKEN_SECRET}" ]]; then echo "PROM_TOKEN=${PROM_TOKEN_SECRET}" >> "$GITHUB_ENV"; fi
+          # Fallback SLO burn rate for simulation when PROM_URL is not provided
+          if [[ -z "${PROM_URL_SECRET}" ]]; then echo "SLO_BURN_RATE=${{ github.event.inputs.slo_burn_rate_sim }}" >> "$GITHUB_ENV"; fi
 
       - name: SLO Burn Rate Gate
         env:
-          SLO_BURN_RATE_THRESHOLD: ${{ github.event.inputs.slo_burn_rate_threshold }}
+          SLO_BURN_RATE_THRESHOLD: ${{ github.event.inputs.slo_burn_rate_threshold || '2.0' }}
         run: |
           python -m pip install --upgrade pip
           python -c "import sys; print(sys.version)"
-          python tools/slo_burn_rate_gate.py --threshold "$SLO_BURN_RATE_THRESHOLD"
+          ARGS=(--threshold "$SLO_BURN_RATE_THRESHOLD")
+          if [[ -n "${{ github.event.inputs.tcu_threshold }}" ]]; then ARGS+=(--tcu-threshold "${{ github.event.inputs.tcu_threshold }}"); fi
+          if [[ -n "${{ github.event.inputs.consistency_threshold }}" ]]; then ARGS+=(--consistency-threshold "${{ github.event.inputs.consistency_threshold }}"); fi
+          if [[ -n "${{ github.event.inputs.hallucination_threshold }}" ]]; then ARGS+=(--hallucination-threshold "${{ github.event.inputs.hallucination_threshold }}"); fi
+          python tools/slo_burn_rate_gate.py "${ARGS[@]}"
 
       - name: Promote rollout
         if: success()
+        shell: bash
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+          TEAMS_WEBHOOK_URL: ${{ secrets.TEAMS_WEBHOOK_URL }}
         run: |
-          echo "Promoting rollout for ${{ github.event.inputs.strategy }} to ${{ github.event.inputs.environment }}"
+          set -euo pipefail
+          # Promote by updating the stable release to match canary/green config
+          if [[ "$STRATEGY" == "canary" ]]; then
+            SRC_RELEASE="topdog-canary"
+          else
+            SRC_RELEASE="topdog-green"
+          fi
+          # Upgrade stable release with the environment values (not canary scale tuning)
+          helm upgrade --install topdog deploy/helm/topdog \
+            -f "${{ steps.select_values.outputs.values_file }}" \
+            --namespace "$NS"
+          # Optionally scale down old release
+          kubectl -n "$NS" scale deployment "${SRC_RELEASE}-topdog" --replicas=0 || true
+          # Remove temporary canary ingress resources
+          for i in $(kubectl -n "$NS" get ingress -o name | grep canary-ingress- || true); do kubectl -n "$NS" delete "$i" || true; done
+          echo "Promotion completed"
+          # Notifications
+          SLACK_TEXT="✅ Promotion completed: $GITHUB_REPOSITORY@${GITHUB_SHA::7} -> ns=$NS strategy=$STRATEGY env=$ENV_INPUT"
+          if [[ -n "${SLACK_WEBHOOK_URL:-}" ]]; then curl -X POST -H 'Content-type: application/json' --data "{\"text\":\"$SLACK_TEXT\"}" "$SLACK_WEBHOOK_URL"; fi
+          if [[ -n "${TEAMS_WEBHOOK_URL:-}" ]]; then curl -H 'Content-Type: application/json' -d "{\"text\":\"$SLACK_TEXT\"}" "$TEAMS_WEBHOOK_URL"; fi
 
       - name: Auto-rollback
         if: failure()
+        shell: bash
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+          TEAMS_WEBHOOK_URL: ${{ secrets.TEAMS_WEBHOOK_URL }}
+          SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+          SLACK_CHANNEL: ${{ secrets.SLACK_CHANNEL }}
         run: |
-          echo "Auto-rollback triggered due to SLO burn rate gate failure"
-          # TODO: add rollback command(s)
+          set -euo pipefail
+          echo "Auto-rollback triggered due to SLO gate failure"
+          if [[ "$STRATEGY" == "canary" ]]; then
+            RELEASE="topdog-canary"
+          else
+            RELEASE="topdog-green"
+          fi
+          # Rollback by uninstalling the temporary release and cleaning canary ingress
+          helm -n "$NS" uninstall "$RELEASE" || true
+          for i in $(kubectl -n "$NS" get ingress -o name | grep canary-ingress- || true); do kubectl -n "$NS" delete "$i" || true; done
+          # Notifications
+          SLACK_TEXT="🚨 Auto-rollback: $GITHUB_REPOSITORY@${GITHUB_SHA::7} ns=$NS strategy=$STRATEGY env=$ENV_INPUT"
+          if [[ -n "${SLACK_WEBHOOK_URL:-}" ]]; then curl -X POST -H 'Content-type: application/json' --data "{\"text\":\"$SLACK_TEXT\"}" "$SLACK_WEBHOOK_URL"; fi
+          if [[ -n "${TEAMS_WEBHOOK_URL:-}" ]]; then curl -H 'Content-Type: application/json' -d "{\"text\":\"$SLACK_TEXT\"}" "$TEAMS_WEBHOOK_URL"; fi
+          if [[ -n "${SLACK_BOT_TOKEN:-}" && -n "${SLACK_CHANNEL:-}" && -n "${SLACK_THREAD_TS:-}" ]]; then
+            python .github/scripts/slack_post.py --bot-token "$SLACK_BOT_TOKEN" --channel "$SLACK_CHANNEL" \
+              --text "SLO failure details: threshold=${SLO_BURN_RATE_THRESHOLD}" --thread-ts "$SLACK_THREAD_TS" >/dev/null || true
+          fi

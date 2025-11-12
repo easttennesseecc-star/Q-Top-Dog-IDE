@@ -52,12 +52,12 @@ spec:
   ingressClassName: nginx
   tls:
   - hosts:
-    - q-ide.com
-    - www.q-ide.com
-    - api.q-ide.com
-    secretName: q-ide-tls
+    - topdog-ide.com
+    - www.topdog-ide.com
+    - api.topdog-ide.com
+    secretName: topdog-ide-tls
   rules:
-  - host: q-ide.com
+  - host: topdog-ide.com
     http:
       paths:
       - path: /
@@ -67,7 +67,7 @@ spec:
             name: frontend
             port:
               number: 3000
-  - host: www.q-ide.com
+  - host: www.topdog-ide.com
     http:
       paths:
       - path: /
@@ -77,7 +77,7 @@ spec:
             name: frontend
             port:
               number: 3000
-  - host: api.q-ide.com
+  - host: api.topdog-ide.com
     http:
       paths:
       - path: /

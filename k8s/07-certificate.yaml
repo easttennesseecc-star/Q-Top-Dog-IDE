@@ -8,7 +8,7 @@ metadata:
 spec:
   acme:
     server: https://acme-v02.api.letsencrypt.org/directory
-    email: admin@q-ide.com
+    email: admin@topdog-ide.com
     privateKeySecretRef:
       name: letsencrypt-prod
     solvers:
@@ -20,16 +20,16 @@ spec:
 apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
-  name: q-ide-cert
+  name: topdog-ide-cert
   namespace: q-ide
   labels:
     app: q-ide
 spec:
-  secretName: q-ide-tls
+  secretName: topdog-ide-tls
   issuerRef:
     name: letsencrypt-prod
     kind: ClusterIssuer
   dnsNames:
-  - q-ide.com
-  - www.q-ide.com
-  - api.q-ide.com
+  - topdog-ide.com
+  - www.topdog-ide.com
+  - api.topdog-ide.com
