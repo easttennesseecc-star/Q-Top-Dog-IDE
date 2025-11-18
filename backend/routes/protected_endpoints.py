@@ -301,7 +301,7 @@ async def get_user_tier(
         raise HTTPException(status_code=401, detail="X-User-ID header required")
     
     # Get tier info
-    require_tier_access(user_id=user_id)
+    await require_tier_access(user_id=user_id)
     
     # Get rate limit
     rate_check = rate_limiter.check_limit(user_id)
