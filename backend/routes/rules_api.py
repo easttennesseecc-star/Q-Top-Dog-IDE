@@ -3,7 +3,7 @@ Rules Management API
 Endpoints for creating, updating, and managing user-defined rules.
 """
 
-from fastapi import APIRouter, HTTPException, Body, Query
+from fastapi import APIRouter, HTTPException, Query
 from typing import List, Optional, Dict, Any
 from pydantic import BaseModel, Field
 from datetime import datetime

@@ -6,7 +6,6 @@ Validates caching, timeout protection, error recovery, and performance
 import pytest
 import asyncio
 import time
-from typing import List
 from unittest.mock import patch, MagicMock
 
 import sys
@@ -15,8 +14,6 @@ sys.path.insert(0, '/backend')
 from services.semantic_analysis import (
     SemanticCache,
     SemanticAnalyzer,
-    ParseMetadata,
-    CompletionItem,
     get_analyzer,
 )
 
@@ -286,7 +283,7 @@ x = 1
 """
 
         start = time.perf_counter()
-        result = await analyzer.analyze_code(code, "python")
+        await analyzer.analyze_code(code, "python")
         elapsed = (time.perf_counter() - start) * 1000
 
         assert elapsed < 100, f"Parse took {elapsed}ms, expected <100ms"
@@ -302,7 +299,7 @@ x = 1
         ])
 
         start = time.perf_counter()
-        result = await analyzer.analyze_code(code, "python")
+        await analyzer.analyze_code(code, "python")
         elapsed = (time.perf_counter() - start) * 1000
 
         assert elapsed < 200, f"Parse took {elapsed}ms, expected <200ms"
@@ -319,7 +316,7 @@ x = 1
         symbols = await analyzer.analyze_code(code, "python")
 
         start = time.perf_counter()
-        completions = analyzer.get_completions(symbols["symbols"], "var")
+        analyzer.get_completions(symbols["symbols"], "var")
         elapsed = (time.perf_counter() - start) * 1000
 
         assert elapsed < 50, f"Completion generation took {elapsed}ms, expected <50ms"

@@ -1,5 +1,4 @@
 import pytest
-from fastapi.testclient import TestClient
 
 from backend.services.ai_orchestration import AIOrchestrationManager
 from backend.orchestration.workflow_state_machine import LLMRole

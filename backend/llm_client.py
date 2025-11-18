@@ -32,7 +32,6 @@ Usage:
 """
 
 import requests
-import json
 from typing import Dict, List, Optional, Any
 from dataclasses import dataclass
 

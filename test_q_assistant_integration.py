@@ -17,7 +17,6 @@ from llm_roles_descriptor import LLMRole, ROLE_SPECIFICATIONS
 from q_assistant_scope import (
     QAssistantScope,
     validate_q_assistant_output,
-    Q_ASSISTANT_SYSTEM_PROMPT,
     generate_simple_wireframe,
     generate_simple_user_flow,
     generate_simple_database_schema,

@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
 import requests
-import json
 
 BASE_URL = "http://127.0.0.1:8000"
 
@@ -39,7 +38,7 @@ try:
     print(f"Status: {resp.status_code}")
     if resp.ok:
         data = resp.json()
-        print(f"OK - Configuration status:")
+        print("OK - Configuration status:")
         print(f"  Cloud providers configured: {data.get('cloud_providers_configured')}/7")
         print(f"  Roles assigned: {data.get('roles_assigned')}/7")
 except Exception as e:

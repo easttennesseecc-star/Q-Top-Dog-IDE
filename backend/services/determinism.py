@@ -8,7 +8,6 @@ Deterministic AI state helpers for esports fairness.
 from __future__ import annotations
 import json
 import hashlib
-from dataclasses import dataclass
 from typing import Dict, Any
 
 

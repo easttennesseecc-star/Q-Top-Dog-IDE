@@ -5,7 +5,7 @@ and persisting the preference for next startup.
 """
 from __future__ import annotations
 from pydantic import BaseModel, Field, ConfigDict
-from typing import List, Optional
+from typing import List
 from pathlib import Path
 import os
 import json

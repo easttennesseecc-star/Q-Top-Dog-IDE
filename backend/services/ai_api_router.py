@@ -7,7 +7,6 @@ from typing import Optional, Dict, List, AsyncIterator, Tuple
 from dataclasses import dataclass, field
 from enum import Enum
 from abc import ABC, abstractmethod
-import json
 from datetime import datetime
 
 
@@ -141,7 +140,7 @@ class OpenAIProvider(AIProvider):
         """Send request to OpenAI"""
         
         # In real implementation, use httpx or aiohttp
-        payload = {
+        {
             "model": self.MODELS.get(model, model),
             "messages": [
                 {"role": msg.role, "content": msg.content}
@@ -178,7 +177,7 @@ class OpenAIProvider(AIProvider):
     ) -> AsyncIterator[str]:
         """Stream response from OpenAI"""
         
-        payload = {
+        {
             "model": self.MODELS.get(model, model),
             "messages": [
                 {"role": msg.role, "content": msg.content}
@@ -226,7 +225,7 @@ class AnthropicProvider(AIProvider):
     ) -> Tuple[str, int]:
         """Send request to Anthropic"""
         
-        payload = {
+        {
             "model": self.MODELS.get(model, model),
             "messages": [
                 {"role": msg.role, "content": msg.content}

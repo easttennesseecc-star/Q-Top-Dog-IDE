@@ -4,7 +4,6 @@ API routes for the LLM Test-Solving System.
 from fastapi import APIRouter, HTTPException, Depends
 import asyncio
 from pydantic import BaseModel
-from typing import Optional
 
 from backend.services.test_solver_service import get_test_solver_service, TestSolvingSession
 

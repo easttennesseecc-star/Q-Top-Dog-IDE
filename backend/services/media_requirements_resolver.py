@@ -13,7 +13,7 @@ from __future__ import annotations
 
 import json
 import os
-from typing import Optional, Tuple, Dict, Optional as _Optional
+from typing import Optional, Dict, Optional as _Optional
 
 
 DEFAULTS: Dict[str, Dict[str, _Optional[str]]] = {

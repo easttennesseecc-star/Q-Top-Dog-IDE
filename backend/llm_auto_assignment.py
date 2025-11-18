@@ -6,7 +6,7 @@ Automatically discovers available LLM models and assigns them to the best roles
 import logging
 from typing import Dict, List, Optional, Any
 from enum import Enum
-from backend.llm_roles_descriptor import LLMRole, ROLE_SPECIFICATIONS
+from backend.llm_roles_descriptor import LLMRole
 
 logger = logging.getLogger("q-ide-topdog")
 

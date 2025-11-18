@@ -10,7 +10,7 @@ import qrcode
 import io
 import base64
 from datetime import datetime, timedelta
-from typing import Dict, Optional, List
+from typing import Dict, List
 from fastapi import HTTPException
 
 class PhonePairingManager:

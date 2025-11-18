@@ -46,7 +46,7 @@ def test_modify_email_submit_and_approve():
     # Extract approval link and token
     m2 = re.search(r"href='([^']+/api/assistant/approve-email\?token=([^']+))'", r2.text)
     assert m2, "approve link not found"
-    approve_url = m2.group(1)
+    m2.group(1)
     approve_token = m2.group(2)
 
     # Approve the revised plan

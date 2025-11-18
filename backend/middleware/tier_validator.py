@@ -7,8 +7,7 @@ Enhanced with feature-based access control and rate limiting
 import sqlite3
 from datetime import datetime, date
 from fastapi import HTTPException, Depends, Header
-from fastapi.responses import JSONResponse
-from backend.database.tier_schema import MembershipTierSchema, TIER_CONFIGS
+from backend.database.tier_schema import MembershipTierSchema
 from typing import Dict, Any, Optional
 
 

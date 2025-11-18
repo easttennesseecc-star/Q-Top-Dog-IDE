@@ -10,7 +10,6 @@ Endpoints for managing AI workflow orchestration:
 """
 
 from fastapi import APIRouter, HTTPException, Depends, Body, Path, Request, Header
-from sqlalchemy.orm import Session
 from typing import Dict, Optional, Any
 import logging
 

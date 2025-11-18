@@ -16,10 +16,10 @@ from __future__ import annotations
 import json
 import secrets
 from dataclasses import dataclass, asdict
-from datetime import datetime, timedelta
+from datetime import datetime
 from enum import Enum
 from pathlib import Path
-from typing import Dict, Optional, Any, List
+from typing import Dict, Optional, Any
 import threading
 
 import logging
@@ -147,7 +147,7 @@ class PairingSessionStore:
 
     def _prune_expired(self, save: bool = False) -> None:
         changed = False
-        now = datetime.utcnow()
+        datetime.utcnow()
         for s in list(self._sessions.values()):
             if s.status in {SessionStatus.PENDING, SessionStatus.SCANNED} and s.is_expired():
                 s.status = SessionStatus.EXPIRED

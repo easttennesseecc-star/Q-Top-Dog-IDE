@@ -11,7 +11,6 @@ Security:
 - Device fingerprinting for security
 """
 
-import asyncio
 import os
 import json
 import logging
@@ -23,7 +22,6 @@ from datetime import datetime, timedelta
 from enum import Enum
 from typing import Optional, Dict, Any, List, Set
 from pathlib import Path
-import base64
 
 try:
     import qrcode
@@ -40,8 +38,8 @@ except ImportError:
     JWT_AVAILABLE = False
     logging.warning("PyJWT not installed. Install: pip install pyjwt[crypto]")
 
-from cryptography.hazmat.primitives import hashes, serialization
-from cryptography.hazmat.primitives.asymmetric import rsa, padding
+from cryptography.hazmat.primitives import serialization
+from cryptography.hazmat.primitives.asymmetric import rsa
 from cryptography.hazmat.backends import default_backend
 from backend.services.pairing_session_store import get_pairing_session_store
 

@@ -4,7 +4,7 @@ Away Mode API
 Endpoints to pair/unpair an away phone number and check status.
 Uses session_id to resolve user_id when possible.
 """
-from fastapi import APIRouter, Body, Query
+from fastapi import APIRouter, Query
 from pydantic import BaseModel
 from typing import Optional
 from backend.services.away_store import set_away_phone, clear_away_phone, get_away_phone

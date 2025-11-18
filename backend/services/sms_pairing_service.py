@@ -10,7 +10,7 @@ import logging
 import secrets
 from datetime import datetime, timedelta
 from typing import Optional, Dict, Any
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 from pathlib import Path
 import json
 from backend.services.pairing_session_store import get_pairing_session_store

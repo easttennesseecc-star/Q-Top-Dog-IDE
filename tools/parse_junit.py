@@ -8,7 +8,6 @@ Usage:
   python tools/parse_junit.py <input_junit.xml> --out <output_summary.md>
 """
 from __future__ import annotations
-import sys
 import argparse
 import xml.etree.ElementTree as ET
 from pathlib import Path

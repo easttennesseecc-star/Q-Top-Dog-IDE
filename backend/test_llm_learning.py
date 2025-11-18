@@ -10,8 +10,6 @@ This script:
 """
 
 import sys
-import time
-import json
 from pathlib import Path
 
 # Add backend to path
@@ -49,7 +47,7 @@ def test_llm_endpoints():
         try:
             build_data = client.get_build(builds.builds[0].id)
             summary = build_data.get("log_summary", {})
-            print(f"✓ Build details:")
+            print("✓ Build details:")
             print(f"  - Status: {build_data.get('status')}")
             print(f"  - Log lines: {summary.get('total_lines', 0)}")
             print(f"  - Errors: {summary.get('error_count', 0)}")
@@ -68,7 +66,7 @@ def test_llm_endpoints():
         config = codebase.get("key_config_files", {})
         backend_files = codebase.get("backend_files", [])
         
-        print(f"✓ Codebase info:")
+        print("✓ Codebase info:")
         print(f"  - Backend: {summary.get('has_backend', False)}")
         print(f"  - Frontend: {summary.get('has_frontend', False)}")
         print(f"  - Tests: {summary.get('has_tests', False)}")
@@ -83,7 +81,7 @@ def test_llm_endpoints():
     
     # Test 4: Submit a sample report (if builds exist)
     if builds.builds:
-        print(f"\n[4] Submitting analysis report...")
+        print("\n[4] Submitting analysis report...")
         try:
             result = client.submit_report(
                 build_id=builds.builds[0].id,
@@ -96,7 +94,7 @@ def test_llm_endpoints():
                 ],
                 confidence=0.92
             )
-            print(f"✓ Report submitted:")
+            print("✓ Report submitted:")
             print(f"  - Report ID: {result.get('report_id', 'N/A')}")
             print(f"  - Message: {result.get('message', 'OK')}")
         except Exception as e:

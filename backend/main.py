@@ -17,7 +17,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from starlette.middleware.base import BaseHTTPMiddleware
 from pydantic import BaseModel
 from typing import List, Dict, Optional
-from backend.llm_pool import build_llm_pool, build_llm_report, get_best_llms_for_operations
+from backend.llm_pool import build_llm_report, get_best_llms_for_operations
 from backend.llm_config_routes import router as llm_config_router
 from backend.llm_auth_routes import router as llm_auth_router
 from backend.llm_chat_routes import router as llm_chat_router
@@ -66,12 +66,12 @@ from backend.routes.build_plan_approval_routes import router as build_plan_appro
 from backend.routes.test_solver_routes import router as test_solver_router
 from backend.routes.domain_config_routes import router as domain_config_router
 from backend.routes.marketplace_fastapi import marketplace_router, agent_router, marketplace_auth_router
-from backend.middleware.compliance_enforcer import ComplianceEnforcer, require_compliance
+from backend.middleware.compliance_enforcer import ComplianceEnforcer
 from backend.services.workflow_db_manager import init_workflow_database, WorkflowDatabaseManager
 from backend.services.orchestration_service import OrchestrationService
 from backend.middleware.rules_enforcement import RulesEnforcementMiddleware
 from backend.services.ai_orchestration import initialize_ai_orchestration
-from backend.logger_utils import configure_logger, get_logger
+from backend.logger_utils import configure_logger
 from contextlib import asynccontextmanager
 import asyncio
 from backend.auto_setup_q_assistant import auto_setup_q_assistant
@@ -218,7 +218,6 @@ async def lifespan(app: FastAPI):
         logger.warning(f"Push reminder loop not configured: {e}")
 
     # Autopilot loop retired — do not start
-    autopilot_task = None
     logger.info("Assistant autopilot has been retired and will not be started")
 
     # Yield to run the application
@@ -340,7 +339,7 @@ class LoggingMiddleware(BaseHTTPMiddleware):
                 elapsed = time.time() - start_time
                 if response.status_code >= 400:
                     logger.warning(
-                        f"Request completed with error",
+                        "Request completed with error",
                         status_code=response.status_code,
                         elapsed_seconds=elapsed
                     )
@@ -353,7 +352,7 @@ class LoggingMiddleware(BaseHTTPMiddleware):
                     pass
                 else:
                     logger.debug(
-                        f"Request completed",
+                        "Request completed",
                         status_code=response.status_code,
                         elapsed_seconds=elapsed
                     )
@@ -361,7 +360,7 @@ class LoggingMiddleware(BaseHTTPMiddleware):
             except Exception as e:
                 elapsed = time.time() - start_time
                 logger.error(
-                    f"Request failed",
+                    "Request failed",
                     error=e,
                     elapsed_seconds=elapsed
                 )
@@ -793,7 +792,7 @@ async def canonical_redirect_middleware(request: Request, call_next):
             return RedirectResponse(url=str(url), status_code=308)
     return await call_next(request)
 
-from fastapi import HTTPException, Body, UploadFile, File, Form
+from fastapi import Body, UploadFile, File, Form
 import json
 
 # Logging middleware already added earlier; avoid duplicate registration which can double-log requests
@@ -1302,7 +1301,6 @@ def github_oauth_callback(code: Optional[str] = None, error: Optional[str] = Non
 
 # Agent orchestration endpoint
 from fastapi import Body
-from backend.llm_pool import build_llm_pool
 from typing import Optional
 
 class AgentTaskRequest(BaseModel):
@@ -1710,7 +1708,9 @@ class AssetGenPayload(BaseModel):
 
 @app.post("/assets/generate")
 def generate_asset(payload: AssetGenPayload):
-    import subprocess, sys, json as _json
+    import subprocess
+    import sys
+    import json as _json
     meta = payload.spec or {}
     # Run guardrails first
     try:
@@ -1777,7 +1777,8 @@ def _bg_generate_asset(job_id: str, payload: AssetGenAsyncPayload):
     ASYNC_ASSETS[job_id]["status"] = "running"
     try:
         # Reuse guardrails
-        import subprocess, sys
+        import subprocess
+        import sys
         proc = subprocess.run(
             [sys.executable, "tools/pcg_guardrails.py"],
             input=_json.dumps(payload.spec).encode("utf-8"),
@@ -2108,7 +2109,7 @@ def get_codebase_for_learning(session_id: Optional[str] = None):
                             "children": subtree
                         })
             return items
-        except Exception as e:
+        except Exception:
             return None
     
     # Get key config files
@@ -2221,8 +2222,6 @@ def submit_llm_learning_report(request_body: dict, session_id: Optional[str] = N
 # --- LLM Streaming Endpoint ---
 from fastapi import Request
 from fastapi.responses import StreamingResponse
-import asyncio
-import json
 
 async def fake_llm_stream(prompt: str):
     # Simulate streaming LLM output in chunks

@@ -3,12 +3,11 @@ Debug Adapter Protocol API Endpoints
 REST API routes for frontend to communicate with DAP server
 """
 
-from flask import Blueprint, request, jsonify, current_app
+from flask import Blueprint, request, jsonify
 from flask_cors import cross_origin
 from functools import wraps
 import asyncio
 import logging
-from typing import Dict, Any
 
 logger = logging.getLogger(__name__)
 

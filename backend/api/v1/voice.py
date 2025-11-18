@@ -12,7 +12,6 @@ from werkzeug.utils import secure_filename
 
 from backend.services.voice_profiling_engine import (
     get_voice_profile_manager,
-    get_voice_recognition_engine,
     create_user_voice_profile,
     add_voice_sample_to_profile,
     recognize_voice_input,

@@ -17,7 +17,7 @@ You can replace the simple heuristics here with actual LLM calls to:
 import time
 import json
 from datetime import datetime
-from typing import Dict, List, Optional
+from typing import Dict, Optional
 from pathlib import Path
 
 # Import the LLM client
@@ -198,7 +198,7 @@ class QIDECodingAgent:
             
             print(f"  Type: {analysis['type']}")
             print(f"  Confidence: {analysis['confidence']}")
-            print(f"  Recommendations:")
+            print("  Recommendations:")
             for rec in analysis["recommendations"]:
                 print(f"    • {rec}")
             

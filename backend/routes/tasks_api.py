@@ -3,11 +3,11 @@ Tasks API
 
 Expose endpoints to add, list, complete, and delete tasks for Q Assistant.
 """
-from fastapi import APIRouter, HTTPException, Query
+from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel, Field
-from typing import Optional, List, Dict, Any
+from typing import Optional, Dict, Any
 
-from backend.services.tasks_service import get_tasks_service, Task
+from backend.services.tasks_service import get_tasks_service
 
 router = APIRouter(prefix="/tasks", tags=["tasks"])
 

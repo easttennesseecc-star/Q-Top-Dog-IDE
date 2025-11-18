@@ -9,13 +9,10 @@ import pytest
 from uuid import uuid4
 
 from backend.orchestration.workflow_state_machine import WorkflowState, LLMRole
-from backend.services.orchestration_service import OrchestrationService
 from backend.services.ai_orchestration import (
     AIOrchestrationContext,
     AIOrchestrationManager,
     AIModelType,
-    initialize_ai_orchestration,
-    get_ai_orchestration_manager,
 )
 
 
@@ -295,7 +292,6 @@ class TestAIProductionReadiness:
     async def test_concurrent_workflows(self, ai_manager: AIOrchestrationManager):
         """Test managing multiple concurrent workflows"""
         import asyncio
-        from uuid import uuid4
         
         # Create multiple workflow contexts concurrently
         tasks = [

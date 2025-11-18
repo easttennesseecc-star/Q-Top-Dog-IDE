@@ -4,7 +4,7 @@ and automatically assigns models to roles
 """
 
 import logging
-from typing import Dict, List, Optional
+from typing import Dict
 from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel
 

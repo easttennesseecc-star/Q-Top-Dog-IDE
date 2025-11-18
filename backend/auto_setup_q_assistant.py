@@ -4,7 +4,6 @@ Try to detect and configure Q Assistant automatically if possible
 """
 
 import os
-import json
 import logging
 from typing import Optional, Dict, Any
 from backend.llm_config import get_q_assistant_llm

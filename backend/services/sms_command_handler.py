@@ -337,7 +337,8 @@ class SMSCommandHandler:
         project_name = command.content or "default"
         logger.info(f"Build requested via SMS for: {project_name}")
         try:
-            import uuid, threading
+            import uuid
+            import threading
             # Reuse backend.main build runner to ensure same behavior as API
             from backend import main as app_main
             build_id = str(uuid.uuid4())
@@ -436,7 +437,9 @@ All systems operational ✓"""
                 f"Open IDE to view the draft. Configure providers for higher fidelity."
             )
             # Prepare approval + modify links and optionally send MMS with snapshot
-            import os, base64, uuid
+            import os
+            import base64
+            import uuid
             from backend.services.email_token_service import register_token
             backend_url = os.getenv("BACKEND_URL", "http://127.0.0.1:8000")
             approve_token = register_token({

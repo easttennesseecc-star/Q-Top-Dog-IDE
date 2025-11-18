@@ -67,7 +67,7 @@ def test_endpoints():
             
             if response.status_code == 200:
                 data = response.json()
-                print(f"   SUCCESS (200)")
+                print("   SUCCESS (200)")
                 print(f"   Response: {json.dumps(data, indent=2)[:200]}...")
                 passed += 1
             else:
@@ -76,7 +76,7 @@ def test_endpoints():
                 failed += 1
                 
         except requests.exceptions.ConnectionError:
-            print(f"   CONNECTION ERROR - Is the server running on port 8000?")
+            print("   CONNECTION ERROR - Is the server running on port 8000?")
             failed += 1
         except Exception as e:
             print(f"   ERROR: {str(e)}")

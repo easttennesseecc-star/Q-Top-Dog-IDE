@@ -4,13 +4,11 @@ Handles user registration, login, API key management, and balance tracking
 """
 
 from typing import Optional, Dict, List, Tuple
-from dataclasses import dataclass, field, asdict
+from dataclasses import dataclass, field
 from datetime import datetime, timedelta
 from enum import Enum
 import secrets
 import hashlib
-import json
-from abc import ABC, abstractmethod
 import os
 
 

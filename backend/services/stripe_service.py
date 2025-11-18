@@ -2,7 +2,6 @@
 Stripe Payment Processing Service
 Handles customer creation, subscriptions, billing portal, and webhook events
 """
-from types import ModuleType
 from typing import Optional, Tuple, Any
 from .stripe_types import (
     SubscriptionInfo,
@@ -22,7 +21,6 @@ except Exception:
 import os
 import logging
 from datetime import datetime
-from typing import Optional  # re-import Optional for local usage; others imported above
 from enum import Enum
 
 logger = logging.getLogger("q-ide-topdog")

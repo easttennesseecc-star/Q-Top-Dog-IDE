@@ -11,9 +11,9 @@ Apply these patterns to your actual routes:
 
 from fastapi import APIRouter, Header, Depends, HTTPException
 from pydantic import BaseModel
-from backend.middleware.tier_validator import require_tier_access, FEATURE_REQUIREMENTS
+from backend.middleware.tier_validator import require_tier_access
 from backend.services.rate_limiter import RateLimiter
-from datetime import datetime, date
+from datetime import datetime
 
 router = APIRouter(prefix="/api", tags=["Protected APIs"])
 
@@ -301,7 +301,7 @@ async def get_user_tier(
         raise HTTPException(status_code=401, detail="X-User-ID header required")
     
     # Get tier info
-    tier_info = require_tier_access(user_id=user_id)
+    require_tier_access(user_id=user_id)
     
     # Get rate limit
     rate_check = rate_limiter.check_limit(user_id)

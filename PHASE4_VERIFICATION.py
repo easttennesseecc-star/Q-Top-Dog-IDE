@@ -15,8 +15,6 @@ import os
 import sys
 import sqlite3
 import stripe
-from datetime import datetime, timedelta
-from pathlib import Path
 
 # Add backend to path
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), 'backend'))
@@ -91,7 +89,7 @@ def test_stripe_api():
     
     try:
         # Try to list customers (simple test)
-        customers = stripe.Customer.list(limit=1)
+        stripe.Customer.list(limit=1)
         test_result("Stripe API Connection", True, "Can list customers")
         
         # Test customer creation
@@ -107,7 +105,7 @@ def test_stripe_api():
         test_result("Delete Test Customer", True)
         
         return True
-    except stripe.error.AuthenticationError as e:
+    except stripe.error.AuthenticationError:
         test_result("Stripe API Connection", False, "Authentication failed - check API key")
         return False
     except Exception as e:
@@ -292,16 +290,6 @@ def test_webhook_configuration():
         test_result("Webhook Secret Set", True, f"Secret: {webhook_secret[:20]}...")
         
         # Test event construction with test payload
-        test_event = {
-            "type": "charge.succeeded",
-            "data": {
-                "object": {
-                    "id": "ch_test_123",
-                    "amount": 9999,
-                    "customer": "cus_test_456"
-                }
-            }
-        }
         
         test_result("Test Webhook Event", True, "Sample event constructed")
         return True

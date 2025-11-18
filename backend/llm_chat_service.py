@@ -7,7 +7,6 @@ import os
 import json
 import asyncio
 from typing import AsyncGenerator, Optional, Dict, Any, List
-from pathlib import Path
 import urllib.request
 import urllib.error
 
@@ -89,7 +88,7 @@ class LLMChatService:
             
             req = urllib.request.Request(url, data=data.encode('utf-8'), headers=headers, method='POST')
             
-            loop = asyncio.get_event_loop()
+            asyncio.get_event_loop()
             
             def fetch_stream():
                 try:
@@ -170,7 +169,7 @@ class LLMChatService:
                 except Exception as e:
                     yield f"\n\n[Error: {str(e)}]"
             
-            loop = asyncio.get_event_loop()
+            asyncio.get_event_loop()
             for chunk in fetch_stream():
                 yield chunk
                 await asyncio.sleep(0)

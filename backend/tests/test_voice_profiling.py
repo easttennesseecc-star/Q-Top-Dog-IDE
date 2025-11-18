@@ -5,11 +5,7 @@ Comprehensive test suite for voice profile management and recognition
 
 import pytest
 import numpy as np
-import asyncio
-import os
 import tempfile
-import json
-from unittest.mock import Mock, patch, MagicMock
 
 from backend.services.voice_profiling_engine import (
     VoiceSample,
@@ -18,8 +14,6 @@ from backend.services.voice_profiling_engine import (
     VoiceFeatureExtractor,
     VoiceProfileManager,
     VoiceRecognitionEngine,
-    get_voice_profile_manager,
-    get_voice_recognition_engine,
 )
 
 
@@ -341,7 +335,7 @@ class TestAsyncFunctions:
             create_user_voice_profile
         )
         
-        with tempfile.TemporaryDirectory() as tmpdir:
+        with tempfile.TemporaryDirectory():
             # Mock the manager
             result = await create_user_voice_profile("user1", "Test Profile")
             

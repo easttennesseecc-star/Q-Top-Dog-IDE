@@ -5,7 +5,6 @@ Uses SQLite for local development, easy to switch to PostgreSQL in production
 
 import sqlite3
 import os
-from datetime import datetime
 
 
 class MembershipTierSchema:
@@ -131,7 +130,7 @@ class MembershipTierSchema:
             conn.commit()
             conn.close()
             
-            print(f"\n✅ All membership tier tables created successfully")
+            print("\n✅ All membership tier tables created successfully")
             print(f"   Database: {db_path}\n")
             
         except Exception as e:

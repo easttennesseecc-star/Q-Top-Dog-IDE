@@ -4,7 +4,6 @@ Test script for LLM configuration endpoints
 """
 
 import requests
-import json
 from pprint import pprint
 
 BASE_URL = "http://127.0.0.1:8000"
@@ -15,7 +14,7 @@ def test_providers():
     try:
         resp = requests.get(f"{BASE_URL}/llm_config/providers")
         print(f"Status: {resp.status_code}")
-        print(f"Response:")
+        print("Response:")
         pprint(resp.json())
         return resp.status_code == 200
     except Exception as e:
@@ -28,7 +27,7 @@ def test_roles():
     try:
         resp = requests.get(f"{BASE_URL}/llm_config/roles")
         print(f"Status: {resp.status_code}")
-        print(f"Response:")
+        print("Response:")
         pprint(resp.json())
         return resp.status_code == 200
     except Exception as e:
@@ -41,7 +40,7 @@ def test_setup_instructions():
     try:
         resp = requests.get(f"{BASE_URL}/llm_config/setup/openai")
         print(f"Status: {resp.status_code}")
-        print(f"Response:")
+        print("Response:")
         pprint(resp.json())
         return resp.status_code == 200
     except Exception as e:
@@ -128,7 +127,7 @@ def test_status():
     try:
         resp = requests.get(f"{BASE_URL}/llm_config/status")
         print(f"Status: {resp.status_code}")
-        print(f"Response:")
+        print("Response:")
         pprint(resp.json())
         return resp.status_code == 200
     except Exception as e:

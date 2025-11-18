@@ -3,11 +3,9 @@ Unified Authentication API Routes for Q-IDE
 Handles OAuth flows, credential management, and service integration
 """
 from fastapi import APIRouter, HTTPException, Query, Body, BackgroundTasks
-from fastapi.responses import RedirectResponse, JSONResponse
-from pydantic import BaseModel, EmailStr
+from pydantic import BaseModel
 from typing import Dict, List, Optional, Any
 import os
-import secrets
 from datetime import datetime
 from .unified_auth_service import UnifiedAuthService
 

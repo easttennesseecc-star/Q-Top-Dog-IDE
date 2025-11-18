@@ -63,7 +63,7 @@ def main():
         else:
             fails = 0
         if fails >= consecutive:
-            ok = trigger_webhook()
+            trigger_webhook()
             fails = 0
         time.sleep(3600)
 

@@ -14,21 +14,15 @@ Supports:
 Reference: https://microsoft.github.io/debug-adapter-protocol/
 """
 
-import json
 import asyncio
 import subprocess
 import sys
-import os
-import signal
 import logging
-from typing import Dict, List, Optional, Any, Set, Tuple
-from dataclasses import dataclass, asdict, field
+from typing import Dict, List, Optional, Any
+from dataclasses import dataclass, field
 from enum import Enum
 from abc import ABC, abstractmethod
-import threading
-import time
 import uuid
-from pathlib import Path
 
 logger = logging.getLogger(__name__)
 
@@ -520,7 +514,7 @@ class DAPServer:
         
         await self.emit_event("output", {
             "category": "console",
-            "output": f"Debugger started\n",
+            "output": "Debugger started\n",
         })
         
         return {

@@ -11,7 +11,6 @@ from backend.main import app
 from backend.database.database_service import get_db
 from backend.models import Base
 # Import all models to ensure they are registered with the Base
-from backend.models import subscription, workflow 
 import asyncio
 
 # Define minimal required models for testing (to satisfy FKs)

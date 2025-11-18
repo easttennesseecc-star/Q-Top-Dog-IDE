@@ -10,20 +10,17 @@ Manages the complete workflow lifecycle:
 """
 
 from typing import Any, Dict, List, Optional, Tuple, cast, Generator
-from datetime import datetime, timedelta
+from datetime import datetime
 from uuid import uuid4
 import logging
 import os
-import contextlib
 
 from sqlalchemy.orm import Session
-from sqlalchemy import desc
 
 from backend.orchestration.workflow_state_machine import (
     WorkflowState,
     WorkflowStateTransition,
     LLMRole,
-    WorkflowPhaseData,
 )
 from backend.models.workflow import (
     BuildWorkflow,
@@ -666,7 +663,6 @@ class OrchestrationService:
             "verification",
             "deployment",
         ]
-        completed = 0  # Would count from DB
         
         return {
             "current_phase": 0,

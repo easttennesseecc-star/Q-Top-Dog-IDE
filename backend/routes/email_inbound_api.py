@@ -18,7 +18,7 @@ For production, wire this endpoint to your email provider's inbound webhook.
 
 from fastapi import APIRouter, Request
 from fastapi.responses import JSONResponse
-from typing import Optional, Dict, Any
+from typing import Dict, Any
 import re
 import logging
 
@@ -72,7 +72,7 @@ async def email_inbound(req: Request):
 
     # Helper to process approval token similar to /approve-email
     async def _process_approval_token(tok: str) -> Dict[str, Any]:
-        from backend.services.email_token_service import consume_token, register_token
+        from backend.services.email_token_service import consume_token
         from backend.services.build_plan_approval_service import get_plan_approval_service, PlanStep
         p = consume_token(tok)
         if not p:
@@ -157,7 +157,8 @@ async def email_inbound(req: Request):
         try:
             from backend.services.build_plan_approval_service import get_plan_approval_service, PlanStep
             from backend.services.email_token_service import register_token
-            import uuid, os
+            import uuid
+            import os
             plan_svc = get_plan_approval_service()
             workflow_id = f"wf-mailmod-{uuid.uuid4().hex[:8]}"
             steps = [

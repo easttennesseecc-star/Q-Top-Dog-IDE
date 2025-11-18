@@ -6,14 +6,12 @@ Validates complete flow: Web Worker → Backend → Completions → UI rendering
 import pytest
 import asyncio
 import time
-from typing import Dict, List
 
 import sys
 sys.path.insert(0, '/backend')
 
-from services.semantic_analysis import SemanticAnalyzer, get_analyzer
-from services.typescript_language_server import TypeScriptServer, get_ts_server
-from services.python_language_server import PythonServer, get_py_server
+from services.semantic_analysis import get_analyzer
+from services.python_language_server import get_py_server
 
 
 class TestE2EIntelliSenseFlow:
@@ -201,7 +199,7 @@ class TestE2EPerfomanceUnderLoad:
         analyzer = get_analyzer()
 
         start = time.perf_counter()
-        result = await analyzer.analyze_code(code, "python")
+        await analyzer.analyze_code(code, "python")
         elapsed = (time.perf_counter() - start) * 1000
 
         assert elapsed < 100, f"Medium file took {elapsed}ms, expected <100ms"
@@ -223,7 +221,7 @@ class TestE2EPerfomanceUnderLoad:
         analyzer = get_analyzer()
 
         start = time.perf_counter()
-        result = await analyzer.analyze_code(code, "python")
+        await analyzer.analyze_code(code, "python")
         elapsed = (time.perf_counter() - start) * 1000
 
         assert elapsed < 500, f"Large file took {elapsed}ms, expected <500ms"
@@ -264,12 +262,12 @@ x = 1
 
         # First parse (not cached)
         start1 = time.perf_counter()
-        result1 = await analyzer.analyze_code(code, "python")
+        await analyzer.analyze_code(code, "python")
         elapsed1 = (time.perf_counter() - start1) * 1000
 
         # Second parse (cached)
         start2 = time.perf_counter()
-        result2 = await analyzer.analyze_code(code, "python")
+        await analyzer.analyze_code(code, "python")
         elapsed2 = (time.perf_counter() - start2) * 1000
 
         # Cached should be much faster

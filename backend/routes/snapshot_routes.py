@@ -19,7 +19,7 @@ import os
 from pathlib import Path
 from typing import Dict, List, Optional, Tuple, Mapping
 
-from fastapi import APIRouter, HTTPException, Request, Body, Header
+from fastapi import APIRouter, HTTPException, Request, Body
 from pydantic import BaseModel
 
 from backend.services.snapshot_store import SnapshotStore
@@ -41,7 +41,6 @@ def _parse_snapshot_name(file_path: Path) -> Dict[str, Optional[str]]:
     Expected pattern: <timestamp>[-label].json
     Returns dict with keys: timestamp, label
     """
-    name = file_path.name
     stem = file_path.stem  # without .json
     # Split into timestamp and optional label (using the last '-' only to support labels with dashes)
     if "-" in stem:

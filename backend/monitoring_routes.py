@@ -8,7 +8,7 @@ Provides REST endpoints for monitoring, health checks, metrics, and alerts.
 from fastapi import APIRouter, Response
 from typing import Dict, Any, Optional, List
 from datetime import datetime
-from typing import Any, cast
+from typing import cast
 try:
     from monitoring import (  # type: ignore[attr-defined]
         monitoring, 

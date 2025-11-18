@@ -4,7 +4,6 @@ Validates caching, timeout protection, error recovery, and performance
 """
 
 import pytest
-import asyncio
 import time
 import sys
 sys.path.insert(0, '/backend')
@@ -160,11 +159,10 @@ interface User {
         code = "def foo(): pass"
 
         # First call - not cached
-        result1 = await analyzer.analyze_code("test.py", code, "python")
-        initial_misses = analyzer.cache.misses
+        await analyzer.analyze_code("test.py", code, "python")
 
         # Second call - should hit cache
-        result2 = await analyzer.analyze_code("test.py", code, "python")
+        await analyzer.analyze_code("test.py", code, "python")
         
         assert analyzer.cache.hits > 0
 
@@ -201,7 +199,7 @@ class TestPerformance:
         code = "def foo(): pass\ndef bar(): pass"
 
         start = time.time()
-        result = await analyzer.analyze_code("test.py", code, "python")
+        await analyzer.analyze_code("test.py", code, "python")
         elapsed_ms = (time.time() - start) * 1000
 
         assert elapsed_ms < 100  # Allow some slack in test env
@@ -214,7 +212,7 @@ class TestPerformance:
         code = "".join([f"def func_{i}(): pass\n" for i in range(50)])
 
         start = time.time()
-        result = await analyzer.analyze_code("test.py", code, "python")
+        await analyzer.analyze_code("test.py", code, "python")
         elapsed_ms = (time.time() - start) * 1000
 
         assert elapsed_ms < 500  # Allow slack in test env
@@ -227,7 +225,7 @@ class TestPerformance:
         code = "".join([f"symbol_{i} = {i}\n" for i in range(100)])
 
         start = time.time()
-        result = await analyzer.analyze_code("test.py", code, "python")
+        await analyzer.analyze_code("test.py", code, "python")
         elapsed_ms = (time.time() - start) * 1000
 
         assert elapsed_ms < 500  # Allow slack in test env

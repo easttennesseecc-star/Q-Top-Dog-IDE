@@ -14,8 +14,6 @@ Tests:
 
 import pytest
 import asyncio
-import json
-from typing import Dict, Any
 import logging
 
 # Import DAP server
@@ -23,7 +21,6 @@ from backend.services.debug_adapter import (
     DAPServer,
     PythonDebuggerAdapter,
     NodeDebuggerAdapter,
-    Breakpoint,
     StopReason,
 )
 
@@ -122,8 +119,8 @@ class TestBreakpointManagement:
         """Test breakpoint tracking across files"""
         adapter = PythonDebuggerAdapter("test-session")
         
-        bp1 = asyncio.run(adapter.set_breakpoint("file1.py", 10))
-        bp2 = asyncio.run(adapter.set_breakpoint("file2.py", 20))
+        asyncio.run(adapter.set_breakpoint("file1.py", 10))
+        asyncio.run(adapter.set_breakpoint("file2.py", 20))
         
         assert "file1.py" in adapter.breakpoints
         assert "file2.py" in adapter.breakpoints

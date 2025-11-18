@@ -45,7 +45,7 @@ async def benchmark_parsing(analyzer: SemanticAnalyzer, size: str, iterations: i
     times = []
     for i in range(iterations):
         start = time.time()
-        result = await analyzer.analyze_code(f"test_{i}.py", code, "python")
+        await analyzer.analyze_code(f"test_{i}.py", code, "python")
         elapsed_ms = (time.time() - start) * 1000
         times.append(elapsed_ms)
     
@@ -60,7 +60,7 @@ async def benchmark_completions(analyzer: SemanticAnalyzer, iterations: int = 5)
     times = []
     for i in range(iterations):
         start = time.time()
-        result = await analyzer.analyze_code(f"test_{i}.py", code, "python")
+        await analyzer.analyze_code(f"test_{i}.py", code, "python")
         elapsed_ms = (time.time() - start) * 1000
         times.append(elapsed_ms)
     
@@ -80,7 +80,7 @@ async def benchmark_cache_hit(analyzer: SemanticAnalyzer, iterations: int = 10):
     times = []
     for i in range(iterations):
         start = time.time()
-        result = await analyzer.analyze_code(file_path, code, "python")
+        await analyzer.analyze_code(file_path, code, "python")
         elapsed_ms = (time.time() - start) * 1000
         times.append(elapsed_ms)
     
@@ -97,7 +97,7 @@ async def benchmark_concurrent(analyzer: SemanticAnalyzer, count: int = 10):
         analyzer.analyze_code(f"file_{i}.py", code, "python")
         for i in range(count)
     ]
-    results = await asyncio.gather(*tasks)
+    await asyncio.gather(*tasks)
     elapsed_ms = (time.time() - start) * 1000
     
     return BenchmarkResult(f"Concurrent ({count} files)", [elapsed_ms])

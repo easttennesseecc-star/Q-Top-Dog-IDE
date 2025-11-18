@@ -16,8 +16,6 @@ import pytest
 import asyncio
 from uuid import uuid4
 from fastapi.testclient import TestClient
-from unittest.mock import MagicMock, patch, AsyncMock
-from datetime import datetime
 
 # Import classes to test
 from backend.orchestration.workflow_state_machine import WorkflowState, LLMRole
@@ -26,11 +24,7 @@ from backend.services.ai_orchestration import (
     AIOrchestrationContext,
     AIOrchestrationManager,
     AIModelType,
-    initialize_ai_orchestration,
-    get_ai_orchestration_manager,
 )
-from backend.orchestration.orchestration_prompts import get_orchestration_prompt
-from backend.services.workflow_db_manager import WorkflowDatabaseManager
 
 
 # ============================================
@@ -484,7 +478,7 @@ class TestAIPerformance:
         import time
         start = time.time()
         
-        prompt = await manager.get_ai_prompt_for_phase(workflow_id, WorkflowState.DISCOVERY)
+        await manager.get_ai_prompt_for_phase(workflow_id, WorkflowState.DISCOVERY)
         
         elapsed = (time.time() - start) * 1000
         

@@ -4,7 +4,7 @@ Workflow models for Q Assistant Orchestration
 Tracks AI workflow state, handoffs between roles, and build progress.
 """
 
-from sqlalchemy import Column, String, DateTime, Enum, JSON, ForeignKey, Boolean, Integer
+from sqlalchemy import Column, String, DateTime, Enum, JSON, ForeignKey
 from typing import Any
 from sqlalchemy.orm import relationship
 from . import Base

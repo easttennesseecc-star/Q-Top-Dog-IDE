@@ -9,9 +9,8 @@ This module shows how to integrate the logger_utils into existing components:
 - Performance tracking
 """
 
-from logger_utils import configure_logger, log_function_call, get_logger
-from typing import Optional, Dict, Any
-import json
+from logger_utils import configure_logger, log_function_call
+from typing import Dict, Any
 
 
 # Initialize logger early in your application
@@ -419,7 +418,6 @@ def start_build(config: BuildConfig):
 
 
 if __name__ == "__main__":
-    import logging
     
     print("Logger integration examples created successfully!")
     print("Check ./logs/ directory for log files:")

@@ -5,7 +5,6 @@ Exposes game engine functionality via REST API
 
 from flask import Blueprint, request, jsonify
 import logging
-from typing import Dict, Any, Optional
 
 from backend.services.game_engine_router import (
     MultiEngineRouter,
@@ -339,7 +338,7 @@ def get_container_status(project_id: str):
             )
         else:
             return (
-                jsonify({"success": False, "error": f"Container not found"}),
+                jsonify({"success": False, "error": "Container not found"}),
                 404,
             )
 
@@ -359,7 +358,7 @@ def get_container_logs(project_id: str):
             return jsonify({"success": True, "logs": logs}), 200
         else:
             return (
-                jsonify({"success": False, "error": f"Container not found"}),
+                jsonify({"success": False, "error": "Container not found"}),
                 404,
             )
 
@@ -386,7 +385,7 @@ def stop_container(project_id: str):
             )
         else:
             return (
-                jsonify({"success": False, "error": f"Container not found"}),
+                jsonify({"success": False, "error": "Container not found"}),
                 404,
             )
 

@@ -1,5 +1,3 @@
-from fastapi.testclient import TestClient
-from backend.main import app
 
 def test_fhir_to_omop(test_client):
     resp = test_client.post("/med/interop/fhir/to-omop", json={"resourceType":"Bundle","entry":[{"resource":{"resourceType":"Patient","id":"p1","gender":"male","birthDate":"1990-01-01"}}]})

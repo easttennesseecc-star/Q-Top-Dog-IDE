@@ -1,6 +1,3 @@
-import json
-from starlette.testclient import TestClient
-from backend.main import app
 from backend.services.email_token_service import register_token
 
 def test_email_inbound_accept_ui_draft(test_client):

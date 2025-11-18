@@ -56,7 +56,9 @@ def get_signer() -> Signer:
                 def keypair(self):
                     return (self.key_id, "")
                 def sign(self, artifact: dict):
-                    import json, base64, hashlib
+                    import json
+                    import base64
+                    import hashlib
                     payload = json.dumps(artifact, sort_keys=True, separators=(",", ":")).encode("utf-8")
                     # AWS KMS Sign requires a message digest for many key types
                     digest = hashlib.sha256(payload).digest()
@@ -78,7 +80,9 @@ def get_signer() -> Signer:
                 def keypair(self):
                     return (self.secret, "")
                 def sign(self, artifact: dict):
-                    import json, hashlib, base64
+                    import json
+                    import hashlib
+                    import base64
                     payload = json.dumps(artifact, sort_keys=True, separators=(",", ":")).encode("utf-8")
                     sig = hashlib.sha256(self.secret.encode("utf-8") + payload).digest()
                     return (base64.b64encode(sig).decode("ascii"), "")
@@ -93,7 +97,9 @@ def get_signer() -> Signer:
                 def keypair(self):
                     return (self.resource, "")
                 def sign(self, artifact: dict):
-                    import json, base64, hashlib
+                    import json
+                    import base64
+                    import hashlib
                     payload = json.dumps(artifact, sort_keys=True, separators=(",", ":")).encode("utf-8")
                     digest = hashlib.sha256(payload).digest()
                     from google.cloud.kms_v1 import Digest  # type: ignore
@@ -108,7 +114,9 @@ def get_signer() -> Signer:
                 def keypair(self):
                     return (self.secret, "")
                 def sign(self, artifact: dict):
-                    import json, hashlib, base64
+                    import json
+                    import hashlib
+                    import base64
                     payload = json.dumps(artifact, sort_keys=True, separators=(",", ":")).encode("utf-8")
                     sig = hashlib.sha256(self.secret.encode("utf-8") + payload).digest()
                     return (base64.b64encode(sig).decode("ascii"), "")
@@ -134,7 +142,9 @@ def get_signer() -> Signer:
                 def keypair(self):
                     return ("azure-key", "")
                 def sign(self, artifact: dict):
-                    import json, base64, hashlib
+                    import json
+                    import base64
+                    import hashlib
                     payload = json.dumps(artifact, sort_keys=True, separators=(",", ":")).encode("utf-8")
                     digest = hashlib.sha256(payload).digest()
                     resp = self.crypto.sign(SignatureAlgorithm.rs_pss_sha_256, digest)
@@ -147,7 +157,9 @@ def get_signer() -> Signer:
                 def keypair(self):
                     return (self.secret, "")
                 def sign(self, artifact: dict):
-                    import json, hashlib, base64
+                    import json
+                    import hashlib
+                    import base64
                     payload = json.dumps(artifact, sort_keys=True, separators=(",", ":")).encode("utf-8")
                     sig = hashlib.sha256(self.secret.encode("utf-8") + payload).digest()
                     return (base64.b64encode(sig).decode("ascii"), "")

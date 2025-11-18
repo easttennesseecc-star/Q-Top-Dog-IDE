@@ -8,7 +8,6 @@ from flask_cors import cross_origin
 from functools import wraps
 import asyncio
 import logging
-from typing import Dict, Any
 
 logger = logging.getLogger(__name__)
 

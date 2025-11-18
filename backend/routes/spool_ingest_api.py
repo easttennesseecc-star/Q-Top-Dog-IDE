@@ -10,7 +10,7 @@ POST /spool/ingest/api   { user_id, text, metadata? }
 GET  /spool/next-input   ?user_id=...  -> { status, message? }
 POST /spool/cleanup      -> retention cleanup (optional admin)
 """
-from fastapi import APIRouter, Body, Query
+from fastapi import APIRouter, Query
 from pydantic import BaseModel, Field
 from typing import Optional, Dict, Any
 from backend.services.spool_dropbox import enqueue, get_next, cleanup_retention
@@ -61,7 +61,8 @@ def spool_cleanup():
 @router.get("/status")
 def spool_status():
     """Return queue depth (incoming), processed count (done size), and last file timestamp."""
-    import os, time
+    import os
+    import time
     root = Path(os.getenv("ASSISTANT_SPOOL_DIR", "./var/spool/assistant")).resolve()
     incoming = root / "incoming"
     done = root / "done"

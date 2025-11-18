@@ -4,7 +4,6 @@ Provides intelligent responses and guides user through setup if needed
 """
 
 import os
-import json
 import logging
 from typing import Optional, Dict, Any
 

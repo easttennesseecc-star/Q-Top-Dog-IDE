@@ -1,7 +1,5 @@
 from fastapi.testclient import TestClient
 import subprocess
-import types
-import sys
 
 from backend.main import app, BUILD_STORE, run_local_build
 

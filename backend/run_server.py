@@ -6,7 +6,6 @@ Runs the FastAPI backend with proper error handling
 
 import sys
 import os
-import subprocess
 
 # Add backend to Python path
 backend_dir = r"C:\Quellum-topdog-ide\backend"
@@ -15,7 +14,7 @@ os.chdir(backend_dir)
 
 print(f"[*] Working directory: {os.getcwd()}")
 print(f"[*] Python: {sys.executable}")
-print(f"[*] Starting FastAPI backend on 127.0.0.1:8000...")
+print("[*] Starting FastAPI backend on 127.0.0.1:8000...")
 print()
 
 # Try to run the server

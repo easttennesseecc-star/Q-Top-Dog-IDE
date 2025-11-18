@@ -14,8 +14,6 @@ from typing import Optional, Dict, Any, List
 from datetime import datetime, timedelta
 import urllib.parse
 import urllib.request
-import base64
-import hashlib
 
 # Storage location for LLM credentials
 CREDS_DIR = Path.home() / '.q-ide'

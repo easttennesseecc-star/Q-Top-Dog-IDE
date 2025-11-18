@@ -8,7 +8,6 @@ from pydantic import BaseModel, Field
 from typing import List, Optional, Dict, Any
 from backend.services.user_notes_service import (
     get_notes_service,
-    UserNote,
     NoteType
 )
 

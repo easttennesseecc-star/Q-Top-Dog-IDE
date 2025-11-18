@@ -4,7 +4,6 @@ Tests all refactoring operations: extract, rename, move
 """
 
 import pytest
-import asyncio
 from backend.services.refactoring_engine import (
     ASTRefactoringEngine,
     ScopeAnalyzer,
@@ -356,7 +355,7 @@ class TestRefactoringPerformance:
         
         import time
         start = time.time()
-        result = engine.extract_function("test", 10, 20, [])
+        engine.extract_function("test", 10, 20, [])
         duration = time.time() - start
         
         assert duration < 0.1  # Should complete in <100ms
@@ -373,7 +372,7 @@ class TestRefactoringPerformance:
         
         import time
         start = time.time()
-        result = engine.rename_symbol("x", "value")
+        engine.rename_symbol("x", "value")
         duration = time.time() - start
         
         assert duration < 0.1  # Should complete in <100ms

@@ -7,15 +7,11 @@ Local dev storage uses a JSON file; for production, use a database + secrets man
 
 import json
 import uuid
-import os
 from pathlib import Path
 from typing import Optional, Dict, Any
 from datetime import datetime, timedelta
 import urllib.parse
 import urllib.request
-import base64
-import hashlib
-import secrets
 from fastapi import Header
 
 # Simple in-memory session store + file-backed user/token store (dev-only)

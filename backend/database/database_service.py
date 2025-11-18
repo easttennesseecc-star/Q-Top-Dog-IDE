@@ -4,13 +4,10 @@ Handles persistence layer using PostgreSQL
 Can be swapped in place of in-memory dictionaries
 """
 
-from typing import Optional, Dict, List, Tuple
+from typing import Optional, Dict, List
 from psycopg2.extensions import connection as _PGConn, cursor as _PGCursor
 import psycopg2
-from psycopg2 import sql
-import json
 import os
-from datetime import datetime
 
 
 class DatabaseService:
@@ -80,7 +77,7 @@ class DatabaseService:
                 INSERT INTO users (id, email, username, password_hash, is_active)
                 VALUES (%s, %s, %s, %s, true)
             """
-            cursor = self.execute(query, (user_id, email, username, password_hash))
+            self.execute(query, (user_id, email, username, password_hash))
             self.commit()
             
             # Create balance record

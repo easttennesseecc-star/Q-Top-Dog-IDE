@@ -11,7 +11,7 @@ from typing import Dict, Any, Optional
 from uuid import uuid4
 import logging
 
-from backend.orchestration.workflow_state_machine import WorkflowState, LLMRole
+from backend.orchestration.workflow_state_machine import WorkflowState
 from backend.services.ai_orchestration import (
     get_ai_orchestration_manager,
     AIOrchestrationManager,

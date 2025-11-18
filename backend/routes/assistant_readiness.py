@@ -9,7 +9,7 @@ from __future__ import annotations
 
 import os
 import uuid
-from typing import Any, Dict, Optional
+from typing import Any, Dict
 from fastapi import APIRouter
 
 """Assistant readiness now validates the file-based spool instead of the legacy inbox.

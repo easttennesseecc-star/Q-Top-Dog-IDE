@@ -14,7 +14,7 @@ numpy arrays (no external audio libs). It provides:
 import json
 import logging
 from datetime import datetime
-from dataclasses import dataclass, field, asdict
+from dataclasses import dataclass, field
 from typing import Dict, List, Optional
 from pathlib import Path
 

@@ -5,9 +5,7 @@ Marketplace routes for browsing models + Agent routes for chat
 
 from flask import Blueprint, request, jsonify
 from flask_cors import cross_origin
-from typing import Dict, List, Optional, Tuple
-from datetime import datetime
-import json
+from typing import Dict
 import os
 import logging
 
@@ -307,7 +305,7 @@ class AgentRoutes:
             try:
                 data = request.get_json()
                 model_id = data.get('model_id')
-                messages = data.get('messages', [])
+                data.get('messages', [])
                 
                 if not model_id:
                     return jsonify({

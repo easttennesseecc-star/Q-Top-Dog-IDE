@@ -6,14 +6,12 @@ Validates <100ms SLA across all operations
 import asyncio
 import time
 import statistics
-from typing import List, Dict, Callable
+from typing import List
 import sys
 
 sys.path.insert(0, '/backend')
 
 from services.semantic_analysis import get_analyzer
-from services.typescript_language_server import get_ts_server
-from services.python_language_server import get_py_server
 
 
 class BenchmarkResult:

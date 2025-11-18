@@ -4,15 +4,10 @@ Connects to TypeScript/JavaScript language services via LSP.
 Provides type information, definitions, and hover data.
 """
 
-import asyncio
 import logging
-import json
 import subprocess
-import os
-from typing import Any, Dict, List, Optional, Tuple
+from typing import Any, Dict, List, Optional
 from dataclasses import dataclass
-from datetime import datetime
-import tempfile
 
 logger = logging.getLogger(__name__)
 
@@ -75,7 +70,7 @@ class TypeScriptServer:
             if line >= len(lines):
                 return completions
             
-            current_line = lines[line] if line < len(lines) else ""
+            lines[line] if line < len(lines) else ""
             
             # Get all symbols in scope (simplified implementation)
             symbols: List[Dict[str, Any]] = await self._extract_symbols(code, line, column)

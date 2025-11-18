@@ -1,4 +1,3 @@
-import pytest
 from starlette.testclient import TestClient
 from sqlalchemy import inspect
 

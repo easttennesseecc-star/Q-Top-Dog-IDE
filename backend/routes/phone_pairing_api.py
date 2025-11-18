@@ -8,15 +8,14 @@ import logging
 from typing import Optional, List
 from datetime import datetime
 
-from fastapi import APIRouter, HTTPException, Depends, Body, Query, Header, Form, Request
-from fastapi.responses import Response, JSONResponse
+from fastapi import APIRouter, HTTPException, Depends, Query, Header, Form, Request
+from fastapi.responses import Response
 from pydantic import BaseModel, Field
 
 from backend.services.phone_pairing_service import (
     get_pairing_service,
     PhonePairingService,
-    DeviceType,
-    PairingStatus
+    DeviceType
 )
 from backend.utils.rate_limiter import make_rate_limiter
 from backend.services.sms_pairing_service import (
@@ -26,7 +25,6 @@ from backend.services.sms_pairing_service import (
 from backend.services.cloud_message_broker import (
     get_message_broker,
     CloudMessageBroker,
-    VoiceCommand,
     BuildNotification,
     ApprovalRequest,
     BuildStatus,
@@ -216,7 +214,7 @@ async def send_sms_invite(
             phone_number=invite.phone_number,
             expires_at=invite.expires_at.isoformat(),
             status=invite.status,
-            message=f"SMS sent! Link expires in 15 minutes."
+            message="SMS sent! Link expires in 15 minutes."
         )
     
     except HTTPException:
@@ -551,10 +549,10 @@ async def process_voice_command(
         
         if "build" in command_lower:
             status = "processing"
-            message = f"Initiating build as requested"
+            message = "Initiating build as requested"
         elif "deploy" in command_lower:
             status = "processing"
-            message = f"Preparing deployment"
+            message = "Preparing deployment"
         elif "status" in command_lower:
             status = "success"
             message = "Current project is healthy. No active builds."

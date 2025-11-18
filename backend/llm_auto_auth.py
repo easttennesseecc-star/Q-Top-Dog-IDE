@@ -13,10 +13,9 @@ On startup, this system:
 """
 
 import json
-import os
 from pathlib import Path
-from typing import Dict, List, Optional, Tuple
-from backend.llm_config import CLOUD_LLMS, LLM_ROLES, get_api_key, get_model_for_role
+from typing import Dict, List, Optional
+from backend.llm_config import CLOUD_LLMS, LLM_ROLES, get_api_key
 from backend.logger_utils import get_logger
 
 logger = get_logger(__name__)

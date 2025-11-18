@@ -1,5 +1,3 @@
-from starlette.testclient import TestClient
-from backend.main import app
 
 def test_push_register_and_notify(test_client):
     # Register a dummy token

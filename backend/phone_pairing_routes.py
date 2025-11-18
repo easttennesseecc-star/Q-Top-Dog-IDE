@@ -3,12 +3,10 @@ Phone Pairing API Routes for Q-IDE
 Handles QR code generation, device pairing, and microphone streaming
 """
 
-from fastapi import APIRouter, HTTPException, WebSocket, BackgroundTasks
+from fastapi import APIRouter, HTTPException, WebSocket
 from pydantic import BaseModel
 from typing import List
 from backend.phone_pairing import phone_pairing_manager
-import asyncio
-import json
 
 # Create router
 router = APIRouter(prefix="/api/phone", tags=["phone-pairing"])

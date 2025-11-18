@@ -23,10 +23,9 @@ This module manages:
 import json
 import os
 import secrets
-import hashlib
 from datetime import datetime, timedelta
 from typing import Dict, Optional, Tuple
-from urllib.parse import urlencode, parse_qs
+from urllib.parse import urlencode
 import requests  # type: ignore[import-untyped]
 
 from backend.llm_config import get_config_file

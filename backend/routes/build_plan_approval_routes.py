@@ -5,13 +5,11 @@ Endpoints for plan generation, approval, and deviation tracking
 
 from fastapi import APIRouter, HTTPException, Path as PathParam
 from pydantic import BaseModel, Field
-from typing import List, Dict, Optional, Any
+from typing import List, Dict, Optional
 from backend.services.build_plan_approval_service import (
     get_plan_approval_service,
-    BuildPlan,
     PlanStep,
-    DeviationType,
-    PlanStatus
+    DeviationType
 )
 
 router = APIRouter(prefix="/api/v1/build-plans", tags=["build-plans"])

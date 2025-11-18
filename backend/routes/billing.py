@@ -4,9 +4,7 @@ Handles subscriptions, checkout, portal, and webhooks
 """
 
 from fastapi import APIRouter, Depends, HTTPException, Request, Body
-from fastapi.responses import JSONResponse
 import os
-import json
 from typing import Any
 # Stripe may be unavailable in some environments (tests/dev)
 stripe: Any
@@ -23,7 +21,7 @@ from typing import Optional, Dict, cast
 from datetime import datetime
 import logging
 
-from backend.services.stripe_service import StripeService, SubscriptionTier, get_tier_from_price_id
+from backend.services.stripe_service import StripeService, SubscriptionTier
 from backend.services.stripe_types import (
     WebhookSubscriptionCreated,
     WebhookSubscriptionUpdated,
@@ -31,7 +29,7 @@ from backend.services.stripe_types import (
     WebhookPaymentSucceeded,
     WebhookPaymentFailed,
 )
-from backend.models.subscription import Subscription, Invoice, UsageEvent, BillingAlert, SubscriptionStatus
+from backend.models.subscription import Subscription, Invoice, BillingAlert, SubscriptionStatus
 from backend.database.database_service import get_db
 from backend.auth import get_current_user
 
@@ -384,7 +382,7 @@ async def handle_webhook(request: Request, db = Depends(get_db)):
                     datetime.fromtimestamp(float(_cd)) if isinstance(_cd, (int, float)) else datetime.utcnow()
                 )
                 db.commit()
-                logger.info(f"Downgraded subscription to free tier after cancellation")
+                logger.info("Downgraded subscription to free tier after cancellation")
         
         elif event_type == "payment_succeeded":
             pay_succeeded = cast(WebhookPaymentSucceeded, event_data)

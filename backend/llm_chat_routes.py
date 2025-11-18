@@ -11,7 +11,7 @@ import json
 import logging
 from typing import Optional, List, Dict, Any, Tuple, TypedDict
 import time
-from backend.llm_chat_service import get_q_assistant_chat_service, LLMChatService
+from backend.llm_chat_service import LLMChatService
 from backend.simple_q_assistant import get_simple_response
 from backend.middleware.tier_validator import require_tier_access
 from backend.llm_pool import get_best_llms_for_operations

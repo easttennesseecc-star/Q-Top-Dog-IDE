@@ -15,9 +15,8 @@ Endpoints:
 """
 
 from fastapi import APIRouter, HTTPException, Query
-from fastapi.responses import RedirectResponse, JSONResponse
 from pydantic import BaseModel
-from typing import Dict, Optional
+from typing import Optional
 
 from backend.llm_oauth_auth import get_oauth_handler, OAUTH_PROVIDERS
 

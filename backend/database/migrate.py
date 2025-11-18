@@ -6,7 +6,6 @@ Connects to PostgreSQL and applies the AI Marketplace schema
 import os
 import sys
 import psycopg2
-from psycopg2 import sql
 from pathlib import Path
 
 class DatabaseMigration:

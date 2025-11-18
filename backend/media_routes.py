@@ -10,10 +10,10 @@ Endpoints:
 
 from fastapi import APIRouter, HTTPException, BackgroundTasks
 from pydantic import BaseModel
-from typing import Optional, List
+from typing import Optional
 import logging
 
-from backend.media_service import get_media_service, MediaType, MediaTier, MediaGenerationResult
+from backend.media_service import get_media_service, MediaType, MediaTier
 from backend.services.media_requirements_resolver import resolve_requirements
 
 logger = logging.getLogger(__name__)

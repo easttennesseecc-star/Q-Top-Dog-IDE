@@ -11,7 +11,7 @@ Celery with Redis/RabbitMQ would be required.
 """
 import asyncio
 import logging
-from typing import Coroutine, Callable, Any, Dict, Set
+from typing import Coroutine, Any, Dict, Set
 import uuid
 
 logger = logging.getLogger(__name__)

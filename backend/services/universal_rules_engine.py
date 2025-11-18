@@ -6,7 +6,7 @@ Claude, GPT-4, Gemini, Copilot, Cursor, and any future models.
 Rules are injected into system prompts and enforced at the API layer.
 """
 
-from typing import Dict, List, Optional, Any, Set
+from typing import Dict, List, Optional, Any
 from dataclasses import dataclass, field
 from datetime import datetime
 from pathlib import Path

@@ -9,7 +9,6 @@ from typing import List, Dict, Optional, Any
 from pathlib import Path
 from backend.services.build_rules_service import (
     get_build_rules_service,
-    BuildManifest,
     BuildRule,
     RuleCategory
 )

@@ -142,7 +142,8 @@ async def create_ui_draft(req: UIDraftRequest) -> UIDraftResponse:
                     # Host the inline image under /artifacts for MMS
                     try:
                         header, b64 = url_str.split(",", 1)
-                        import base64, uuid
+                        import base64
+                        import uuid
                         ext = "png"
                         if "image/" in header:
                             ctype = header.split(":",1)[1].split(";",1)[0]
@@ -166,7 +167,7 @@ async def create_ui_draft(req: UIDraftRequest) -> UIDraftResponse:
                     f"Modify: {modify_link}"
                 )
                 if media_url_for_mms:
-                    sms_sent = sms.send_mms(sms_to, sms_body, media_url_for_mms, user_id=req.project_id)
+                    sms.send_mms(sms_to, sms_body, media_url_for_mms, user_id=req.project_id)
                 else:
                     # As a fallback, include draft link if available; otherwise just text + email will follow
                     if isinstance(url_str, str) and url_str.startswith("http"):
@@ -175,18 +176,17 @@ async def create_ui_draft(req: UIDraftRequest) -> UIDraftResponse:
                             f"Approve: {approve_link}\n"
                             f"Modify: {modify_link}"
                         )
-                    sms_sent = sms.send_sms_text(sms_to, sms_body, user_id=req.project_id)
+                    sms.send_sms_text(sms_to, sms_body, user_id=req.project_id)
             else:
-                sms_sent = False
+                pass
         except Exception as se:
             logger.warning(f"SMS send skipped/failed: {se}")
-            sms_sent = False
 
         # Optional: push notification as a supplemental channel (does not change priority order)
         try:
             from backend.services.push_service import get_push_service
             push_title = "UI draft ready"
-            push_body = f"Approve or request changes."
+            push_body = "Approve or request changes."
             _ = get_push_service().send(req.project_id, push_title, push_body, {
                 "approve_link": approve_link,
                 "modify_link": modify_link,
@@ -530,7 +530,8 @@ async def submit_changes(token: str = Form(...), changes: str = Form("")):
         desc = payload.get("description") or "UI draft"
         # Create a revised plan in pending approval state
         svc = get_plan_approval_service()
-        import uuid, os
+        import uuid
+        import os
         workflow_id = f"wf-mod-{uuid.uuid4().hex[:8]}"
         steps = [
             PlanStep(

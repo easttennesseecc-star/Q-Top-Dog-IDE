@@ -206,7 +206,7 @@ class BuildOrchestrator:
             return None
         
         phase = project.current_phase
-        phase_enum = BuildPhase[phase.upper()] if phase.upper() in BuildPhase.__members__ else None
+        BuildPhase[phase.upper()] if phase.upper() in BuildPhase.__members__ else None
         
         return {
             "phase": phase,

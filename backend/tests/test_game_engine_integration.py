@@ -4,12 +4,9 @@ Tests for multi-engine router, container manager, and API routes
 """
 
 import pytest
-import os
-import json
 from backend.services.game_engine_router import (
     MultiEngineRouter,
     GameEngine,
-    EngineConfig,
 )
 from backend.services.game_container_manager import GameEngineContainerManager
 

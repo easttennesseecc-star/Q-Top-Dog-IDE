@@ -8,7 +8,7 @@ import os
 import logging
 from sqlalchemy import create_engine, text, inspect
 from sqlalchemy.orm import sessionmaker, Session
-from backend.models.workflow import Base, BuildWorkflow, WorkflowHandoff, WorkflowEvent
+from backend.models.workflow import Base
 
 logger = logging.getLogger(__name__)
 
@@ -110,7 +110,7 @@ class WorkflowDatabaseManager:
             True if all tables exist, False otherwise
         """
         try:
-            with self.engine.connect() as connection:
+            with self.engine.connect():
                 # Get list of tables
                 db_inspector = inspect(self.engine)
                 existing_tables = db_inspector.get_table_names()

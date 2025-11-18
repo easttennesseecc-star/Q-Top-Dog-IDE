@@ -14,7 +14,7 @@ It ensures that ALL models receive user rules in their prompts
 and validates responses before returning to the user.
 """
 
-from typing import Dict, List, Optional, Any, Callable, cast
+from typing import Dict, Optional, Any, Callable, cast
 from fastapi import Request, Response
 from fastapi.responses import JSONResponse
 from starlette.middleware.base import BaseHTTPMiddleware
@@ -26,11 +26,7 @@ from pathlib import Path
 
 from backend.services.universal_rules_engine import (
     get_rules_engine,
-    Rule,
-    RuleType,
-    RuleScope,
-    RuleEnforcement,
-    RuleViolation
+    RuleEnforcement
 )
 
 logger = logging.getLogger(__name__)
@@ -409,7 +405,7 @@ class RulesEnforcementMiddleware(BaseHTTPMiddleware):
             )
         else:
             self.logger.info(
-                f"Rule enforcement: No violations",
+                "Rule enforcement: No violations",
                 extra=log_data
             )
 

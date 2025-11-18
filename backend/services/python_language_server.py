@@ -3,11 +3,9 @@ Python Language Server Integration for Q-IDE
 Provides Python-specific completions, type hints, and diagnostics.
 """
 
-import asyncio
 import logging
 import ast
-import re
-from typing import Any, Dict, List, Optional, Set, Tuple
+from typing import Any, Dict, List, Optional, Set
 from dataclasses import dataclass
 
 logger = logging.getLogger(__name__)

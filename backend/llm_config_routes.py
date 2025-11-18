@@ -10,11 +10,11 @@ Endpoints for:
 
 from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel, ConfigDict
-from typing import Dict, List, Optional, Any
+from typing import Dict, Optional, Any
 from backend.llm_config import (
     CLOUD_LLMS, LOCAL_MODELS, LLM_ROLES,
-    load_api_keys, save_api_key, delete_api_key, get_api_key,
-    load_role_assignments, save_role_assignment, get_model_for_role,
+    save_api_key, delete_api_key, get_api_key,
+    save_role_assignment, get_model_for_role,
     list_available_providers, get_role_recommendations, 
     validate_api_key, get_setup_instructions, format_provider_status,
     get_q_assistant_llm

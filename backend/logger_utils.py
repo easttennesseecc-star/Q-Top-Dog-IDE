@@ -17,7 +17,6 @@ import logging.handlers
 import json
 import traceback
 import sys
-import os
 from datetime import datetime
 from pathlib import Path
 from typing import Any, Dict, Optional, List, TYPE_CHECKING
@@ -30,7 +29,7 @@ from contextlib import contextmanager
 
 # Try to import asyncio for async support (optional) with mypy-friendly typing
 if TYPE_CHECKING:
-    import asyncio as _asyncio  # pragma: no cover
+    pass  # pragma: no cover
 try:
     import asyncio  # type: ignore[no-redef]
 except ImportError:  # pragma: no cover - platforms without asyncio

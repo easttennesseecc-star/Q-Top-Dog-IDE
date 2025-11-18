@@ -3,20 +3,17 @@ Build Orchestration API Routes
 Endpoints for managing the 5-LLM build pipeline
 """
 
-from fastapi import APIRouter, HTTPException, Body, WebSocket, BackgroundTasks, Header, Depends
+from fastapi import APIRouter, HTTPException, Body, Header, Depends
 from pydantic import BaseModel
-from typing import Dict, List, Optional, Any
-import json
-import asyncio
+from typing import Dict, List, Any
 from datetime import datetime
 
 from backend.build_orchestrator import (
-    orchestrator, BuildProject, BuildPhaseResult, BuildPhase, LLMAssignment
+    orchestrator, BuildPhaseResult, BuildPhase
 )
 from backend.llm_roles_descriptor import (
     LLMRole, get_all_roles, get_role_by_name, get_role_context
 )
-from backend.llm_config import get_q_assistant_llm
 from backend.middleware.tier_validator import require_tier_access
 
 router = APIRouter(prefix="/api/builds", tags=["builds"])

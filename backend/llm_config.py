@@ -10,8 +10,7 @@ Manages:
 
 import json
 import os
-from typing import Dict, List, Optional, Any, Mapping, cast
-from datetime import datetime
+from typing import Dict, List, Optional, Any, cast
 from pathlib import Path
 
 # Configuration file paths
@@ -455,7 +454,7 @@ def get_q_assistant_llm() -> Optional[Dict]:
         return None
     
     # Assigned model found - get full details
-    providers = list_available_providers()
+    list_available_providers()
     
     # Check if it's a cloud provider
     if assigned_model in CLOUD_LLMS:

@@ -4,12 +4,9 @@ Unit tests (17) + E2E tests (7) = 24+ tests
 """
 
 import pytest
-import json
-from datetime import datetime
-from backend.services.ai_marketplace_registry import AIMarketplaceRegistry, AIModel, ModelCapability, ModelPricing, ModelProvider
+from backend.services.ai_marketplace_registry import AIMarketplaceRegistry, ModelCapability, ModelProvider
 from backend.services.ai_auth_service import AIAuthService, ProviderType, APIKeyStatus
 from backend.services.ai_recommendation_engine import RecommendationEngine, QueryAnalyzer, TaskCategory
-from backend.api.v1.ai_marketplace_routes import MarketplaceRoutes, AgentRoutes, AuthRoutes
 
 
 # ==================== UNIT TESTS ====================

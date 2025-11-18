@@ -4,7 +4,6 @@ Manages Godot and Unreal Engine Docker containers for cloud-based game developme
 """
 
 import os
-import json
 import logging
 import subprocess
 from typing import Dict, Optional, List, Any
@@ -74,7 +73,7 @@ class GameEngineContainerManager:
         try:
             container_id = str(uuid.uuid4())[:8]
             config = config or {}
-            godot_version = config.get("version", "4.2")
+            config.get("version", "4.2")
 
             # Port mapping
             debug_port = 6006  # GDScript debugger
@@ -135,7 +134,7 @@ CMD ["godot", "--headless", "--debug-server", "0.0.0.0:{debug_port}"]
             ]
 
             logger.info(f"Starting Godot container: godot-{container_id}")
-            result = subprocess.run(run_cmd, check=True, capture_output=True, text=True)
+            subprocess.run(run_cmd, check=True, capture_output=True, text=True)
 
             # Create status object
             status = ContainerStatus(
@@ -179,7 +178,7 @@ CMD ["godot", "--headless", "--debug-server", "0.0.0.0:{debug_port}"]
         try:
             container_id = str(uuid.uuid4())[:8]
             config = config or {}
-            ue_version = config.get("version", "5.3")
+            config.get("version", "5.3")
 
             # Port mapping
             debug_port = 6007
@@ -242,7 +241,7 @@ CMD ["cmd.exe", "/c", "C:\\UnrealEngine\\Engine\\Binaries\\Win64\\UnrealEditor-C
             ]
 
             logger.info(f"Starting Unreal container: unreal-{container_id}")
-            result = subprocess.run(run_cmd, check=True, capture_output=True, text=True)
+            subprocess.run(run_cmd, check=True, capture_output=True, text=True)
 
             # Create status object
             status = ContainerStatus(

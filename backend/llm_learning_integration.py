@@ -8,7 +8,6 @@ Usage:
 """
 
 import requests
-import json
 from typing import List, Dict
 
 # Configuration
@@ -110,7 +109,7 @@ def example_learning_workflow():
     print("\n📚 Step 1: Fetching codebase structure...")
     codebase = client.get_codebase_info()
     if codebase.get("status") == "ok":
-        print(f"  ✓ Codebase info loaded")
+        print("  ✓ Codebase info loaded")
         print(f"    - Main dirs: {', '.join(codebase['structure']['main_dirs'].keys())}")
         print(f"    - Models available: {', '.join(codebase['models']['available'])}")
     
@@ -127,10 +126,10 @@ def example_learning_workflow():
         
         build_detail = client.get_build_detail(build_id)
         if build_detail.get("status") == "ok":
-            print(f"  ✓ Build details retrieved")
+            print("  ✓ Build details retrieved")
             
             # Step 4: Generate insights and submit report
-            print(f"\n💡 Step 4: Generating learning insights...")
+            print("\n💡 Step 4: Generating learning insights...")
             
             report = client.submit_learning_report(
                 build_id=build_id,
@@ -149,18 +148,18 @@ def example_learning_workflow():
             )
             
             if report.get("status") == "ok":
-                print(f"  ✓ Report submitted successfully")
+                print("  ✓ Report submitted successfully")
                 print(f"    - Report ID: {report.get('report_id')}")
                 print(f"    - Insights updated: {report.get('insights_updated')}")
     
     # Step 5: Get learning metrics
-    print(f"\n📊 Step 5: Current learning metrics...")
+    print("\n📊 Step 5: Current learning metrics...")
     metrics = client.get_metrics()
     if metrics.get("status") == "ok":
         print(f"  ✓ Builds analyzed: {metrics.get('builds_analyzed')}")
         print(f"  ✓ Reports submitted: {metrics.get('learning_reports_submitted')}")
         print(f"  ✓ Model accuracy: {metrics.get('model_accuracy')}%")
-        print(f"  ✓ Recent improvements:")
+        print("  ✓ Recent improvements:")
         for improvement in metrics.get("model_improvements", [])[:3]:
             print(f"    - {improvement}")
     

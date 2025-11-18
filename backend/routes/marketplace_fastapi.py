@@ -19,7 +19,7 @@ return a 500 until startup repair logic re-initializes it.
 
 from fastapi import APIRouter, Depends, Header, HTTPException
 from fastapi.responses import JSONResponse
-from typing import Optional, List, Dict, Any
+from typing import Optional, Dict, Any
 import os
 import logging
 
@@ -192,7 +192,7 @@ def get_recommendations(payload: Dict[str, Any], token: Optional[str] = Depends(
 @marketplace_router.post("/select-model")
 def select_model(payload: Dict[str, Any], token: Optional[str] = Depends(get_token)):
     try:
-        user_id = require_user(token)
+        require_user(token)
         model_id = payload.get("model_id")
         if not model_id:
             raise HTTPException(status_code=400, detail="Model ID required")
@@ -245,7 +245,7 @@ def agent_chat(payload: Dict[str, Any], token: Optional[str] = Depends(get_token
                 })
         total_chars = sum(len(m.get("content", "")) for m in messages)
         estimated_tokens = max(1, total_chars // 4)
-        input_cost = (estimated_tokens / 1000) * model.pricing.input_cost_per_1k_tokens
+        (estimated_tokens / 1000) * model.pricing.input_cost_per_1k_tokens
         # Simulated response; integrate real LLM invocation later
         response_text = "Simulated response (router integration pending)."
         output_tokens = 100

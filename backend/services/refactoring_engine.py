@@ -10,7 +10,7 @@ Reference: AST manipulation + scope analysis
 
 import ast
 import re
-from typing import Dict, List, Optional, Tuple, Any, Set
+from typing import Dict, List, Optional, Tuple, Any
 from dataclasses import dataclass
 from enum import Enum
 import logging
@@ -187,9 +187,9 @@ class ASTRefactoringEngine:
 
             # Analyze extracted code to find return values
             try:
-                extracted_ast = ast.parse(code_block)
+                ast.parse(code_block)
             except:
-                extracted_ast = None
+                pass
 
             # Build new function
             params = ', '.join(parameters or [])
@@ -315,9 +315,6 @@ class ASTRefactoringEngine:
 
         try:
             # Find symbol in AST
-            symbol_node = None
-            symbol_line_start = None
-            symbol_line_end = None
 
             class SymbolFinder(ast.NodeVisitor):
                 def __init__(self):

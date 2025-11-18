@@ -1,7 +1,5 @@
 from fastapi.testclient import TestClient
 import subprocess
-import types
-import sys
 from pathlib import Path
 
 from backend.main import app, BUILD_STORE, run_local_build
@@ -65,7 +63,6 @@ def test_run_build_subprocess_raises(monkeypatch):
 
 def test_run_build_script_missing(monkeypatch):
     # Simulate the build script missing by forcing Path.exists to return False
-    real_exists = Path.exists
     monkeypatch.setattr(Path, 'exists', lambda self: False)
 
     resp = client.post('/build/run')

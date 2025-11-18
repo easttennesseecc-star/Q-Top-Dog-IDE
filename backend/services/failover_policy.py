@@ -15,9 +15,8 @@ introducing new dependencies or behavior changes. It's ready for wiring.
 """
 from __future__ import annotations
 from dataclasses import dataclass
-from typing import List, Optional, Dict, Any
+from typing import List, Dict, Any
 import random
-import time
 
 
 @dataclass

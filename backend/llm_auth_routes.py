@@ -13,8 +13,7 @@ from pydantic import BaseModel
 from typing import Dict, List, Optional, Any
 from backend.llm_auth import (
     get_provider_auth_status, get_all_auth_status, get_authenticated_providers,
-    store_api_key, retrieve_api_key, store_oauth_token, retrieve_oauth_token,
-    exchange_oauth_code, revoke_provider_auth, validate_provider_access,
+    store_api_key, retrieve_api_key, store_oauth_token, exchange_oauth_code, revoke_provider_auth, validate_provider_access,
     get_oauth_config
 )
 from backend.logger_utils import get_logger
@@ -83,7 +82,7 @@ async def oauth_login(provider: str):
         return {"success": False, "client_required": True, "message": f"OAuth not configured for {provider}"}
     # Compose a minimal auth URL; frontend will open a popup
     scopes = cfg.get("scopes", [])
-    from urllib.parse import urlencode, quote
+    from urllib.parse import urlencode
     # Use backend's configured URL as redirect base if available
     import os
     backend_url = os.getenv("BACKEND_URL", "http://127.0.0.1:8000")

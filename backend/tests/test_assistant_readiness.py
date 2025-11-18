@@ -1,5 +1,3 @@
-from starlette.testclient import TestClient
-from backend.main import app
 
 def test_assistant_readiness_endpoint(test_client):
     r = test_client.get("/assistant/readiness")

@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Body, HTTPException
 from pydantic import BaseModel
-from typing import Any, Dict, Optional
+from typing import Optional
 
 router = APIRouter(prefix="/science/multimodal", tags=["Science - Multimodal Diagnostic Synthesis"])
 

@@ -12,9 +12,6 @@ This script helps you:
 Run: python stripe_setup_assistant.py
 """
 
-import os
-import sys
-import json
 from pathlib import Path
 from colorama import Fore, Back, Style, init
 
@@ -142,7 +139,7 @@ def show_product_creation_instructions():
     print(f"{Fore.WHITE}Here's how:{Style.RESET_ALL}\n")
     
     print(f"{Fore.YELLOW}1. Open Stripe Dashboard:{Style.RESET_ALL}")
-    print(f"   → https://dashboard.stripe.com/login\n")
+    print("   → https://dashboard.stripe.com/login\n")
     
     print(f"{Fore.YELLOW}2. Navigate to Products:{Style.RESET_ALL}")
     print("   → Products (left sidebar) → Create Product\n")
