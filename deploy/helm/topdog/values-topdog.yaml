@@ -1,0 +1,91 @@
+# Production config - topdog-ide.com (primary) with www alias
+
+replicaCount: 2
+
+image:
+  repository: registry.digitalocean.com/topdog-registry/topdog
+  tag: v1.1.4
+  pullPolicy: IfNotPresent
+
+imagePullSecrets:
+  - name: docr-secret
+
+service:
+  type: ClusterIP
+  port: 8000
+
+env:
+  MARKETPLACE_MODE: "directory"
+
+extraEnv:
+  # Canonical/redirect + CORS/sitemap for TopDog
+  - name: ENABLE_HOST_REDIRECT
+    value: "true"
+  - name: CANONICAL_HOST
+    value: "topdog-ide.com"
+  - name: ALTERNATE_HOSTS
+    value: "www.topdog-ide.com"
+  - name: SITEMAP_HOSTS
+    value: "www.topdog-ide.com"
+  - name: FRONTEND_URL
+    value: "https://topdog-ide.com"
+  - name: BACKEND_URL
+    value: "https://topdog-ide.com"
+  - name: CORS_ORIGINS
+    value: "https://topdog-ide.com,https://www.topdog-ide.com"
+
+livenessProbe:
+  path: /health
+  initialDelaySeconds: 15
+  periodSeconds: 10
+  timeoutSeconds: 5
+  failureThreshold: 3
+
+readinessProbe:
+  path: /health
+  initialDelaySeconds: 10
+  periodSeconds: 10
+  timeoutSeconds: 5
+  failureThreshold: 3
+
+autoscaling:
+  enabled: true
+  minReplicas: 2
+  maxReplicas: 10
+  targetCPUUtilizationPercentage: 70
+  targetMemoryUtilizationPercentage: 80
+
+ingress:
+  enabled: true
+  className: "nginx"
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+    acme.cert-manager.io/http01-edit-in-place: "true"
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+  useRouterService: true
+  hosts:
+    - host: topdog-ide.com
+      paths:
+        - path: /robots.txt
+          pathType: Exact
+        - path: /sitemap.xml
+          pathType: Exact
+        - path: /
+          pathType: Prefix
+    - host: www.topdog-ide.com
+      paths:
+        - path: /robots.txt
+          pathType: Exact
+        - path: /sitemap.xml
+          pathType: Exact
+        - path: /
+          pathType: Prefix
+  tls:
+    - secretName: topdog-tls
+      hosts:
+        - topdog-ide.com
+        - www.topdog-ide.com
+
+extraEnvFrom:
+  - secretRef:
+      name: provider-api-keys

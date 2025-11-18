@@ -12,14 +12,16 @@ Security:
 """
 
 import asyncio
+import os
 import json
 import logging
 import secrets
+import uuid
 import hashlib
 from dataclasses import dataclass, asdict
 from datetime import datetime, timedelta
 from enum import Enum
-from typing import Optional, Dict, Any, List
+from typing import Optional, Dict, Any, List, Set
 from pathlib import Path
 import base64
 
@@ -41,6 +43,7 @@ except ImportError:
 from cryptography.hazmat.primitives import hashes, serialization
 from cryptography.hazmat.primitives.asymmetric import rsa, padding
 from cryptography.hazmat.backends import default_backend
+from backend.services.pairing_session_store import get_pairing_session_store
 
 logger = logging.getLogger(__name__)
 
@@ -70,6 +73,7 @@ class PairingToken:
     expires_at: datetime
     created_at: datetime
     ip_address: Optional[str] = None
+    otp_code: Optional[str] = None
     
     def is_expired(self) -> bool:
         """Check if token has expired"""
@@ -77,12 +81,16 @@ class PairingToken:
     
     def to_qr_payload(self) -> Dict[str, Any]:
         """Convert to QR code payload"""
-        return {
+        payload = {
             "token": self.token,
             "expires": self.expires_at.isoformat(),
             "server": "mqtt.topdog-ide.com",  # MQTT broker URL
             "version": "1.0"
         }
+        # Optionally embed OTP into QR payload for simplified demo flows
+        if os.getenv("PAIRING_QR_EMBED_OTP", "0").lower() in {"1", "true", "yes"} and self.otp_code:
+            payload["otp"] = self.otp_code
+        return payload
 
 
 @dataclass
@@ -131,7 +139,8 @@ class PhonePairingService:
         self,
         storage_path: Optional[Path] = None,
         token_expiry_days: int = 30,
-        pairing_token_expiry_minutes: int = 5
+        pairing_token_expiry_minutes: int = 5,
+        revoked_jti_filename: str = "revoked_jti.json",
     ):
         """
         Initialize phone pairing service
@@ -156,14 +165,20 @@ class PhonePairingService:
         
         # Active pairing tokens (token -> PairingToken)
         self.pairing_tokens: Dict[str, PairingToken] = {}
-        
+
         # Paired devices storage file
         self.devices_file = self.storage_path / "paired_devices.json"
-        
+
         # Load paired devices
         self.paired_devices: Dict[str, PairedDevice] = self._load_devices()
-        
+        # Revoked JWT jti values for immediate invalidation (persisted)
+        self.revoked_jti: Set[str] = set()
+        self.revoked_jti_file = self.storage_path / revoked_jti_filename
+        self._load_revoked_jti()
+
         logger.info(f"PhonePairingService initialized: {self.storage_path}")
+        # Audit file path
+        self.audit_file = self.storage_path / "pairing_audit.jsonl"
     
     def _initialize_keys(self):
         """Generate or load RSA key pair"""
@@ -252,6 +267,86 @@ class PhonePairingService:
         
         except Exception as e:
             logger.error(f"Failed to save paired devices: {e}")
+
+    def audit(self, event: str, details: Dict[str, Any]) -> None:
+        """Append a JSON line to the pairing audit log."""
+        try:
+            record = {
+                "ts": datetime.utcnow().isoformat(),
+                "event": event,
+                **details,
+            }
+            with open(self.audit_file, "a", encoding="utf-8") as f:
+                f.write(json.dumps(record) + "\n")
+        except Exception as e:
+            logger.warning(f"Failed to write audit record: {e}")
+
+    def _load_revoked_jti(self) -> None:
+        """Load revoked JTI entries from disk (best-effort)."""
+        if not self.revoked_jti_file.exists():
+            return
+        try:
+            data = json.loads(self.revoked_jti_file.read_text(encoding="utf-8"))
+            # Optional format: {"revoked": [..]} or a simple list
+            if isinstance(data, dict) and "revoked" in data:
+                entries = data.get("revoked", [])
+            elif isinstance(data, list):
+                entries = data
+            else:
+                entries = []
+            now = datetime.utcnow()
+            keep: Set[str] = set()
+            for entry in entries:
+                if isinstance(entry, dict):
+                    jti = entry.get("jti")
+                    exp = entry.get("exp")
+                    if jti and exp:
+                        try:
+                            if datetime.fromisoformat(exp) > now:
+                                keep.add(jti)
+                        except Exception:
+                            continue
+                elif isinstance(entry, str):
+                    keep.add(entry)
+            self.revoked_jti = keep
+            logger.info(f"Loaded {len(self.revoked_jti)} revoked JTI entries")
+        except Exception as e:
+            logger.warning(f"Failed loading revoked JTI list: {e}")
+
+    def _persist_revoked_jti(self) -> None:
+        """Persist revoked JTI entries as JSON with optional expiry pruning."""
+        try:
+            # Attempt to decode tokens for expiry hints; store exp when possible.
+            entries: List[Dict[str, Any]] = []
+            for device in self.paired_devices.values():
+                try:
+                    payload = jwt.decode(
+                        device.jwt_token,
+                        self.public_key,
+                        algorithms=["RS256"],
+                        audience="topdog-mobile",
+                        issuer="topdog-ide",
+                        options={"verify_exp": False},
+                    )
+                    jti = payload.get("jti")
+                    exp = payload.get("exp")
+                    if jti and jti in self.revoked_jti:
+                        # Convert numeric exp to ISO when present
+                        if isinstance(exp, (int, float)):
+                            exp_dt = datetime.utcfromtimestamp(exp)
+                            entries.append({"jti": jti, "exp": exp_dt.isoformat()})
+                        else:
+                            entries.append({"jti": jti, "exp": None})
+                except Exception:
+                    # Skip tokens we can't parse
+                    continue
+            # Fallback: if no entries collected but we have revoked_jti, store plain list
+            if not entries and self.revoked_jti:
+                entries = [{"jti": j, "exp": None} for j in self.revoked_jti]
+            serialized = json.dumps({"revoked": entries}, indent=2)
+            self.revoked_jti_file.write_text(serialized, encoding="utf-8")
+        except Exception as e:
+            logger.warning(f"Failed persisting revoked JTI list: {e}")
     
     def generate_pairing_token(
         self,
@@ -272,16 +367,33 @@ class PhonePairingService:
         token = secrets.token_urlsafe(32)
         
         # Create pairing token
+        # Optionally require an OTP for QR flow (not SMS), configurable via env
+        require_qr_otp = os.getenv("PAIRING_QR_REQUIRE_OTP", "0").lower() in {"1", "true", "yes"}
+        otp_code = f"{secrets.randbelow(1000000):06d}" if require_qr_otp else None
+
         pairing_token = PairingToken(
             token=token,
             user_id=user_id,
             expires_at=datetime.utcnow() + timedelta(minutes=self.pairing_token_expiry_minutes),
             created_at=datetime.utcnow(),
-            ip_address=ip_address
+            ip_address=ip_address,
+            otp_code=otp_code,
         )
         
         # Store token
         self.pairing_tokens[token] = pairing_token
+
+        # Record session for observability
+        try:
+            get_pairing_session_store().create_qr_session(
+                user_id=user_id,
+                pairing_token=token,
+                expires_at=pairing_token.expires_at,
+                otp_code=otp_code,
+                ip=ip_address,
+            )
+        except Exception:
+            logger.debug("Failed to record QR pairing session")
         
         logger.info(f"Generated pairing token for user {user_id} (expires in {self.pairing_token_expiry_minutes} minutes)")
         
@@ -377,18 +489,22 @@ class PhonePairingService:
         self,
         user_id: str,
         device_id: str,
-        device_fingerprint: str
+        device_fingerprint: str,
+        jti: Optional[str] = None
     ) -> str:
         """Generate JWT token for device"""
         if not JWT_AVAILABLE:
             raise RuntimeError("PyJWT package required")
         
+        if jti is None:
+            jti = str(uuid.uuid4())
         payload = {
             "user_id": user_id,
             "device_id": device_id,
             "fingerprint": device_fingerprint,
             "iat": datetime.utcnow(),
             "exp": datetime.utcnow() + timedelta(days=self.token_expiry_days),
+            "jti": jti,
             "iss": "topdog-ide",
             "aud": "topdog-mobile"
         }
@@ -448,10 +564,12 @@ class PhonePairingService:
         )
         
         # Generate JWT token
+        jti = str(uuid.uuid4())
         jwt_token = self._generate_jwt_token(
             pairing_token.user_id,
             device_id,
-            fingerprint
+            fingerprint,
+            jti=jti
         )
         
         # Create paired device
@@ -478,9 +596,15 @@ class PhonePairingService:
         
         # Remove used pairing token
         del self.pairing_tokens[pairing_token_str]
-        
-        logger.info(f"Device paired successfully: {device_name} ({device_id})")
-        
+
+        # Update session status
+        try:
+            get_pairing_session_store().mark_accepted(pairing_token_str, device_id, device_name, device_type.value)
+        except Exception:
+            logger.debug("Failed to update session to accepted")
+
+        logger.info(f"Device paired successfully: {device_name} ({device_id}) jti={jti}")
+
         return paired_device
     
     def verify_jwt_token(self, token: str) -> Optional[Dict[str, Any]]:
@@ -505,6 +629,10 @@ class PhonePairingService:
                 audience="topdog-mobile",
                 issuer="topdog-ide"
             )
+            jti = payload.get("jti")
+            if jti and jti in self.revoked_jti:
+                logger.warning(f"JWT jti revoked: {jti}")
+                return None
             return payload
         
         except jwt.ExpiredSignatureError:
@@ -533,12 +661,34 @@ class PhonePairingService:
             self._save_devices()
     
     def revoke_device(self, device_id: str) -> bool:
-        """Revoke device pairing"""
+        """Revoke device pairing and invalidate JWT immediately."""
         device = self.paired_devices.get(device_id)
         if device:
             device.status = PairingStatus.REVOKED
+            # Extract jti from existing token if possible
+            if JWT_AVAILABLE:
+                try:
+                    payload = jwt.decode(
+                        device.jwt_token,
+                        self.public_key,
+                        algorithms=["RS256"],
+                        audience="topdog-mobile",
+                        issuer="topdog-ide",
+                        options={"verify_exp": False}
+                    )
+                    jti = payload.get("jti")
+                    if jti:
+                        self.revoked_jti.add(jti)
+                        logger.info(f"Added jti to revocation list: {jti}")
+                except Exception as e:
+                    logger.warning(f"Failed to decode JWT for revocation: {e}")
             self._save_devices()
+            self._persist_revoked_jti()
             logger.info(f"Device revoked: {device_id}")
+            try:
+                get_pairing_session_store().mark_revoked(device_id)
+            except Exception:
+                logger.debug("Failed to mark session revoked")
             return True
         return False
     

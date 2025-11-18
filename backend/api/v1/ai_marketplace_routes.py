@@ -8,6 +8,7 @@ from flask_cors import cross_origin
 from typing import Dict, List, Optional, Tuple
 from datetime import datetime
 import json
+import os
 import logging
 
 # Configure logging
@@ -258,39 +259,41 @@ class AgentRoutes:
                 if not user:
                     return jsonify({'success': False, 'error': 'User not found'}), 404
                 
-                # Estimate cost
+                # Estimate cost (simple heuristic)
                 total_chars = sum(len(m.get('content', '')) for m in messages)
-                estimated_tokens = total_chars // 4
+                estimated_tokens = max(1, total_chars // 4)
                 input_cost = (estimated_tokens / 1000) * model.pricing.input_cost_per_1k_tokens
-                
-                if user.balance.available_balance < input_cost:
+
+                founder_bypass = getattr(user, 'is_founder', False)
+                if not founder_bypass and user.balance.available_balance < input_cost:
                     return jsonify({
                         'success': False,
                         'error': 'Insufficient balance',
                         'required': input_cost,
                         'available': user.balance.available_balance
                     }), 402
-                
-                # In production, actually call the router
+
+                # Simulated response; replace with router.send_message() in production
                 response = "This is a simulated response. In production, call router.send_message()"
                 output_tokens = 100
-                
-                # Deduct balance
-                total_cost = input_cost + (output_tokens / 1000) * model.pricing.output_cost_per_1k_tokens
-                self.auth_service.deduct_balance(
-                    user_id,
-                    total_cost,
-                    model_id,
-                    estimated_tokens + output_tokens
-                )
-                
+                total_cost = 0.0
+                if not founder_bypass:
+                    total_cost = input_cost + (output_tokens / 1000) * model.pricing.output_cost_per_1k_tokens
+                    self.auth_service.deduct_balance(
+                        user_id,
+                        total_cost,
+                        model_id,
+                        estimated_tokens + output_tokens
+                    )
+
                 return jsonify({
                     'success': True,
                     'data': {
                         'response': response,
                         'tokens_used': estimated_tokens + output_tokens,
                         'cost': total_cost,
-                        'remaining_balance': user.balance.available_balance - total_cost
+                        'remaining_balance': user.balance.available_balance if not founder_bypass else 'founder-unlimited',
+                        'founder_bypass': founder_bypass
                     }
                 }), 200
             except Exception as e:
@@ -319,10 +322,13 @@ class AgentRoutes:
                 if not is_valid:
                     return jsonify({'success': False, 'error': 'Unauthorized'}), 401
                 
-                # In production, implement streaming response
+                user = self.auth_service.get_user(user_id)
+                founder_bypass = getattr(user, 'is_founder', False) if user else False
+                # Streaming not implemented; founder bypass surfaced
                 return jsonify({
                     'success': True,
-                    'message': 'Streaming initialized. Use WebSocket for live streaming.'
+                    'message': 'Streaming initialized. Use WebSocket for live streaming.',
+                    'founder_bypass': founder_bypass
                 }), 200
             except Exception as e:
                 logger.error(f"Error streaming chat: {e}")
@@ -460,6 +466,208 @@ class AuthRoutes:
                 }), 200
             except Exception as e:
                 logger.error(f"Error logging in: {e}")
+                return jsonify({'success': False, 'error': str(e)}), 500
+
+        @self.blueprint.route('/credentials/add', methods=['POST'])
+        @cross_origin()
+        def add_credentials():
+            """POST /auth/credentials/add?user_id= - Add an API credential for a provider
+            Frontend compatibility endpoint (UnifiedSignInHub)
+            Body: { service: string, api_key: string, is_active?: bool }
+            """
+            try:
+                user_id = request.args.get('user_id')
+                if not user_id:
+                    return jsonify({'success': False, 'error': 'user_id required'}), 400
+                data = request.get_json() or {}
+                service = data.get('service')
+                api_key = data.get('api_key')
+                if not service or not api_key:
+                    return jsonify({'success': False, 'error': 'service and api_key required'}), 400
+                # Map service string to ProviderType
+                from backend.services.ai_auth_service import ProviderType  # local import to avoid circular at module load
+                mapping = {
+                    'openai': ProviderType.OPENAI,
+                    'anthropic': ProviderType.ANTHROPIC,
+                    'google_gemini': ProviderType.GOOGLE_GEMINI,
+                    'google': ProviderType.GOOGLE_OAUTH,
+                    'github': ProviderType.GITHUB,
+                    'github_copilot': ProviderType.GITHUB_COPILOT,
+                    'huggingface': ProviderType.HUGGINGFACE,
+                    'cohere': ProviderType.COHERE,
+                }
+                provider = mapping.get(service)
+                if not provider:
+                    return jsonify({'success': False, 'error': f'Unsupported provider: {service}'}), 400
+                success, message, key_obj = self.auth_service.add_api_key(user_id, provider, api_key, daily_limit=None)
+                if not success:
+                    return jsonify({'success': False, 'error': message}), 400
+                return jsonify({'success': True, 'data': key_obj.to_dict_safe()}), 200
+            except Exception as e:
+                logger.error(f"Error /auth/credentials/add: {e}")
+                return jsonify({'success': False, 'error': str(e)}), 500
+
+        @self.blueprint.route('/me', methods=['GET'])
+        @cross_origin()
+        def me():
+            """GET /auth/me - Return current user profile (safe)"""
+            try:
+                token = request.headers.get('Authorization', '').replace('Bearer ', '')
+                is_valid, user_id = self.auth_service.verify_token(token)
+                if not is_valid:
+                    return jsonify({'success': False, 'error': 'Unauthorized'}), 401
+                user = self.auth_service.get_user(user_id)
+                if not user:
+                    return jsonify({'success': False, 'error': 'User not found'}), 404
+                # Derive connected providers from existing API keys (OAuth and others)
+                try:
+                    connected = sorted(list({k.provider.value for k in user.api_keys.values() if k.status.value == 'active'}))
+                except Exception:
+                    connected = []
+                data = user.to_dict_safe()
+                data['connected_providers'] = connected
+                return jsonify({'success': True, 'data': data}), 200
+            except Exception as e:
+                logger.error(f"Error /auth/me: {e}")
+                return jsonify({'success': False, 'error': str(e)}), 500
+
+        @self.blueprint.route('/api-keys', methods=['GET'])
+        @cross_origin()
+        def list_api_keys():
+            """GET /auth/api-keys - List active API keys (safe)"""
+            try:
+                token = request.headers.get('Authorization', '').replace('Bearer ', '')
+                is_valid, user_id = self.auth_service.verify_token(token)
+                if not is_valid:
+                    return jsonify({'success': False, 'error': 'Unauthorized'}), 401
+                ok, keys = self.auth_service.get_api_keys(user_id)
+                return jsonify({'success': True, 'data': keys}), 200
+            except Exception as e:
+                logger.error(f"Error /auth/api-keys: {e}")
+                return jsonify({'success': False, 'error': str(e)}), 500
+
+        @self.blueprint.route('/credentials/revoke', methods=['POST'])
+        @cross_origin()
+        def revoke_api_key():
+            """POST /auth/credentials/revoke - Revoke a specific API key by id"""
+            try:
+                token = request.headers.get('Authorization', '').replace('Bearer ', '')
+                is_valid, user_id = self.auth_service.verify_token(token)
+                if not is_valid:
+                    return jsonify({'success': False, 'error': 'Unauthorized'}), 401
+                data = request.get_json() or {}
+                key_id = data.get('key_id')
+                if not key_id:
+                    return jsonify({'success': False, 'error': 'key_id required'}), 400
+                ok, msg = self.auth_service.remove_api_key(user_id, key_id)
+                if not ok:
+                    return jsonify({'success': False, 'error': msg}), 400
+                return jsonify({'success': True, 'message': msg}), 200
+            except Exception as e:
+                logger.error(f"Error /auth/credentials/revoke: {e}")
+                return jsonify({'success': False, 'error': str(e)}), 500
+
+        @self.blueprint.route('/credentials/rotate', methods=['POST'])
+        @cross_origin()
+        def rotate_api_key():
+            """POST /auth/credentials/rotate - Rotate a key by replacing with a new value for the same provider
+            Body: { key_id: string, new_api_key: string }
+            """
+            try:
+                token = request.headers.get('Authorization', '').replace('Bearer ', '')
+                is_valid, user_id = self.auth_service.verify_token(token)
+                if not is_valid:
+                    return jsonify({'success': False, 'error': 'Unauthorized'}), 401
+                data = request.get_json() or {}
+                key_id = data.get('key_id')
+                new_api_key = data.get('new_api_key')
+                if not key_id or not new_api_key:
+                    return jsonify({'success': False, 'error': 'key_id and new_api_key required'}), 400
+                user = self.auth_service.get_user(user_id)
+                if not user or key_id not in user.api_keys:
+                    return jsonify({'success': False, 'error': 'API key not found'}), 404
+                provider = user.api_keys[key_id].provider
+                # Revoke old
+                try:
+                    from backend.services.ai_auth_service import APIKeyStatus
+                    user.api_keys[key_id].status = APIKeyStatus.REVOKED
+                except Exception:
+                    user.api_keys[key_id].status = user.api_keys[key_id].status.__class__('revoked')
+                # Add new
+                ok, msg, new_key = self.auth_service.add_api_key(user_id, provider, new_api_key, daily_limit=None)
+                if not ok:
+                    return jsonify({'success': False, 'error': msg}), 400
+                return jsonify({'success': True, 'data': new_key.to_dict_safe()}), 200
+            except Exception as e:
+                logger.error(f"Error /auth/credentials/rotate: {e}")
+                return jsonify({'success': False, 'error': str(e)}), 500
+
+        @self.blueprint.route('/grant-founder', methods=['POST'])
+        @cross_origin()
+        def grant_founder():
+            """POST /auth/grant-founder - Admin route to grant founder status & paid access"""
+            try:
+                admin_token = request.headers.get('X-Admin-Key')
+                expected = os.getenv('ADMIN_FOUNDER_GRANT_KEY')
+                if not expected or admin_token != expected:
+                    return jsonify({'success': False, 'error': 'Forbidden'}), 403
+                data = request.get_json() or {}
+                email = data.get('email')
+                if not email:
+                    return jsonify({'success': False, 'error': 'Email required'}), 400
+                user = self.auth_service.get_user_by_email(email)
+                if not user:
+                    return jsonify({'success': False, 'error': 'User not found'}), 404
+                user.is_founder = True
+                user.paid = True
+                # Optionally seed large balance
+                if user.balance.total_balance < 1000:
+                    user.balance.total_balance = 1000.0
+                return jsonify({'success': True, 'data': user.to_dict_safe()}), 200
+            except Exception as e:
+                logger.error(f"Error /auth/grant-founder: {e}")
+                return jsonify({'success': False, 'error': str(e)}), 500
+
+        @self.blueprint.route('/admin/set-password', methods=['POST'])
+        @cross_origin()
+        def admin_set_password():
+            """POST /auth/admin/set-password - Admin: ensure user exists and set password (DEV ONLY)
+            Headers: X-Admin-Key matches ADMIN_FOUNDER_GRANT_KEY
+            Body: { email: string, password: string, ensure_founder?: bool }
+            """
+            try:
+                admin_token = request.headers.get('X-Admin-Key')
+                expected = os.getenv('ADMIN_FOUNDER_GRANT_KEY')
+                if not expected or admin_token != expected:
+                    return jsonify({'success': False, 'error': 'Forbidden'}), 403
+                data = request.get_json() or {}
+                email = (data.get('email') or '').strip().lower()
+                password = data.get('password')
+                ensure_founder = bool(data.get('ensure_founder'))
+                if not email or not password:
+                    return jsonify({'success': False, 'error': 'email and password required'}), 400
+                user = self.auth_service.get_user_by_email(email)
+                if not user:
+                    # Create user bypassing min-length (hash directly)
+                    username = email.split('@')[0]
+                    from backend.services.ai_auth_service import PasswordHasher, User, UserBalance
+                    uid = __import__('secrets').token_hex(8)
+                    user = User(id=uid, email=email, username=username, password_hash=PasswordHasher.hash_password(password))
+                    user.balance = UserBalance(user_id=uid)
+                    self.auth_service.users[uid] = user
+                    self.auth_service.email_index[email] = uid
+                    self.auth_service.username_index[username] = uid
+                else:
+                    # Reset password directly
+                    from backend.services.ai_auth_service import PasswordHasher
+                    user.password_hash = PasswordHasher.hash_password(password)
+                # Founder/paid flags
+                if ensure_founder or email.lower() == getattr(self.auth_service, 'FOUNDER_EMAIL', '').lower():
+                    user.is_founder = True
+                    user.paid = True
+                return jsonify({'success': True, 'data': user.to_dict_safe()}), 200
+            except Exception as e:
+                logger.error(f"Error /auth/admin/set-password: {e}")
                 return jsonify({'success': False, 'error': str(e)}), 500
         
         @self.blueprint.route('/verify-token', methods=['POST'])

@@ -13,6 +13,18 @@ import os
 
 _STORE_PATH = Path(os.getenv("PUSH_SUBSCRIBERS_STORE", "./.push_subscribers.json")).resolve()
 
+def _use_sqlite() -> bool:
+    """Default to SQLite in non-test environments with env override."""
+    try:
+        override = os.getenv("PUSH_STORE_BACKEND")
+        if override:
+            return override.strip().lower() == "sqlite"
+        if os.getenv("PYTEST_CURRENT_TEST") or (os.getenv("ENVIRONMENT", "").strip().lower() in {"test", "testing"}):
+            return False
+        return True
+    except Exception:
+        return True
+
 
 def _load() -> Dict[str, Any]:
     try:
@@ -31,6 +43,9 @@ def _save(data: Dict[str, Any]) -> None:
 
 
 def add_subscriber(user_id: str, token: str | None = None, platform: str = "web", meta: Dict[str, Any] | None = None, subscription: Dict[str, Any] | None = None) -> None:
+    if _use_sqlite():
+        from backend.services.push_store_sqlite import add_subscriber as _add
+        return _add(user_id, token, platform, meta, subscription)
     data = _load()
     arr = data.get(user_id) or []
     entry: Dict[str, Any] = {"platform": platform, "meta": meta or {}}
@@ -52,11 +67,17 @@ def add_subscriber(user_id: str, token: str | None = None, platform: str = "web"
 
 
 def list_subscribers(user_id: str) -> List[Dict[str, Any]]:
+    if _use_sqlite():
+        from backend.services.push_store_sqlite import list_subscribers as _list
+        return _list(user_id)
     data = _load()
     return data.get(user_id) or []
 
 
 def remove_subscriber(user_id: str, token: str) -> None:
+    if _use_sqlite():
+        from backend.services.push_store_sqlite import remove_subscriber as _remove
+        return _remove(user_id, token)
     data = _load()
     arr = data.get(user_id) or []
     arr = [s for s in arr if s.get("token") != token]
@@ -65,4 +86,7 @@ def remove_subscriber(user_id: str, token: str) -> None:
 
 
 def list_all() -> Dict[str, Any]:
+    if _use_sqlite():
+        from backend.services.push_store_sqlite import list_all as _all
+        return _all()
     return _load()

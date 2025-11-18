@@ -1,4 +1,6 @@
-# 💰 [Archived] Top Dog Pricing & Monetization Strategy
+# 💰 [ARCHIVED] Top Dog Pricing & Monetization Strategy
+
+**THIS DOCUMENT IS ARCHIVED AND OUT OF DATE.** The official pricing is in `PRICING_FLAT_SUBSCRIPTIONS.md`.
 
 This document has been archived. The marketplace runs in Directory (BYOK) mode and uses flat subscriptions. See `PRICING_FLAT_SUBSCRIPTIONS.md`.
 

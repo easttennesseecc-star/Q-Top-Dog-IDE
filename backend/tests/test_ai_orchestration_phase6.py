@@ -78,48 +78,25 @@ class TestAIContextCore:
 class TestAIManagerCore:
     """Core AI manager functionality tests"""
 
-    def test_manager_creation(self):
-        """Test creating AI manager"""
-        mock_service = OrchestrationService(db=None)
-        manager = AIOrchestrationManager(mock_service)
-        
-        assert manager is not None
-        assert manager.orchestration_service == mock_service
-        assert manager.contexts == {}
+    def test_manager_creation(self, ai_manager: AIOrchestrationManager):
+        """Test that the AI manager fixture provides an instance."""
+        assert ai_manager is not None
+        assert isinstance(ai_manager, AIOrchestrationManager)
+        assert hasattr(ai_manager, 'orchestration_service')
 
-    def test_context_storage(self):
-        """Test contexts are stored properly"""
-        mock_service = OrchestrationService(db=None)
-        manager = AIOrchestrationManager(mock_service)
-        
-        context = AIOrchestrationContext("w-1", LLMRole.Q_ASSISTANT)
-        manager.contexts["w-1"] = context
-        
-        assert "w-1" in manager.contexts
-        assert manager.contexts["w-1"].workflow_id == "w-1"
-
-    def test_get_context_for_role(self):
-        """Test retrieving context for role"""
-        mock_service = OrchestrationService(db=None)
-        manager = AIOrchestrationManager(mock_service)
-        
-        # Get context (creates if doesn't exist)
-        context = manager.get_context_for_role("w-1", LLMRole.CODE_WRITER)
+    @pytest.mark.asyncio
+    async def test_get_context_for_role(self, ai_manager: AIOrchestrationManager):
+        """Test retrieving a transient context for a role."""
+        context = await ai_manager.get_context_for_role("w-1", LLMRole.CODE_WRITER)
         
         assert context.workflow_id == "w-1"
         assert context.role == LLMRole.CODE_WRITER
 
-    def test_initialize_global_manager(self):
-        """Test initializing global manager"""
-        mock_service = OrchestrationService(db=None)
-        manager = initialize_ai_orchestration(mock_service)
-        
+    def test_manager_is_on_app_state(self, test_client):
+        """Test that the manager is correctly initialized and attached to the app state."""
+        manager = test_client.app.state.ai_orchestration_manager
         assert manager is not None
         assert isinstance(manager, AIOrchestrationManager)
-        
-        # Should be retrievable
-        retrieved = get_ai_orchestration_manager()
-        assert retrieved == manager
 
 
 class TestAIPromptGeneration:
@@ -314,16 +291,25 @@ class TestAIProductionReadiness:
         request = context.build_api_request(WorkflowState.DISCOVERY)
         assert "messages" in request
 
-    def test_concurrent_contexts(self):
-        """Test managing multiple concurrent contexts"""
-        manager = AIOrchestrationManager(OrchestrationService(db=None))
+    @pytest.mark.asyncio
+    async def test_concurrent_workflows(self, ai_manager: AIOrchestrationManager):
+        """Test managing multiple concurrent workflows"""
+        import asyncio
+        from uuid import uuid4
         
-        # Create multiple workflow contexts
-        for i in range(10):
-            context = AIOrchestrationContext(f"w-{i}", LLMRole.Q_ASSISTANT)
-            manager.contexts[f"w-{i}"] = context
+        # Create multiple workflow contexts concurrently
+        tasks = [
+            ai_manager.initialize_workflow(
+                workflow_id=str(uuid4()),
+                project_id="proj-1",
+                build_id=f"build-{uuid4()}",
+                user_id="user-1",
+                initial_requirements={}
+            ) for i in range(10)
+        ]
         
-        assert len(manager.contexts) == 10
+        results = await asyncio.gather(*tasks)
+        assert len(results) == 10
 
 
 # ============================================

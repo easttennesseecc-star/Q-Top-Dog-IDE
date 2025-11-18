@@ -1,0 +1,3 @@
+## Deprecated: Ruff configuration is centralized in pyproject.toml.
+## This file is intentionally left without settings to avoid duplication.
+

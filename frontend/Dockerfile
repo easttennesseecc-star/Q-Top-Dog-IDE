@@ -1,18 +1,34 @@
 # Multi-stage Dockerfile for Q-IDE Frontend
-# Optimized for Kubernetes deployment with auto-scaling
+#+ Builds the app inside the container (no prebuilt dist required)
 
 # ============================================================================
-# Stage 1: Runtime - Serve the built application
+# Stage 1: Builder - Install deps and build SPA
 # ============================================================================
-FROM node:20-alpine
+FROM node:20-alpine AS builder
+
+WORKDIR /app
+
+# Install dependencies
+COPY frontend/package.json ./package.json
+# If you later adopt npm lockfile, also COPY package-lock.json and use `npm ci`
+RUN npm install --no-fund --no-audit
+
+# Copy source and build
+COPY frontend/ .
+RUN npm run build
+
+# ============================================================================
+# Stage 2: Runtime - Serve the built application
+# ============================================================================
+FROM node:20-alpine AS runtime
 
 WORKDIR /app
 
 # Install serve to run the static files
 RUN npm install -g serve
 
-# Copy pre-built frontend dist (assumes build ran in CI to produce frontend/dist)
-COPY frontend/dist ./dist
+# Copy built assets from builder
+COPY --from=builder /app/dist ./dist
 
 # Copy entrypoint that injects runtime env into env.js
 COPY frontend/docker-entrypoint.sh /app/entrypoint.sh

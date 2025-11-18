@@ -1,0 +1,43 @@
+{
+  "plan_id": "plan_wf-mail-6a843867_1762640139.435714",
+  "workflow_id": "wf-mail-6a843867",
+  "generated_at": "2025-11-08T17:15:39.435714",
+  "generated_by": "email-reply",
+  "objective": "Approved UI draft → build",
+  "scope": "Test draft",
+  "steps": [
+    {
+      "step_id": "step-1",
+      "order": 1,
+      "description": "Finalize UI assets and constraints",
+      "estimated_duration": "1h",
+      "files_affected": [],
+      "dependencies": [],
+      "risk_level": "low",
+      "verification_criteria": "UI snapshot matches draft"
+    },
+    {
+      "step_id": "step-2",
+      "order": 2,
+      "description": "Implement features and tests per draft",
+      "estimated_duration": "2h",
+      "files_affected": [],
+      "dependencies": [],
+      "risk_level": "low",
+      "verification_criteria": "Unit/integration tests pass"
+    }
+  ],
+  "estimated_total_duration": null,
+  "risks": [],
+  "dependencies_to_install": [],
+  "files_to_create": [],
+  "files_to_modify": [],
+  "files_to_delete": [],
+  "status": "executing",
+  "approved_by": "email-reply",
+  "approved_at": "2025-11-08T17:15:39.446037",
+  "rejection_reason": null,
+  "execution_started_at": "2025-11-08T17:15:39.458221",
+  "execution_completed_at": null,
+  "deviations": []
+}

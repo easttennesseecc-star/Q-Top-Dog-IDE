@@ -281,6 +281,48 @@ Link expires in 15 minutes.
 - Device fingerprinting
 - See Phone Pairing Service docs for details
 
+### Unified Session Lifecycle (New in v1.1)
+- Every SMS invite now creates a pairing session (state machine)
+- States: pending → accepted (or expired)
+- Sessions persisted to `pairing_sessions.json` for auditability
+- Enables future metrics & revocation correlation
+
+### Persistent JWT Revocation (New in v1.1)
+- Revoked device JWT IDs (JTI) are stored on disk (`revoked_jti.json`)
+- Survives restarts, preventing token reuse after admin revocation
+- Revocation endpoint updates both device registry & session store
+
+### Adaptive Rate Limiting (Enhanced)
+- Composite key includes client IP + critical headers to prevent brute force
+- Separate buckets for invite creation vs acceptance
+- Mitigates abuse (mass invite spam / token guessing)
+
+### Optional Admin Gating
+- Sensitive operations (listing / deleting paired devices) can require an admin token
+- Enabled when `PHONE_DEVICES_REQUIRE_ADMIN="1"`
+- Client must send `x-admin-token: <ADMIN_TOKEN>` header
+
+### Optional QR OTP (Cross‑Method Hardening)
+- While this guide focuses on SMS, enabling QR OTP strengthens hybrid deployments
+- `PAIRING_QR_REQUIRE_OTP="1"` forces OTP entry when pairing via QR
+- `PAIRING_QR_EMBED_OTP="1"` embeds the OTP inside the QR payload for smoother UX (still validated server-side)
+- OTP flow is isolated—SMS flow remains link-based for frictionless UX
+
+### Operational Audit Trail
+- All pairing actions (invite create, accept, revoke) appended to JSONL audit log
+- Supports incident response & compliance reviews
+
+### Recommended Hardening Defaults
+| Feature | Recommended | Env / Config |
+|---------|-------------|--------------|
+| Invite Expiry | 15 min | `PAIRING_INVITE_EXPIRY_MINUTES` |
+| Admin Gating | Enabled in prod | `PHONE_DEVICES_REQUIRE_ADMIN=1` + `ADMIN_TOKEN` |
+| QR OTP (if QR enabled) | Require OTP | `PAIRING_QR_REQUIRE_OTP=1` |
+| QR OTP Embed | Enable | `PAIRING_QR_EMBED_OTP=1` |
+| Logging | Persist audit log | Log retention policy |
+| Revocation Persistence | Always on | (built-in) |
+| Rate Limiting | Enabled | (built-in config) |
+
 ---
 
 ## Customization
@@ -421,6 +463,27 @@ curl http://localhost:8000/phone/pairing/invite/{code}
 
 See main Phone Pairing documentation for JWT troubleshooting.
 
+### Admin Gating Failures
+
+If listing or deleting devices returns 401/403:
+1. Ensure `PHONE_DEVICES_REQUIRE_ADMIN` is set to `1` in the backend environment
+2. Include header `x-admin-token: <ADMIN_TOKEN>` in the request
+3. Verify the server's `ADMIN_TOKEN` exactly matches the header value
+
+### OTP Enforcement (QR Only)
+
+If QR pairing fails with "OTP required" or "OTP invalid":
+1. Confirm `PAIRING_QR_REQUIRE_OTP` is enabled intentionally
+2. Ensure the client extracts or prompts for the OTP when scanning QR
+3. If `PAIRING_QR_EMBED_OTP=1`, the OTP is included in the QR payload; still must be validated by the server
+
+### Session State Mismatch
+
+If an invite appears accepted but device isn't paired:
+1. Check `pairing_sessions.json` for the session state and timestamps
+2. Review audit log entries around the accept event
+3. Ensure storage path has write permissions for persistence files
+
 ---
 
 ## Cost Estimation
@@ -475,6 +538,10 @@ TWILIO_PHONE_NUMBER="+15551234567"
 # Custom Settings (Optional)
 PAIRING_INVITE_EXPIRY_MINUTES="15"
 PAIRING_BASE_URL="https://pair.topdog-ide.com"
+PHONE_DEVICES_REQUIRE_ADMIN="1"         # Require admin token for device list/delete
+ADMIN_TOKEN="super-secret-admin"        # Token presented via x-admin-token header
+PAIRING_QR_REQUIRE_OTP="1"              # (If QR also deployed) force OTP challenge
+PAIRING_QR_EMBED_OTP="1"                # Embed OTP inside QR payload for UX
 ```
 
 ### Kubernetes ConfigMap
@@ -487,6 +554,10 @@ metadata:
 data:
   PAIRING_INVITE_EXPIRY_MINUTES: "15"
   PAIRING_BASE_URL: "https://pair.topdog-ide.com"
+  PHONE_DEVICES_REQUIRE_ADMIN: "1"
+  ADMIN_TOKEN: "super-secret-admin"
+  PAIRING_QR_REQUIRE_OTP: "1"
+  PAIRING_QR_EMBED_OTP: "1"
 ```
 
 ### Kubernetes Secret
@@ -512,6 +583,17 @@ stringData:
 3. **Build Frontend UI** (phone number input + status display)
 4. **Deploy to Production**
 5. **Monitor SMS costs** (Twilio/AWS dashboards)
+
+### Hardening Verification Checklist (v1.1)
+Run this after deployment:
+1. Rate limiting: Exceed invite attempts rapidly → expect 429
+2. Session persistence: Restart backend → previous sessions still present
+3. Revocation: Revoke a device → JWT blocked on subsequent auth
+4. Admin gating: Omit `x-admin-token` on device list → receive 401/403
+5. Audit log: Accept + revoke flow produces sequential entries
+6. (If QR enabled) OTP required & rejection on wrong code
+7. Pairing expiry: Allow invite to pass expiry window → status reflects expired
+8. Config map & secret contain all required vars (see Production Deployment)
 
 **For full system integration, see:**
 - `PHONE_PAIRING_COMPLETE_GUIDE.md` - Full phone pairing system

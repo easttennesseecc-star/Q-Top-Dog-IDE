@@ -3,12 +3,12 @@ Subscription model and database schema for Stripe integration
 """
 
 from sqlalchemy import Column, String, DateTime, Integer, Enum, Boolean, Float, ForeignKey
-from sqlalchemy.orm import relationship, declarative_base
+from typing import Any
+from sqlalchemy.orm import relationship
+from . import Base
 from datetime import datetime
 import enum
 import uuid
-
-Base = declarative_base()
 
 
 class SubscriptionTier(str, enum.Enum):
@@ -41,8 +41,8 @@ class Subscription(Base):
     stripe_payment_method_id = Column(String, nullable=True)
     
     # Subscription info
-    tier = Column(Enum(SubscriptionTier), default=SubscriptionTier.FREE, nullable=False)
-    status = Column(Enum(SubscriptionStatus), default=SubscriptionStatus.ACTIVE, nullable=False)
+    tier: Any = Column(Enum(SubscriptionTier), default=SubscriptionTier.FREE, nullable=False)
+    status: Any = Column(Enum(SubscriptionStatus), default=SubscriptionStatus.ACTIVE, nullable=False)
     
     # Billing cycle
     current_period_start = Column(DateTime, nullable=True)

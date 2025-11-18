@@ -95,7 +95,7 @@ class BenchmarkSuite:
 
         test_cases = [
             ("small", "const x = 1;"),
-            ("medium", "\n".join([f"const func_{i} = () => {{};" for i in range(50)])),
+                ("medium", "\n".join([f"const func_{i} = () => {{}};" for i in range(50)])),
             ("large", "\n".join([
                 f"""const function_{i} = (arg1: number, arg2: number) => {{
   const x = arg1;

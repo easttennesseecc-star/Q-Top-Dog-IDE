@@ -1,4 +1,4 @@
-# 🛡️ THE AI SAFETY & VERIFICATION MOAT: Top Dog's Unfair Competitive Advantage
+# THE AI SAFETY & VERIFICATION MOAT: Top Dog's Unfair Competitive Advantage
 
 **Type**: Technical Differentiation Strategy  
 **Scope**: How Top Dog defeats GitHub Copilot's core weakness  
@@ -143,7 +143,7 @@ def get_user(user_id):
 ```
 
 Overwatch verification results:
-⚠️  SECURITY ISSUE (Critical): SQL Injection vulnerability
+SECURITY ISSUE (Critical): SQL Injection vulnerability
     Line 3: String interpolation in SQL query
     Fix: Use parameterized queries instead
     
@@ -153,13 +153,13 @@ Overwatch verification results:
     result = db.execute(query, (user_id,))
     ```
 
-❌  DEPENDENCY ISSUE: Variable 'db' not found in scope
+DEPENDENCY ISSUE: Variable 'db' not found in scope
     Suggestion: Import database connection or add parameter
     
-⚠️  TYPE ISSUE: user_id parameter has no type hint
+TYPE ISSUE: user_id parameter has no type hint
     Suggestion: Add type hint -> def get_user(user_id: int):
 
-💡 LOGIC ISSUE: Function doesn't handle case where user not found
+LOGIC ISSUE: Function doesn't handle case where user not found
     Suggestion: Add error handling for empty result
 
 Developer reaction: "I see exactly what's wrong and how to fix it"
@@ -333,12 +333,12 @@ Developer: "Generate database connection function for Postgres"
 
 Top Dog generates + Overwatch verifies:
 
-⚠️  CONFIGURATION ISSUE: Hardcoded database config found
+CONFIGURATION ISSUE: Hardcoded database config found
     Suggestion: Load from environment variables
     
-❌  MISSING VALIDATION: No error handling for connection failure
+MISSING VALIDATION: No error handling for connection failure
 
-💡 BEST PRACTICE: Connection string should use environment variables
+BEST PRACTICE: Connection string should use environment variables
 
 Developer approves suggested fixes
 
@@ -348,13 +348,13 @@ Developer: "Generate a query function using that connection"
 
 Top Dog generates + Overwatch verifies:
 
-⚠️  SQL INJECTION: String interpolation detected
+SQL INJECTION: String interpolation detected
     Suggestion: Use parameterized queries
     
-❌  TYPE MISMATCH: connection parameter type undefined
+TYPE MISMATCH: connection parameter type undefined
     Suggestion: Add type hint
 
-💡 INTEGRATION CHECK: Generated function matches connection API signature ✅
+INTEGRATION CHECK: Generated function matches connection API signature
 
 Developer approves suggested fixes
 
@@ -364,10 +364,10 @@ Developer: "Generate an error handler"
 
 Top Dog generates + Overwatch verifies:
 
-❌  LOGIC ERROR: Catching all exceptions silently
+LOGIC ERROR: Catching all exceptions silently
     Suggestion: Specific exception handling with logging
 
-💡 INTEGRATION CHECK: Error handling matches expected exceptions ✅
+INTEGRATION CHECK: Error handling matches expected exceptions
 
 Developer approves fixes
 
@@ -377,12 +377,12 @@ Developer: "Generate a wrapper function"
 
 Top Dog generates + Overwatch verifies:
 
-✅ All verifications pass:
-   ├─ Connection API matches ✅
-   ├─ SQL injection patterns absent ✅
-   ├─ Error handling correct ✅
-   ├─ Configuration matches environment ✅
-   └─ No cascading assumptions ✅
+All verifications pass:
+   ├─ Connection API matches
+   ├─ SQL injection patterns absent
+   ├─ Error handling correct
+   ├─ Configuration matches environment
+   └─ No cascading assumptions
 
 Developer deploys with CONFIDENCE
 
@@ -535,10 +535,10 @@ Your advantage window: 24+ months (they're just getting started when you're alre
                         SPEED ←→ SAFETY
                         ↑
        TRUSTWORTHY  │
-       FOR PROD     │  ◆ Top Dog (verified)
+       FOR PROD     │  Top Dog (verified)
        DEPLOYMENT   │
                     │
-       BEST EFFORT  │  ● GitHub Copilot
+       BEST EFFORT  │  GitHub Copilot
        CODE         │     (hope it works)
                     │
                     └─────────────────────────

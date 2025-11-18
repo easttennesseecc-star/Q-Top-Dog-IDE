@@ -1,0 +1,30 @@
+{
+  "plan_wf-mail-c46c9b81_1762639589.559223": {
+    "workflow_id": "wf-mail-c46c9b81",
+    "status": "approved",
+    "generated_at": "2025-11-08T17:06:29.559223",
+    "generated_by": "email-reply",
+    "approved_at": "2025-11-08T17:06:29.572994"
+  },
+  "plan_wf-mail-809ec545_1762639924.416314": {
+    "workflow_id": "wf-mail-809ec545",
+    "status": "approved",
+    "generated_at": "2025-11-08T17:12:04.416314",
+    "generated_by": "email-reply",
+    "approved_at": "2025-11-08T17:12:04.427889"
+  },
+  "plan_wf-mail-6a843867_1762640139.435714": {
+    "workflow_id": "wf-mail-6a843867",
+    "status": "approved",
+    "generated_at": "2025-11-08T17:15:39.435714",
+    "generated_by": "email-reply",
+    "approved_at": "2025-11-08T17:15:39.446037"
+  },
+  "plan_wf-mail-73b64918_1762640401.374254": {
+    "workflow_id": "wf-mail-73b64918",
+    "status": "approved",
+    "generated_at": "2025-11-08T17:20:01.374254",
+    "generated_by": "email-reply",
+    "approved_at": "2025-11-08T17:20:01.384388"
+  }
+}

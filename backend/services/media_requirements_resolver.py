@@ -13,10 +13,10 @@ from __future__ import annotations
 
 import json
 import os
-from typing import Optional, Tuple, Dict
+from typing import Optional, Tuple, Dict, Optional as _Optional
 
 
-DEFAULTS = {
+DEFAULTS: Dict[str, Dict[str, _Optional[str]]] = {
     "image": {"resolution": "1024x1024", "format": "png"},
     "video": {"resolution": "1280x720", "format": "mp4"},
     "audio": {"resolution": None, "format": "wav"},

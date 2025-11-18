@@ -71,7 +71,7 @@ class NoteResponse(BaseModel):
 @router.post("/", response_model=NoteResponse, status_code=201)
 async def create_note(
     request: CreateNoteRequest,
-    validated_workspace: str = Depends(lambda: validate_workspace_access(request.workspace_id))
+    validated_workspace: str = Depends(lambda request: validate_workspace_access(request.workspace_id))
 ):
     """Create a new user note (workspace isolation enforced)"""
     service = get_notes_service()
@@ -119,8 +119,8 @@ async def search_notes(
 
 @router.get("/{workspace_id}/{note_id}", response_model=NoteResponse)
 async def get_note(
-    workspace_id: str = Depends(validate_workspace_access),
-    note_id: str = None
+    note_id: str,
+    workspace_id: str = Depends(validate_workspace_access)
 ):
     """Get a specific note (workspace isolation enforced)"""
     service = get_notes_service()
@@ -132,9 +132,9 @@ async def get_note(
 
 @router.put("/{workspace_id}/{note_id}", response_model=NoteResponse)
 async def update_note(
-    workspace_id: str = Depends(validate_workspace_access),
-    note_id: str = None,
-    request: UpdateNoteRequest = None
+    note_id: str,
+    request: UpdateNoteRequest,
+    workspace_id: str = Depends(validate_workspace_access)
 ):
     """Update an existing note (workspace isolation enforced)"""
     service = get_notes_service()
@@ -153,8 +153,8 @@ async def update_note(
 
 @router.delete("/{workspace_id}/{note_id}", status_code=204)
 async def delete_note(
-    workspace_id: str = Depends(validate_workspace_access),
-    note_id: str = None
+    note_id: str,
+    workspace_id: str = Depends(validate_workspace_access)
 ):
     """Delete a note (workspace isolation enforced)"""
     service = get_notes_service()

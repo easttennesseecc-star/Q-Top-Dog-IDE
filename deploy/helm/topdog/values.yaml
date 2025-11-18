@@ -49,7 +49,29 @@ autoscaling:
 ingress:
   enabled: true
   className: "nginx"
-  annotations: {}
+  annotations:
+    # Enable HTTP Strict Transport Security (HSTS)
+    nginx.ingress.kubernetes.io/hsts: "true"
+    nginx.ingress.kubernetes.io/hsts-max-age: "31536000"
+    nginx.ingress.kubernetes.io/hsts-include-subdomains: "true"
+    nginx.ingress.kubernetes.io/hsts-preload: "true"
+    # Security headers and caching rules
+    nginx.ingress.kubernetes.io/configuration-snippet: |
+      add_header X-Content-Type-Options "nosniff" always;
+      add_header X-Frame-Options "SAMEORIGIN" always;
+      add_header X-XSS-Protection "1; mode=block" always;
+      add_header Referrer-Policy "strict-origin-when-cross-origin" always;
+      add_header Permissions-Policy "geolocation=(), microphone=(), camera=()" always;
+      
+      # Caching: long cache for static assets, no-store for HTML
+      if ($request_uri ~* \.(js|css|png|jpg|jpeg|gif|svg|woff|woff2|ttf|eot)$) {
+        add_header Cache-Control "public, max-age=31536000, immutable";
+      }
+      if ($request_uri ~* \.(html)$) {
+        add_header Cache-Control "no-store";
+      }
+  # When true, ingress routes to the router service (<release>-router) instead of the default service
+  useRouterService: false
   hosts:
     - host: topdog.example.com
       paths:

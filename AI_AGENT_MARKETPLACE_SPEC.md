@@ -1,4 +1,4 @@
-# 🤖 AI AGENT MARKETPLACE - COMPLETE SPECIFICATION
+# AI AGENT MARKETPLACE - COMPLETE SPECIFICATION
 
 **Status**: Planning Complete  
 **Date**: October 29, 2025  
@@ -8,22 +8,22 @@
 
 ---
 
-## 🎯 VISION
+## VISION
 
 **Problem**: Developers waste time switching between ChatGPT, Claude, Copilot, Gemini, Llama, etc.
 
 **Solution**: Single unified marketplace in Top Dog to:
-- ✅ Browse 50+ AI models (free + paid)
-- ✅ Sign in with one account
-- ✅ Get Q Assistant recommendations ("What model should I use?")
-- ✅ Use any model directly inside the IDE
-- ✅ Pay only for what you use (or use free models)
+- Browse 50+ AI models (free + paid)
+- Sign in with one account
+- Get Q Assistant recommendations ("What model should I use?")
+- Use any model directly inside the IDE
+- Pay only for what you use (or use free models)
 
 **Outcome**: Top Dog becomes the **universal AI agent hub** for developers
 
 ---
 
-## 🧭 MARKETPLACE MODE: DIRECTORY (BYOK)
+## MARKETPLACE MODE: DIRECTORY (BYOK)
 
 This marketplace operates as a directory and integration hub, not a reseller. We do not collect commissions or re-sell tokens. Users bring their own provider keys (BYOK) and connect them inside Top Dog. Our job is to make discovery easy and integration seamless.
 
@@ -43,7 +43,7 @@ Notes:
 
 ---
 
-## 🧪 Regulated Segments: Medical & Scientific Pricing
+## Regulated Segments: Medical & Scientific Pricing
 
 Some marketplace agents/tools operate on regulated or high‑integrity data. Offer segment SKUs with added protections and distinct pricing.
 
@@ -69,7 +69,7 @@ Billing and metering fields:
 
 ---
 
-## 🧩 Free Demo Models and API Keys
+## Free Demo Models and API Keys
 
 Purpose: Let users test the marketplace before upgrading. Demo models are strictly non‑production: rate‑limited, low quotas, and no SLAs. Upgrade to Pro/Enterprise for production throughput and guarantees.
 
@@ -102,7 +102,7 @@ Gating behaviors:
 
 ---
 
-## 🏗️ ARCHITECTURE
+## ARCHITECTURE
 
 ### System Layers
 
@@ -192,7 +192,7 @@ User Query
 
 ---
 
-## 📁 FILE STRUCTURE (8-10 Files)
+## FILE STRUCTURE (8-10 Files)
 
 ### Backend Services (4 files, ~1,200 lines)
 
@@ -520,7 +520,7 @@ export const AIMarketplacePanel: React.FC<AIMarketplacePanelProps> = ({
   return (
     <MarketplaceContainer>
       <Header>
-        <Title>🤖 AI Agent Marketplace</Title>
+        <Title>AI Agent Marketplace</Title>
         <AuthButton>
           {user ? `Signed in as ${user.email}` : "Sign In"}
         </AuthButton>
@@ -534,7 +534,7 @@ export const AIMarketplacePanel: React.FC<AIMarketplacePanelProps> = ({
         <QAssistantButton 
           onClick={() => getRecommendations(searchQuery)}
         >
-          ✨ Ask Q Assistant
+          Ask Q Assistant
         </QAssistantButton>
       </SearchSection>
       
@@ -713,7 +713,7 @@ class TestBillingService(unittest.TestCase):
 
 ---
 
-## 🎯 KEY FEATURES BREAKDOWN
+## KEY FEATURES BREAKDOWN
 
 ### Feature 1: Universal Model Browser
 ```
@@ -721,11 +721,11 @@ Browsing a model in Top Dog:
 
 ┌─────────────────────────────────────────┐
 │ GPT-4 Turbo                             │
-│ ⭐ 4.8 (2,341 reviews)                  │
+│ 4.8 (2,341 reviews)                  │
 ├─────────────────────────────────────────┤
 │ Provider: OpenAI                        │
 │ Context: 128K tokens                    │
-│ Speed: ⚡⚡⚡⚡ (very fast)              │
+│ Speed: (very fast)              │
 │ Cost: $0.03 per 1K tokens               │
 │ Best for: Code, complex reasoning       │
 ├─────────────────────────────────────────┤
@@ -736,11 +736,11 @@ vs
 
 ┌─────────────────────────────────────────┐
 │ Llama 2 7B                              │
-│ ⭐ 4.2 (1,203 reviews)                  │
+│ 4.2 (1,203 reviews)                  │
 ├─────────────────────────────────────────┤
 │ Provider: HuggingFace (Free)            │
 │ Context: 4K tokens                      │
-│ Speed: ⚡⚡ (medium)                    │
+│ Speed: (medium)                    │
 │ Cost: FREE                              │
 │ Best for: Quick tasks, budget           │
 ├─────────────────────────────────────────┤
@@ -760,7 +760,7 @@ vs
 
 **Q Assistant recommends**:
 ```
-1. ✅ PRIMARY: Claude 3 Opus
+1. PRIMARY: Claude 3 Opus
    - Best for: API design (has specific knowledge)
    - Cost: $0.015/1K tokens
    - Reasoning: "Specialized in REST API architecture"
@@ -807,10 +807,10 @@ User workflow:
 2. Sees Q Assistant recommended models
 3. Clicks "Use Claude 3 Opus"
 4. Automatically:
-   ✅ Loads Claude 3 API key from secure storage
-   ✅ Checks user balance
-   ✅ Opens chat interface with Claude
-   ✅ User starts typing queries
+   - Loads Claude 3 API key from secure storage
+   - Checks user balance
+   - Opens chat interface with Claude
+   - User starts typing queries
 5. All responses streamed live in IDE
 6. Cost tracked and deducted automatically
 7. User switches to GPT-4 for next query (1 click)
@@ -822,9 +822,9 @@ User workflow:
 Chat interface shows:
 
 ┌──────────────────────────────┐
-│ 💰 Account Balance: $45.32   │
-│ 📊 This month usage: $8.47   │
-│ ⏱️  Avg response cost: $0.03  │
+│ Account Balance: $45.32   │
+│ This month usage: $8.47   │
+│  Avg response cost: $0.03  │
 ├──────────────────────────────┤
 │ Model: GPT-4 Turbo           │
 │ This query: 234 tokens ≈$0.007│
@@ -837,7 +837,7 @@ Query input: [User types...]
 
 ---
 
-## 🔗 INTEGRATION POINTS
+## INTEGRATION POINTS
 
 ### 1. Q Assistant Integration
 ```python
@@ -894,34 +894,34 @@ def ask_q_assistant(query: str):
 
 ---
 
-## 📊 IMPLEMENTATION TIMELINE
+## IMPLEMENTATION TIMELINE
 
 ### Week 1-2 (Concurrent with IntelliSense + Game Engines)
 
 **Day 1-2: Backend Foundation**
-- ✅ Create AI registry database (120 lines)
-- ✅ Create auth service (280 lines)
+- Create AI registry database (120 lines)
+- Create auth service (280 lines)
 - Deploy test database
 
 **Day 2-3: Recommendations + Routing**
-- ✅ Recommendation engine (300 lines)
-- ✅ Multi-LLM API router (300 lines)
+- Recommendation engine (300 lines)
+- Multi-LLM API router (300 lines)
 - Test all provider integrations
 
 **Day 3-4: REST API**
-- ✅ Marketplace routes (280 lines)
-- ✅ Agent routes (220 lines)
+- Marketplace routes (280 lines)
+- Agent routes (220 lines)
 - API testing (50 routes)
 
 **Day 4-5: Frontend UI**
-- ✅ Marketplace panel (550 lines)
-- ✅ Auth modal (400 lines)
-- ✅ Agent chat UI (450 lines)
+- Marketplace panel (550 lines)
+- Auth modal (400 lines)
+- Agent chat UI (450 lines)
 - Styling & polish
 
 **Day 5: Testing + Validation**
-- ✅ Unit tests (400 lines)
-- ✅ E2E tests
+- Unit tests (400 lines)
+- E2E tests
 - Performance benchmarks
 - All tests passing
 
@@ -939,7 +939,7 @@ def ask_q_assistant(query: str):
 
 ---
 
-## 🚀 LAUNCH CHECKLIST
+## LAUNCH CHECKLIST
 
 - [ ] Backend complete (4 files, 1,200+ lines)
 - [ ] Frontend complete (3 components, 1,400+ lines)
@@ -956,32 +956,32 @@ def ask_q_assistant(query: str):
 
 ---
 
-## 💡 COMPETITIVE ADVANTAGES
+## COMPETITIVE ADVANTAGES
 
 ### vs ChatGPT Direct
-- ✅ Don't leave IDE
-- ✅ Access 50+ models, not just GPT
-- ✅ One authentication, all models
-- ✅ Q Assistant recommendations
-- ✅ Integrated billing (30% cheaper)
+- Don't leave IDE
+- Access 50+ models, not just GPT
+- One authentication, all models
+- Q Assistant recommendations
+- Integrated billing (30% cheaper)
 
 ### vs GitHub Copilot
-- ✅ 50+ models, not just 1
-- ✅ User picks which model for each task
-- ✅ Transparent pricing
-- ✅ Supports local/self-hosted models
-- ✅ Works with all game engines
+- 50+ models, not just 1
+- User picks which model for each task
+- Transparent pricing
+- Supports local/self-hosted models
+- Works with all game engines
 
 ### vs VS Code + Extensions
-- ✅ All in one UI
-- ✅ Recommendations built-in
-- ✅ Billing unified
-- ✅ Marketplace first-class feature
-- ✅ Supporting game engines (unique)
+- All in one UI
+- Recommendations built-in
+- Billing unified
+- Marketplace first-class feature
+- Supporting game engines (unique)
 
 ---
 
-## 📈 REVENUE PROJECTIONS
+## REVENUE PROJECTIONS
 
 ### Year 1 Phase 1 (Launch)
 - Beta users: 5,000
@@ -1010,7 +1010,7 @@ def ask_q_assistant(query: str):
 
 ---
 
-## ✅ SUCCESS METRICS
+## SUCCESS METRICS
 
 - **Adoption**: 50%+ of Top Dog users have tried marketplace in first 30 days
 - **Usage**: Average user tries 3+ models in first week
@@ -1023,13 +1023,13 @@ def ask_q_assistant(query: str):
 
 ---
 
-## 🎉 FINAL IMPACT
+## FINAL IMPACT
 
 **Top Dog becomes the universal hub for developers to:**
-- 🎮 Build games (4 engines)
-- 🤖 Use any AI model (50+ models)
-- 💻 Code with IDE features (IntelliSense, refactoring, debugging)
-- 🚀 Launch products faster
+- Build games (4 engines)
+- Use any AI model (50+ models)
+- Code with IDE features (IntelliSense, refactoring, debugging)
+- Launch products faster
 
 **Competitive Position**: #1 Developer IDE combining code + game engines + AI agents
 

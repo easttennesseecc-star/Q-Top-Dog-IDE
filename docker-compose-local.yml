@@ -39,6 +39,9 @@ services:
       DATABASE_NAME: qide_dev
       FRONTEND_URL: http://localhost:3000
       BACKEND_URL: http://localhost:8000
+      # Dev conveniences
+      DEV_FUNDS_KEY: ${DEV_FUNDS_KEY:-local-dev-seed}
+      FOUNDER_EMAIL: ${FOUNDER_EMAIL:-founder@local.test}
       LOG_LEVEL: info
       STRIPE_PUBLIC_KEY: ${STRIPE_PUBLIC_KEY:-pk_test_your_key}
       STRIPE_SECRET_KEY: ${STRIPE_SECRET_KEY:-sk_test_your_key}

@@ -57,7 +57,8 @@ async def reminder_loop(stop_event: Optional[asyncio.Event] = None):
                         try:
                             sent = get_push_service().send(user, title, body, data)
                             logger.info(f"Reminder push sent={sent} user={user} kind={kind}")
-                            mark_reminder_sent(token)
+                            if isinstance(token, str) and token:
+                                mark_reminder_sent(token)
                         except Exception as e:
                             logger.warning(f"Reminder push failed: {e}")
             except Exception as e:

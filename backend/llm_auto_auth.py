@@ -77,12 +77,36 @@ def get_assigned_llms() -> Dict[str, str]:
 
 
 def check_credential_exists(llm_id: str) -> bool:
-    """Check if API key or credential exists for an LLM"""
+    """Check if API key or credential exists for an LLM.
+
+    Handles mapping from model IDs (e.g. 'gpt-4', 'claude-3', 'gemini-pro') to their
+    underlying provider credential keys (openai, anthropic, google, xai, perplexity).
+    Falls back to llm_auth credential store if direct key lookup fails.
+    """
+    # Map model identifiers to provider keys used in llm_config API key storage
+    MODEL_TO_PROVIDER = {
+        'gpt-4': 'openai', 'gpt-4o': 'openai', 'gpt-3.5-turbo': 'openai',
+        'gemini-pro': 'google', 'gemini-1.5-pro': 'google', 'gemini-1.5-flash': 'google',
+        'claude-3': 'anthropic', 'claude-3-opus': 'anthropic', 'claude-3-sonnet': 'anthropic', 'claude-3-haiku': 'anthropic', 'claude-3.5-sonnet': 'anthropic',
+        'grok': 'xai', 'perplexity': 'perplexity', 'copilot': 'copilot'
+    }
+    provider_key = MODEL_TO_PROVIDER.get(llm_id, llm_id)
     try:
-        key = get_api_key(llm_id)
-        return bool(key)
-    except:
-        return False
+        key = get_api_key(provider_key)
+        if key:
+            return True
+    except Exception:
+        pass
+    # Fallback: inspect llm_auth credentials file directly for provider presence
+    try:
+        from backend.llm_auth import load_credentials
+        creds = load_credentials().get('providers', {})
+        prov_entry = creds.get(provider_key) or creds.get(llm_id)
+        if prov_entry and (prov_entry.get('key') or prov_entry.get('access_token')):
+            return True
+    except Exception:
+        pass
+    return False
 
 
 def get_llm_setup_info(llm_id: str) -> Dict:
@@ -171,7 +195,8 @@ def check_all_llm_authentication() -> LLMAuthenticationStatus:
             setup_info = get_llm_setup_info(llm_id)
             setup_info['assigned_role'] = LLM_ROLES.get(role_id, {}).get('name', role_id)
             status.needs_setup.append(setup_info)
-            logger.warning(f"✗ {llm_id} missing credentials (assigned to {role_id})")
+            # Avoid Unicode symbols to prevent Windows console encoding issues
+            logger.warning(f"MISSING CREDENTIALS: {llm_id} (assigned to {role_id})")
     
     return status
 

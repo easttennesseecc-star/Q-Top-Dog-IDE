@@ -2,17 +2,27 @@
 Stripe Payment Processing Service
 Handles customer creation, subscriptions, billing portal, and webhook events
 """
+from types import ModuleType
+from typing import Optional, Tuple, Any
+from .stripe_types import (
+    SubscriptionInfo,
+    CustomerInfo,
+    InvoiceInfo,
+    WebhookPayload,
+)
+_StripeError: type[Exception]
+stripe: Any
 try:
-    import stripe
-    from stripe.error import StripeError as _StripeError
+    import stripe as _stripe_mod  # type: ignore
+    _StripeError = _stripe_mod.error.StripeError  # type: ignore[attr-defined]
+    stripe = _stripe_mod
 except Exception:
     stripe = None
-    class _StripeError(Exception):
-        pass
+    _StripeError = Exception
 import os
 import logging
 from datetime import datetime
-from typing import Optional, Dict, List, Tuple
+from typing import Optional  # re-import Optional for local usage; others imported above
 from enum import Enum
 
 logger = logging.getLogger("q-ide-topdog")
@@ -75,8 +85,8 @@ class StripeService:
         customer_id: str,
         price_id: str,
         trial_days: int = 14,
-        metadata: Dict = None
-    ) -> Dict:
+        metadata: Optional[dict] = None
+    ) -> SubscriptionInfo:
         """
         Create a subscription for a customer
         
@@ -115,7 +125,7 @@ class StripeService:
             raise
 
     @staticmethod
-    def cancel_subscription(subscription_id: str, at_period_end: bool = False) -> Dict:
+    def cancel_subscription(subscription_id: str, at_period_end: bool = False) -> SubscriptionInfo:
         """
         Cancel a subscription
         
@@ -149,7 +159,7 @@ class StripeService:
             raise
 
     @staticmethod
-    def get_subscription(subscription_id: str) -> Dict:
+    def get_subscription(subscription_id: str) -> SubscriptionInfo:
         """
         Get subscription details
         
@@ -186,7 +196,7 @@ class StripeService:
             raise
 
     @staticmethod
-    def get_customer(customer_id: str) -> Dict:
+    def get_customer(customer_id: str) -> CustomerInfo:
         """
         Get customer details
         
@@ -282,7 +292,7 @@ class StripeService:
             raise
 
     @staticmethod
-    def get_invoice(invoice_id: str) -> Dict:
+    def get_invoice(invoice_id: str) -> InvoiceInfo:
         """
         Get invoice details
         
@@ -318,7 +328,7 @@ class StripeService:
             raise
 
     @staticmethod
-    def list_invoices(customer_id: str, limit: int = 10) -> List[Dict]:
+    def list_invoices(customer_id: str, limit: int = 10) -> list[InvoiceInfo]:
         """
         List invoices for a customer
         
@@ -353,7 +363,7 @@ class StripeService:
             raise
 
     @staticmethod
-    def handle_webhook(event: Dict) -> Tuple[str, Dict]:
+    def handle_webhook(event: dict) -> Tuple[str, WebhookPayload]:
         """
         Handle Stripe webhook events
         
@@ -436,7 +446,7 @@ class StripeService:
             return ("webhook_error", {"error": str(e)})
 
     @staticmethod
-    def construct_event(payload: bytes, sig_header: str, webhook_secret: str) -> Dict:
+    def construct_event(payload: bytes, sig_header: str, webhook_secret: str) -> dict:
         """
         Construct and verify webhook event from Stripe
         

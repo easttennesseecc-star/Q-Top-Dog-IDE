@@ -28,11 +28,10 @@ WORKDIR /app
 FROM base AS dependencies
 
 # Copy requirements
-COPY requirements.txt .
+COPY backend/requirements.txt ./requirements.txt
 
 # Install Python dependencies as root in /usr/local/lib/python3.11/site-packages
-RUN pip install --no-warn-script-location \
-    -r requirements.txt
+RUN pip install --no-warn-script-location -r requirements.txt
 
 # ============================================================================
 # Stage 3: Runtime - Final production image
@@ -70,11 +69,11 @@ HEALTHCHECK --interval=30s --timeout=10s --start-period=40s --retries=3 \
 # - Graceful shutdown for rolling updates
 # - Better resource management
 CMD ["gunicorn", \
-     "--workers=4", \
-     "--worker-class=uvicorn.workers.UvicornWorker", \
-     "--bind=0.0.0.0:8000", \
-     "--timeout=120", \
-     "--access-logfile=-", \
-     "--error-logfile=-", \
-     "--log-level=info", \
-     "main:app"]
+    "--workers=4", \
+    "--worker-class=uvicorn.workers.UvicornWorker", \
+    "--bind=0.0.0.0:8000", \
+    "--timeout=120", \
+    "--access-logfile=-", \
+    "--error-logfile=-", \
+    "--log-level=info", \
+    "backend.main:app"]

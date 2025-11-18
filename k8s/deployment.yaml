@@ -1,0 +1,73 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: topdog-ide-backend
+  labels:
+    app: topdog-ide-backend
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: topdog-ide-backend
+  template:
+    metadata:
+      labels:
+        app: topdog-ide-backend
+    spec:
+      securityContext:
+        runAsUser: 1001
+        runAsGroup: 1001
+        fsGroup: 1001
+      containers:
+        - name: backend
+          image: ghcr.io/easttennesseecc-star/q-top-dog-ide:latest
+          imagePullPolicy: Always
+          resources:
+            requests:
+              cpu: "250m"
+              memory: "512Mi"
+            limits:
+              cpu: "1"
+              memory: "1Gi"
+          ports:
+            - containerPort: 8000
+          env:
+            - name: PYTHONUNBUFFERED
+              value: "1"
+            - name: UVICORN_HOST
+              value: "0.0.0.0"
+            - name: UVICORN_PORT
+              value: "8000"
+            - name: DATABASE_URL
+              value: "sqlite:////app/data/topdog_ide.db"
+            - name: RATE_LIMIT_SOFT_WARN_PCT
+              value: "10"
+            - name: DEV_SEED_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: topdog-ide-secrets
+                  key: DEV_SEED_KEY
+            - name: DEV_FUNDS_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: topdog-ide-secrets
+                  key: DEV_FUNDS_KEY
+          volumeMounts:
+            - name: data
+              mountPath: /app/data
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 8000
+            initialDelaySeconds: 10
+            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 8000
+            initialDelaySeconds: 20
+            periodSeconds: 20
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: topdog-ide-data

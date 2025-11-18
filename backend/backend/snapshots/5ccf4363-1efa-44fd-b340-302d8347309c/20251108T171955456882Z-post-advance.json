@@ -1,0 +1,26 @@
+{
+  "workflow_id": "5ccf4363-1efa-44fd-b340-302d8347309c",
+  "timestamp": "2025-11-08T17:19:55.456882",
+  "contexts": [],
+  "extra": {
+    "result": {
+      "workflow_id": "5ccf4363-1efa-44fd-b340-302d8347309c",
+      "previous_state": "planning",
+      "new_state": "handoff_to_coder",
+      "next_role": "code_writer",
+      "handoff_data": {
+        "workflow_id": "5ccf4363-1efa-44fd-b340-302d8347309c",
+        "current_phase": "handoff_to_coder",
+        "handoff_timestamp": "2025-11-08T17:19:55.456882",
+        "previous_phase_output": {
+          "plan": []
+        },
+        "instructions": "Q Assistant is handing off to Code Writer",
+        "implementation_plan": [],
+        "requirements": {}
+      },
+      "is_complete": false,
+      "state_description": "Q Assistant is handing off to Code Writer"
+    }
+  }
+}

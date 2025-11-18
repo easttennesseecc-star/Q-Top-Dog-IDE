@@ -104,17 +104,28 @@ Bandwidth Usage:
 
 ---
 
-## 🔐 Security
+## 🔐 Security & Lifecycle
 
 ```
-✅ QR code + 6-char code (one-time use)
-✅ HTTPS only (encrypted)
-✅ Session tokens (secure)
-✅ Auto-expiration (5 min timeout)
+✅ QR code + one-time token (5 min expiry)
+✅ Optional OTP for QR (env: PAIRING_QR_REQUIRE_OTP)
+✅ SMS invite includes OTP (must match on accept)
+✅ HTTPS-only transport + TLS for MQTT
+✅ RSA (RS256) signed JWT (30‑day default)
+✅ Revocation list persisted (revoked_jti.json)
+✅ Unified PairingSession tracking (pending→accepted→revoked/expired)
 ✅ Mic can be toggled anytime
 ```
 
-**Data**: Stays local, not sent to cloud
+Environment Flags:
+```
+PAIRING_QR_REQUIRE_OTP=1          # Require 6‑digit OTP validation for QR pairing
+PAIRING_QR_EMBED_OTP=1            # Embed OTP into QR payload (demo convenience)
+PHONE_DEVICES_REQUIRE_ADMIN=1     # Require x-admin-token header for listing/revoking devices
+ADMIN_TOKEN=super-secret-value    # Token expected in x-admin-token
+```
+
+**Data**: Stays local where possible; MQTT messages encrypted; minimal PII stored.
 
 ---
 
@@ -244,7 +255,7 @@ Q3 2026:
 
 ---
 
-## 📊 Quick Stats
+## 📊 Quick Stats (Updated)
 
 | Metric | Value |
 |--------|-------|
@@ -253,12 +264,15 @@ Q3 2026:
 | Uptime | 99.5%+ |
 | Max devices | 10 per account |
 | Max concurrent mics | Unlimited |
-| Pairing code lifetime | 5 min |
+| Pairing token lifetime | 5 min |
+| OTP (QR/SMS) length | 6 digits |
+| JWT lifetime | 30 days |
+| Revocation persistence | Yes |
 | Supported phones | All modern |
 
 ---
 
-**Version**: 1.0  
-**Last Updated**: October 28, 2025  
-**Status**: Ready to Use ✅
+**Version**: 1.1  
+**Last Updated**: November 9, 2025  
+**Status**: Hardened & Ready ✅
 

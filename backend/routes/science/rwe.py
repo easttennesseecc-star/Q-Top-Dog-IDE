@@ -33,7 +33,7 @@ async def synthesize_rwe(req: RWESynthesisRequest = Body(...)):
     """
     try:
         # Stub mapping: count keywords as signals
-        conditions = []
+        conditions: List[Dict[str, Optional[str]]] = []
         for n in req.notes:
             text = (n.text or "").lower()
             if "diabetes" in text:
@@ -41,10 +41,11 @@ async def synthesize_rwe(req: RWESynthesisRequest = Body(...)):
             if "hypertension" in text:
                 conditions.append({"condition": "hypertension", "date": n.timestamp or None})
 
-        omop_like = {"conditions": conditions}
-        fhir_like = {"resourceType": "Bundle", "type": "collection", "entry": []}
+        omop_like: Dict[str, Any] = {"conditions": conditions}
+        entries: List[Dict[str, Any]] = []
+        fhir_like: Dict[str, Any] = {"resourceType": "Bundle", "type": "collection", "entry": entries}
         for c in conditions:
-            fhir_like["entry"].append({
+            entries.append({
                 "resource": {
                     "resourceType": "Condition",
                     "code": {"text": c["condition"]},

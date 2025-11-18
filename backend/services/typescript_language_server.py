@@ -68,7 +68,7 @@ class TypeScriptServer:
             if not self.initialized:
                 await self.initialize()
             
-            completions = []
+            completions: List[Dict[str, Any]] = []
             
             # Extract context around cursor
             lines = code.split('\n')
@@ -78,7 +78,7 @@ class TypeScriptServer:
             current_line = lines[line] if line < len(lines) else ""
             
             # Get all symbols in scope (simplified implementation)
-            symbols = await self._extract_symbols(code, line, column)
+            symbols: List[Dict[str, Any]] = await self._extract_symbols(code, line, column)
             
             # Filter and rank
             for symbol in symbols:
@@ -209,7 +209,7 @@ class TypeScriptServer:
             if not self.initialized:
                 await self.initialize()
             
-            diagnostics = []
+            diagnostics: List[DiagnosticMessage] = []
             
             # Basic error detection
             lines = code.split('\n')
@@ -289,10 +289,10 @@ class TypeScriptServer:
             
             # Variables
             elif "const " in l or "let " in l or "var " in l:
-                parts = l.split("=")[0]
+                lhs = l.split("=")[0]
                 for keyword in ["const ", "let ", "var "]:
-                    if keyword in parts:
-                        name = parts.replace(keyword, "").strip()
+                    if keyword in lhs:
+                        name = lhs.replace(keyword, "").strip()
                         symbols.append({
                             "name": name,
                             "kind": "Variable",

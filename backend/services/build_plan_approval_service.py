@@ -8,7 +8,7 @@ import json
 from datetime import datetime
 from pathlib import Path
 from typing import Dict, List, Optional, Any
-from dataclasses import dataclass, asdict
+from dataclasses import dataclass, asdict, field
 from enum import Enum
 
 
@@ -72,7 +72,7 @@ class BuildPlan:
     # Execution tracking
     execution_started_at: Optional[str] = None
     execution_completed_at: Optional[str] = None
-    deviations: List[Dict[str, Any]] = None
+    deviations: List[Dict[str, Any]] = field(default_factory=list)
     
     def to_dict(self) -> Dict:
         return asdict(self)
@@ -317,8 +317,12 @@ class BuildPlanApprovalService:
             pid for pid, data in index.items()
             if data.get('status') == PlanStatus.PENDING
         ]
-        
-        return [self.get_plan(pid) for pid in pending_plans if self.get_plan(pid)]
+        plans: List[BuildPlan] = []
+        for pid in pending_plans:
+            plan = self.get_plan(pid)
+            if plan is not None:
+                plans.append(plan)
+        return plans
 
 
 # Singleton instance

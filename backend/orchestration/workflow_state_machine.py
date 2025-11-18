@@ -6,7 +6,7 @@ Ensures orchestration follows a structured path from discovery to deployment.
 """
 
 from enum import Enum
-from typing import Set, Dict, Tuple
+from typing import Set, Dict, Tuple, Optional, Any
 from datetime import datetime
 import logging
 
@@ -171,7 +171,7 @@ class WorkflowStateTransition:
         return is_valid
     
     @staticmethod
-    def get_next_role(current_state: WorkflowState) -> LLMRole:
+    def get_next_role(current_state: WorkflowState) -> Optional[LLMRole]:
         """
         Determine which role should handle the next phase after current state.
         
@@ -220,7 +220,7 @@ class WorkflowStateTransition:
         from_state: WorkflowState,
         to_state: WorkflowState,
         role: LLMRole,
-        reason: str = None
+        reason: Optional[str] = None
     ):
         """
         Log a workflow state transition.
@@ -258,7 +258,7 @@ class WorkflowPhaseData:
         self.verification_phase = None   # Verification Overseer checks
         self.deployment_phase = None    # Release Manager deployment
     
-    def get_phase_data(self, state: WorkflowState) -> Dict:
+    def get_phase_data(self, state: WorkflowState) -> Optional[Dict[str, Any]]:
         """Get data for a specific phase"""
         phase_map = {
             WorkflowState.DISCOVERY: self.discovery_phase,
@@ -270,7 +270,7 @@ class WorkflowPhaseData:
         }
         return phase_map.get(state)
     
-    def set_phase_data(self, state: WorkflowState, data: Dict):
+    def set_phase_data(self, state: WorkflowState, data: Dict[str, Any]):
         """Set data for a specific phase"""
         if state == WorkflowState.DISCOVERY or state == WorkflowState.PLANNING:
             if state == WorkflowState.DISCOVERY:

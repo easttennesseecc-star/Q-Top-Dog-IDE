@@ -4,7 +4,7 @@ Test monitoring system to verify all components are working correctly
 
 import pytest
 from datetime import datetime
-from monitoring import (
+from backend.monitoring import (
     monitoring,
     MonitoringSystem,
     MonitoringConfig,

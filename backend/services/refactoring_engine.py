@@ -68,7 +68,7 @@ class ScopeAnalyzer(ast.NodeVisitor):
     """Analyzes scopes and symbol references in code"""
 
     def __init__(self):
-        self.scopes: List[Dict[str, List[int]]] = [{}]  # Stack of scopes
+        self.scopes: List[Dict[str, List[Tuple[int, int]]]] = [{}]  # Stack of scopes
         self.global_scope = {}
         self.references: Dict[str, List[Tuple[int, int]]] = {}  # symbol -> [(line, col), ...]
         self.definitions: Dict[str, Tuple[int, int]] = {}  # symbol -> (line, col)
@@ -393,13 +393,17 @@ class ASTRefactoringEngine:
 
     def get_available_refactorings(self, line: int, col: int) -> List[Dict[str, Any]]:
         """Get available refactorings at position"""
-        refactorings = []
+        refactorings: List[Dict[str, Any]] = []
 
         # Check if position is in function definition
+        if not self.tree:
+            return refactorings
         for node in ast.walk(self.tree):
             if isinstance(node, (ast.FunctionDef, ast.ClassDef)):
-                if (node.lineno <= line <= (node.end_lineno or node.lineno) and
-                    node.col_offset <= col <= node.end_col_offset + 10):
+                end_lineno = getattr(node, "end_lineno", node.lineno)
+                end_col = getattr(node, "end_col_offset", node.col_offset) or node.col_offset
+                if (node.lineno <= line <= end_lineno and
+                    node.col_offset <= col <= end_col + 10):
                     refactorings.append({
                         "type": "extract_function",
                         "name": "Extract Function",

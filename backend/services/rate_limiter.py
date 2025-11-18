@@ -4,7 +4,9 @@ Checks daily API call limits and trial expiry
 """
 
 import sqlite3
+import os
 from datetime import datetime, date
+from typing import Any, Dict, Optional
 from backend.database.tier_schema import MembershipTierSchema
 
 
@@ -14,7 +16,7 @@ class RateLimiter:
     def __init__(self):
         self.db_path = MembershipTierSchema.get_db_path()
     
-    def check_limit(self, user_id: str) -> dict:
+    def check_limit(self, user_id: str) -> Dict[str, Any]:
         """
         Check if user has exceeded daily limits
         Returns: {
@@ -24,8 +26,23 @@ class RateLimiter:
             'tier': str or None
         }
         """
+        # Test/dev bypass: allow disabling rate limiter in tests to avoid DB contention
         try:
-            conn = sqlite3.connect(self.db_path)
+            if os.getenv("DISABLE_RATE_LIMITER", "false").lower() in ("1", "true", "yes"):
+                return {
+                    'allowed': True,
+                    'remaining': 999999,
+                    'limit': 999999,
+                    'used': 0,
+                    'tier': 'bypass',
+                    'error': None
+                }
+        except Exception:
+            # Fall through to normal path on any env parsing error
+            pass
+        try:
+            # Use a short timeout to avoid hanging if the DB is locked under concurrent tests
+            conn = sqlite3.connect(self.db_path, timeout=0.2)
             conn.row_factory = sqlite3.Row
             cursor = conn.cursor()
             
@@ -135,7 +152,7 @@ class RateLimiter:
                 'tier': None
             }
     
-    def get_user_tier(self, user_id: str) -> dict:
+    def get_user_tier(self, user_id: str) -> Optional[Dict[str, Any]]:
         """Get user's current tier information"""
         try:
             conn = sqlite3.connect(self.db_path)
@@ -162,7 +179,7 @@ class RateLimiter:
             print(f"Error getting tier: {e}")
             return None
     
-    def get_daily_usage(self, user_id: str) -> dict:
+    def get_daily_usage(self, user_id: str) -> Optional[Dict[str, Any]]:
         """Get user's daily usage for today"""
         try:
             conn = sqlite3.connect(self.db_path)

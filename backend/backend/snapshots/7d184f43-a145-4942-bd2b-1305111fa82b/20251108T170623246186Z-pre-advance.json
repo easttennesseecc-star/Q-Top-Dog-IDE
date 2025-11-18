@@ -1,0 +1,10 @@
+{
+  "workflow_id": "7d184f43-a145-4942-bd2b-1305111fa82b",
+  "timestamp": "2025-11-08T17:06:23.246186",
+  "contexts": [],
+  "extra": {
+    "ai_response": "test",
+    "phase_result": {},
+    "completed_state": "discovery"
+  }
+}

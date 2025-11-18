@@ -8,7 +8,7 @@ import logging
 from typing import Optional, List
 from datetime import datetime
 
-from fastapi import APIRouter, HTTPException, Depends, Body, Query, Header
+from fastapi import APIRouter, HTTPException, Depends, Body, Query, Header, Form, Request
 from fastapi.responses import Response, JSONResponse
 from pydantic import BaseModel, Field
 
@@ -18,6 +18,7 @@ from backend.services.phone_pairing_service import (
     DeviceType,
     PairingStatus
 )
+from backend.utils.rate_limiter import make_rate_limiter
 from backend.services.sms_pairing_service import (
     get_sms_pairing_service,
     SMSPairingService
@@ -91,6 +92,7 @@ class PairDeviceRequest(BaseModel):
     os_version: Optional[str] = Field(None, description="OS version")
     app_version: Optional[str] = Field(None, description="App version")
     push_token: Optional[str] = Field(None, description="Push notification token")
+    otp_code: Optional[str] = Field(None, description="Optional OTP for QR pairing if required")
 
 
 class PairDeviceResponse(BaseModel):
@@ -155,9 +157,10 @@ class SendApprovalRequest(BaseModel):
 
 # API Endpoints
 
-@router.post("/pairing/send-sms", response_model=SMSInviteResponse)
+@router.post("/pairing/send-sms", response_model=SMSInviteResponse, dependencies=[Depends(make_rate_limiter(5, 60, "sms_invite", key_headers=["x-user-id", "x-phone"]))])
 async def send_sms_invite(
     request: SendSMSInviteRequest,
+    http_request: Request,
     sms_service: SMSPairingService = Depends(get_sms_pairing_service)
 ):
     """
@@ -197,6 +200,17 @@ async def send_sms_invite(
                 detail="Failed to send SMS. Check phone number format (+1234567890)"
             )
         
+        # Audit
+        try:
+            get_pairing_service().audit("send_sms_invite", {
+                "user_id": request.user_id,
+                "phone_number": request.phone_number,
+                "ip": http_request.client.host if http_request.client else None,
+                "ua": http_request.headers.get("user-agent")
+            })
+        except Exception:
+            pass
+
         return SMSInviteResponse(
             invite_code=invite.invite_code,
             phone_number=invite.phone_number,
@@ -212,9 +226,13 @@ async def send_sms_invite(
         raise HTTPException(status_code=500, detail=str(e))
 
 
-@router.post("/pairing/accept-invite")
+class AcceptInviteWithOTPRequest(AcceptInviteRequest):
+    otp_code: str = Field(..., description="6-digit OTP code sent via SMS")
+
+@router.post("/pairing/accept-invite", dependencies=[Depends(make_rate_limiter(10, 300, "accept_invite", key_headers=["x-user-id", "x-device-id"]))])
 async def accept_sms_invite(
-    request: AcceptInviteRequest,
+    request: AcceptInviteWithOTPRequest,
+    http_request: Request,
     sms_service: SMSPairingService = Depends(get_sms_pairing_service),
     pairing_service: PhonePairingService = Depends(get_pairing_service)
 ):
@@ -242,6 +260,9 @@ async def accept_sms_invite(
             )
         
         # Accept invite
+        # Verify OTP
+        if invite.otp_code and invite.otp_code != request.otp_code:
+            raise HTTPException(status_code=400, detail="Invalid OTP code")
         success = sms_service.accept_invite(
             invite_code=request.invite_code,
             device_id=request.device_id,
@@ -250,19 +271,20 @@ async def accept_sms_invite(
             os_version=request.os_version,
             app_version=request.app_version
         )
-        
         if not success:
             raise HTTPException(status_code=500, detail="Failed to accept invite")
         
         # Create pairing (generate JWT token)
         # Convert device_type string to DeviceType enum
         try:
-            device_type_enum = DeviceType[request.device_type.upper()]
+            device_type_enum: DeviceType = DeviceType[request.device_type.upper()]
         except KeyError:
             device_type_enum = DeviceType.UNKNOWN
-        
+
+        # Generate a proper pairing token for this user to avoid using invite_code as token
+        proper_token = pairing_service.generate_pairing_token(invite.user_id, ip_address=(http_request.client.host if http_request.client else None))
         paired_device = pairing_service.pair_device(
-            pairing_token_str=request.invite_code,  # Use invite code as token
+            pairing_token_str=proper_token.token,
             device_id=request.device_id,
             device_name=request.device_name,
             device_type=device_type_enum,
@@ -284,7 +306,20 @@ async def accept_sms_invite(
                 app_version=request.app_version,
                 push_token=None
             )
+        if not paired_device:
+            raise HTTPException(status_code=500, detail="Failed to pair device after invite acceptance")
         
+        # Audit
+        try:
+            pairing_service.audit("accept_invite", {
+                "user_id": invite.user_id,
+                "device_id": request.device_id,
+                "ip": http_request.client.host if http_request.client else None,
+                "ua": http_request.headers.get("user-agent")
+            })
+        except Exception:
+            pass
+
         return PairDeviceResponse(
             device_id=paired_device.device_id,
             jwt_token=paired_device.jwt_token,
@@ -360,9 +395,10 @@ async def resend_sms(
         raise HTTPException(status_code=500, detail=str(e))
 
 
-@router.post("/pairing/generate-qr", response_model=QRCodeResponse)
+@router.post("/pairing/generate-qr", response_model=QRCodeResponse, dependencies=[Depends(make_rate_limiter(10, 60, "qr_gen", key_headers=["x-user-id"]))])
 async def generate_pairing_qr(
     request: PairingRequestModel,
+    http_request: Request,
     pairing_service: PhonePairingService = Depends(get_pairing_service)
 ):
     """
@@ -373,7 +409,7 @@ async def generate_pairing_qr(
     """
     try:
         # Generate pairing token
-        pairing_token = pairing_service.generate_pairing_token(request.user_id)
+        pairing_token = pairing_service.generate_pairing_token(request.user_id, ip_address=(http_request.client.host if http_request.client else None))
         
         # Generate QR code
         qr_bytes = pairing_service.generate_qr_code(pairing_token)
@@ -385,6 +421,15 @@ async def generate_pairing_qr(
         import base64
         qr_base64 = base64.b64encode(qr_bytes).decode('utf-8')
         
+        try:
+            pairing_service.audit("generate_qr", {
+                "user_id": request.user_id,
+                "ip": http_request.client.host if http_request.client else None,
+                "ua": http_request.headers.get("user-agent")
+            })
+        except Exception:
+            pass
+
         return QRCodeResponse(
             pairing_token=pairing_token.token,
             expires_at=pairing_token.expires_at.isoformat(),
@@ -397,9 +442,10 @@ async def generate_pairing_qr(
         raise HTTPException(status_code=500, detail=str(e))
 
 
-@router.post("/pairing/pair", response_model=PairDeviceResponse)
+@router.post("/pairing/pair", response_model=PairDeviceResponse, dependencies=[Depends(make_rate_limiter(20, 300, "pair_device", key_headers=["x-user-id", "x-device-id"]))])
 async def pair_device(
     request: PairDeviceRequest,
+    http_request: Request,
     pairing_service: PhonePairingService = Depends(get_pairing_service)
 ):
     """
@@ -409,6 +455,17 @@ async def pair_device(
     Returns JWT token for authenticated communication.
     """
     try:
+        # Optional: if QR OTP is required, validate it before pairing
+        import os as _os
+        require_qr_otp = _os.getenv("PAIRING_QR_REQUIRE_OTP", "0").lower() in {"1", "true", "yes"}
+        if require_qr_otp:
+            pairing_token_obj = pairing_service.verify_pairing_token(request.pairing_token)
+            if not pairing_token_obj:
+                raise HTTPException(status_code=400, detail="Invalid or expired pairing token")
+            expected_otp = getattr(pairing_token_obj, "otp_code", None)
+            if expected_otp and request.otp_code != expected_otp:
+                raise HTTPException(status_code=400, detail="Invalid OTP for QR pairing")
+
         # Pair device
         paired_device = pairing_service.pair_device(
             pairing_token_str=request.pairing_token,
@@ -417,12 +474,23 @@ async def pair_device(
             device_type=request.device_type,
             os_version=request.os_version,
             app_version=request.app_version,
-            push_token=request.push_token
+            push_token=request.push_token,
+            ip_address=(http_request.client.host if http_request.client else None)
         )
         
         if not paired_device:
             raise HTTPException(status_code=400, detail="Invalid or expired pairing token")
         
+        try:
+            pairing_service.audit("pair_device", {
+                "user_id": paired_device.user_id if paired_device else None,
+                "device_id": request.device_id,
+                "ip": http_request.client.host if http_request.client else None,
+                "ua": http_request.headers.get("user-agent")
+            })
+        except Exception:
+            pass
+
         return PairDeviceResponse(
             device_id=paired_device.device_id,
             jwt_token=paired_device.jwt_token,
@@ -431,12 +499,15 @@ async def pair_device(
             user_id=paired_device.user_id
         )
     
+    except HTTPException:
+        # Preserve intended HTTP status codes (e.g., 400 for invalid OTP)
+        raise
     except Exception as e:
         logger.error(f"Failed to pair device: {e}")
         raise HTTPException(status_code=500, detail=str(e))
 
 
-@router.post("/voice-command", response_model=VoiceCommandResponse)
+@router.post("/voice-command", response_model=VoiceCommandResponse, dependencies=[Depends(make_rate_limiter(60, 60, "voice_cmd"))])
 async def process_voice_command(
     request: VoiceCommandRequest,
     authorization: str = Header(..., description="Bearer {jwt_token}"),
@@ -509,15 +580,30 @@ async def process_voice_command(
         raise HTTPException(status_code=500, detail=str(e))
 
 
-@router.get("/devices", response_model=List[DeviceInfo])
+@router.get("/devices", response_model=List[DeviceInfo], dependencies=[Depends(make_rate_limiter(30, 60, "list_devices", key_headers=["x-user-id"]))])
 async def list_devices(
-    user_id: str = Query(..., description="User ID"),
+    authorization: str = Header(..., description="Bearer {jwt_token}"),
+    x_admin_token: Optional[str] = Header(default=None, alias="x-admin-token"),
     pairing_service: PhonePairingService = Depends(get_pairing_service)
 ):
     """
     List all paired devices for a user
     """
     try:
+        if not authorization.startswith("Bearer "):
+            raise HTTPException(status_code=401, detail="Invalid authorization header")
+        jwt_token = authorization.split(" ")[1]
+        payload = pairing_service.verify_jwt_token(jwt_token)
+        if not payload:
+            raise HTTPException(status_code=401, detail="Invalid or expired token")
+        # Optional admin gating via header
+        import os as _os
+        admin_required = _os.getenv("PHONE_DEVICES_REQUIRE_ADMIN", "0").lower() in {"1", "true", "yes"}
+        if admin_required:
+            required = _os.getenv("ADMIN_TOKEN")
+            if not required or x_admin_token != required:
+                raise HTTPException(status_code=403, detail="Admin token required")
+        user_id = payload['user_id']
         devices = pairing_service.get_user_devices(user_id)
         
         return [
@@ -538,21 +624,36 @@ async def list_devices(
         raise HTTPException(status_code=500, detail=str(e))
 
 
-@router.delete("/devices/{device_id}")
+@router.delete("/devices/{device_id}", dependencies=[Depends(make_rate_limiter(10, 300, "revoke_device", key_headers=["x-user-id", "x-device-id"]))])
 async def revoke_device(
     device_id: str,
-    user_id: str = Query(..., description="User ID for authorization"),
-    pairing_service: PhonePairingService = Depends(get_pairing_service)
+    authorization: str = Header(..., description="Bearer {jwt_token}"),
+    x_admin_token: Optional[str] = Header(default=None, alias="x-admin-token"),
+    pairing_service: PhonePairingService = Depends(get_pairing_service),
+    message_broker: CloudMessageBroker = Depends(get_message_broker)
 ):
     """
     Revoke device pairing
     """
     try:
+        if not authorization.startswith("Bearer "):
+            raise HTTPException(status_code=401, detail="Invalid authorization header")
+        jwt_token = authorization.split(" ")[1]
+        payload = pairing_service.verify_jwt_token(jwt_token)
+        if not payload:
+            raise HTTPException(status_code=401, detail="Invalid or expired token")
+        # Optional admin gating via X-Admin-Token
+        import os as _os
+        admin_required = _os.getenv("PHONE_DEVICES_REQUIRE_ADMIN", "0").lower() in {"1", "true", "yes"}
+        if admin_required:
+            admin_token = _os.getenv("ADMIN_TOKEN")
+            if not admin_token or x_admin_token != admin_token:
+                raise HTTPException(status_code=403, detail="Admin token required")
+        user_id = payload['user_id']
         # Verify device belongs to user
         device = pairing_service.get_device(device_id)
         if not device:
             raise HTTPException(status_code=404, detail="Device not found")
-        
         if device.user_id != user_id:
             raise HTTPException(status_code=403, detail="Not authorized")
         
@@ -562,6 +663,22 @@ async def revoke_device(
         if not success:
             raise HTTPException(status_code=500, detail="Failed to revoke device")
         
+        # notify device of logout if possible
+        try:
+            await message_broker.send_build_notification(
+                user_id=user_id,
+                device_id=device_id,
+                notification=BuildNotification(
+                    build_id="security",
+                    project_name="q-ide",
+                    status=BuildStatus.FAILURE,
+                    message="Device access revoked. Please re-pair to regain access.",
+                    priority=NotificationPriority.CRITICAL,
+                    action_required=True,
+                ),
+            )
+        except Exception:
+            pass
         return {"message": "Device revoked successfully", "device_id": device_id}
     
     except HTTPException:
@@ -672,8 +789,8 @@ async def request_approval(
 
 @router.post("/sms/webhook")
 async def sms_webhook(
-    From: str = Body(..., description="Sender phone number"),
-    Body_text: str = Body(..., alias="Body", description="SMS message text"),
+    From: str = Form(..., description="Sender phone number"),
+    Body_text: str = Form(..., alias="Body", description="SMS message text"),
     pairing_service: PhonePairingService = Depends(get_pairing_service),
     sms_handler: SMSCommandHandler = Depends(get_sms_command_handler)
 ):
@@ -687,8 +804,16 @@ async def sms_webhook(
     AWS SNS sends: originationNumber, messageBody
     """
     try:
+        # Accept form-encoded (Twilio) parameters; already parsed by FastAPI via Form(...)
         phone_number = From
         message = Body_text
+        if not message:
+            logger.warning("Empty SMS message received; returning 200 to avoid retry loop")
+            return Response(
+                content="""<?xml version="1.0" encoding="UTF-8"?>
+<Response><Message>Empty message received.</Message></Response>""",
+                media_type="application/xml"
+            )
         
         logger.info(f"Incoming SMS from {phone_number}: {message}")
         
@@ -715,10 +840,11 @@ async def sms_webhook(
         
     except Exception as e:
         logger.error(f"Error handling SMS webhook: {e}")
+        # Return 200 with error message to prevent provider retry storms (idempotent failure handling)
         return Response(
             content=f"""<?xml version="1.0" encoding="UTF-8"?>
 <Response>
-    <Message>Sorry, I couldn't process your message. Please try again.</Message>
+    <Message>Sorry, error: {str(e)[:120]}</Message>
 </Response>""",
             media_type="application/xml"
         )

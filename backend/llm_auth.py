@@ -109,7 +109,7 @@ def get_all_auth_status() -> Dict[str, Dict[str, Any]]:
     }
 
 
-def store_api_key(provider: str, api_key: str, user_identifier: str = None):
+def store_api_key(provider: str, api_key: str, user_identifier: Optional[str] = None):
     """
     Store an API key for a provider.
     
@@ -148,9 +148,9 @@ def store_oauth_token(
     provider: str,
     access_token: str,
     user_identifier: str,
-    expires_in: int = None,
-    refresh_token: str = None,
-    scopes: List[str] = None
+    expires_in: Optional[int] = None,
+    refresh_token: Optional[str] = None,
+    scopes: Optional[List[str]] = None
 ):
     """
     Store OAuth access token for a provider.
@@ -195,7 +195,7 @@ def retrieve_oauth_token(provider: str) -> Optional[str]:
     return creds.get('providers', {}).get(provider, {}).get('access_token')
 
 
-def get_oauth_config(provider: str) -> Dict[str, str]:
+def get_oauth_config(provider: str) -> Dict[str, Any]:
     """Get OAuth configuration for a specific provider."""
     
     configs = {
@@ -306,7 +306,7 @@ def get_authenticated_providers() -> List[str]:
     ]
 
 
-def validate_provider_access(provider: str, required_scopes: List[str] = None) -> bool:
+def validate_provider_access(provider: str, required_scopes: Optional[List[str]] = None) -> bool:
     """
     Validate that a provider is authenticated and has required scopes.
     

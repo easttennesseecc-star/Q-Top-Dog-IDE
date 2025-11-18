@@ -3,7 +3,9 @@ from typing import Optional
 
 
 @dataclass
-class TestClock:
+class SimClock:
+    # Prevent pytest from attempting to collect this as a test class
+    __test__ = False
     now_sec: float = 0.0
 
     def now(self) -> float:
@@ -24,7 +26,7 @@ class ClaimsProcessorSim:
 
     def __init__(
         self,
-        clock: TestClock,
+    clock: SimClock,
         checkpoint_interval_seconds: float = 300.0,
         recovery_duration_seconds: float = 1.0,
     ) -> None:
@@ -59,3 +61,6 @@ class ClaimsProcessorSim:
     def compute_rpo(self, outage_start: float) -> float:
         """Compute RPO as time between outage start and last durable checkpoint."""
         return max(0.0, outage_start - self.last_checkpoint_time)
+
+# Backward-compatibility aliases for tests
+TestClock = SimClock

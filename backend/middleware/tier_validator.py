@@ -240,10 +240,10 @@ _validator = TierValidator()
 
 
 async def require_tier_access(
-    tier_id: str = None,
-    feature: str = None,
-    action: str = None,
-    user_id: str = Header(None, alias="X-User-ID")
+    tier_id: Optional[str] = None,
+    feature: Optional[str] = None,
+    action: Optional[str] = None,
+    user_id: Optional[str] = Header(None, alias="X-User-ID")
 ) -> dict:
     """
     Enhanced dependency for tier validation
@@ -347,7 +347,7 @@ async def require_tier_access(
         raise HTTPException(status_code=500, detail=f"Tier validation failed: {str(e)}")
 
 
-def create_tier_endpoint_decorator(tier_id: str = None, feature: str = None, action: str = None):
+def create_tier_endpoint_decorator(tier_id: Optional[str] = None, feature: Optional[str] = None, action: Optional[str] = None):
     """
     Decorator factory for protecting endpoints with tier requirements
     

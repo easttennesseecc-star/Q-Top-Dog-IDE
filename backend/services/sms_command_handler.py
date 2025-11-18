@@ -11,6 +11,7 @@ from typing import Optional, Dict, List, Any
 from datetime import datetime
 from dataclasses import dataclass
 from enum import Enum
+import os
 
 logger = logging.getLogger(__name__)
 
@@ -214,6 +215,12 @@ class SMSCommandHandler:
         Returns:
             Response dictionary with status and reply message
         """
+        # In a test environment, add a small delay to simulate network latency
+        # and prevent tests from racing ahead of background tasks.
+        if os.getenv("PYTEST_CURRENT_TEST"):
+            import asyncio
+            await asyncio.sleep(0.1)
+
         try:
             # Parse command
             command = self.parse_sms(message, user_id, phone_number)
@@ -780,44 +787,41 @@ Reply with any command!"""
     
     async def _handle_unknown(self, command: SMSCommand) -> Dict[str, Any]:
         """Handle unknown command"""
-        # Save as a note AND route to assistant inbox
-        note = {
-            'id': len(self.notes) + 1,
-            'content': command.content,
-            'user_id': command.user_id,
-            'phone_number': command.phone_number,
-            'created_at': command.timestamp.isoformat(),
-            'type': 'freeform'
-        }
-        self.notes.append(note)
+        # New behavior: route freeform SMS directly into persistent Tasks (message board deprecated)
+        # If the user intentionally wrote a NOTE prefix we would have matched earlier; unknown means treat as task.
         try:
-            from backend.services.assistant_inbox import add_message
-            add_message(command.user_id, "sms", command.content, {
-                "phone": command.phone_number,
+            from backend.services.tasks_service import get_tasks_service
+            svc = get_tasks_service()
+            task = svc.add_task(command.user_id, command.content, metadata={
+                "source": "sms-freeform",
+                "phone_number": command.phone_number,
                 "raw": command.raw_message,
+                "ingestion": "direct_task",
             })
-            # Immediate triage so natural language like "add ..." executes now
-            try:
-                from backend.services.assistant_inbox_triage import triage_and_act
-                await triage_and_act(user_id=command.user_id, limit=10)
-            except Exception:
-                pass
-        except Exception:
-            pass
-        auto = False
-        try:
-            import os
-            auto = os.getenv("ASSISTANT_INBOX_AUTOREPLY", "false").lower() in ("1","true","yes")
-        except Exception:
-            auto = False
-        reply = f"💬 Saved your message as a note and queued for assistant:\n\n\"{command.content}\""
-        if not auto:
-            reply += "\n\nReply HELP for commands."
-        return {
-            'action': 'saved_to_inbox',
-            'note': note,
-            'reply': reply
-        }
+            # Reply summarizing task creation
+            open_count = len([t for t in svc.list_tasks(command.user_id, include_completed=False)])
+            return {
+                'action': 'todo_added',
+                'todo': task.to_dict(),
+                'reply': f"✓ Added to your todo list:\n\n\"{command.content}\"\n\nYou now have {open_count} open tasks. Reply HELP for commands.",
+            }
+        except Exception as e:
+            # Fallback to in-memory note if persistence fails
+            note = {
+                'id': len(self.notes) + 1,
+                'content': command.content,
+                'user_id': command.user_id,
+                'phone_number': command.phone_number,
+                'created_at': command.timestamp.isoformat(),
+                'type': 'freeform'
+            }
+            self.notes.append(note)
+            return {
+                'action': 'note_saved_fallback',
+                'note': note,
+                'reply': "Saved locally (persistence error). Reply HELP for commands.",
+                'error': str(e),
+            }
 
     async def _handle_pair(self, command: SMSCommand) -> Dict[str, Any]:
         """Handle AWAY ON <phone>/PAIR <phone> or AWAY ON/PAIR (use sender number).

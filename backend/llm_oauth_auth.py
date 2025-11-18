@@ -27,7 +27,7 @@ import hashlib
 from datetime import datetime, timedelta
 from typing import Dict, Optional, Tuple
 from urllib.parse import urlencode, parse_qs
-import requests
+import requests  # type: ignore[import-untyped]
 
 from backend.llm_config import get_config_file
 

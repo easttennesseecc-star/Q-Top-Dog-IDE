@@ -13,6 +13,7 @@ from typing import Optional, Dict, Any
 from dataclasses import dataclass, field
 from pathlib import Path
 import json
+from backend.services.pairing_session_store import get_pairing_session_store
 
 logger = logging.getLogger(__name__)
 
@@ -44,6 +45,7 @@ class PairingInvite:
     status: str = "pending"  # pending, accepted, expired, cancelled
     device_info: Optional[Dict[str, Any]] = None
     ip_address: Optional[str] = None
+    otp_code: Optional[str] = None
     
     def is_expired(self) -> bool:
         """Check if invite has expired"""
@@ -80,7 +82,7 @@ class SMSPairingService:
     
     def __init__(
         self,
-        storage_path: str = None,
+        storage_path: Optional[str] = None,
         invite_expiry_minutes: int = 15,
         base_url: str = "https://pair.topdog-ide.com"
     ):
@@ -94,13 +96,13 @@ class SMSPairingService:
         """
         if storage_path is None:
             storage_path = os.path.join(os.path.expanduser("~"), ".q-ide", "pairing")
-        
+
         self.storage_path = Path(storage_path)
         self.storage_path.mkdir(parents=True, exist_ok=True)
-        
+
         self.invite_expiry_minutes = invite_expiry_minutes
         self.base_url = base_url
-        
+
         # Store active invites
         self.invites_file = self.storage_path / "pairing_invites.json"
         self.invites: Dict[str, PairingInvite] = {}
@@ -114,7 +116,10 @@ class SMSPairingService:
     def _init_sms_providers(self):
         """Initialize SMS service providers"""
         # Twilio setup
-        self.twilio_client = None
+        # Use broad Any typing to avoid optional third-party typing requirements at import time
+        from typing import Any as _Any  # local alias to avoid polluting module namespace
+        self.twilio_client: _Any = None
+        self.twilio_phone: Optional[str] = None
         if TWILIO_AVAILABLE:
             account_sid = os.getenv("TWILIO_ACCOUNT_SID")
             auth_token = os.getenv("TWILIO_AUTH_TOKEN")
@@ -128,7 +133,7 @@ class SMSPairingService:
                     logger.warning(f"Twilio initialization failed: {e}")
         
         # AWS SNS setup
-        self.sns_client = None
+        self.sns_client: _Any = None
         if AWS_SNS_AVAILABLE:
             try:
                 self.sns_client = boto3.client('sns')
@@ -197,8 +202,8 @@ class SMSPairingService:
         self,
         phone_number: str,
         user_id: str,
-        user_name: str = None,
-        ip_address: str = None
+        user_name: Optional[str] = None,
+        ip_address: Optional[str] = None
     ) -> Optional[PairingInvite]:
         """
         Send SMS pairing invite to phone number
@@ -224,6 +229,7 @@ class SMSPairingService:
         pairing_link = f"{self.base_url}/pair?code={invite_code}"
         
         # Create invite
+        otp_code = f"{secrets.randbelow(1000000):06d}"
         invite = PairingInvite(
             invite_code=invite_code,
             phone_number=phone_number,
@@ -231,7 +237,8 @@ class SMSPairingService:
             created_at=datetime.utcnow(),
             expires_at=datetime.utcnow() + timedelta(minutes=self.invite_expiry_minutes),
             pairing_link=pairing_link,
-            ip_address=ip_address
+            ip_address=ip_address,
+            otp_code=otp_code
         )
         
         # Compose SMS message
@@ -239,6 +246,7 @@ class SMSPairingService:
         message = (
             f"{greeting}Click to pair your phone with Q-IDE:\n\n"
             f"{pairing_link}\n\n"
+            f"Security code: {otp_code}\n"
             f"Link expires in {self.invite_expiry_minutes} minutes."
         )
         
@@ -249,11 +257,23 @@ class SMSPairingService:
             # Store invite
             self.invites[invite_code] = invite
             self._save_invites()
+            # Record unified session
+            try:
+                get_pairing_session_store().create_sms_session(
+                    user_id=user_id,
+                    invite_code=invite_code,
+                    expires_at=invite.expires_at,
+                    otp_code=otp_code,
+                    phone=phone_number,
+                    ip=ip_address,
+                )
+            except Exception:
+                logger.debug("Failed to record SMS pairing session")
             
             logger.info(f"✓ Sent pairing invite to {phone_number}")
             return invite
         else:
-            logger.error(f"✗ Failed to send pairing invite to {phone_number}")
+            logger.error(f"Failed to send pairing invite to {phone_number}")
             return None
     
     def _send_sms(self, phone_number: str, message: str) -> bool:
@@ -337,8 +357,8 @@ class SMSPairingService:
         device_id: str,
         device_name: str,
         device_type: str,
-        os_version: str = None,
-        app_version: str = None
+        os_version: Optional[str] = None,
+        app_version: Optional[str] = None
     ) -> bool:
         """
         Accept pairing invite (user clicked link and tapped accept)
@@ -370,6 +390,11 @@ class SMSPairingService:
         
         invite.status = "accepted"
         self._save_invites()
+        # Mark session accepted
+        try:
+            get_pairing_session_store().mark_accepted(invite_code, device_id, device_name, device_type)
+        except Exception:
+            logger.debug("Failed to mark SMS session accepted")
         
         logger.info(f"✓ Invite accepted: {invite_code} -> {device_name}")
         return True
@@ -448,7 +473,7 @@ def get_sms_pairing_service() -> SMSPairingService:
 
 
 def initialize_sms_pairing_service(
-    storage_path: str = None,
+    storage_path: Optional[str] = None,
     invite_expiry_minutes: int = 15,
     base_url: str = "https://pair.topdog-ide.com"
 ) -> SMSPairingService:

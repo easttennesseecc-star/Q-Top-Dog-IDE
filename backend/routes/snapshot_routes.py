@@ -17,7 +17,7 @@ from __future__ import annotations
 
 import os
 from pathlib import Path
-from typing import Dict, List, Optional
+from typing import Dict, List, Optional, Tuple, Mapping
 
 from fastapi import APIRouter, HTTPException, Request, Body, Header
 from pydantic import BaseModel
@@ -70,7 +70,7 @@ def _require_snapshot_auth(request: Request) -> None:
         raise HTTPException(status_code=401, detail="invalid session")
 
 
-def _split_label(label: Optional[str]) -> tuple[Optional[str], Optional[str]]:
+def _split_label(label: Optional[str]) -> Tuple[Optional[str], Optional[str]]:
     """Split a label into base and detail.
 
     Rules:
@@ -114,7 +114,8 @@ def list_snapshots(
     store = SnapshotStore()
     files = store.list_snapshots(workflow_id)
 
-    results_all: List[Dict[str, object]] = []
+    # Use Mapping to avoid dict invariance issues when values are unions
+    results_all: List[Mapping[str, object]] = []
     for f in files:
         p = Path(f)
         meta = _parse_snapshot_name(p)
@@ -161,7 +162,7 @@ def list_checkpoints(
 
     store = SnapshotStore()
     files = store.list_snapshots(workflow_id)
-    results_all: List[Dict[str, object]] = []
+    results_all: List[Mapping[str, object]] = []
     for f in files:
         p = Path(f)
         meta = _parse_snapshot_name(p)

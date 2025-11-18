@@ -5,6 +5,7 @@ Can be swapped in place of in-memory dictionaries
 """
 
 from typing import Optional, Dict, List, Tuple
+from psycopg2.extensions import connection as _PGConn, cursor as _PGCursor
 import psycopg2
 from psycopg2 import sql
 import json
@@ -27,7 +28,7 @@ class DatabaseService:
         self.database = database
         self.user = user
         self.password = password
-        self.conn = None
+        self.conn: Optional[_PGConn] = None
         self.connect()
     
     def connect(self):
@@ -45,18 +46,24 @@ class DatabaseService:
             print(f"❌ Database connection failed: {e}")
             raise
     
-    def execute(self, query: str, params: tuple = ()) -> psycopg2.extensions.cursor:
+    def execute(self, query: str, params: tuple = ()) -> _PGCursor:
         """Execute a query and return cursor"""
-        cursor = self.conn.cursor()
+        if self.conn is None:
+            raise RuntimeError("Database not connected")
+        cursor: _PGCursor = self.conn.cursor()
         cursor.execute(query, params)
         return cursor
     
     def commit(self):
         """Commit transaction"""
+        if self.conn is None:
+            raise RuntimeError("Database not connected")
         self.conn.commit()
     
     def rollback(self):
         """Rollback transaction"""
+        if self.conn is None:
+            return
         self.conn.rollback()
     
     def close(self):
@@ -353,7 +360,7 @@ class DatabaseService:
     
     # ==================== CHAT OPERATIONS ====================
     
-    def create_chat_session(self, session_id: str, user_id: str, model_id: str, title: str = None) -> bool:
+    def create_chat_session(self, session_id: str, user_id: str, model_id: str, title: Optional[str] = None) -> bool:
         """Create new chat session"""
         try:
             query = """
@@ -433,10 +440,10 @@ class DatabaseService:
 
 
 # Global database instance
-_db_instance = None
+_db_instance: Optional[DatabaseService] = None
 
 
-def get_db() -> DatabaseService:
+def get_db() -> Optional[DatabaseService]:
     """Get or create the global database instance"""
     global _db_instance
     if _db_instance is None:

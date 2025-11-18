@@ -1,10 +1,10 @@
-# 🤖 AI Agent Marketplace - Integration Guide
+# AI Agent Marketplace - Integration Guide
 
 **How the Marketplace Connects to All 4 IDE Gaps**
 
 ---
 
-## 🎯 BIG PICTURE
+## BIG PICTURE
 
 ```
 ┌────────────────────────────────────────────────────────────────┐
@@ -13,12 +13,12 @@
 │                                                                │
 │  Gap #1        Gap #2          Gap #3         Gap #4          │
 │  IntelliSense  Debugging       Refactoring    Game Engines    │
-│  ✨ Fast      🐛 Breakpoints  ♻️ Extract    🎮 Godot        │
+│   Fast      Breakpoints   Extract     Godot        │
 │  Completions   Step/Vars       Rename Move    Unity, Unreal  │
 │  (1,500 lines) (1,300 lines)   (950 lines)   (3,500 lines)   │
 │       ↓              ↓              ↓              ↓           │
 │  ┌────────────────────────────────────────────────────────┐   │
-│  │   ★ Gap #5: AI Agent Marketplace ★                   │   │
+│  │    Gap #5: AI Agent Marketplace                    │   │
 │  │   • 50+ AI Models                                     │   │
 │  │   • Q Assistant Recommendations                       │   │
 │  │   • One-click model selection                         │   │
@@ -33,7 +33,7 @@
 
 ---
 
-## 🔗 INTEGRATION POINTS
+## INTEGRATION POINTS
 
 ### Integration #1: IntelliSense + Marketplace
 
@@ -137,7 +137,7 @@ Shows in debug console
   <Button 
     onClick={() => explainErrorWithMarketplace(error)}
   >
-    💡 Explain with Claude
+     Explain with Claude
   </Button>
 </ErrorDisplay>
 
@@ -327,7 +327,7 @@ Returns: event definitions
 
 ---
 
-## 🧪 Selecting Data Segments (Medical/Scientific)
+## Selecting Data Segments (Medical/Scientific)
 
 When a project or API key requires regulated handling, set a data segment so routing + policy + billing align:
 
@@ -347,7 +347,7 @@ Body:
 
 SLAs vary by segment (see Prometheus thresholds); pricing varies per MONETIZATION_V2.
 
-## 🏗️ ARCHITECTURAL LAYERS
+## ARCHITECTURAL LAYERS
 
 ```
 ┌─────────────────────────────────────────────────────┐
@@ -383,7 +383,7 @@ SLAs vary by segment (see Prometheus thresholds); pricing varies per MONETIZATIO
 
 ---
 
-## 📊 DEPENDENCY CHAIN
+## DEPENDENCY CHAIN
 
 ```
 Task Timeline:
@@ -396,7 +396,7 @@ Week 1 (Nov 3-7)
 Week 2-3 (Nov 10-20)
 ├─ Gap #2: Debugging (1,300 lines)
 ├─ Gap #4: Game Engines (3,500 lines)
-├─ Gap #5: Marketplace (3,500 lines) ← BUILD CONCURRENTLY
+├─ Gap #5: Marketplace (3,500 lines) 
 └─ TOTAL: 8,300 lines (Integration features + Revenue)
 
 Week 4-8 (Nov 24-Dec 31)
@@ -418,7 +418,7 @@ KEY: Marketplace can launch INDEPENDENTLY after core features!
 
 ---
 
-## 💰 REVENUE STACKING
+## REVENUE STACKING
 
 ### Without Marketplace (Current)
 ```
@@ -452,7 +452,7 @@ By Month 6:
 
 ---
 
-## 🎯 STRATEGIC ADVANTAGES
+## STRATEGIC ADVANTAGES
 
 ### #1: Marketplace Drives Feature Usage
 ```
@@ -501,7 +501,7 @@ After: Top Dog targets:
 
 ---
 
-## 📈 INTEGRATION SEQUENCE
+## INTEGRATION SEQUENCE
 
 ### Phase 1: Marketplace Foundation (Week 2-3)
 ```
@@ -555,7 +555,7 @@ Result: $120k+ MRR from marketplace alone
 
 ---
 
-## 🔗 CONCRETE INTEGRATION EXAMPLES
+## CONCRETE INTEGRATION EXAMPLES
 
 ### Example 1: User Writes Python Code
 
@@ -660,7 +660,7 @@ Value: 10x better extracted function
 
 ---
 
-## ✅ INTEGRATION CHECKLIST
+## INTEGRATION CHECKLIST
 
 After marketplace is built, integrate with each feature:
 
@@ -694,7 +694,7 @@ After marketplace is built, integrate with each feature:
 
 ---
 
-## 🚀 LAUNCH PLAN
+## LAUNCH PLAN
 
 ### Pre-Launch (Before Nov 14)
 - [ ] Marketplace fully built and tested
@@ -710,7 +710,7 @@ After marketplace is built, integrate with each feature:
 10:30 AM - Monitor metrics
 11:00 AM - Share with team
 2:00 PM - First revenue reports come in
-End of day: Success! 🎉
+End of day: Success! 
 ```
 
 ### Week 1 Post-Launch (Nov 14-20)
@@ -733,27 +733,27 @@ End of day: Success! 🎉
 
 ---
 
-## 💡 KEY SUCCESS FACTORS
+## KEY SUCCESS FACTORS
 
 1. **Build marketplace independently** - Don't wait for all features
 2. **Launch early** - Private beta as soon as core is working
 3. **Monitor revenue** - 30% commission creates strong financial feedback
 4. **Integrate gradually** - Each gap feature can add marketplace support incrementally
 5. **Keep costs low** - Use provider defaults, optimize token usage
-6. **Market positioning** - "First IDE to unify all AI models" 🎯
+6. **Market positioning** - "First IDE to unify all AI models" 
 
 ---
 
-## 🎓 LESSONS LEARNED
+## LESSONS LEARNED
 
-✅ **What works**:
+ **What works**:
 - Marketplace as horizontal feature (connects to all gaps)
 - 30% commission model (low friction, automatic scaling)
 - One sign-in, multiple provider keys (user friendly)
 - Q Assistant recommendations (differentiator)
 - Real-time billing (transparency)
 
-❌ **What doesn't**:
+ **What doesn't**:
 - Trying to build own AI models (too complex, expensive)
 - Exclusive partnerships (limits user choice)
 - Upfront payment models (friction)
@@ -762,7 +762,7 @@ End of day: Success! 🎉
 
 ---
 
-## 📞 SUPPORT & QUESTIONS
+## SUPPORT & QUESTIONS
 
 **Question**: "When should we launch the marketplace?"
 **Answer**: As soon as core marketplace is working (even before all integrations)
@@ -781,7 +781,7 @@ End of day: Success! 🎉
 
 ---
 
-## 🏆 FINAL ROADMAP
+## FINAL ROADMAP
 
 ```
 TODAY (Oct 29):         Plan everything
@@ -801,6 +801,6 @@ Top Dog with marketplace = First IDE to unify ALL AI models + Game engines + IDE
 
 ---
 
-**Let's build this.** 🚀
+**Let's build this.** 
 
 Version 1.0 | October 29, 2025

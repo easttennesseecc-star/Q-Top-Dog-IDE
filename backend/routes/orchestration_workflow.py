@@ -11,7 +11,7 @@ Endpoints for managing AI workflow orchestration:
 
 from fastapi import APIRouter, HTTPException, Depends, Body, Path, Request, Header
 from sqlalchemy.orm import Session
-from typing import Dict, Optional
+from typing import Dict, Optional, Any
 import logging
 
 from backend.orchestration.workflow_state_machine import (
@@ -31,14 +31,19 @@ router = APIRouter(prefix="/api/workflows", tags=["orchestration"])
 # Dependency Injection
 # ================================
 
-def get_db(request: Request) -> Session:
-    """Get database session from app context"""
+def get_db_manager(request: Request) -> Any:
+    """Get workflow database manager from app context"""
     if not hasattr(request.app, 'workflow_db_manager'):
         raise HTTPException(
             status_code=500,
             detail="Workflow database not initialized"
         )
-    return request.app.workflow_db_manager.get_session()
+    return request.app.workflow_db_manager
+
+
+def _tier_dep(user_id: Optional[str] = Header(None, alias="X-User-ID")):
+    """Dependency wrapper to validate tier access with header-provided user id."""
+    return require_tier_access(feature='webhooks', user_id=user_id)
 
 
 
@@ -90,17 +95,14 @@ class WorkflowRetryRequest:
 
 @router.post("/{project_id}/start")
 async def start_workflow(
+    request: Request,
     project_id: str = Path(..., description="Project ID"),
     build_id: str = Body(..., description="Build ID"),
     user_id_body: str = Body(..., description="User ID"),
     requirements: Dict = Body(..., description="Initial requirements"),
     metadata: Optional[Dict] = Body(None, description="Optional metadata"),
-    request: Request = None,
-    user_id: str = Header(None, alias="X-User-ID"),
-    tier_info = Depends(lambda: require_tier_access(
-        feature='webhooks',
-        user_id=user_id
-    ))
+    user_id: Optional[str] = Header(None, alias="X-User-ID"),
+    tier_info = Depends(_tier_dep)
 ):
     """
     Start a new build workflow with database persistence.
@@ -128,21 +130,22 @@ async def start_workflow(
         }
     """
     try:
+        effective_user_id = user_id or user_id_body
         logger.info(
-            f"Starting workflow for project {project_id}, build {build_id}, user {user_id}"
+            f"Starting workflow for project {project_id}, build {build_id}, user {effective_user_id}"
         )
         
-        # Get database session
-        db = get_db(request)
+        # Get database manager from app
+        dbm = get_db_manager(request)
         
-        # Create orchestration service with DB session
-        orchestration_service = OrchestrationService(db=db)
+        # Create orchestration service with DB manager
+        orchestration_service = OrchestrationService(db_manager=dbm)
         
         # Start workflow
         workflow_id, initial_state = await orchestration_service.start_workflow(
             project_id=project_id,
             build_id=build_id,
-            user_id=user_id,
+            user_id=effective_user_id,
             initial_requirements=requirements,
             metadata=metadata,
         )
@@ -168,12 +171,12 @@ async def start_workflow(
 
 @router.post("/{workflow_id}/advance")
 async def advance_workflow(
+    request: Request,
     workflow_id: str = Path(..., description="Workflow ID"),
     role: str = Body(..., description="Role completing the work"),
     completed_state: str = Body(..., description="State that was completed"),
     phase_result: Dict = Body(..., description="Result from completed phase"),
     next_state: Optional[str] = Body(None, description="Optional specific next state"),
-    request: Request = None,
 ):
     """
     Advance workflow when a role completes their work with database persistence.
@@ -214,11 +217,11 @@ async def advance_workflow(
         except KeyError as e:
             raise ValueError(f"Invalid role or state: {str(e)}")
         
-        # Get database session
-        db = get_db(request)
+        # Get database manager
+        dbm = get_db_manager(request)
         
-        # Create orchestration service with DB session
-        orchestration_service = OrchestrationService(db=db)
+        # Create orchestration service with DB manager
+        orchestration_service = OrchestrationService(db_manager=dbm)
         
         result = await orchestration_service.advance_workflow(
             workflow_id=workflow_id,
@@ -242,8 +245,8 @@ async def advance_workflow(
 
 @router.get("/{workflow_id}/status")
 async def get_workflow_status(
+    request: Request,
     workflow_id: str = Path(..., description="Workflow ID"),
-    request: Request = None,
 ):
     """
     Get comprehensive status of a workflow from backend.database.
@@ -269,11 +272,11 @@ async def get_workflow_status(
     try:
         logger.info(f"Getting status for workflow {workflow_id}")
         
-        # Get database session
-        db = get_db(request)
+        # Get database manager
+        dbm = get_db_manager(request)
         
-        # Create orchestration service with DB session
-        orchestration_service = OrchestrationService(db=db)
+        # Create orchestration service with DB manager
+        orchestration_service = OrchestrationService(db_manager=dbm)
         
         status = await orchestration_service.get_workflow_status(workflow_id)
         

@@ -1,6 +1,6 @@
 # Top Dog Tier Features – CLARIFIED (API Keys vs BYOK LLM)
 
-## 🔑 The Distinction
+## The Distinction
 
 ### **Top Dog API Keys** (for calling YOUR API)
 ```
@@ -13,24 +13,24 @@ ENTERPRISE:  ∞ keys  (unlimited integrations)
 
 ### **BYOK LLM Keys** (customers bring provider API keys: OpenAI/Anthropic/etc)
 ```
-FREE:        ✅ BYOK enabled (basic providers)
-PRO:         ✅ BYOK enabled
-PRO-PLUS:    ✅ BYOK enabled (multi-provider + policies)
-TEAMS:       ✅ BYOK enabled (team-wide key management)
-ENTERPRISE:  ✅ BYOK enabled (+ data residency, on‑prem options)
+FREE:        BYOK enabled (basic providers)
+PRO:         BYOK enabled
+PRO-PLUS:    BYOK enabled (multi-provider + policies)
+TEAMS:       BYOK enabled (team-wide key management)
+ENTERPRISE:  BYOK enabled (+ data residency, on‑prem options)
 ```
 
 Note: Q‑IDE does not ship a managed LLM by default. BYOK is the baseline for all tiers. For Enterprise, models are customer‑managed (BYOK and/or self‑hosted on the customer’s infrastructure). The platform does not operate models for Enterprise accounts.
 
 ---
 
-## 📊 Updated Feature Matrix (BYOK enabled for all tiers)
+## Updated Feature Matrix (BYOK enabled for all tiers)
 
 ### Core Execution
 | Feature | FREE | PRO | PRO+ | TEAMS | ENTERPRISE |
 |---------|------|-----|------|-------|------------|
 | **API Calls/day** | 20 | 10K | 50K | 100K-∞ | Unlimited |
-| **Code Execution** | ❌ | ✅ | ✅ | ✅ | ✅ |
+| **Code Execution** | | | | | |
 | **LLM Requests/day** | 2 | 1K | 5K | 10K-∞ | Unlimited |
 | **Storage** | 0.5GB | 100GB | 250GB | 1TB | 10TB+ |
 | **Concurrent Jobs** | 1 | 5 | 8 | 10+ | 50+ |
@@ -39,46 +39,46 @@ Note: Q‑IDE does not ship a managed LLM by default. BYOK is the baseline for a
 | Feature | FREE | PRO | PRO+ | TEAMS | ENTERPRISE |
 |---------|------|-----|------|-------|------------|
 | **Top Dog API Keys** | 1 | 5 | 10 | ∞ | ∞ |
-| **Webhooks** | ❌ | ✅ | ✅ | ✅ | ✅ |
+| **Webhooks** | | | | | |
 | **Debug Logs Retention** | 7d | 30d | 60d | 90d | Forever |
-| **Version Control** | ❌ | ✅ | ✅ | ✅ | ✅ |
+| **Version Control** | | | | | |
 
 ### LLM Customization (BYOK is default across all tiers)
 | Feature | FREE | PRO | PRO+ | TEAMS | ENTERPRISE |
 |---------|------|-----|------|-------|------------|
-| **Managed LLMs (platform keys)** | ❌ | ❌ | ❌ | ❌ | Optional add‑on |
-| **BYOK LLM Support** | ✅ | ✅ | ✅ | ✅ | ✅ |
+| **Managed LLMs (platform keys)** | | | | | Optional add‑on |
+| **BYOK LLM Support** | | | | | |
 | **Supported Providers** | OpenAI (basic) | OpenAI, Anthropic | OpenAI, Anthropic, Cohere | All major | All + custom/privates |
-| **Custom Integrations** | ❌ | 🔶 Limited | ✅ | ✅ | ✅ |
+| **Custom Integrations** | | Limited | | | |
 
 ### Collaboration
 | Feature | FREE | PRO | PRO+ | TEAMS | ENTERPRISE |
 |---------|------|-----|------|-------|------------|
 | **Team Members** | 1 | 1 | 1 | 5-100 | ∞ |
-| **Role-Based Access** | ❌ | ❌ | ❌ | ✅ | ✅ |
-| **Shared Workspaces** | ❌ | ❌ | ❌ | ✅ | ✅ |
-| **Audit Logs** | ❌ | ❌ | ❌ | ✅ | ✅ |
-| **Resource Quotas** | ❌ | ❌ | ❌ | ✅ | ✅ |
+| **Role-Based Access** | | | | | |
+| **Shared Workspaces** | | | | | |
+| **Audit Logs** | | | | | |
+| **Resource Quotas** | | | | | |
 
 ### Compliance & Enterprise
 | Feature | FREE | PRO | PRO+ | TEAMS | ENTERPRISE |
 |---------|------|-----|------|-------|------------|
-| **HIPAA Ready** | ❌ | ❌ | ❌ | ❌ | ✅ |
-| **SOC2 Certified** | ❌ | ❌ | ❌ | ❌ | ✅ |
-| **SSO/SAML** | ❌ | ❌ | ❌ | ❌ | ✅ Premium+ |
-| **Data Residency** | ❌ | ❌ | ❌ | ❌ | ✅ Ultimate |
-| **On-Premise Deploy** | ❌ | ❌ | ❌ | ❌ | ✅ Ultimate |
+| **HIPAA Ready** | | | | | |
+| **SOC2 Certified** | | | | | |
+| **SSO/SAML** | | | | | Premium+ |
+| **Data Residency** | | | | | Ultimate |
+| **On-Premise Deploy** | | | | | Ultimate |
 
 ### Support
 | Feature | FREE | PRO | PRO+ | TEAMS | ENTERPRISE |
 |---------|------|-----|------|-------|------------|
 | **Support** | Community | Email | Email | Phone+Email | 24/7 Phone |
 | **Response Time** | 72hr | 24hr | 12hr | 4-24hr | 1hr |
-| **Account Manager** | ❌ | ❌ | ❌ | ❌ | ✅ Premium+ |
+| **Account Manager** | | | | | Premium+ |
 
 ---
 
-## 🎯 Database Schema Update
+## Database Schema Update
 
 Add these columns to `membership_tiers` table:
 
@@ -103,7 +103,7 @@ platform_managed_llm_enabled = False
 
 ---
 
-## 💾 Implementation Notes
+## Implementation Notes
 
 ### BYOK (all tiers)
 
@@ -113,15 +113,15 @@ platform_managed_llm_enabled = False
 4. **We charge the Q‑IDE subscription** → Access to platform, gateway, safety, observability
 
 ### Security Best Practices:
-- ✅ Never log API keys (not even truncated)
-- ✅ Encrypt keys at rest with AES-256
-- ✅ Use key rotation/versioning
-- ✅ Audit log every key access
-- ✅ Rate limit key API calls per tier
+- Never log API keys (not even truncated)
+- Encrypt keys at rest with AES-256
+- Use key rotation/versioning
+- Audit log every key access
+- Rate limit key API calls per tier
 
 ---
 
-## 🚀 Quick Summary (updated)
+## Quick Summary (updated)
 
 | What | Where | Who Pays |
 |------|-------|----------|
@@ -135,7 +135,7 @@ Want me to update the actual database schema to include the `byok_llm_enabled` c
 
 ---
 
-## 🧭 BYOK and Regulated Segments (Operational Notes)
+## BYOK and Regulated Segments (Operational Notes)
 
 - Plan-aware and segment-aware SLAs: The backend exposes SLI metrics labeled with `plan` and `data_segment` (see `X-Plan` and `X-Data-Segment` headers). These labels enable Prometheus to evaluate tier/segment-specific alerts (e.g., stricter thresholds for `medical`/`scientific`).
 - BYOK is baseline; discounting between BYOK vs platform‑managed is only relevant if you enable the Enterprise managed‑keys add‑on.

@@ -11,6 +11,7 @@ from dataclasses import dataclass, asdict
 from datetime import datetime
 from pathlib import Path
 from typing import Dict, List, Optional, Any
+from dataclasses import field
 
 
 @dataclass
@@ -21,7 +22,7 @@ class Task:
     created_at: str
     completed: bool = False
     completed_at: Optional[str] = None
-    metadata: Dict[str, Any] = None
+    metadata: Dict[str, Any] = field(default_factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
         d = asdict(self)
@@ -33,7 +34,8 @@ class Task:
 
 class TasksService:
     def __init__(self, storage_path: Optional[str] = None):
-        self.storage_path = Path(storage_path or os.getenv("TASKS_STORE", "./data/tasks.json")).resolve()
+        path_str: str = storage_path if storage_path is not None else (os.getenv("TASKS_STORE") or "./data/tasks.json")
+        self.storage_path = Path(path_str).resolve()
         self.storage_path.parent.mkdir(parents=True, exist_ok=True)
         if not self.storage_path.exists():
             self._save({"tasks": []})

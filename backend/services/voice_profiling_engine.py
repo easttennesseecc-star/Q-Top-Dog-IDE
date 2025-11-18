@@ -101,17 +101,17 @@ class VoiceFeatureExtractor:
         # Simple mel-like band aggregation: split into n_mfcc+2 bands and sum
         n_bands = n_mfcc + 2
         band_edges = np.linspace(0, power.size, n_bands + 1, dtype=int)
-        mel_energies = []
+        mel_energies_list: List[float] = []
         for i in range(n_bands):
             start, end = band_edges[i], band_edges[i + 1]
             if end > start:
-                mel_energies.append(power[start:end].mean())
+                mel_energies_list.append(float(power[start:end].mean()))
             else:
-                mel_energies.append(0.0)
-        mel_energies = np.array(mel_energies, dtype=np.float32) + 1e-10
+                mel_energies_list.append(0.0)
+        mel_energies_arr = np.array(mel_energies_list, dtype=np.float32) + 1e-10
 
         # Log and DCT (take first n_mfcc coefficients)
-        log_mel = np.log(mel_energies)
+        log_mel = np.log(mel_energies_arr)
         # DCT type-II via cosine transform matrix
         k = np.arange(n_mfcc)[:, None]
         n = np.arange(log_mel.size)[None, :]

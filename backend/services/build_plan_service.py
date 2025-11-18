@@ -144,7 +144,7 @@ class BuildPlanService:
                 return self._row_to_plan(row)
         return None
     
-    def approve_plan(self, plan_id: str, approval_notes: Optional[str] = None) -> BuildPlan:
+    def approve_plan(self, plan_id: str, approval_notes: Optional[str] = None) -> Optional[BuildPlan]:
         """Approve a build plan for execution"""
         with self._get_connection() as conn:
             conn.execute("""
@@ -160,7 +160,7 @@ class BuildPlanService:
         
         return self.get_plan(plan_id)
     
-    def reject_plan(self, plan_id: str, rejection_notes: str) -> BuildPlan:
+    def reject_plan(self, plan_id: str, rejection_notes: str) -> Optional[BuildPlan]:
         """Reject a build plan"""
         with self._get_connection() as conn:
             conn.execute("""
@@ -175,9 +175,11 @@ class BuildPlanService:
         
         return self.get_plan(plan_id)
     
-    def start_execution(self, plan_id: str) -> BuildPlan:
+    def start_execution(self, plan_id: str) -> Optional[BuildPlan]:
         """Mark plan as in progress"""
         plan = self.get_plan(plan_id)
+        if not plan:
+            raise ValueError("Plan not found")
         if plan.status != BuildPlanStatus.APPROVED:
             raise ValueError("Can only execute approved plans")
         

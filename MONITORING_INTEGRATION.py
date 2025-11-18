@@ -272,7 +272,7 @@ curl http://localhost:8000/api/monitoring/metrics/performance
 
 if __name__ == "__main__":
     print("""
-    ✅ Monitoring Integration Guide Ready
+    Monitoring Integration Guide Ready
     
     Steps to integrate:
     1. Add 'from monitoring_routes import router as monitoring_router' to main.py

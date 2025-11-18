@@ -87,10 +87,10 @@ async def email_inbound(req: Request):
                 PlanStep(step_id="step-1", order=1, description="Finalize UI assets and constraints", estimated_duration="1h", files_affected=[], dependencies=[], risk_level="low", verification_criteria="UI snapshot matches draft"),
                 PlanStep(step_id="step-2", order=2, description="Implement features and tests per draft", estimated_duration="2h", files_affected=[], dependencies=[], risk_level="low", verification_criteria="Unit/integration tests pass"),
             ]
-            plan = svc.generate_plan(workflow_id=workflow_id, generated_by="email-reply", objective="Approved UI draft → build", scope=desc, steps=steps, risks=[], dependencies_to_install=[], files_to_create=[], files_to_modify=[], files_to_delete=[], estimated_total_duration=None)
-            svc.approve_plan(plan.plan_id, approved_by="email-reply")
-            svc.start_execution(plan.plan_id)
-            return {"status": "ok", "action": "approved", "plan_id": plan.plan_id}
+            generated_plan = svc.generate_plan(workflow_id=workflow_id, generated_by="email-reply", objective="Approved UI draft → build", scope=desc, steps=steps, risks=[], dependencies_to_install=[], files_to_create=[], files_to_modify=[], files_to_delete=[], estimated_total_duration=None)
+            svc.approve_plan(generated_plan.plan_id, approved_by="email-reply")
+            svc.start_execution(generated_plan.plan_id)
+            return {"status": "ok", "action": "approved", "plan_id": generated_plan.plan_id}
         elif kind == "plan_approval":
             from backend.services.build_plan_approval_service import get_plan_approval_service
             svc = get_plan_approval_service()
@@ -158,13 +158,13 @@ async def email_inbound(req: Request):
             from backend.services.build_plan_approval_service import get_plan_approval_service, PlanStep
             from backend.services.email_token_service import register_token
             import uuid, os
-            svc = get_plan_approval_service()
+            plan_svc = get_plan_approval_service()
             workflow_id = f"wf-mailmod-{uuid.uuid4().hex[:8]}"
             steps = [
                 PlanStep(step_id="step-1", order=1, description=f"Apply requested changes: {notes[:200]}" if notes else "Apply requested changes", estimated_duration="1-2h", files_affected=[], dependencies=[], risk_level="low", verification_criteria="Updated UI reflects requested changes"),
                 PlanStep(step_id="step-2", order=2, description="Regenerate UI draft and confirm", estimated_duration="1h", files_affected=[], dependencies=["step-1"], risk_level="low", verification_criteria="New draft approved"),
             ]
-            plan = svc.generate_plan(workflow_id=workflow_id, generated_by="email-reply-modify", objective="Revise UI per email reply", scope=notes or "Email change request", steps=steps, risks=[], dependencies_to_install=[], files_to_create=[], files_to_modify=[], files_to_delete=[], estimated_total_duration=None)
+            plan = plan_svc.generate_plan(workflow_id=workflow_id, generated_by="email-reply-modify", objective="Revise UI per email reply", scope=notes or "Email change request", steps=steps, risks=[], dependencies_to_install=[], files_to_create=[], files_to_modify=[], files_to_delete=[], estimated_total_duration=None)
             backend_url = os.getenv("BACKEND_URL", "http://127.0.0.1:8000")
             approve = register_token({"kind": "plan_approval", "plan_id": plan.plan_id, "start_execution": True}, expires_seconds=7*24*3600)
             approve_link = f"{backend_url.rstrip('/')}/api/assistant/approve-email?token={approve}"
@@ -173,19 +173,46 @@ async def email_inbound(req: Request):
             logger.error(f"Modify via email failed: {e}")
             return JSONResponse(status_code=500, content={"error": "modify_failed"})
 
-    # No command matched — route to assistant inbox as freeform input and triage immediately
+    # No explicit command matched — new behavior: direct Todo / Note ingestion (assistant inbox deprecated)
     try:
-        from backend.services.assistant_inbox import add_message
-        from backend.services.assistant_inbox_triage import triage_and_act
+        from backend.services.tasks_service import get_tasks_service, TasksService
+        from backend.services.user_notes_service import get_notes_service, NoteType
         user_id = payload.get("user_id") or "__global__"
-        add_message(user_id, "email", text, {"from": sender})
-        # Run a quick triage pass so imperative emails like "add ..." execute now
-        try:
-            # Only attempt a targeted triage when user_id is provided
-            target = None if user_id == "__global__" else user_id
-            await triage_and_act(user_id=target, limit=10)
-        except Exception:
-            pass
-        return {"status": "ok", "action": "saved_to_inbox"}
+        content = text.strip()
+        tasks_svc: TasksService = get_tasks_service()
+
+        # Preserve NOTE/NOTES prefix even if it's not at the very start (subject may precede body)
+        # Scan lines for a line beginning with NOTE: or NOTES:
+        lines = [l.strip() for l in content.splitlines() if l is not None]
+        note_line = None
+        for l in lines:
+            ll = l.lower().lstrip()
+            if ll.startswith("note:") or ll.startswith("notes:"):
+                note_line = l
+                break
+
+        if note_line is not None:
+            try:
+                ll = note_line.lstrip()
+                if ll.lower().startswith("notes:"):
+                    body = ll[6:].strip()
+                else:
+                    body = ll[5:].strip()
+                title = (body[:80].strip() or "Note")
+                get_notes_service().create_note(
+                    workspace_id=user_id,
+                    note_type=NoteType.CLARIFICATION,
+                    title=title,
+                    content=body,
+                    tags=["email", "inbound"],
+                    metadata={"from": sender}
+                )
+                return {"status": "ok", "action": "note_saved"}
+            except Exception:
+                return {"status": "error", "action": "note_failed"}
+
+        # Treat imperatives and everything else as tasks
+        task = tasks_svc.add_task(user_id, content, metadata={"source": "email", "from": sender})
+        return {"status": "ok", "action": "task_added", "task": task.to_dict()}
     except Exception:
-        return {"status": "ignored", "message": "no_actionable_command"}
+        return {"status": "ignored", "message": "ingestion_failed"}

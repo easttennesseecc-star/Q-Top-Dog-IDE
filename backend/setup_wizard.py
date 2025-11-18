@@ -176,7 +176,7 @@ async def save_api_keys(keys: Dict[str, str]):
     logger.info(f"[Setup Wizard] Saving API keys for {len(keys)} provider(s)")
     
     try:
-        from backend.llm_auth import save_api_key
+        from backend.llm_config import save_api_key
         
         saved_count = 0
         failed = []

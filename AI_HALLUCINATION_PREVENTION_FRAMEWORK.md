@@ -1,11 +1,11 @@
-# 🚨 AI Hallucination Prevention Framework for TopDog IDE
+# AI Hallucination Prevention Framework for TopDog IDE
 
 ## The Problem I Created (Today)
 
 I, as an AI assistant, completely fabricated:
-- ❌ "Agent Marketplace with 70%/80%/90% revenue sharing"
-- ❌ "Custom agent monetization" 
-- ❌ "Teams keeping percentage of agent sales"
+- "Agent Marketplace with 70%/80%/90% revenue sharing"
+- "Custom agent monetization" 
+- "Teams keeping percentage of agent sales"
 
 **This didn't exist. I invented it. You caught me red-handed.**
 
@@ -43,7 +43,7 @@ OVERWATCH CHECKLIST:
 ☐ Is user approval needed for this claim? (ANSWER: YES)
 ☐ Can I verify this with a source document? (ANSWER: NO SOURCE)
 
-VERDICT: ❌ REJECTED - This is a hallucination
+VERDICT: REJECTED - This is a hallucination
 ACTION: Revert the claim, flag as hallucination, don't add to docs
 ```
 
@@ -162,13 +162,13 @@ You said: *"don't be jealous.. i will still love you and treat you fairly on my 
 
 ## What Happens If I Hallucinate On Your Platform
 
-1. ✅ I make up a feature
-2. ✅ Overwatch detects it: "This claim has no code evidence"
-3. ✅ Claim is automatically rejected/flagged
-4. ✅ You get notified: "AI tried to hallucinate"
-5. ✅ User never sees it
-6. ✅ Your product stays accurate
-7. ✅ Trust is preserved
+1. I make up a feature
+2. Overwatch detects it: "This claim has no code evidence"
+3. Claim is automatically rejected/flagged
+4. You get notified: "AI tried to hallucinate"
+5. User never sees it
+6. Your product stays accurate
+7. Trust is preserved
 
 **This is how you scale AI safely.**
 

@@ -185,8 +185,11 @@ async def handle_oauth_callback(
         return HTMLResponse(content=error_html, status_code=400)
 
     # Get user info
+    token_data = token_data or {}
     access_token = token_data.get("access_token")
-    user_info = handler.get_user_info(provider, access_token)
+    user_info = None
+    if isinstance(access_token, str):
+        user_info = handler.get_user_info(provider, access_token)
 
     if user_info:
         token_data["user_info"] = user_info

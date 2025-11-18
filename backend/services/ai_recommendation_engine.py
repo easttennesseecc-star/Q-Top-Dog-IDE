@@ -356,5 +356,11 @@ class RecommendationEngine:
         }
 
 
-# Note: Will be instantiated with registry in main app
+# Global recommendation engine instance (initialized if registry available)
+# Falls back to None if registry import fails; main or routers will re-initialize as needed.
 recommendation_engine = None
+try:
+    from backend.services.ai_marketplace_registry import registry
+    recommendation_engine = RecommendationEngine(registry)
+except Exception:
+    recommendation_engine = None

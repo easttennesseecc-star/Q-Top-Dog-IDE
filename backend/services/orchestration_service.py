@@ -9,11 +9,12 @@ Manages the complete workflow lifecycle:
 - Persisting workflow state to database
 """
 
-from typing import Any, Dict, List, Optional, Tuple, cast
-import os
+from typing import Any, Dict, List, Optional, Tuple, cast, Generator
 from datetime import datetime, timedelta
 from uuid import uuid4
 import logging
+import os
+import contextlib
 
 from sqlalchemy.orm import Session
 from sqlalchemy import desc
@@ -31,6 +32,8 @@ from backend.models.workflow import (
     WorkflowStateEnum,
     LLMRoleEnum,
 )
+from backend.services.workflow_db_manager import WorkflowDatabaseManager
+from contextlib import contextmanager
 
 logger = logging.getLogger(__name__)
 
@@ -41,14 +44,17 @@ class OrchestrationService:
     Handles state transitions, handoffs between roles, and workflow tracking.
     """
     
-    def __init__(self, db: Optional[Session] = None):
+    def __init__(self, db_manager: Optional["WorkflowDatabaseManager"] = None, db: Optional["WorkflowDatabaseManager"] = None):
         """
         Initialize orchestration service.
         
         Args:
-            db: Database session (optional for testing)
+            db_manager: Database manager instance (optional for testing)
         """
-        self.db = db
+        # Backwards compatibility: tests may pass 'db' instead of 'db_manager'
+        if db_manager is None and db is not None:
+            db_manager = db
+        self.db_manager = db_manager
         # In-memory store for testing when db is None
         self._workflows: Dict[str, Dict[str, Any]] = {}  # workflow_id -> workflow_data
         self._handoffs: Dict[str, List[Dict[str, Any]]] = {}   # workflow_id -> list of handoffs
@@ -64,6 +70,35 @@ class OrchestrationService:
                 logger.info("Failover policy enabled via FEATURE_FAILOVER_POLICY")
         except Exception as e:
             logger.warning(f"Failover policy initialization skipped: {e}")
+
+    @contextmanager
+    def _get_db_session(self) -> Generator[Session, None, None]:
+        """
+        Provide a transactional scope around a series of operations.
+        
+        This is a context manager that yields a session.
+        """
+        if not self.db_manager:
+            # This case should only happen if the database is disabled.
+            # In a test environment, this should be considered a failure.
+            if os.getenv("PYTEST_CURRENT_TEST"):
+                raise RuntimeError(
+                    "Database manager not available in test mode. "
+                    "Tests must have a database connection."
+                )
+            # In a real environment, we might yield None if DB is optional.
+            # For this service, the DB is critical.
+            raise ConnectionError("Database manager is not configured.")
+
+        session = self.db_manager.get_session()
+        try:
+            yield session
+            session.commit()
+        except Exception:
+            session.rollback()
+            raise
+        finally:
+            session.close()
 
     def choose_endpoint(self, context: Dict[str, Any] | None = None) -> str:
         """Select an LLM endpoint using the configured failover policy when enabled.
@@ -114,59 +149,56 @@ class OrchestrationService:
                 "conversation_history": [],
             }
             
-            if self.db is not None:
-                # Create workflow in database
-                workflow = BuildWorkflow(
-                    id=workflow_id,
-                    build_id=build_id,
-                    project_id=project_id,
-                    user_id=user_id,
-                    current_state=WorkflowStateEnum.DISCOVERY,
-                    discovery_phase=discovery_data,
-                    workflow_metadata=metadata or {},
-                )
-                
-                self.db.add(workflow)
-                self.db.commit()
-                self.db.refresh(workflow)
-                
-                # Create initial event in audit trail
-                event = WorkflowEvent(
-                    workflow_id=workflow_id,
-                    event_type="workflow_started",
-                    triggered_by="system",
-                    event_data={
-                        "reason": "User initiated build",
-                        "project_id": project_id,
-                        "build_id": build_id,
-                    },
-                )
-                self.db.add(event)
-                self.db.commit()
+            if self.db_manager:
+                with self._get_db_session() as session:
+                    # Create workflow in database
+                    workflow = BuildWorkflow(
+                        id=workflow_id,
+                        build_id=build_id,
+                        project_id=project_id,
+                        user_id=user_id,
+                        current_state=WorkflowStateEnum.DISCOVERY,
+                        discovery_phase=discovery_data,
+                        workflow_metadata=metadata or {},
+                    )
+                    session.add(workflow)
+                    # Create initial event in audit trail
+                    event = WorkflowEvent(
+                        workflow_id=workflow_id,
+                        event_type="workflow_started",
+                        triggered_by="system",
+                        event_data={
+                            "reason": "User initiated build",
+                            "project_id": project_id,
+                            "build_id": build_id,
+                        },
+                    )
+                    session.add(event)
             else:
-                # In-memory storage for testing
+                # In-memory fallback for tests supplying db=None
                 self._workflows[workflow_id] = {
                     "id": workflow_id,
                     "build_id": build_id,
                     "project_id": project_id,
                     "user_id": user_id,
-                    "current_state": WorkflowState.DISCOVERY,
+                    "current_state": WorkflowStateEnum.DISCOVERY,
                     "discovery_phase": discovery_data,
-                    "planning_phase": None,
-                    "implementation_phase": None,
-                    "testing_phase": None,
-                    "verification_phase": None,
-                    "deployment_phase": None,
-                    "metadata": metadata or {},
+                    "workflow_metadata": metadata or {},
                     "created_at": datetime.utcnow(),
                     "updated_at": datetime.utcnow(),
                 }
-                self._handoffs[workflow_id] = []
-                self._events[workflow_id] = [{
-                    "event_type": "workflow_started",
-                    "triggered_by": "system",
-                    "timestamp": datetime.utcnow(),
-                }]
+                self._events[workflow_id] = [
+                    {
+                        "event_type": "workflow_started",
+                        "triggered_by": "system",
+                        "event_data": {
+                            "reason": "User initiated build",
+                            "project_id": project_id,
+                            "build_id": build_id,
+                        },
+                        "timestamp": datetime.utcnow().isoformat(),
+                    }
+                ]
             
             logger.info(
                 f"Started workflow {workflow_id} for project {project_id}, "
@@ -178,8 +210,7 @@ class OrchestrationService:
             
         except Exception as e:
             logger.error(f"Failed to start workflow: {str(e)}")
-            if self.db is not None:
-                self.db.rollback()
+            # No rollback needed here as the session context manager handles it
             raise
     
     async def advance_workflow(
@@ -248,95 +279,74 @@ class OrchestrationService:
             # Get next role
             next_role = WorkflowStateTransition.get_next_role(next_state)
             
-            if self.db is not None:
-                # Database mode
-                # Fetch workflow from database
-                workflow = self.db.query(BuildWorkflow).filter(
-                    BuildWorkflow.id == workflow_id
-                ).first()
-                
-                if not workflow:
-                    raise ValueError(f"Workflow {workflow_id} not found")
-                
-                # Store phase result in workflow
+            if self.db_manager:
+                with self._get_db_session() as session:
+                    workflow = session.query(BuildWorkflow).filter(
+                        BuildWorkflow.id == workflow_id
+                    ).first()
+                    if not workflow:
+                        raise ValueError(f"Workflow {workflow_id} not found")
+                    phase_key = self._get_phase_column(completed_state)
+                    if phase_key:
+                        setattr(workflow, phase_key, phase_result)
+                    wf = cast(Any, workflow)
+                    wf.current_state = WorkflowStateEnum[next_state.name]
+                    wf.updated_at = datetime.utcnow()
+                    handoff = WorkflowHandoff(
+                        workflow_id=workflow_id,
+                        from_role=LLMRoleEnum[current_role.name],
+                        to_role=LLMRoleEnum[next_role.name] if next_role else None,
+                        from_state=WorkflowStateEnum[completed_state.name],
+                        to_state=WorkflowStateEnum[next_state.name],
+                        data_transferred=phase_result,
+                        notes=f"{current_role.value} completed {completed_state.value}",
+                    )
+                    session.add(handoff)
+                    event = WorkflowEvent(
+                        workflow_id=workflow_id,
+                        event_type="state_advanced",
+                        triggered_by=current_role.value,
+                        event_data={
+                            "from_state": completed_state.value,
+                            "to_state": next_state.value,
+                            "from_role": current_role.value,
+                            "to_role": next_role.value if next_role else None,
+                        },
+                    )
+                    session.add(event)
+                    if next_state == WorkflowState.COMPLETE:
+                        wf.completed_at = datetime.utcnow()
+            else:
+                # In-memory update
+                wf = self._workflows.get(workflow_id)
+                if not wf:
+                    raise ValueError(f"Workflow {workflow_id} not found (memory mode)")
                 phase_key = self._get_phase_column(completed_state)
                 if phase_key:
-                    setattr(workflow, phase_key, phase_result)
-                
-                # Update workflow state to the new state (not the completed one)
-                wf = cast(Any, workflow)
-                wf.current_state = WorkflowStateEnum[next_state.name]
-                wf.updated_at = datetime.utcnow()
-                
-                # Create handoff record in database
-                handoff = WorkflowHandoff(
-                    workflow_id=workflow_id,
-                    from_role=LLMRoleEnum[current_role.name],
-                    to_role=LLMRoleEnum[next_role.name] if next_role else None,
-                    from_state=WorkflowStateEnum[completed_state.name],
-                    to_state=WorkflowStateEnum[next_state.name],
-                    data_transferred=phase_result,
-                    notes=f"{current_role.value} completed {completed_state.value}",
-                )
-                
-                self.db.add(handoff)
-                
-                # Create event in audit trail
-                event = WorkflowEvent(
-                    workflow_id=workflow_id,
-                    event_type="state_advanced",
-                    triggered_by=current_role.value,
-                    event_data={
+                    wf[phase_key] = phase_result
+                wf["current_state"] = WorkflowStateEnum[next_state.name]
+                wf["updated_at"] = datetime.utcnow()
+                self._handoffs.setdefault(workflow_id, []).append({
+                    "from_role": current_role.value,
+                    "to_role": next_role.value if next_role else None,
+                    "from_state": completed_state.value,
+                    "to_state": next_state.value,
+                    "data_transferred": phase_result,
+                    "timestamp": datetime.utcnow().isoformat(),
+                })
+                self._events.setdefault(workflow_id, []).append({
+                    "event_type": "state_advanced",
+                    "triggered_by": current_role.value,
+                    "event_data": {
                         "from_state": completed_state.value,
                         "to_state": next_state.value,
                         "from_role": current_role.value,
                         "to_role": next_role.value if next_role else None,
                     },
-                )
-                self.db.add(event)
-                
-                # Mark as complete if finished
-                if next_state == WorkflowState.COMPLETE:
-                    wf.completed_at = datetime.utcnow()
-                
-                self.db.commit()
-            else:
-                # In-memory mode (testing)
-                if workflow_id not in self._workflows:
-                    raise ValueError(f"Workflow {workflow_id} not found")
-                
-                workflow = self._workflows[workflow_id]
-                
-                # Store phase result
-                phase_key = self._get_phase_column(completed_state)
-                if phase_key:
-                    workflow[phase_key] = phase_result
-                
-                # Update state
-                workflow["current_state"] = next_state
-                workflow["updated_at"] = datetime.utcnow()
-                
-                # Record handoff
-                self._handoffs[workflow_id].append({
-                    "from_role": current_role,
-                    "to_role": next_role,
-                    "from_state": completed_state,
-                    "to_state": next_state,
-                    "data_transferred": phase_result,
-                    "timestamp": datetime.utcnow(),
+                    "timestamp": datetime.utcnow().isoformat(),
                 })
-                
-                # Record event
-                self._events[workflow_id].append({
-                    "event_type": "state_advanced",
-                    "triggered_by": current_role.value,
-                    "from_state": completed_state.value,
-                    "to_state": next_state.value,
-                    "timestamp": datetime.utcnow(),
-                })
-                
                 if next_state == WorkflowState.COMPLETE:
-                    workflow["completed_at"] = datetime.utcnow()
+                    wf["completed_at"] = datetime.utcnow()
             
             logger.info(
                 f"Workflow {workflow_id} advanced: {completed_state.value} → {next_state.value}"
@@ -364,13 +374,11 @@ class OrchestrationService:
             
         except ValueError as e:
             logger.error(f"Workflow {workflow_id} transition error: {str(e)}")
-            if self.db is not None:
-                self.db.rollback()
+            # No rollback needed, session context manager handles it
             raise
         except Exception as e:
             logger.error(f"Failed to advance workflow {workflow_id}: {str(e)}")
-            if self.db is not None:
-                self.db.rollback()
+            # No rollback needed, session context manager handles it
             raise
 
     
@@ -393,165 +401,128 @@ class OrchestrationService:
         """
         try:
             logger.info(f"Getting status for workflow {workflow_id}")
-            
-            if self.db is not None:
-                # Database mode
-                # Fetch workflow from database
-                workflow = self.db.query(BuildWorkflow).filter(
-                    BuildWorkflow.id == workflow_id
-                ).first()
-                
-                if not workflow:
-                    raise ValueError(f"Workflow {workflow_id} not found")
-                
-                # Get handoff history
-                handoffs = self.db.query(WorkflowHandoff).filter(
-                    WorkflowHandoff.workflow_id == workflow_id
-                ).order_by(WorkflowHandoff.timestamp).all()
-                
-                # Calculate elapsed time
-                elapsed = datetime.utcnow() - workflow.created_at
-                hours = elapsed.total_seconds() // 3600
-                minutes = (elapsed.total_seconds() % 3600) // 60
-                elapsed_time = f"{int(hours)}h {int(minutes)}m"
-                
-                # Resolve current state safely (support mocks in tests)
+            if self.db_manager:
+                with self._get_db_session() as session:
+                    workflow = session.query(BuildWorkflow).filter(
+                        BuildWorkflow.id == workflow_id
+                    ).first()
+                    if not workflow:
+                        raise ValueError(f"Workflow {workflow_id} not found")
+                    handoffs = session.query(WorkflowHandoff).filter(
+                        WorkflowHandoff.workflow_id == workflow_id
+                    ).order_by(WorkflowHandoff.timestamp).all()
+                    # Coerce created_at to datetime for arithmetic
+                    created_at_dt = cast(datetime, workflow.created_at)
+                    elapsed_td = datetime.utcnow() - created_at_dt
+                    hours = elapsed_td.total_seconds() // 3600
+                    minutes = (elapsed_td.total_seconds() % 3600) // 60
+                    elapsed_time = f"{int(hours)}h {int(minutes)}m"
+                    try:
+                        state_name = getattr(workflow.current_state, "name", None)
+                        if not isinstance(state_name, str):
+                            state_name = str(state_name)
+                        safe_state = WorkflowState[state_name]
+                    except Exception:
+                        safe_state = WorkflowState.DISCOVERY
+                    current_role = WorkflowStateTransition.get_next_role(safe_state)
+                    completed_phases = []
+                    if workflow.discovery_phase:
+                        completed_phases.append("discovery")
+                    if workflow.planning_phase:
+                        completed_phases.append("planning")
+                    if workflow.implementation_phase:
+                        completed_phases.append("implementation")
+                    if workflow.testing_phase:
+                        completed_phases.append("testing")
+                    if workflow.verification_phase:
+                        completed_phases.append("verification")
+                    if workflow.deployment_phase:
+                        completed_phases.append("deployment")
+                    progress = len(completed_phases) / 6 * 100
+                    handoff_history = [
+                        {
+                            "from_role": h.from_role.value,
+                            "to_role": h.to_role.value if h.to_role else None,
+                            "from_state": h.from_state.value,
+                            "to_state": h.to_state.value,
+                            "timestamp": h.timestamp.isoformat() if h.timestamp else None,
+                            "notes": h.notes,
+                        }
+                        for h in handoffs
+                    ]
+                    status: Dict[str, Any] = {
+                        "workflow_id": workflow_id,
+                        "build_id": workflow.build_id,
+                        "project_id": workflow.project_id,
+                        "current_state": safe_state.value,
+                        "current_role": current_role.value if current_role else "system",
+                        "progress": round(progress, 1),
+                        "completed_phases": completed_phases,
+                        "handoff_history": handoff_history,
+                        "elapsed_time": elapsed_time,
+                        "created_at": workflow.created_at.isoformat() if workflow.created_at else None,
+                        "updated_at": workflow.updated_at.isoformat() if workflow.updated_at else None,
+                        "completed_at": workflow.completed_at.isoformat() if workflow.completed_at else None,
+                        "next_expectations": {
+                            "role": current_role.value if current_role else "system",
+                            "task": WorkflowStateTransition.get_description(safe_state),
+                            "deadline": None,
+                        },
+                        "status": "complete" if workflow.current_state == WorkflowStateEnum.COMPLETE else "in_progress",
+                    }
+                    return status
+            else:
+                wf = self._workflows.get(workflow_id)
+                if not wf:
+                    raise ValueError(f"Workflow {workflow_id} not found (memory mode)")
+                # Resolve current state
+                current_state_enum = wf.get("current_state", WorkflowStateEnum.DISCOVERY)
                 try:
-                    state_name = getattr(workflow.current_state, "name", None)
-                    if not isinstance(state_name, str):
-                        state_name = str(state_name)
-                    safe_state = WorkflowState[state_name]
+                    safe_state = WorkflowState[current_state_enum.name]
                 except Exception:
                     safe_state = WorkflowState.DISCOVERY
-                # Get current role
                 current_role = WorkflowStateTransition.get_next_role(safe_state)
-                
-                # Count completed phases
                 completed_phases = []
-                if workflow.discovery_phase:
-                    completed_phases.append("discovery")
-                if workflow.planning_phase:
-                    completed_phases.append("planning")
-                if workflow.implementation_phase:
-                    completed_phases.append("implementation")
-                if workflow.testing_phase:
-                    completed_phases.append("testing")
-                if workflow.verification_phase:
-                    completed_phases.append("verification")
-                if workflow.deployment_phase:
-                    completed_phases.append("deployment")
-                
-                # Calculate progress
+                for phase_name, state in [
+                    ("discovery", wf.get("discovery_phase")),
+                    ("planning", wf.get("planning_phase")),
+                    ("implementation", wf.get("implementation_phase")),
+                    ("testing", wf.get("testing_phase")),
+                    ("verification", wf.get("verification_phase")),
+                    ("deployment", wf.get("deployment_phase")),
+                ]:
+                    if state:
+                        completed_phases.append(phase_name)
                 progress = len(completed_phases) / 6 * 100
-                
-                # Build handoff history
-                handoff_history = [
-                    {
-                        "from_role": h.from_role.value,
-                        "to_role": h.to_role.value if h.to_role else None,
-                        "from_state": h.from_state.value,
-                        "to_state": h.to_state.value,
-                        "timestamp": h.timestamp.isoformat() if h.timestamp else None,
-                        "notes": h.notes,
-                    }
-                    for h in handoffs
-                ]
-                
-                # Build status response
-                status: Dict[str, Any] = {
+                handoff_history = self._handoffs.get(workflow_id, [])
+                created_at = wf.get("created_at") or datetime.utcnow()
+                elapsed_td = datetime.utcnow() - created_at
+                hours = elapsed_td.total_seconds() // 3600
+                minutes = (elapsed_td.total_seconds() % 3600) // 60
+                elapsed_time = f"{int(hours)}h {int(minutes)}m"
+                mem_status: Dict[str, Any] = {
                     "workflow_id": workflow_id,
-                    "build_id": workflow.build_id,
-                    "project_id": workflow.project_id,
+                    "build_id": wf.get("build_id"),
+                    "project_id": wf.get("project_id"),
                     "current_state": safe_state.value,
                     "current_role": current_role.value if current_role else "system",
                     "progress": round(progress, 1),
                     "completed_phases": completed_phases,
                     "handoff_history": handoff_history,
                     "elapsed_time": elapsed_time,
-                    "created_at": workflow.created_at.isoformat() if workflow.created_at else None,
-                    "updated_at": workflow.updated_at.isoformat() if workflow.updated_at else None,
-                    "completed_at": workflow.completed_at.isoformat() if workflow.completed_at else None,
+                    "created_at": self._to_iso(created_at),
+                    "updated_at": self._to_iso(wf.get("updated_at")),
+                    "completed_at": self._to_iso(wf.get("completed_at")),
                     "next_expectations": {
                         "role": current_role.value if current_role else "system",
                         "task": WorkflowStateTransition.get_description(safe_state),
                         "deadline": None,
                     },
-                    "status": "complete" if workflow.current_state == WorkflowStateEnum.COMPLETE else "in_progress",
+                    "status": "complete" if current_state_enum == WorkflowStateEnum.COMPLETE else "in_progress",
                 }
-            else:
-                # In-memory mode (testing)
-                if workflow_id not in self._workflows:
-                    raise ValueError(f"Workflow {workflow_id} not found")
-                
-                workflow = self._workflows[workflow_id]
-                handoffs = self._handoffs.get(workflow_id, [])
-                
-                # Calculate elapsed time
-                elapsed = datetime.utcnow() - workflow["created_at"]
-                hours = elapsed.total_seconds() // 3600
-                minutes = (elapsed.total_seconds() % 3600) // 60
-                elapsed_time = f"{int(hours)}h {int(minutes)}m"
-                
-                # Get current state and role
-                current_state = workflow.get("current_state", WorkflowState.DISCOVERY)
-                current_role = WorkflowStateTransition.get_next_role(current_state)
-                
-                # Count completed phases
-                completed_phases = []
-                if workflow.get("discovery_phase"):
-                    completed_phases.append("discovery")
-                if workflow.get("planning_phase"):
-                    completed_phases.append("planning")
-                if workflow.get("implementation_phase"):
-                    completed_phases.append("implementation")
-                if workflow.get("testing_phase"):
-                    completed_phases.append("testing")
-                if workflow.get("verification_phase"):
-                    completed_phases.append("verification")
-                if workflow.get("deployment_phase"):
-                    completed_phases.append("deployment")
-                
-                # Calculate progress
-                progress = len(completed_phases) / 6 * 100
-                
-                # Build handoff history
-                handoff_history = [
-                    {
-                        "from_role": str(h["from_role"]),
-                        "to_role": str(h["to_role"]) if h.get("to_role") else None,
-                        "from_state": str(h["from_state"]),
-                        "to_state": str(h["to_state"]),
-                        "timestamp": h["timestamp"].isoformat() if h.get("timestamp") else None,
-                    }
-                    for h in handoffs
-                ]
-                
-                # Build status response
-                status = {
-                    "workflow_id": workflow_id,
-                    "build_id": workflow.get("build_id"),
-                    "project_id": workflow.get("project_id"),
-                    "current_state": current_state.value if isinstance(current_state, WorkflowState) else str(current_state),
-                    "current_role": current_role.value if current_role else "system",
-                    "progress": round(progress, 1),
-                    "completed_phases": completed_phases,
-                    "handoff_history": handoff_history,
-                    "elapsed_time": elapsed_time,
-                    "created_at": OrchestrationService._to_iso(workflow.get("created_at")),
-                    "updated_at": OrchestrationService._to_iso(workflow.get("updated_at")),
-                    "completed_at": OrchestrationService._to_iso(workflow.get("completed_at")),
-                    "next_expectations": {
-                        "role": current_role.value if current_role else "system",
-                        "task": WorkflowStateTransition.get_description(current_state) if isinstance(current_state, WorkflowState) else "Unknown",
-                        "deadline": None,
-                    },
-                    "status": "complete" if isinstance(current_state, WorkflowState) and current_state == WorkflowState.COMPLETE else "in_progress",
-                }
-            
-            return status
-            
+                return mem_status
         except Exception as e:
-            logger.error(f"Failed to get workflow status: {str(e)}")
+            logger.error(f"Failed to get workflow status: {e}")
             raise
 
     

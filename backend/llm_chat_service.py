@@ -6,7 +6,7 @@ Supports OpenAI, Google Gemini, Anthropic Claude, and local LLMs (Ollama, etc.)
 import os
 import json
 import asyncio
-from typing import AsyncGenerator, Optional, Dict, Any
+from typing import AsyncGenerator, Optional, Dict, Any, List
 from pathlib import Path
 import urllib.request
 import urllib.error
@@ -28,7 +28,7 @@ class LLMChatService:
         self.llm_type = llm_config.get("type", "cloud")
         self.llm_source = llm_config.get("source", "unknown")
         
-    async def stream_chat(self, message: str, conversation_history: list = None) -> AsyncGenerator[str, None]:
+    async def stream_chat(self, message: str, conversation_history: Optional[List[Dict[str, Any]]] = None) -> AsyncGenerator[str, None]:
         """
         Stream a chat response from the LLM
         
@@ -80,7 +80,7 @@ class LLMChatService:
                 "Content-Type": "application/json"
             }
             data = json.dumps({
-                "model": "gpt-4" if "gpt-4" in self.llm_id.lower() else "gpt-3.5-turbo",
+                "model": "gpt-4" if "gpt-4" in (self.llm_id or "").lower() else "gpt-3.5-turbo",
                 "messages": messages,
                 "stream": True,
                 "temperature": 0.7,

@@ -1,0 +1,44 @@
+{
+  "user-xyz": [
+    {
+      "id": "user-xyz_1762639589.624556",
+      "title": "The client prefers blue accents.",
+      "type": "clarification",
+      "tags": [
+        "email",
+        "inbound"
+      ],
+      "created_at": "2025-11-08T17:06:29.624556"
+    },
+    {
+      "id": "user-xyz_1762639924.473574",
+      "title": "The client prefers blue accents.",
+      "type": "clarification",
+      "tags": [
+        "email",
+        "inbound"
+      ],
+      "created_at": "2025-11-08T17:12:04.473574"
+    },
+    {
+      "id": "user-xyz_1762640139.490151",
+      "title": "The client prefers blue accents.",
+      "type": "clarification",
+      "tags": [
+        "email",
+        "inbound"
+      ],
+      "created_at": "2025-11-08T17:15:39.490151"
+    },
+    {
+      "id": "user-xyz_1762640401.42801",
+      "title": "The client prefers blue accents.",
+      "type": "clarification",
+      "tags": [
+        "email",
+        "inbound"
+      ],
+      "created_at": "2025-11-08T17:20:01.428010"
+    }
+  ]
+}

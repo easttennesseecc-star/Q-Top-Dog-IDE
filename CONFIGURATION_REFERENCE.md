@@ -121,12 +121,7 @@ services:
     container_name: q_marketplace_db
     environment:
       POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
-      POSTGRES_DB: q_marketplace
-    ports:
-      - "5432:5432"
-    volumes:
-      - postgres_data:/var/lib/postgresql/data
+     APP_URL: Frontend application origin used by OAuth redirect flows. Set to http://localhost:5173 for local Vite dev.
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U postgres"]
       interval: 10s
@@ -148,10 +143,6 @@ services:
     ports:
       - "5000:5000"
     depends_on:
-      postgres:
-        condition: service_healthy
-    volumes:
-      - ./backend:/app/backend
     command: python backend/main.py
 
 volumes:

@@ -40,8 +40,8 @@ class SnapshotStore:
     def _serialize(self, obj: Any) -> Any:
         # Best-effort JSON serialization
         try:
-            if is_dataclass(obj):
-                return asdict(obj)
+            if is_dataclass(obj) and not isinstance(obj, type):
+                return asdict(obj)  # type: ignore[arg-type]
         except Exception:
             pass
         if hasattr(obj, "value"):

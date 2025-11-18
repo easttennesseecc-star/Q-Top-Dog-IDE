@@ -20,7 +20,7 @@ import sys
 import os
 from datetime import datetime
 from pathlib import Path
-from typing import Any, Dict, Optional, List
+from typing import Any, Dict, Optional, List, TYPE_CHECKING
 import threading
 from functools import wraps
 import time
@@ -28,11 +28,19 @@ import platform
 import psutil
 from contextlib import contextmanager
 
+# Try to import asyncio for async support (optional) with mypy-friendly typing
+if TYPE_CHECKING:
+    import asyncio as _asyncio  # pragma: no cover
+try:
+    import asyncio  # type: ignore[no-redef]
+except ImportError:  # pragma: no cover - platforms without asyncio
+    asyncio = None  # type: ignore[assignment]
+
 
 class ContextualLogger:
     """Main logger class with context awareness and full error capture."""
     
-    def __init__(self, name: str = "q-ide", log_dir: str = None, level: int = logging.INFO):
+    def __init__(self, name: str = "q-ide", log_dir: Optional[str] = None, level: int = logging.INFO):
         """
         Initialize the logger.
         
@@ -151,7 +159,7 @@ class ContextualLogger:
         """Log warning message with context."""
         self.logger.warning(f"{message} | {self._format_context()}", extra=kwargs)
     
-    def error(self, message: str, error: Exception = None, **kwargs):
+    def error(self, message: str, error: Optional[BaseException] = None, **kwargs):
         """
         Log error with full context and stack trace.
         
@@ -161,7 +169,9 @@ class ContextualLogger:
             **kwargs: Additional context
         """
         if error is None:
-            error = sys.exc_info()[1]
+            err_candidate = sys.exc_info()[1]
+            if isinstance(err_candidate, BaseException):
+                error = err_candidate
         
         # Build comprehensive error report
         error_data = {
@@ -180,7 +190,7 @@ class ContextualLogger:
             extra={"full_context": error_data}
         )
     
-    def critical(self, message: str, error: Exception = None, **kwargs):
+    def critical(self, message: str, error: Optional[BaseException] = None, **kwargs):
         """
         Log critical error with full system state.
         
@@ -190,7 +200,9 @@ class ContextualLogger:
             **kwargs: Additional context
         """
         if error is None:
-            error = sys.exc_info()[1]
+            err_candidate = sys.exc_info()[1]
+            if isinstance(err_candidate, BaseException):
+                error = err_candidate
         
         error_data = {
             "message": message,
@@ -220,7 +232,7 @@ class ContextualLogger:
                 "timestamp": datetime.utcnow().isoformat()
             })
     
-    def get_metrics(self, category: str = None) -> Dict[str, Any]:
+    def get_metrics(self, category: Optional[str] = None) -> Dict[str, Any]:
         """Retrieve tracked metrics."""
         with self._metrics_lock:
             if category:
@@ -257,11 +269,13 @@ class JSONFormatter(logging.Formatter):
         
         # Include exception info if present
         if record.exc_info:
-            log_data["exception"] = {
-                "type": record.exc_info[0].__name__,
-                "value": str(record.exc_info[1]),
-                "traceback": traceback.format_exception(*record.exc_info)
-            }
+            exc_type, exc_value, exc_tb = record.exc_info
+            if exc_type is not None:
+                log_data["exception"] = {
+                    "type": exc_type.__name__,
+                    "value": str(exc_value),
+                    "traceback": traceback.format_exception(exc_type, exc_value, exc_tb)
+                }
         
         return json.dumps(log_data, default=str)
 
@@ -390,7 +404,7 @@ async def _log_api_impl(logger, func, *args, **kwargs):
 _global_logger: Optional[ContextualLogger] = None
 
 
-def get_logger(name: str = "q-ide", log_dir: str = None) -> ContextualLogger:
+def get_logger(name: str = "q-ide", log_dir: Optional[str] = None) -> ContextualLogger:
     """
     Get or create the global logger instance.
     
@@ -409,7 +423,7 @@ def get_logger(name: str = "q-ide", log_dir: str = None) -> ContextualLogger:
 
 def configure_logger(
     name: str = "q-ide",
-    log_dir: str = None,
+    log_dir: Optional[str] = None,
     level: int = logging.INFO
 ) -> ContextualLogger:
     """
@@ -426,13 +440,6 @@ def configure_logger(
     global _global_logger
     _global_logger = ContextualLogger(name, log_dir, level)
     return _global_logger
-
-
-# Try to import asyncio for async support (optional)
-try:
-    import asyncio
-except ImportError:
-    asyncio = None
 
 
 if __name__ == "__main__":

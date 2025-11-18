@@ -3,9 +3,7 @@ from starlette.testclient import TestClient
 from backend.main import app
 from backend.services.email_token_service import register_token
 
-client = TestClient(app)
-
-def test_email_inbound_accept_ui_draft():
+def test_email_inbound_accept_ui_draft(test_client):
     token = register_token({
         "kind": "ui_draft_approval",
         "project_id": "test-user",
@@ -16,7 +14,7 @@ def test_email_inbound_accept_ui_draft():
         "subject": "Re: UI Draft",
         "text": f"ACCEPT {token}"
     }
-    resp = client.post("/email/inbound", json=payload)
+    resp = test_client.post("/email/inbound", json=payload)
     assert resp.status_code == 200
     data = resp.json()
     assert data.get("status") == "ok"

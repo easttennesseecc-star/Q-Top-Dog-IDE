@@ -40,7 +40,7 @@ test_results = []
 
 def test_result(name: str, passed: bool, message: str = ""):
     """Record test result"""
-    status = "✅ PASS" if passed else "❌ FAIL"
+    status = "PASS" if passed else "FAIL"
     result_line = f"{status} | {name}"
     if message:
         result_line += f" | {message}"
@@ -361,7 +361,7 @@ def print_summary():
     print(f"\nResults: {passed}/{total} tests passed")
     
     if passed == total:
-        print("\n🎉 ALL TESTS PASSED! Ready for Phase 4 implementation.")
+        print("\nALL TESTS PASSED! Ready for Phase 4 implementation.")
         print("\nNext steps:")
         print("1. Install frontend dependencies: npm install --save @stripe/react-stripe-js @stripe/js")
         print("2. Create Stripe account and get test keys")
@@ -370,7 +370,7 @@ def print_summary():
         print("5. Create BillingDashboard.tsx component")
         print("6. Run manual testing (see PHASE4_TESTING_GUIDE.md)")
     else:
-        print(f"\n⚠️  {total - passed} tests failed. See details above.")
+        print(f"\n{total - passed} tests failed. See details above.")
         print("\nFix the failures and run again.")
     
     print("\n" + "=" * 70)

@@ -35,7 +35,7 @@ import "./styles/pricing-page.css";
 const BackgroundSettings = React.lazy(() => import('./components/BackgroundSettings'));
 const OAuthCallback = React.lazy(() => import('./components/OAuthCallback'));
 
-type SelectedTab = "viewer" | "account" | "builds" | "extensions" | "settings" | "learning" | "llm" | "config" | "phone" | "billing" | "pricing" | "medical" | "science" | "rules";
+type SelectedTab = "viewer" | "advantages" | "account" | "builds" | "extensions" | "settings" | "learning" | "llm" | "config" | "phone" | "billing" | "pricing" | "medical" | "science" | "rules";
 type WorkspaceProfile = 'default' | 'medical' | 'science' | 'staging';
 
 interface AppProps { initialTab?: SelectedTab }
@@ -65,10 +65,10 @@ function App({ initialTab }: AppProps) {
   const workspaceProfile = ((window as any).__WORKSPACE_PROFILE || 'default') as WorkspaceProfile;
   const isStaging = workspaceProfile === 'staging' || /(^|\.)staging[-.]|(^|\.)staging\./i.test(window.location.hostname);
   const allowedTabsByProfile: Record<WorkspaceProfile, SelectedTab[]> = {
-    default: ['viewer','account','builds','extensions','settings','learning','llm','config','phone','billing','pricing','rules'],
-    medical: ['viewer','account','medical','builds','llm','config','billing','settings','learning','pricing','rules'],
-    science: ['viewer','account','science','builds','llm','config','billing','settings','learning','pricing','rules'],
-    staging: ['viewer','account','builds','extensions','settings','learning','llm','config','phone','billing','pricing','rules'],
+    default: ['viewer','advantages','account','builds','extensions','settings','learning','llm','config','phone','billing','pricing','rules'],
+    medical: ['viewer','advantages','account','medical','builds','llm','config','billing','settings','learning','pricing','rules'],
+    science: ['viewer','advantages','account','science','builds','llm','config','billing','settings','learning','pricing','rules'],
+    staging: ['viewer','advantages','account','builds','extensions','settings','learning','llm','config','phone','billing','pricing','rules'],
   };
   const isTabAllowed = (t: SelectedTab) => allowedTabsByProfile[workspaceProfile].includes(t);
 
@@ -230,6 +230,11 @@ function App({ initialTab }: AppProps) {
 
   // Inline SVG icons (stroke-current, 1.6px)
   const Icon = {
+    Star: (
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+        <path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 22 12 18.77 5.82 22 7 14.14l-5-4.87 6.91-1.01z" />
+      </svg>
+    ),
     Builds: (
       <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
         <path d="M7 7h10v10H7z" />
@@ -424,6 +429,7 @@ function App({ initialTab }: AppProps) {
               <div className="h-10 flex items-stretch gap-1 border-b border-white/5 px-2">
                 {(([
                   { key: 'viewer', label: 'Viewer', icon: null },
+                  { key: 'advantages', label: 'Advantages', icon: Icon.Star },
                   { key: 'account', label: 'Account', icon: Icon.Settings },
                   { key: 'builds', label: 'Builds', icon: Icon.Builds },
                   { key: 'llm', label: 'LLM Pool', icon: Icon.LLM },
@@ -450,6 +456,56 @@ function App({ initialTab }: AppProps) {
                 {tab === 'viewer' && (
                   <div className="h-full w-full rounded-lg border border-white/10 bg-white/5 grid place-items-center text-slate-300/80 text-sm select-none">
                     Nothing selected. Choose a tab to view tools here.
+                  </div>
+                )}
+                {tab === 'advantages' && (
+                  <div className="h-full w-full overflow-auto">
+                    <div className="mb-2 text-sm font-semibold text-cyan-200">TopDog Advantages</div>
+                    <div className="grid gap-3 md:grid-cols-2">
+                      <div className="rounded-lg border border-white/10 p-3 bg-black/20">
+                        <h3 className="text-xs font-semibold text-cyan-300 mb-2">LLM & Orchestration</h3>
+                        <ul className="list-disc list-inside text-xs text-slate-300/80 space-y-1">
+                          <li>BYOK-only model (use your own API keys)</li>
+                          <li>Local-first with Ollama auto-detect and auto-assign</li>
+                          <li>Multi-provider LLM pool and instant switching</li>
+                          <li>Role-based model assignment (Coding, Overwatch, more)</li>
+                          <li>Overwatch verification to reduce hallucinations</li>
+                        </ul>
+                      </div>
+                      <div className="rounded-lg border border-white/10 p-3 bg-black/20">
+                        <h3 className="text-xs font-semibold text-cyan-300 mb-2">Extensions & Media</h3>
+                        <ul className="list-disc list-inside text-xs text-slate-300/80 space-y-1">
+                          <li>Media synthesis with provenance labels</li>
+                          <li>Phone pairing (SMS/QR) for remote control</li>
+                          <li>Game engine integration (Construct 3 now; GameMaker scaffold)</li>
+                          <li>Learning endpoints and orchestration workflow engine</li>
+                          <li>Priority queue (tier-based) in orchestration pipeline</li>
+                        </ul>
+                      </div>
+                      <div className="rounded-lg border border-white/10 p-3 bg-black/20">
+                        <h3 className="text-xs font-semibold text-cyan-300 mb-2">Security & Compliance</h3>
+                        <ul className="list-disc list-inside text-xs text-slate-300/80 space-y-1">
+                          <li>Compliance middleware (HIPAA/SOC2/FedRAMP track)</li>
+                          <li>Audit-friendly provenance on generated assets</li>
+                          <li>Self-hosted / on‑prem deployment option</li>
+                          <li>Metrics for LLM latency, TTFT, tokens, and verification</li>
+                          <li>Edition profiles (Developer/Regulated) with policy hooks</li>
+                        </ul>
+                      </div>
+                      <div className="rounded-lg border border-white/10 p-3 bg-black/20">
+                        <h3 className="text-xs font-semibold text-cyan-300 mb-2">Monetization & Teams</h3>
+                        <ul className="list-disc list-inside text-xs text-slate-300/80 space-y-1">
+                          <li>Tier-aware features (teams, RBAC, shared workspaces)</li>
+                          <li>Pricing page and comparison panels</li>
+                          <li>Upgrade prompts and usage visuals</li>
+                          <li>Staging and production ready deployment pipeline</li>
+                          <li>Domain & TLS automation with cert-manager</li>
+                        </ul>
+                      </div>
+                    </div>
+                    <div className="mt-3 text-[11px] text-slate-400">
+                      Note: Some enterprise/compliance controls are policy‑gated and require appropriate tier configuration.
+                    </div>
                   </div>
                 )}
                 {tab === 'account' && (
@@ -590,6 +646,7 @@ function App({ initialTab }: AppProps) {
           onClose={() => setCommandPaletteOpen(false)}
           commands={[
             { label: "Viewer", action: () => { setTab('viewer'); setCommandPaletteOpen(false); } },
+            { label: "TopDog Advantages", action: () => { setTab('advantages'); setCommandPaletteOpen(false); } },
             { label: "Account Status", action: () => { setTab('account'); setCommandPaletteOpen(false); } },
             { label: "Builds", action: () => { setTab('builds'); setCommandPaletteOpen(false); } },
             { label: "Extensions", action: () => { setTab('extensions'); setCommandPaletteOpen(false); } },

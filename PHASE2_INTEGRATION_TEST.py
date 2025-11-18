@@ -56,7 +56,7 @@ def test_endpoints():
     
     for test in tests:
         try:
-            print(f"\n📋 Testing: {test['name']}")
+            print(f"\nTesting: {test['name']}")
             print(f"   URL: {test['url']}")
             print(f"   User: {test_user_id}")
             
@@ -67,19 +67,19 @@ def test_endpoints():
             
             if response.status_code == 200:
                 data = response.json()
-                print(f"   ✅ SUCCESS (200)")
+                print(f"   SUCCESS (200)")
                 print(f"   Response: {json.dumps(data, indent=2)[:200]}...")
                 passed += 1
             else:
-                print(f"   ❌ FAILED ({response.status_code})")
+                print(f"   FAILED ({response.status_code})")
                 print(f"   Error: {response.text[:200]}")
                 failed += 1
                 
         except requests.exceptions.ConnectionError:
-            print(f"   ❌ CONNECTION ERROR - Is the server running on port 8000?")
+            print(f"   CONNECTION ERROR - Is the server running on port 8000?")
             failed += 1
         except Exception as e:
-            print(f"   ❌ ERROR: {str(e)}")
+            print(f"   ERROR: {str(e)}")
             failed += 1
     
     print("\n" + "="*60)
@@ -94,13 +94,13 @@ if __name__ == "__main__":
     for i in range(30):
         try:
             requests.get(f"{BASE_URL}/api/health", timeout=1)
-            print("✅ Server is ready!")
+            print("Server is ready!")
             break
         except:
-            print(f"⏳ Waiting... ({i+1}/30)")
+            print(f"Waiting... ({i+1}/30)")
             time.sleep(1)
     else:
-        print("❌ Server did not start in time")
+        print("Server did not start in time")
         exit(1)
     
     passed, failed = test_endpoints()

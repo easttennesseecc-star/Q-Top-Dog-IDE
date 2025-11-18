@@ -22,7 +22,7 @@ import os
 import signal
 import logging
 from typing import Dict, List, Optional, Any, Set, Tuple
-from dataclasses import dataclass, asdict
+from dataclasses import dataclass, asdict, field
 from enum import Enum
 from abc import ABC, abstractmethod
 import threading
@@ -82,14 +82,8 @@ class StackFrame:
     file: str
     line: int
     column: int = 0
-    locals: Dict[str, Any] = None
-    args: Dict[str, Any] = None
-
-    def __post_init__(self):
-        if self.locals is None:
-            self.locals = {}
-        if self.args is None:
-            self.args = {}
+    locals: Dict[str, Any] = field(default_factory=dict)
+    args: Dict[str, Any] = field(default_factory=dict)
 
 
 @dataclass
@@ -472,7 +466,7 @@ class DAPServer:
             self.event_callbacks[event_name] = []
         self.event_callbacks[event_name].append(callback)
 
-    async def emit_event(self, event_name: str, body: Dict = None):
+    async def emit_event(self, event_name: str, body: Optional[Dict[str, Any]] = None):
         """Emit a debug event"""
         for callback in self.event_callbacks.get(event_name, []):
             try:
@@ -487,6 +481,7 @@ class DAPServer:
         """Create a new debug session"""
         session_id = str(uuid.uuid4())
         
+        adapter: DebuggerAdapter
         if language == "python":
             adapter = PythonDebuggerAdapter(session_id)
         elif language in ["javascript", "typescript", "node"]:

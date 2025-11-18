@@ -11,12 +11,14 @@
    - 15-minute invite expiry with resend capability
    - Secure invite code generation (256-bit entropy)
 
-2. **Phone Pairing Service** (`phone_pairing_service.py` - 580+ lines)
+2. **Phone Pairing Service** (`phone_pairing_service.py` - 600+ lines)
    - QR code generation (alternative method)
+   - Optional QR OTP (env-controlled)
    - JWT token management (RS256, 30-day expiry)
    - RSA-2048 key pair generation
    - Device fingerprinting (SHA-256)
    - Device lifecycle management (revoke, suspend, reactivate)
+   - Persistent JWT revocation list (revoked_jti.json)
 
 3. **Cloud Message Broker** (`cloud_message_broker.py` - 660+ lines)
    - MQTT pub/sub messaging for global communication
@@ -25,7 +27,7 @@
    - QoS level support (0/1/2)
    - Topic structure: `topdog/{user_id}/{device_id}/{message_type}`
 
-4. **REST API** (`phone_pairing_api.py` - 450+ lines)
+4. **REST API** (`phone_pairing_api.py` - 470+ lines)
    - `POST /phone/pairing/send-sms` - Send SMS invite
    - `POST /phone/pairing/accept-invite` - Accept and pair device
    - `GET /phone/pairing/invite/{code}` - Check invite status
@@ -72,14 +74,16 @@ For users who prefer or when SMS isn't available:
 3. Accept pairing
 4. Done!
 
-## 🔐 Security Features
+## 🔐 Security Features (Hardened)
 
-- **SMS Invite Codes**: 256-bit secure random tokens
-- **One-Time Use**: Each invite can only be accepted once
-- **Auto-Expiry**: 15-minute default (configurable)
-- **JWT Tokens**: RS256 signed, 30-day validity
-- **Device Fingerprinting**: SHA-256 hash prevents token theft
+- **SMS Invite Codes**: 256-bit secure random tokens + 6-digit OTP
+- **QR Pairing Tokens**: One-time, 5-minute expiry; optional OTP validation
+- **One-Time Use**: Each invite/token consumed on success
+- **Auto-Expiry**: 15-minute SMS / 5-minute QR (configurable)
+- **JWT Tokens**: RS256 signed, 30-day validity, persisted revocation list
+- **Device Fingerprinting**: SHA-256 hash prevents token theft replay
 - **TLS/SSL**: All MQTT communication encrypted
+- **Unified Sessions**: Central session store tracks lifecycle
 
 ## 📡 Communication Architecture
 
@@ -222,7 +226,7 @@ IDE sends real-time notifications to phone:
 - No recurring costs
 - Perfect for security-conscious enterprises
 
-## 📝 Environment Variables
+## 📝 Environment Variables (Extended)
 
 ```bash
 # SMS Provider (Twilio)
@@ -233,8 +237,12 @@ TWILIO_PHONE_NUMBER="+15551234567"
 # Or AWS SNS (automatic if credentials configured)
 
 # Custom Settings
-PAIRING_INVITE_EXPIRY_MINUTES="15"
+PAIRING_INVITE_EXPIRY_MINUTES="15"           # SMS invite expiry minutes
 PAIRING_BASE_URL="https://pair.topdog-ide.com"
+PAIRING_QR_REQUIRE_OTP="0"                   # Set 1/true to require OTP for QR pairing
+PAIRING_QR_EMBED_OTP="0"                     # Set 1/true to embed OTP in QR payload (demo)
+PHONE_DEVICES_REQUIRE_ADMIN="0"              # Set 1/true to require admin token for list/delete
+ADMIN_TOKEN="super-secret-value"             # Token expected in x-admin-token header
 ```
 
 ## 🎓 Quick Start Commands
@@ -278,7 +286,7 @@ tail -f logs/Top Dog-topdog.log
 4. **`backend/services/cloud_message_broker.py`** - MQTT messaging
 5. **`backend/routes/phone_pairing_api.py`** - REST API endpoints
 
-## ✨ Key Improvements vs Original Plan
+## ✨ Key Improvements vs Original Plan (v1.1)
 
 ### Original Request
 > "easy set up for phone pairing like via phone number or pairing automation...sends you a text/link to pair....like you enter your phone number and then accept the invite... and done.."
@@ -289,27 +297,34 @@ tail -f logs/Top Dog-topdog.log
 ✅ **Click to pair** - One-tap acceptance  
 ✅ **Automation** - Auto-expiry, resend, device management  
 ✅ **Plus bonuses:**
-  - QR code alternative method
-  - Voice command integration
-  - Real-time notifications
-  - Global MQTT communication
-  - JWT security with device fingerprinting
-  - Mock mode for development
-  - Comprehensive documentation
+   - QR code alternative method + optional OTP
+   - Unified PairingSession lifecycle tracking
+   - Persistent JWT revocation list
+   - Voice command integration scaffold
+   - Real-time notifications
+   - Global MQTT communication
+   - JWT security with device fingerprinting
+   - Mock mode for development
+   - Hardened admin gating option
+   - Comprehensive documentation & updated env vars
 
-## 🎯 Next Steps
+## 🎯 Next Steps (Post-Hardening)
 
-1. **Test SMS in Mock Mode** (no setup needed)
-2. **Configure Twilio** (15 min, free trial available)
-3. **Build Frontend UI** (phone number input form)
-4. **Create Mobile Web App** (pairing acceptance page)
-5. **Deploy MQTT Broker**
-6. **Build Voice Command Handler**
-7. **Launch! 🚀**
+1. Test with real SMS provider (Twilio/AWS SNS)
+2. Add frontend admin gating UX (show when device actions restricted)
+3. Expand voice command handler (intent parsing + execution)
+4. Stress test multi-device revocation & session expiry
+5. Deploy production MQTT broker with QoS strategy
+6. Instrument metrics around session states (pending vs accepted rates)
+7. Launch hardened beta 🚀
 
 ---
 
-**Questions? Check:**
+**Questions? Check (Updated):**
 - `PHONE_PAIRING_SMS_SETUP.md` for detailed setup
 - Backend logs for SMS status
 - API docs: http://localhost:8000/docs
+- Updated env flags in this summary (security hardening)
+
+**Version**: 1.1
+**Status**: Hardened core + session tracking

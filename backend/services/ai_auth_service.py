@@ -11,6 +11,7 @@ import secrets
 import hashlib
 import json
 from abc import ABC, abstractmethod
+import os
 
 
 class APIKeyStatus(str, Enum):
@@ -26,6 +27,9 @@ class ProviderType(str, Enum):
     OPENAI = "openai"
     ANTHROPIC = "anthropic"
     GOOGLE_GEMINI = "google_gemini"
+    GOOGLE_OAUTH = "google_oauth"
+    GITHUB = "github"
+    GITHUB_COPILOT = "github_copilot"
     HUGGINGFACE = "huggingface"
     COHERE = "cohere"
 
@@ -182,7 +186,8 @@ class AIAuthService:
     """Authentication service for marketplace users"""
     
     # Founder email - always has full access regardless of payment status
-    FOUNDER_EMAIL = "paul@quellum.net"  # Update with actual founder email
+    # Can be overridden with env var FOUNDER_EMAIL
+    FOUNDER_EMAIL = os.getenv("FOUNDER_EMAIL", "paul@quellum.net")
     
     def __init__(self):
         """Initialize the auth service"""

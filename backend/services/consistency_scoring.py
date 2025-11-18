@@ -15,7 +15,7 @@ Notes:
 """
 from __future__ import annotations
 from dataclasses import dataclass
-from typing import Callable, List, Dict, Tuple
+from typing import Callable, List, Dict, Tuple, Set
 import re
 
 
@@ -28,7 +28,7 @@ class ConsistencyResult:
 
 class ConsistencyScoringAgent:
     def __init__(self) -> None:
-        self._memo = {}
+        self._memo: Dict[str, str] = {}
 
     def generate_probes(self, prompt: str, n: int = 3) -> List[str]:
         n = max(1, n)
@@ -81,11 +81,11 @@ class ConsistencyScoringAgent:
         score = self.compute_score(outs)
         return ConsistencyResult(score=score, outputs=outs, pairwise=pairwise)
 
-    def _tokset(self, s: str):
+    def _tokset(self, s: str) -> Set[str]:
         toks = re.findall(r"[a-z0-9]+", s.lower())
         return set(toks)
 
-    def _jaccard(self, a: set, b: set) -> float:
+    def _jaccard(self, a: Set[str], b: Set[str]) -> float:
         if not a and not b:
             return 1.0
         if not a or not b:

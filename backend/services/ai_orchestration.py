@@ -14,6 +14,7 @@ from backend.orchestration.workflow_state_machine import WorkflowState, LLMRole
 from backend.orchestration.orchestration_prompts import get_orchestration_prompt, get_workflow_context
 from backend.services.orchestration_service import OrchestrationService
 from backend.services.snapshot_store import SnapshotStore
+from backend.orchestration.workflow_state_machine import WorkflowStateTransition
 
 logger = logging.getLogger(__name__)
 
@@ -139,8 +140,16 @@ class AIOrchestrationManager:
             orchestration_service: Service for workflow management
         """
         self.orchestration_service = orchestration_service
-        self.contexts: Dict[str, AIOrchestrationContext] = {}
         self.snapshot_store = SnapshotStore()
+
+    async def _get_or_create_context(self, workflow_id: str, role: LLMRole) -> AIOrchestrationContext:
+        """
+        Creates a transient context for a role. In a real-world scenario,
+        this might load conversation history from a database.
+        """
+        # For now, we create a new context each time.
+        # A future implementation could persist/load history.
+        return AIOrchestrationContext(workflow_id=workflow_id, role=role)
     
     async def initialize_workflow(
         self,
@@ -172,14 +181,8 @@ class AIOrchestrationManager:
             initial_requirements=initial_requirements,
         )
         
-        # Create AI context for Q Assistant
-        context = AIOrchestrationContext(
-            workflow_id=workflow_id,
-            role=LLMRole.Q_ASSISTANT,
-        )
-        
-        # Store context
-        self.contexts[workflow_id] = context
+        # Create a transient AI context for the initial role
+        context = await self._get_or_create_context(workflow_id, LLMRole.Q_ASSISTANT)
         
         logger.info(f"Initialized workflow {workflow_id} with Q Assistant orchestration")
         # Initial snapshot for clean baseline
@@ -191,6 +194,7 @@ class AIOrchestrationManager:
         return {
             "workflow_id": workflow_id,
             "initial_state": initial_state.value,
+            "system_prompt": context.system_prompt,
         }
     
     async def advance_with_ai_result(
@@ -210,12 +214,21 @@ class AIOrchestrationManager:
         Returns:
             Result from orchestration service
         """
-        context = self.contexts.get(workflow_id)
-        if not context:
-            raise ValueError(f"No context found for workflow {workflow_id}")
+        # Get current workflow status to determine current state and role
+        status = await self.orchestration_service.get_workflow_status(workflow_id)
+        if not status:
+            raise ValueError(f"Could not retrieve status for workflow {workflow_id}")
+
+        current_state = WorkflowState(status["current_state"])
+        current_role = LLMRole(status["current_role"])
+
+        # Get a transient context for the current role
+        context = await self._get_or_create_context(workflow_id, current_role)
+        context.current_state = current_state # Set current state for context
         
-        # Add AI response to history
+        # Add AI response to history (in this transient context)
         context.add_message("assistant", ai_response)
+        
         # Pre-advance snapshot to capture inputs
         try:
             self.take_snapshot(
@@ -224,7 +237,7 @@ class AIOrchestrationManager:
                 extra={
                     "ai_response": ai_response,
                     "phase_result": phase_result,
-                    "completed_state": (context.current_state.value if context.current_state else WorkflowState.DISCOVERY.value),
+                    "completed_state": current_state.value,
                 },
             )
         except Exception:
@@ -234,7 +247,7 @@ class AIOrchestrationManager:
         result = await self.orchestration_service.advance_workflow(
             workflow_id=workflow_id,
             current_role=context.role,
-            completed_state=context.current_state or WorkflowState.DISCOVERY,
+            completed_state=current_state,
             phase_result=phase_result,
         )
         
@@ -267,45 +280,30 @@ class AIOrchestrationManager:
         Returns:
             AI orchestration context for the role
         """
-        key = f"{workflow_id}:{role.value}"
-        
-        if key not in self.contexts:
-            context = AIOrchestrationContext(workflow_id, role)
-            self.contexts[key] = context
+        # This now returns a transient context
+        context = AIOrchestrationContext(workflow_id, role)
         
         # Return a proxy that is both usable directly and awaitable
-        return _ContextAwaitableProxy(self.contexts[key])
+        return _ContextAwaitableProxy(context)
 
     def take_snapshot(self, workflow_id: str, label: Optional[str] = None, extra: Optional[Dict[str, Any]] = None) -> Optional[str]:
         """Capture a snapshot of all role contexts for a workflow to aid conversation continuity."""
-        # Collect all contexts related to this workflow (supports both keys: exact ID and ID:role)
-        role_contexts: List[Dict[str, Any]] = []
-        for key, ctx in self.contexts.items():
-            if key == workflow_id or key.startswith(f"{workflow_id}:"):
-                try:
-                    role_contexts.append({
-                        "role": ctx.role.value,
-                        "system_prompt": ctx.system_prompt,
-                        "current_state": ctx.current_state.value if ctx.current_state else None,
-                        "conversation_history": list(ctx.conversation_history),
-                        "context_data": dict(ctx.context_data),
-                        "created_at": ctx.created_at.isoformat(),
-                    })
-                except Exception:
-                    # Best effort; skip malformed contexts
-                    continue
-
+        # This method is now more complex as contexts are not stored.
+        # For snapshotting, we'd need to fetch state and reconstruct.
+        # For now, we'll log that it's a simplified implementation.
+        logger.debug("take_snapshot is simplified and does not capture full context history.")
+        
         snapshot: Dict[str, Any] = {
             "workflow_id": workflow_id,
             "timestamp": datetime.utcnow().isoformat(),
-            "contexts": role_contexts,
+            "contexts": [], # Contexts are no longer stored in a dict
         }
         if extra:
             snapshot["extra"] = extra
 
         path = self.snapshot_store.save_snapshot(workflow_id, snapshot, label=label)
         if path:
-            logger.info(f"Saved snapshot for workflow {workflow_id}: {path}")
+            logger.info(f"Saved (simplified) snapshot for workflow {workflow_id}: {path}")
         else:
             logger.debug(f"Failed to save snapshot for workflow {workflow_id} (non-fatal)")
         return path
@@ -325,9 +323,14 @@ class AIOrchestrationManager:
         Returns:
             Complete AI API request dict
         """
-        context = self.contexts.get(workflow_id)
-        if not context:
-            raise ValueError(f"No context found for workflow {workflow_id}")
+        # Determine the role for the current state
+        role = WorkflowStateTransition.get_next_role(current_state)
+        if not role:
+            # Fallback for terminal or initial states
+            status = await self.orchestration_service.get_workflow_status(workflow_id)
+            role = LLMRole(status["current_role"])
+
+        context = await self._get_or_create_context(workflow_id, role)
         
         return context.build_api_request(current_state)
 
@@ -352,16 +355,15 @@ def initialize_ai_orchestration(orchestration_service: OrchestrationService) -> 
     return _orchestration_manager
 
 
-def get_ai_orchestration_manager() -> AIOrchestrationManager:
+from fastapi import Request
+
+# ... existing code ...
+def get_ai_orchestration_manager(request: Request) -> "AIOrchestrationManager":
     """
-    Get the global AI orchestration manager.
-    
-    Returns:
-        The manager instance
-        
-    Raises:
-        RuntimeError: If manager not initialized
+    Get the AI orchestration manager from the request state.
+    This function is designed to be used as a FastAPI dependency.
     """
-    if _orchestration_manager is None:
-        raise RuntimeError("AI Orchestration Manager not initialized. Call initialize_ai_orchestration() first.")
-    return _orchestration_manager
+    manager = getattr(request.app.state, "ai_orchestration_manager", None)
+    if manager is None:
+        raise RuntimeError("AI Orchestration Manager not initialized.")
+    return manager

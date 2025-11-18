@@ -4,7 +4,7 @@ Routes requests to OpenAI, Anthropic, Gemini, HuggingFace, Ollama
 """
 
 from typing import Optional, Dict, List, AsyncIterator, Tuple
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from enum import Enum
 from abc import ABC, abstractmethod
 import json
@@ -33,11 +33,7 @@ class ProviderConfig:
     type: ProviderType
     api_key: Optional[str] = None
     api_url: Optional[str] = None
-    headers: Dict[str, str] = None
-    
-    def __post_init__(self):
-        if self.headers is None:
-            self.headers = {}
+    headers: Dict[str, str] = field(default_factory=dict)
 
 
 class TokenCounter(ABC):
@@ -99,7 +95,7 @@ class AIProvider(ABC):
         pass
     
     @abstractmethod
-    async def stream_message(
+    def stream_message(
         self,
         messages: List[ChatMessage],
         model: str,
@@ -107,7 +103,7 @@ class AIProvider(ABC):
         max_tokens: int = 2000
     ) -> AsyncIterator[str]:
         """Stream message response"""
-        pass
+        raise NotImplementedError
     
     def count_tokens(self, text: str) -> int:
         """Count tokens in text"""
@@ -161,7 +157,10 @@ class OpenAIProvider(AIProvider):
         # Count tokens for billing
         prompt_text = "\n".join([msg.content for msg in messages])
         prompt_tokens = self.count_tokens(prompt_text)
-        completion_tokens = self.token_counter.estimate_completion_tokens(prompt_tokens)
+        completion_tokens = (
+            self.token_counter.estimate_completion_tokens(prompt_tokens)
+            if self.token_counter else int(prompt_tokens * 0.3)
+        )
         
         self.total_tokens += prompt_tokens + completion_tokens
         
@@ -213,7 +212,7 @@ class AnthropicProvider(AIProvider):
         super().__init__(config)
         self.token_counter = AnthropicTokenCounter()
         self.config.headers = {
-            "x-api-key": config.api_key,
+            "x-api-key": config.api_key or "",
             "anthropic-version": "2023-06-01",
             "content-type": "application/json"
         }
@@ -241,7 +240,10 @@ class AnthropicProvider(AIProvider):
         
         prompt_text = "\n".join([msg.content for msg in messages])
         prompt_tokens = self.count_tokens(prompt_text)
-        completion_tokens = self.token_counter.estimate_completion_tokens(prompt_tokens)
+        completion_tokens = (
+            self.token_counter.estimate_completion_tokens(prompt_tokens)
+            if self.token_counter else int(prompt_tokens * 0.25)
+        )
         
         self.total_tokens += prompt_tokens + completion_tokens
         
@@ -277,7 +279,7 @@ class GoogleGeminiProvider(AIProvider):
         """Initialize Google Gemini provider"""
         super().__init__(config)
         self.config.headers = {
-            "x-goog-api-key": config.api_key,
+            "x-goog-api-key": config.api_key or "",
             "content-type": "application/json"
         }
     
@@ -418,7 +420,7 @@ class AIAPIRouter:
         messages: List[ChatMessage],
         temperature: float = 0.7,
         max_tokens: int = 2000,
-        user_id: str = None
+        user_id: Optional[str] = None
     ) -> Tuple[bool, str, int]:
         """Send message via appropriate provider"""
         
@@ -441,7 +443,7 @@ class AIAPIRouter:
         messages: List[ChatMessage],
         temperature: float = 0.7,
         max_tokens: int = 2000,
-        user_id: str = None
+        user_id: Optional[str] = None
     ) -> AsyncIterator[str]:
         """Stream message via appropriate provider"""
         
@@ -458,7 +460,7 @@ class AIAPIRouter:
         # Log request
         self._log_request(model_id, user_id, 0)  # Token count would be tracked separately
     
-    def _log_request(self, model_id: str, user_id: str, tokens: int):
+    def _log_request(self, model_id: str, user_id: Optional[str], tokens: int):
         """Log an API request"""
         self.request_log.append({
             'timestamp': datetime.now().isoformat(),

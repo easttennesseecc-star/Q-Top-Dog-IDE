@@ -44,7 +44,7 @@ class PythonServer:
     ) -> List[Dict[str, Any]]:
         """Get Python completions at position."""
         try:
-            completions = []
+            completions: List[Dict[str, Any]] = []
             
             lines = code.split('\n')
             if line >= len(lines):
@@ -231,7 +231,7 @@ class PythonServer:
         column: int
     ) -> List[Dict[str, Any]]:
         """Extract available symbols."""
-        symbols = []
+        symbols: List[Dict[str, Any]] = []
         lines = code.split('\n')
         
         # Parse AST to get functions and classes
@@ -284,8 +284,8 @@ class PythonServer:
             
             # Variables
             elif "=" in l_stripped and not l_stripped.startswith("#"):
-                parts = l_stripped.split("=")[0]
-                name = parts.strip()
+                lhs = l_stripped.split("=")[0]
+                name = lhs.strip()
                 if name.isidentifier() and not any(c in name for c in " ()[]{}"):
                     symbols.append({
                         "name": name,
@@ -304,8 +304,8 @@ class PythonServer:
             })
         
         # Remove duplicates
-        seen = set()
-        unique = []
+        seen: Set[str] = set()
+        unique: List[Dict[str, Any]] = []
         for symbol in symbols:
             key = symbol["name"]
             if key not in seen:
@@ -336,7 +336,7 @@ class PythonServer:
                     return "bool"
                 elif value_part.isdigit() or (value_part.startswith("-") and value_part[1:].isdigit()):
                     return "int"
-                elif "." in value_part and all(c.isdigit() or c in "-."):
+                elif "." in value_part and all(ch.isdigit() or ch in "-." for ch in value_part):
                     return "float"
                 elif value_part.startswith("lambda"):
                     return "Callable"

@@ -3,7 +3,7 @@ import subprocess
 import types
 import sys
 
-from main import app, BUILD_STORE, run_local_build
+from backend.main import app, BUILD_STORE, run_local_build
 
 client = TestClient(app)
 

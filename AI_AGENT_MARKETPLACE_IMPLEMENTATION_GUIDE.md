@@ -1,4 +1,4 @@
-# 🤖 AI AGENT MARKETPLACE - IMPLEMENTATION GUIDE
+# AI AGENT MARKETPLACE - IMPLEMENTATION GUIDE
 
 **Phase**: Gap #5 (NEW - After Game Engines)  
 **Timeline**: Week 2-3 concurrent with core IDE gaps  
@@ -8,7 +8,7 @@
 
 ---
 
-## 🗺️ IMPLEMENTATION ROADMAP
+## IMPLEMENTATION ROADMAP
 
 ```
 Week 1-2 (IntelliSense + Refactoring + Game Engines)
@@ -28,7 +28,7 @@ Week 3: Refinements, add partnerships, scale
 
 ---
 
-## 📋 DETAILED TASK BREAKDOWN
+## DETAILED TASK BREAKDOWN
 
 ### BACKEND TASKS (6 tasks, ~1,200 lines)
 
@@ -140,10 +140,10 @@ INITIAL_MODELS = [
 ```
 
 **Acceptance Criteria**:
-- ✅ All 20+ models loaded and searchable
-- ✅ Search returns results in <50ms
-- ✅ Filtering works (tier, capability)
-- ✅ No database required (hardcoded is fine for v1)
+-  All 20+ models loaded and searchable
+-  Search returns results in <50ms
+-  Filtering works (tier, capability)
+-  No database required (hardcoded is fine for v1)
 
 ---
 
@@ -251,12 +251,12 @@ class AIAuthService:
 ```
 
 **Acceptance Criteria**:
-- ✅ Sign up creates new user
-- ✅ Sign in generates JWT token
-- ✅ Token verification works
-- ✅ API keys encrypted (never stored in plain text)
-- ✅ Balance tracking works
-- ✅ Password hashing secure
+-  Sign up creates new user
+-  Sign in generates JWT token
+-  Token verification works
+-  API keys encrypted (never stored in plain text)
+-  Balance tracking works
+-  Password hashing secure
 
 ---
 
@@ -379,11 +379,11 @@ class RecommendationEngine:
 ```
 
 **Acceptance Criteria**:
-- ✅ Analyzes task description
-- ✅ Returns ranked recommendations
-- ✅ Reasoning text provided
-- ✅ Handles budget constraints
-- ✅ Trending models work
+-  Analyzes task description
+-  Returns ranked recommendations
+-  Reasoning text provided
+-  Handles budget constraints
+-  Trending models work
 
 ---
 
@@ -495,13 +495,13 @@ class APIRouter:
 ```
 
 **Acceptance Criteria**:
-- ✅ Routes to OpenAI ✅
-- ✅ Routes to Anthropic ✅
-- ✅ Routes to HuggingFace ✅
-- ✅ Routes to Google ✅
-- ✅ Routes to Ollama (local) ✅
-- ✅ Error handling (fallback to free model)
-- ✅ Token counting (for billing)
+-  Routes to OpenAI 
+-  Routes to Anthropic 
+-  Routes to HuggingFace 
+-  Routes to Google 
+-  Routes to Ollama (local) 
+-  Error handling (fallback to free model)
+-  Token counting (for billing)
 
 ---
 
@@ -661,10 +661,10 @@ def get_balance():
 ```
 
 **Acceptance Criteria**:
-- ✅ 10 endpoints working
-- ✅ Auth required where needed
-- ✅ Error handling (400/401/404)
-- ✅ All responses in standard format
+-  10 endpoints working
+-  Auth required where needed
+-  Error handling (400/401/404)
+-  All responses in standard format
 
 ---
 
@@ -759,10 +759,10 @@ def get_history(agent_id):
 ```
 
 **Acceptance Criteria**:
-- ✅ Completion endpoint works
-- ✅ Streaming works (optional)
-- ✅ Billing tracked per API call
-- ✅ Error handling
+-  Completion endpoint works
+-  Streaming works (optional)
+-  Billing tracked per API call
+-  Error handling
 
 ---
 
@@ -978,12 +978,12 @@ const ModelCard = styled.div`
 ```
 
 **Acceptance Criteria**:
-- ✅ Model list displays
-- ✅ Search works
-- ✅ Filter by tier works
-- ✅ Recommendations display
-- ✅ Model cards show info
-- ✅ Responsive grid layout
+-  Model list displays
+-  Search works
+-  Filter by tier works
+-  Recommendations display
+-  Model cards show info
+-  Responsive grid layout
 
 ---
 
@@ -1130,11 +1130,11 @@ export const AIAuthModal: React.FC<{
 ```
 
 **Acceptance Criteria**:
-- ✅ Sign up form works
-- ✅ Sign in form works
-- ✅ JWT token stored
-- ✅ Error messages display
-- ✅ Loading state
+-  Sign up form works
+-  Sign in form works
+-  JWT token stored
+-  Error messages display
+-  Loading state
 
 ---
 
@@ -1268,11 +1268,11 @@ export const AIAgentChat: React.FC<{
 ```
 
 **Acceptance Criteria**:
-- ✅ Chat UI displays
-- ✅ Messages send/receive
-- ✅ Balance shows
-- ✅ Streaming works (optional)
-- ✅ Loading state
+-  Chat UI displays
+-  Messages send/receive
+-  Balance shows
+-  Streaming works (optional)
+-  Loading state
 
 ---
 
@@ -1360,14 +1360,14 @@ if __name__ == '__main__':
 ```
 
 **Acceptance Criteria**:
-- ✅ 15+ unit tests written
-- ✅ 100% pass rate
-- ✅ Coverage > 80%
-- ✅ All major features tested
+-  15+ unit tests written
+-  100% pass rate
+-  Coverage > 80%
+-  All major features tested
 
 ---
 
-## ⏱️ DAILY SCHEDULE
+## DAILY SCHEDULE
 
 ### Day 1
 - ☐ Task 1: Marketplace registry (Morning)
@@ -1394,7 +1394,7 @@ if __name__ == '__main__':
 
 ---
 
-## ✅ SUCCESS CHECKLIST
+## SUCCESS CHECKLIST
 
 ### Backend Complete
 - [ ] 4 services created (1,200+ lines)

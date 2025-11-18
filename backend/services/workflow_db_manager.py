@@ -6,7 +6,7 @@ Handles database setup, migrations, and initialization for the orchestration sys
 
 import os
 import logging
-from sqlalchemy import create_engine, text
+from sqlalchemy import create_engine, text, inspect
 from sqlalchemy.orm import sessionmaker, Session
 from backend.models.workflow import Base, BuildWorkflow, WorkflowHandoff, WorkflowEvent
 
@@ -40,7 +40,7 @@ class WorkflowDatabaseManager:
             # Create all tables defined in Base metadata
             Base.metadata.create_all(self.engine)
             
-            logger.info("✅ Workflow database tables created successfully")
+            logger.info("Workflow database tables created successfully")
             logger.info("   - build_workflows table created")
             logger.info("   - workflow_handoffs table created")
             logger.info("   - workflow_events table created")
@@ -48,7 +48,7 @@ class WorkflowDatabaseManager:
             return True
             
         except Exception as e:
-            logger.error(f"❌ Failed to initialize workflow database: {str(e)}")
+            logger.error(f"Failed to initialize workflow database: {str(e)}")
             return False
     
     def run_migrations(self) -> bool:
@@ -93,11 +93,11 @@ class WorkflowDatabaseManager:
                 
                 connection.commit()
             
-            logger.info("✅ Database migrations completed successfully")
+            logger.info("Database migrations completed successfully")
             return True
             
         except Exception as e:
-            logger.error(f"❌ Failed to run migrations: {str(e)}")
+            logger.error(f"Failed to run migrations: {str(e)}")
             # Fall back to ORM initialization
             logger.info("Falling back to SQLAlchemy ORM table creation...")
             return self.init_database()
@@ -112,8 +112,7 @@ class WorkflowDatabaseManager:
         try:
             with self.engine.connect() as connection:
                 # Get list of tables
-                inspector = __import__('sqlalchemy.inspect', fromlist=['inspect']).inspect
-                db_inspector = inspector(self.engine)
+                db_inspector = inspect(self.engine)
                 existing_tables = db_inspector.get_table_names()
                 
                 required_tables = {
@@ -125,10 +124,10 @@ class WorkflowDatabaseManager:
                 missing_tables = required_tables - set(existing_tables)
                 
                 if missing_tables:
-                    logger.error(f"❌ Missing tables: {', '.join(missing_tables)}")
+                    logger.error(f"Missing tables: {', '.join(missing_tables)}")
                     return False
                 
-                logger.info("✅ All required workflow tables verified:")
+                logger.info("All required workflow tables verified:")
                 for table in required_tables:
                     columns = [c['name'] for c in db_inspector.get_columns(table)]
                     logger.info(f"   - {table} ({len(columns)} columns)")
@@ -136,7 +135,7 @@ class WorkflowDatabaseManager:
                 return True
                 
         except Exception as e:
-            logger.error(f"❌ Failed to verify schema: {str(e)}")
+            logger.error(f"Failed to verify schema: {str(e)}")
             return False
     
     def get_session(self) -> Session:
@@ -155,23 +154,25 @@ class WorkflowDatabaseManager:
 
 # Convenience functions for database setup
 
-def init_workflow_database(database_url: str) -> bool:
+def init_workflow_database(manager: WorkflowDatabaseManager) -> bool:
     """
-    Initialize workflow database.
+    Initialize workflow database using a provided manager instance.
     
     Args:
-        database_url: SQLAlchemy database connection URL
+        manager: An instance of WorkflowDatabaseManager.
         
     Returns:
         True if successful, False otherwise
     """
-    manager = WorkflowDatabaseManager(database_url)
-    success = manager.run_migrations() or manager.init_database()
-    
-    if success:
-        manager.verify_schema()
-    
-    return success
+    # First, try to create tables directly with the ORM. This is the most reliable method.
+    if not manager.init_database():
+        # If that fails, fall back to trying migrations.
+        if not manager.run_migrations():
+            logger.error("Both ORM initialization and migrations failed.")
+            return False
+
+    # After attempting creation, verify the schema. This is the source of truth.
+    return manager.verify_schema()
 
 
 def get_workflow_db_session(database_url: str) -> Session:

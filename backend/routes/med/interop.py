@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Body, HTTPException
 from pydantic import BaseModel
-from typing import Any, Dict, Optional
+from typing import Any, Dict, Optional, List
 
 router = APIRouter(prefix="/med/interop", tags=["Medical Interoperability"])
 
@@ -35,18 +35,24 @@ async def fhir_to_omop(bundle: Dict[str, Any] = Body(...)):
     try:
         # Stub normalization: pick key fields if present
         patient = None
-        entries = bundle.get("entry", []) if isinstance(bundle, dict) else []
+        entry_val = bundle.get("entry", []) if isinstance(bundle, dict) else []
+        entries: List[Dict[str, Any]] = entry_val if isinstance(entry_val, list) else []
         for e in entries:
-            res = (e or {}).get("resource", {})
+            res_raw = e.get("resource") if isinstance(e, dict) else None
+            res = res_raw if isinstance(res_raw, dict) else {}
             if res.get("resourceType") == "Patient":
+                pid = res.get("id") if isinstance(res.get("id"), str) else None
+                gender_raw = res.get("gender")
+                gender = gender_raw.lower() if isinstance(gender_raw, str) else "unknown"
+                birth_dt = res.get("birthDate") if isinstance(res.get("birthDate"), str) else None
                 patient = {
-                    "person_source_value": res.get("id"),
-                    "gender_concept": (res.get("gender") or "unknown").lower(),
-                    "birth_datetime": (res.get("birthDate") or None),
+                    "person_source_value": pid,
+                    "gender_concept": gender,
+                    "birth_datetime": birth_dt,
                 }
                 break
 
-        normalized = {"patient": patient, "observations": []}
+        normalized: Dict[str, Any] = {"patient": patient, "observations": []}
         return TranslationResult(status="ok", format="omop", data=normalized)
     except Exception as e:
         raise HTTPException(status_code=400, detail=str(e))

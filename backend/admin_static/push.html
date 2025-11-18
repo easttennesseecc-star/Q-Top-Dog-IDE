@@ -58,8 +58,8 @@
     <h3>Ask Q Assistant</h3>
     <p>Prefer automation? Ask Q Assistant to guide push setup and register this device.</p>
     <div class="row">
-      <a class="btn" href="/assistant-inbox/add?user_id=__global__&source=api&text=Help%20me%20set%20up%20Web%20Push%20(VAPID)%20and%20register%20this%20browser" target="_blank">Ask for Web Push setup</a>
-      <a class="btn secondary" href="/assistant-inbox/add?user_id=__global__&source=api&text=Help%20me%20set%20up%20Firebase%20Cloud%20Messaging%20(FCM)%20and%20obtain%20API%20keys" target="_blank">Ask for FCM setup</a>
+      <a class="btn" href="#" onclick="submitSpool('Help me set up Web Push (VAPID) and register this browser'); return false;">Ask for Web Push setup</a>
+      <a class="btn secondary" href="#" onclick="submitSpool('Help me set up Firebase Cloud Messaging (FCM) and obtain API keys'); return false;">Ask for FCM setup</a>
     </div>
   </div>
   <script>
@@ -135,17 +135,21 @@
     alert('Native token registered');
   };
 
-  // Unread count badge (not consumed)
+  // Unread-like badge: show spool queue depth (global)
   async function updateUnread(){
     try{
-      const userId = new URLSearchParams(location.search).get('user_id') || '__global__';
-      const url = new URL(location.origin + '/assistant-inbox/list');
-      url.searchParams.set('user_id', userId);
-      url.searchParams.set('limit', '200');
-      url.searchParams.set('include_consumed', 'false');
-      const j = await (await fetch(url)).json();
-      document.getElementById('unread').textContent = (j.messages||[]).length;
+      const j = await (await fetch('/spool/status')).json();
+      document.getElementById('unread').textContent = j.depth ?? 0;
     } catch {}
+  }
+  async function submitSpool(text){
+    try{
+      const userId = new URLSearchParams(location.search).get('user_id') || '__global__';
+      const res = await fetch('/spool/ingest/api', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ user_id: userId, text })});
+      if (!res.ok) throw new Error('enqueue failed');
+      updateUnread();
+      alert('Queued request for '+userId);
+    } catch(e){ alert('Failed to queue: '+ e.message); }
   }
   updateUnread();
   setInterval(updateUnread, 10000);

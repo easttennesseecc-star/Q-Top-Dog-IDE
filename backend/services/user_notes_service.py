@@ -255,29 +255,30 @@ class UserNotesService:
     def get_workspace_summary(self, workspace_id: str) -> Dict:
         """Get summary of notes for a workspace"""
         notes = self.list_notes(workspace_id)
-        
-        summary = {
-            "total_notes": len(notes),
-            "by_type": {},
-            "all_tags": set(),
-            "recent_notes": []
-        }
-        
+        from typing import Any, Set as _Set
+        by_type: Dict[str, int] = {}
+        all_tags: _Set[str] = set()
         for note in notes:
-            note_type = note.note_type
-            summary["by_type"][note_type] = summary["by_type"].get(note_type, 0) + 1
-            summary["all_tags"].update(note.tags)
-        
+            nt = note.note_type
+            by_type[nt] = by_type.get(nt, 0) + 1
+            try:
+                all_tags.update(note.tags)
+            except Exception:
+                pass
+
         # Get 5 most recent notes
         sorted_notes = sorted(notes, key=lambda n: n.updated_at, reverse=True)
-        summary["recent_notes"] = [
+        recent: List[Dict[str, Any]] = [
             {"id": n.id, "title": n.title, "type": n.note_type, "updated_at": n.updated_at}
             for n in sorted_notes[:5]
         ]
-        
-        summary["all_tags"] = list(summary["all_tags"])
-        
-        return summary
+
+        return {
+            "total_notes": len(notes),
+            "by_type": by_type,
+            "all_tags": list(all_tags),
+            "recent_notes": recent,
+        }
 
 
 # Singleton instance

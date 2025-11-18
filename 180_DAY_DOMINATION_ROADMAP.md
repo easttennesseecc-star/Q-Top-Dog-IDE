@@ -1,4 +1,4 @@
-# 📅 180-DAY DOMINATION ROADMAP: Week-by-Week Execution Plan
+# 180-DAY DOMINATION ROADMAP: Week-by-Week Execution Plan
 
 **Mission**: Transform Top Dog from "competitive" to "unbeatable"  
 **Timeline**: 26 weeks (180 days)  

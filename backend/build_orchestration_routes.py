@@ -79,7 +79,7 @@ class SetReleaseInfoRequest(BaseModel):
 async def create_project(
     req: CreateProjectRequest,
     user_id: str = Header(None, alias="X-User-ID"),
-    tier_info = Depends(lambda: require_tier_access(
+    tier_info = Depends(lambda user_id = Header(None, alias="X-User-ID"): require_tier_access(
         feature='code_execution',
         user_id=user_id
     ))
@@ -110,6 +110,7 @@ async def get_project(project_id: str):
     if not project:
         raise HTTPException(status_code=404, detail="Project not found")
     
+    assert project is not None
     return {
         "status": "ok",
         "project": project.to_dict()
@@ -139,15 +140,16 @@ async def assign_llm(project_id: str, req: AssignLLMRequest):
     success = orchestrator.assign_llm_to_role(
         project_id,
         req.role,
-        req.llm_id,
-        req.llm_name,
-        req.llm_provider
+        str(req.llm_id),
+        str(req.llm_name),
+        str(req.llm_provider)
     )
     
     if not success:
         raise HTTPException(status_code=400, detail="Failed to assign LLM")
     
     project = orchestrator.get_project(project_id)
+    assert project is not None
     return {
         "status": "ok",
         "message": f"LLM assigned to {req.role}",
@@ -211,6 +213,7 @@ async def set_requirements(project_id: str, req: SetRequirementsRequest):
     orchestrator.record_phase_result(project_id, phase_result)
     
     project = orchestrator.get_project(project_id)
+    assert project is not None
     return {
         "status": "ok",
         "message": "Requirements recorded",
@@ -242,6 +245,7 @@ async def set_implementation(project_id: str, req: SetImplementationRequest):
     orchestrator.record_phase_result(project_id, phase_result)
     
     project = orchestrator.get_project(project_id)
+    assert project is not None
     return {
         "status": "ok",
         "message": "Implementation recorded",
@@ -278,6 +282,7 @@ async def set_test_results(project_id: str, req: SetTestResultsRequest):
     orchestrator.record_phase_result(project_id, phase_result)
     
     project = orchestrator.get_project(project_id)
+    assert project is not None
     return {
         "status": "ok",
         "message": "Test results recorded",
@@ -315,6 +320,7 @@ async def set_verification(project_id: str, req: SetVerificationRequest):
     orchestrator.record_phase_result(project_id, phase_result)
     
     project = orchestrator.get_project(project_id)
+    assert project is not None
     return {
         "status": "ok",
         "message": f"Verification complete: {req.go_no_go_decision}",
@@ -348,6 +354,7 @@ async def set_release_info(project_id: str, req: SetReleaseInfoRequest):
     orchestrator.record_phase_result(project_id, phase_result)
     
     project = orchestrator.get_project(project_id)
+    assert project is not None
     project.status = "completed"
     project.completed_at = datetime.utcnow().isoformat()
     
@@ -419,12 +426,18 @@ async def setup_team(project_id: str, assignments: Dict[str, Dict] = Body(...)):
     failed_roles = []
     
     for role_name, llm_info in assignments.items():
+        llm_id = llm_info.get("llm_id")
+        llm_name = llm_info.get("llm_name")
+        llm_provider = llm_info.get("llm_provider")
+        if not isinstance(llm_id, str) or not isinstance(llm_name, str) or not isinstance(llm_provider, str):
+            failed_roles.append(role_name)
+            continue
         success = orchestrator.assign_llm_to_role(
             project_id,
             role_name,
-            llm_info.get("llm_id"),
-            llm_info.get("llm_name"),
-            llm_info.get("llm_provider")
+            llm_id,
+            llm_name,
+            llm_provider
         )
         
         if success:
@@ -436,6 +449,7 @@ async def setup_team(project_id: str, assignments: Dict[str, Dict] = Body(...)):
         raise HTTPException(status_code=400, detail=f"Failed to assign: {failed_roles}")
     
     project = orchestrator.get_project(project_id)
+    assert project is not None
     return {
         "status": "ok",
         "message": f"Team setup complete: {len(assigned_roles)} roles assigned",

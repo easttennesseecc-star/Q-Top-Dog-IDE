@@ -1,0 +1,15 @@
+{
+  "workflow_id": "b21261ac-b82b-4bbd-8199-b4cb81d00158",
+  "timestamp": "2025-11-08T17:15:33.428087",
+  "contexts": [],
+  "extra": {
+    "ai_response": "Requirements gathered",
+    "phase_result": {
+      "reqs": [
+        "R1",
+        "R2"
+      ]
+    },
+    "completed_state": "discovery"
+  }
+}

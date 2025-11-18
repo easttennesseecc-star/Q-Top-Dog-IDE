@@ -31,19 +31,19 @@ def print_section(title: str) -> None:
 
 def print_success(msg: str) -> None:
     """Print success message"""
-    print(f"{GREEN}✓ {msg}{RESET}")
+    print(f"{GREEN} {msg}{RESET}")
 
 def print_error(msg: str) -> None:
     """Print error message"""
-    print(f"{RED}✗ {msg}{RESET}")
+    print(f"{RED} {msg}{RESET}")
 
 def print_warning(msg: str) -> None:
     """Print warning message"""
-    print(f"{YELLOW}⚠ {msg}{RESET}")
+    print(f"{YELLOW} {msg}{RESET}")
 
 def print_info(msg: str) -> None:
     """Print info message"""
-    print(f"{BLUE}ℹ {msg}{RESET}")
+    print(f"{BLUE} {msg}{RESET}")
 
 def check_server_health() -> bool:
     """Check if backend server is running"""
@@ -139,7 +139,7 @@ def verify_tier_names(tiers: List[Dict]) -> bool:
     if len(found) >= 8:
         print_success(f"Found {len(found)} expected tier names")
         for name in sorted(found):
-            print_info(f"  • {name}")
+            print_info(f"  - {name}")
         return True
     else:
         print_error(f"Only found {len(found)} of {len(expected_names)} expected tiers")
@@ -310,7 +310,7 @@ def main():
     
     # Check server
     if not check_server_health():
-        print_section("❌ VERIFICATION FAILED")
+        print_section("VERIFICATION FAILED")
         print_error("Backend server is not running. Cannot continue.")
         sys.exit(1)
     results["server_running"] = True
@@ -321,7 +321,7 @@ def main():
     results["total_tiers"] = tier_data["tiers_count"]
     
     if not tier_data["endpoint_works"]:
-        print_section("❌ VERIFICATION FAILED")
+        print_section("VERIFICATION FAILED")
         print_error("Tiers endpoint is not working. Cannot continue.")
         sys.exit(1)
     
@@ -357,7 +357,7 @@ def main():
     print_section("PHASE 3 VERIFICATION RESULT")
     
     if passed == total:
-        print_success("ALL CHECKS PASSED ✓")
+        print_success("ALL CHECKS PASSED")
         print_info("Phase 3 is ready for testing!")
         print_info("Next steps:")
         print_info("  1. Start frontend: cd frontend && npm start")

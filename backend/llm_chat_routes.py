@@ -9,7 +9,7 @@ import asyncio
 import os
 import json
 import logging
-from typing import Optional, List, Dict, Any, Tuple
+from typing import Optional, List, Dict, Any, Tuple, TypedDict
 import time
 from backend.llm_chat_service import get_q_assistant_chat_service, LLMChatService
 from backend.simple_q_assistant import get_simple_response
@@ -23,7 +23,12 @@ router = APIRouter(prefix="/api/chat", tags=["Q Assistant Chat"])
 
 # Simple in-memory conversation storage (use database for production)
 _conversations: Dict[str, List[Dict[str, str]]] = {}
-_provider_failures: Dict[str, Dict[str, float]] = {}
+
+class FailureRecord(TypedDict):
+    count: int
+    last: float
+
+_provider_failures: Dict[str, FailureRecord] = {}
 _provider_circuit_open_until: Dict[str, float] = {}
 
 
@@ -42,7 +47,7 @@ def _map_source(name: str) -> str:
     return "unknown"
 
 
-def _env_cost_rate(model_name: str, provider: str) -> tuple[Optional[float], Optional[float]]:
+def _env_cost_rate(model_name: str, provider: str) -> Tuple[Optional[float], Optional[float]]:
     """Return (in_cost_per_1k, out_cost_per_1k) from env for model/provider.
     Looks up COST_PER_1K_INPUT_{MODEL_KEY} then provider fallback COST_PER_1K_INPUT_{PROVIDER}.
     Same for output. Returns None if not configured.
@@ -109,7 +114,7 @@ class ChatRequest(BaseModel):
     include_history: bool = True
 
 
-def _tier_dep(user_id: str = Header(None, alias="X-User-ID")):
+def _tier_dep(user_id: Optional[str] = Header(None, alias="X-User-ID")):
     """Wrapper dependency to validate tier access using the X-User-ID header."""
     return require_tier_access(feature='code_execution', user_id=user_id)
 
@@ -117,7 +122,7 @@ def _tier_dep(user_id: str = Header(None, alias="X-User-ID")):
 @router.post("/")
 async def chat_stream(
     request: ChatRequest = Body(...),
-    user_id: str = Header(None, alias="X-User-ID"),
+    user_id: Optional[str] = Header(None, alias="X-User-ID"),
     x_domain: Optional[str] = Header(None, alias="X-Domain"),
     x_overwatch: Optional[str] = Header(None, alias="X-Overwatch-LLM"),
     tier_info = Depends(_tier_dep),
@@ -300,7 +305,7 @@ async def chat_stream(
                 if overwatch_llm or require_overwatch:
                     try:
                         ow_model = overwatch_llm or (default_ow)
-                        ow_source = _map_source(ow_model)
+                        ow_source = _map_source(ow_model or "")
                         if ow_source != "unknown":
                             overseer = LLMChatService({
                                 "id": ow_model,
@@ -425,7 +430,7 @@ async def chat_stream(
 @router.post("/science")
 async def chat_stream_science(
     request: ChatRequest = Body(...),
-    user_id: str = Header(None, alias="X-User-ID"),
+    user_id: Optional[str] = Header(None, alias="X-User-ID"),
     tier_info = Depends(_tier_dep)
 ):
     """Deprecated: use '/' with X-Domain: science header. Kept for backward compatibility."""

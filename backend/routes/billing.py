@@ -7,22 +7,33 @@ from fastapi import APIRouter, Depends, HTTPException, Request, Body
 from fastapi.responses import JSONResponse
 import os
 import json
+from typing import Any
+# Stripe may be unavailable in some environments (tests/dev)
+stripe: Any
+_StripeError: type[Exception]
 try:
-    import stripe
-    from stripe.error import StripeError as _StripeError
+    import stripe as _stripe_mod
+    _StripeError = _stripe_mod.error.StripeError  # type: ignore[attr-defined]
+    stripe = _stripe_mod
 except Exception:  # stripe not installed in some envs (tests)
     stripe = None
-    class _StripeError(Exception):
-        pass
+    _StripeError = Exception
 from pydantic import BaseModel
-from typing import Optional, Dict
+from typing import Optional, Dict, cast
 from datetime import datetime
 import logging
 
 from backend.services.stripe_service import StripeService, SubscriptionTier, get_tier_from_price_id
+from backend.services.stripe_types import (
+    WebhookSubscriptionCreated,
+    WebhookSubscriptionUpdated,
+    WebhookSubscriptionDeleted,
+    WebhookPaymentSucceeded,
+    WebhookPaymentFailed,
+)
 from backend.models.subscription import Subscription, Invoice, UsageEvent, BillingAlert, SubscriptionStatus
 from backend.database.database_service import get_db
-from auth import get_current_user
+from backend.auth import get_current_user
 
 logger = logging.getLogger("q-ide-topdog")
 router = APIRouter(prefix="/api/billing", tags=["billing"])
@@ -79,7 +90,7 @@ async def get_subscription(
             )
             db.add(subscription)
             db.commit()
-            logger.info(f"Created free subscription for user {current_user.id}")
+            logger.info(f"Created free subscription for user {current_user}")
         
         return GetSubscriptionResponse(
             tier=subscription.tier.value,
@@ -105,13 +116,11 @@ async def create_checkout_session(
     try:
         _require_stripe()
         # Get or create subscription
-        subscription = db.query(Subscription).filter(
-            Subscription.user_id == current_user.id
-        ).first()
+        subscription = db.query(Subscription).filter(Subscription.user_id == current_user).first()
         
         if not subscription:
             subscription = Subscription(
-                user_id=current_user.id,
+                user_id=current_user,
                 tier=SubscriptionTier.FREE,
                 status=SubscriptionStatus.ACTIVE
             )
@@ -121,9 +130,9 @@ async def create_checkout_session(
         # Get or create Stripe customer
         if not subscription.stripe_customer_id:
             customer_id = StripeService.create_customer(
-                current_user.id,
-                current_user.email,
-                current_user.name or current_user.email
+                current_user,
+                f"{current_user}@example.local",
+                current_user
             )
             subscription.stripe_customer_id = customer_id
             db.commit()
@@ -137,8 +146,7 @@ async def create_checkout_session(
             success_url=f"{frontend_url}/billing/success?session_id={{CHECKOUT_SESSION_ID}}",
             cancel_url=f"{frontend_url}/billing/cancel"
         )
-        
-        logger.info(f"Created checkout session for user {current_user.id}: {session_id}")
+        logger.info(f"Created checkout session for user {current_user}: {session_id}")
         return {
             "status": "ok",
             "sessionId": session_id
@@ -168,14 +176,12 @@ async def checkout_success(
         # Retrieve checkout session from Stripe
         session = stripe.checkout.Session.retrieve(session_id)
         
-        subscription = db.query(Subscription).filter(
-            Subscription.user_id == current_user.id
-        ).first()
+        subscription = db.query(Subscription).filter(Subscription.user_id == current_user).first()
         
         if subscription:
             subscription.stripe_subscription_id = session.subscription
             db.commit()
-            logger.info(f"Checkout successful for user {current_user.id}")
+            logger.info(f"Checkout successful for user {current_user}")
         
         return {
             "status": "ok",
@@ -195,9 +201,7 @@ async def create_billing_portal(
     """Create link to Stripe billing portal"""
     try:
         _require_stripe()
-        subscription = db.query(Subscription).filter(
-            Subscription.user_id == current_user.id
-        ).first()
+        subscription = db.query(Subscription).filter(Subscription.user_id == current_user).first()
         
         if not subscription or not subscription.stripe_customer_id:
             raise HTTPException(status_code=404, detail="No billing account found")
@@ -207,8 +211,7 @@ async def create_billing_portal(
             customer_id=subscription.stripe_customer_id,
             return_url=f"{frontend_url}/dashboard"
         )
-        
-        logger.info(f"Created billing portal for user {current_user.id}")
+        logger.info(f"Created billing portal for user {current_user}")
         return {
             "status": "ok",
             "url": portal_url
@@ -231,7 +234,7 @@ async def cancel_subscription(
     """Cancel subscription at end of billing period"""
     try:
         subscription = db.query(Subscription).filter(
-            Subscription.user_id == current_user.id
+            Subscription.user_id == current_user
         ).first()
         
         if not subscription or not subscription.stripe_subscription_id:
@@ -243,11 +246,14 @@ async def cancel_subscription(
             at_period_end=True
         )
         
-        subscription.cancel_at = datetime.fromtimestamp(result.get("cancel_at", 0)) if result.get("cancel_at") else None
+        cancel_at_val = result.get("cancel_at")
+        subscription.cancel_at = (
+            datetime.fromtimestamp(float(cancel_at_val))
+            if isinstance(cancel_at_val, (int, float)) else None
+        )
         subscription.status = SubscriptionStatus(result.get("status", "canceled"))
         db.commit()
-        
-        logger.info(f"Canceled subscription for user {current_user.id}")
+        logger.info(f"Canceled subscription for user {current_user}")
         return {
             "status": "ok",
             "message": "Subscription will cancel at end of billing period",
@@ -274,7 +280,7 @@ async def get_invoices(
     """Get user's invoice history"""
     try:
         subscription = db.query(Subscription).filter(
-            Subscription.user_id == current_user.id
+            Subscription.user_id == current_user
         ).first()
         
         if not subscription:
@@ -325,6 +331,9 @@ async def handle_webhook(request: Request, db = Depends(get_db)):
         if not webhook_secret:
             logger.error("STRIPE_WEBHOOK_SECRET not configured")
             raise HTTPException(status_code=500, detail="Webhook secret not configured")
+        if not sig_header:
+            logger.error("Missing Stripe signature header")
+            raise HTTPException(status_code=400, detail="Missing signature header")
         
         # Verify webhook signature
         event = StripeService.construct_event(payload, sig_header, webhook_secret)
@@ -334,53 +343,62 @@ async def handle_webhook(request: Request, db = Depends(get_db)):
         
         # Update database based on event
         if event_type == "subscription_created":
+            sub_created = cast(WebhookSubscriptionCreated, event_data)
             subscription = db.query(Subscription).filter(
-                Subscription.stripe_customer_id == event_data["customer_id"]
+                Subscription.stripe_customer_id == sub_created["customer_id"]
             ).first()
             
             if subscription:
-                subscription.stripe_subscription_id = event_data["subscription_id"]
-                subscription.status = SubscriptionStatus.TRIALING if event_data.get("trial_end") else SubscriptionStatus.ACTIVE
-                subscription.trial_end = datetime.fromtimestamp(event_data["trial_end"]) if event_data.get("trial_end") else None
+                subscription.stripe_subscription_id = sub_created["subscription_id"]
+                subscription.status = SubscriptionStatus.TRIALING if sub_created.get("trial_end") else SubscriptionStatus.ACTIVE
+                _te = sub_created.get("trial_end")
+                subscription.trial_end = datetime.fromtimestamp(float(_te)) if isinstance(_te, (int, float)) else None
                 db.commit()
-                logger.info(f"Updated subscription {event_data['subscription_id']} status to {subscription.status}")
+                logger.info(f"Updated subscription {sub_created['subscription_id']} status to {subscription.status}")
         
         elif event_type == "subscription_updated":
+            sub_updated = cast(WebhookSubscriptionUpdated, event_data)
             subscription = db.query(Subscription).filter(
-                Subscription.stripe_customer_id == event_data["customer_id"]
+                Subscription.stripe_customer_id == sub_updated["customer_id"]
             ).first()
             
             if subscription:
-                subscription.status = SubscriptionStatus(event_data["status"])
-                if event_data.get("cancel_at"):
-                    subscription.cancel_at = datetime.fromtimestamp(event_data["cancel_at"])
+                subscription.status = SubscriptionStatus(sub_updated["status"])
+                _ca = sub_updated.get("cancel_at")
+                if isinstance(_ca, (int, float)):
+                    subscription.cancel_at = datetime.fromtimestamp(float(_ca))
                 db.commit()
                 logger.info(f"Updated subscription status to {subscription.status}")
         
         elif event_type == "subscription_deleted":
+            sub_deleted = cast(WebhookSubscriptionDeleted, event_data)
             subscription = db.query(Subscription).filter(
-                Subscription.stripe_customer_id == event_data["customer_id"]
+                Subscription.stripe_customer_id == sub_deleted["customer_id"]
             ).first()
             
             if subscription:
                 subscription.status = SubscriptionStatus.CANCELED
                 subscription.tier = SubscriptionTier.FREE
-                subscription.canceled_at = datetime.fromtimestamp(event_data["canceled_at"]) if event_data.get("canceled_at") else datetime.utcnow()
+                _cd = sub_deleted.get("canceled_at")
+                subscription.canceled_at = (
+                    datetime.fromtimestamp(float(_cd)) if isinstance(_cd, (int, float)) else datetime.utcnow()
+                )
                 db.commit()
                 logger.info(f"Downgraded subscription to free tier after cancellation")
         
         elif event_type == "payment_succeeded":
+            pay_succeeded = cast(WebhookPaymentSucceeded, event_data)
             # Create invoice record
             subscription = db.query(Subscription).filter(
-                Subscription.stripe_subscription_id == event_data.get("subscription_id")
+                Subscription.stripe_subscription_id == pay_succeeded.get("subscription_id")
             ).first()
             
             if subscription:
                 invoice = Invoice(
                     subscription_id=subscription.id,
-                    stripe_invoice_id=event_data["invoice_id"],
-                    stripe_customer_id=event_data["customer_id"],
-                    amount_paid=event_data.get("amount_paid", 0.0) / 100,  # Convert from cents
+                    stripe_invoice_id=pay_succeeded["invoice_id"],
+                    stripe_customer_id=pay_succeeded["customer_id"],
+                    amount_paid=float(cast(int, pay_succeeded.get("amount_paid", 0))) / 100.0,  # Convert from cents
                     status="paid",
                     paid=True
                 )
@@ -390,9 +408,10 @@ async def handle_webhook(request: Request, db = Depends(get_db)):
                 logger.info(f"Recorded payment for subscription {subscription.id}")
         
         elif event_type == "payment_failed":
+            pay_failed = cast(WebhookPaymentFailed, event_data)
             # Create alert for user
             subscription = db.query(Subscription).filter(
-                Subscription.stripe_subscription_id == event_data.get("subscription_id")
+                Subscription.stripe_subscription_id == pay_failed.get("subscription_id")
             ).first()
             
             if subscription:
@@ -401,7 +420,7 @@ async def handle_webhook(request: Request, db = Depends(get_db)):
                     user_id=subscription.user_id,
                     subscription_id=subscription.id,
                     alert_type="payment_failed",
-                    message=f"Payment failed for invoice {event_data.get('invoice_id')}. Please update your payment method.",
+                    message=f"Payment failed for invoice {pay_failed.get('invoice_id')}. Please update your payment method.",
                     severity="critical"
                 )
                 db.add(alert)

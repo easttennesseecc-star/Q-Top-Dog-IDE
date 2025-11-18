@@ -24,7 +24,7 @@ spec:
             pathType: {{ .pathType }}
             backend:
               service:
-                name: {{ include "topdog.fullname" $ }}
+                name: {{ include "topdog.fullname" $ }}{{- if $.Values.ingress.useRouterService -}}-router{{- end }}
                 port:
                   number: {{ $.Values.service.port }}
           {{- end }}

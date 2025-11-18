@@ -9,7 +9,7 @@ from __future__ import annotations
 import os
 import re
 import json
-from typing import Dict, List
+from typing import Dict, List, Tuple
 
 _BLOCK_PATTERNS = [
     r"ignore\s+previous\s+instructions",
@@ -50,7 +50,7 @@ def estimate_hallucination_severity(text: str) -> float:
     return max(0.0, min(1.0, score))
 
 
-def _opa_check(prompt: str) -> (bool, List[str]):
+def _opa_check(prompt: str) -> Tuple[bool, List[str]]:
     """Optional OPA safety decision. Returns (allow, reasons).
     Uses OPA_URL env or defaults to http://opa:8181, path /v1/data/topdog/api/allow.
     """

@@ -60,7 +60,13 @@ class EmailService:
 
         # Attach files
         for (fname, data, ctype) in (attachments or []):
-            part = MIMEBase(*((ctype.split("/", 1) + [None])[:2])) if "/" in ctype else MIMEBase("application", "octet-stream")
+            try:
+                maintype, subtype = ctype.split("/", 1)
+                if not maintype or not subtype:
+                    raise ValueError("invalid content type")
+            except Exception:
+                maintype, subtype = "application", "octet-stream"
+            part = MIMEBase(maintype, subtype)
             part.set_payload(data)
             encoders.encode_base64(part)
             part.add_header("Content-Disposition", f"attachment; filename=\"{fname}\"")

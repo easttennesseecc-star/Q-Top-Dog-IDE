@@ -7,9 +7,7 @@ Runs all tests, generates reports, and validates SLA compliance
 import subprocess
 import sys
 import time
-import json
 from datetime import datetime
-from pathlib import Path
 
 
 def run_command(cmd, description):
@@ -75,7 +73,7 @@ Executing: Unit Tests + E2E Tests + Performance Benchmarks
     elapsed = time.time() - start_time
 
     print(f"\n{'='*70}")
-    print(f"[SUMMARY] TEST EXECUTION SUMMARY")
+    print("[SUMMARY] TEST EXECUTION SUMMARY")
     print(f"{'='*70}\n")
 
     test_count = sum(1 for v in results.values() if v)
@@ -83,13 +81,13 @@ Executing: Unit Tests + E2E Tests + Performance Benchmarks
     print(f"[TIME] Total Time:    {elapsed:.1f}s")
     print(f"[INFO] Timestamp:     {datetime.now().isoformat()}")
 
-    print(f"\nDetailed Results:")
+    print("\nDetailed Results:")
     for test_name, passed in results.items():
         status = "[OK]" if passed else "[FAIL]"
         print(f"  {status} {test_name:.<40}")
 
     print(f"\n{'='*70}")
-    print(f"[CHECK] SLA VALIDATION CHECKLIST")
+    print("[CHECK] SLA VALIDATION CHECKLIST")
     print(f"{'='*70}\n")
 
     sla_checklist = [
@@ -111,10 +109,10 @@ Executing: Unit Tests + E2E Tests + Performance Benchmarks
     print(f"\n{'='*70}")
 
     if all(results.values()):
-        print(f"[SUCCESS] ALL TESTS PASSED - READY FOR DEPLOYMENT\n")
+        print("[SUCCESS] ALL TESTS PASSED - READY FOR DEPLOYMENT\n")
         return 0
     else:
-        print(f"[WARNING] SOME TESTS FAILED - REVIEW ERRORS ABOVE\n")
+        print("[WARNING] SOME TESTS FAILED - REVIEW ERRORS ABOVE\n")
         return 1
 
 

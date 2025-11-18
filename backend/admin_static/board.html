@@ -87,7 +87,7 @@
       async function listMessages() {
         const userId = userEl.value.trim();
         const include = showConsumedEl.checked ? 'true' : 'false';
-        const url = new URL(location.origin + '/assistant-inbox/list');
+  const url = new URL(location.origin + '/spool/next-input');
         if (userId) url.searchParams.set('user_id', userId);
         url.searchParams.set('limit', '200');
         url.searchParams.set('include_consumed', include);
@@ -96,7 +96,7 @@
         renderMessages(j.messages || []);
         // Update unread badge (not consumed)
         try {
-          const url2 = new URL(location.origin + '/assistant-inbox/list');
+    const url2 = new URL(location.origin + '/spool/next-input');
           if (userId) url2.searchParams.set('user_id', userId);
           url2.searchParams.set('limit', '200');
           url2.searchParams.set('include_consumed', 'false');
@@ -133,16 +133,10 @@
         const userId = userEl.value.trim();
         const text = textEl.value.trim();
         if (!userId || !text) { alert('Enter user id and message'); return; }
-        await fetch('/assistant-inbox/add', {
+        await fetch('/spool/ingest/api', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ user_id: userId, source: 'api', text, metadata: { board: true } })
-        });
-        // Immediately triage so it acts now
-        await fetch('/assistant-inbox/triage', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ user_id: userId, limit: 20 })
+          body: JSON.stringify({ user_id: userId, text, metadata: { board: true } })
         });
         textEl.value = '';
         await listMessages();
@@ -150,11 +144,7 @@
 
       async function triageNow() {
         const userId = userEl.value.trim() || undefined;
-        await fetch('/assistant-inbox/triage', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ user_id: userId || null, limit: 50 })
-        });
+        await fetch('/spool/pump-once' + (userId ? ('?user_id='+encodeURIComponent(userId)) : ''), { method:'POST' });
         await listMessages();
       }
 
@@ -173,7 +163,7 @@
         const preset = u.searchParams.get('user_id');
         if (preset) userEl.value = preset;
       } catch {}
-      listMessages();
+  listMessages();
       // refresh badge periodically
       setInterval(listMessages, 10000);
     </script>

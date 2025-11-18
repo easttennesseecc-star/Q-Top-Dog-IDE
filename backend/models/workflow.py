@@ -5,13 +5,12 @@ Tracks AI workflow state, handoffs between roles, and build progress.
 """
 
 from sqlalchemy import Column, String, DateTime, Enum, JSON, ForeignKey, Boolean, Integer
+from typing import Any
 from sqlalchemy.orm import relationship
-from sqlalchemy.orm import declarative_base
+from . import Base
 from datetime import datetime
 import uuid
 import enum
-
-Base = declarative_base()
 
 
 class WorkflowStateEnum(str, enum.Enum):
@@ -54,7 +53,7 @@ class BuildWorkflow(Base):
     user_id = Column(String(36), nullable=False, index=True)
     
     # Workflow state
-    current_state = Column(
+    current_state: Any = Column(
         Enum(WorkflowStateEnum),
         default=WorkflowStateEnum.DISCOVERY,
         nullable=False,
@@ -134,10 +133,10 @@ class WorkflowHandoff(Base):
     )
     
     # Handoff details
-    from_role = Column(Enum(LLMRoleEnum), nullable=False, index=True)
-    to_role = Column(Enum(LLMRoleEnum), nullable=True)  # May be None for final state
-    from_state = Column(Enum(WorkflowStateEnum), nullable=False)
-    to_state = Column(Enum(WorkflowStateEnum), nullable=False)
+    from_role: Any = Column(Enum(LLMRoleEnum), nullable=False, index=True)
+    to_role: Any = Column(Enum(LLMRoleEnum), nullable=True)  # May be None for final state
+    from_state: Any = Column(Enum(WorkflowStateEnum), nullable=False)
+    to_state: Any = Column(Enum(WorkflowStateEnum), nullable=False)
     
     # Data transferred
     data_transferred = Column(JSON, nullable=True)
@@ -190,7 +189,7 @@ class WorkflowEvent(Base):
     
     # Event details
     event_type = Column(String(50), nullable=False, index=True)
-    triggered_by = Column(Enum(LLMRoleEnum), nullable=False)
+    triggered_by: Any = Column(Enum(LLMRoleEnum), nullable=False)
     event_data = Column(JSON, nullable=True)
     
     # Timing

@@ -4,7 +4,7 @@ Automatically discovers available LLM models and assigns them to the best roles
 """
 
 import logging
-from typing import Dict, List, Optional
+from typing import Dict, List, Optional, Any
 from enum import Enum
 from backend.llm_roles_descriptor import LLMRole, ROLE_SPECIFICATIONS
 
@@ -125,7 +125,7 @@ class LLMAutoAssignment:
     
     def __init__(self):
         self.available_models: List[ModelProfile] = []
-        self.assignments: Dict[LLMRole, ModelProfile] = {}
+        self.assignments: Dict[LLMRole, Optional[ModelProfile]] = {}
     
     def discover_available_models(self, available_providers: Dict[str, bool]) -> List[ModelProfile]:
         """
@@ -288,16 +288,17 @@ class LLMAutoAssignment:
         """Get a human-readable summary of assignments"""
         if not self.assignments:
             return {"error": "No assignments made yet"}
-        
-        summary = {
+
+        assignments_out: Dict[str, Any] = {}
+        summary: Dict[str, Any] = {
             "total_available_models": len(self.available_models),
-            "assignments": {},
+            "assignments": assignments_out,
             "total_monthly_cost_estimate": 0.0,
         }
         
         for role, model in self.assignments.items():
             if model:
-                summary["assignments"][role.value] = {
+                assignments_out[role.value] = {
                     "model": model.model_id,
                     "provider": model.provider,
                     "capabilities": [c.value for c in model.capabilities],
@@ -307,7 +308,7 @@ class LLMAutoAssignment:
                 # Rough estimate: 1M tokens per month per role
                 summary["total_monthly_cost_estimate"] += (model.cost_per_1k_tokens * 1000)
             else:
-                summary["assignments"][role.value] = {"model": None, "error": "No suitable model available"}
+                assignments_out[role.value] = {"model": None, "error": "No suitable model available"}
         
         return summary
 

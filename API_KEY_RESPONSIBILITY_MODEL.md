@@ -1,4 +1,4 @@
-# 🔐 Top Dog API Key Responsibility Model
+# Top Dog API Key Responsibility Model
 
 **TL;DR**: You bring your own API keys. Top Dog doesn't provide them, store them insecurely, or charge you for LLM usage. You pay the provider directly.
 
@@ -6,34 +6,34 @@
 
 ## Three Core Rules
 
-### Rule 1: Free Tier = Free/Local Models Only ✅
+### Rule 1: Free Tier = Free/Local Models Only
 ```
 Free users get:
-✅ Ollama (local Llama, Mistral, etc.) - 100% free
-✅ LLaMA models - Open source, no keys needed
-✅ GPT4All - Local, private, completely free
-✅ No API keys required
-✅ Works completely offline
+- Ollama (local Llama, Mistral, etc.) - 100% free
+- LLaMA models - Open source, no keys needed
+- GPT4All - Local, private, completely free
+- No API keys required
+- Works completely offline
 ```
 
-### Rule 2: Pro/Teams/Enterprise = BYOK (Bring Your Own Key) 🔑
+### Rule 2: Pro/Teams/Enterprise = BYOK (Bring Your Own Key)
 ```
 Paid users can add their own keys:
-✅ OpenAI GPT-4 (you pay OpenAI directly)
-✅ Google Gemini (you pay Google directly)
-✅ Anthropic Claude (you pay Anthropic directly)
-✅ Still can use free local models too
-✅ You manage all keys in Top Dog Settings
+- OpenAI GPT-4 (you pay OpenAI directly)
+- Google Gemini (you pay Google directly)
+- Anthropic Claude (you pay Anthropic directly)
+- Still can use free local models too
+- You manage all keys in Top Dog Settings
 ```
 
-### Rule 3: Top Dog Never Handles Your API Keys ⛔
+### Rule 3: Top Dog Never Handles Your API Keys
 ```
 What Top Dog does NOT do:
-❌ Store your keys on our servers
-❌ Charge you for API usage
-❌ Log or monitor your API calls
-❌ Share keys with anyone
-❌ Process payments for LLM usage
+- Store your keys on our servers
+- Charge you for API usage
+- Log or monitor your API calls
+- Share keys with anyone
+- Process payments for LLM usage
 ```
 
 ---
@@ -102,7 +102,7 @@ What Top Dog does NOT do:
 
 ## Tier-by-Tier API Key Model
 
-### 🎓 FREE TIER ($0)
+### FREE TIER ($0)
 
 **What you get:**
 - Ollama (local LLMs, completely free)
@@ -110,7 +110,7 @@ What Top Dog does NOT do:
 - GPT4All
 - 100% offline capability
 
-**API keys required:** None ✅
+**API keys required:** None
 
 **Cost breakdown:**
 - Top Dog: $0
@@ -129,7 +129,7 @@ Cost: $0
 
 ---
 
-### 💎 PRO TIER ($12/month)
+### PRO TIER ($12/month)
 
 **What you get:**
 - Add your own API keys to Top Dog settings
@@ -164,7 +164,7 @@ Cost: $0.02 added to OpenAI bill (not Top Dog bill)
 
 ---
 
-### 👥 TEAMS TIER ($25/seat/month)
+### TEAMS TIER ($25/seat/month)
 
 **What you get:**
 - Add team's API keys
@@ -205,7 +205,7 @@ Option B (Individual Keys):
 
 ---
 
-### 🏢 ENTERPRISE ($Custom)
+### ENTERPRISE ($Custom)
 
 **What you get:**
 - BYOK: Add your own API keys (same as Teams)
@@ -362,7 +362,7 @@ Pro/Teams/Enterprise: Use Pro tier WITHOUT adding any keys
 ---
 
 ### Q: What if I lose my API key?
-**A:** 
+**A:**
 1. Go to OpenAI/Google/Anthropic dashboard
 2. Delete the old key
 3. Generate a new one
@@ -372,14 +372,14 @@ Pro/Teams/Enterprise: Use Pro tier WITHOUT adding any keys
 ---
 
 ### Q: Can I share my API key with coworkers?
-**A:** 
+**A:**
 
-❌ **NOT recommended** (security risk):
+**NOT recommended** (security risk):
 - Anyone with the key can use it
 - Anyone can accidentally consume your budget
 - Not accountable if something goes wrong
 
-✅ **Better approach** (Teams tier):
+**Better approach** (Teams tier):
 - Set up a shared key with spending limits
 - Or give each person their own key
 - Manager tracks usage on provider dashboard
@@ -421,36 +421,36 @@ Pro/Teams/Enterprise: Use Pro tier WITHOUT adding any keys
 ### What This Means For You
 
 **Free tier:**
-- ✅ 100% free
-- ✅ 100% private
-- ✅ 100% offline
-- ✅ Use local Ollama
+- 100% free
+- 100% private
+- 100% offline
+- Use local Ollama
 
 **Pro tier:**
-- ✅ $12/month for Top Dog features
-- ✅ Add your API keys (optional)
-- ✅ Pay provider directly for LLM usage
-- ✅ No Top Dog markup
+- $12/month for Top Dog features
+- Add your API keys (optional)
+- Pay provider directly for LLM usage
+- No Top Dog markup
 
 **Teams tier:**
-- ✅ $25/seat/month for Top Dog features
-- ✅ Team members add their API keys
-- ✅ Pay provider directly for LLM usage
-- ✅ No Top Dog markup
+- $25/seat/month for Top Dog features
+- Team members add their API keys
+- Pay provider directly for LLM usage
+- No Top Dog markup
 
 **Enterprise:**
-- ✅ Custom pricing for Top Dog
-- ✅ BYOK, self-hosted, or managed LLM
-- ✅ Full control over infrastructure
-- ✅ Direct billing with providers
+- Custom pricing for Top Dog
+- BYOK, self-hosted, or managed LLM
+- Full control over infrastructure
+- Direct billing with providers
 
 ---
 
 ## Bottom Line
 
-> Top Dog is a product company, not a payment processor.  
-> We focus on building great tools.  
-> You manage your API keys and pay providers directly.  
+> Top Dog is a product company, not a payment processor.
+> We focus on building great tools.
+> You manage your API keys and pay providers directly.
 > This keeps things simple, secure, and transparent.
 
 **Questions?** See [PRICING_AND_MONETIZATION_STRATEGY.md](./PRICING_AND_MONETIZATION_STRATEGY.md#-llm-model-access--api-key-model-critical) for full details.

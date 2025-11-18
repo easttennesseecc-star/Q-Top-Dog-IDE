@@ -22,17 +22,22 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           python -m pip install -r backend/requirements.txt
-          # Optional tooling for lint/type checks
-          python -m pip install mypy ruff
+          if [ -f requirements-dev.txt ]; then python -m pip install -r requirements-dev.txt; fi
 
-      - name: Run unit tests (backend)
+      - name: Run tests (fast set)
         run: |
           python -m pytest -q
 
+      - name: Run heavy/performance tests (non-blocking)
+        continue-on-error: true
+        run: |
+          echo "Running heavy/performance tests"
+          python -m pytest -m "heavy or performance" -q || true
+
       - name: Type check (best-effort)
         run: |
-          mypy --ignore-missing-imports backend || true
+          python -m mypy backend/services backend/routes backend/models || true
 
       - name: Lint (best-effort)
         run: |
-          ruff check backend || true
+          python -m ruff check backend || true

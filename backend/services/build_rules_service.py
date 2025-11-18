@@ -8,7 +8,7 @@ import json
 import hashlib
 from datetime import datetime
 from pathlib import Path
-from typing import Dict, List, Optional, Any
+from typing import Dict, List, Optional, Any, TypedDict
 from dataclasses import dataclass, asdict
 from enum import Enum
 
@@ -112,7 +112,7 @@ class BuildRulesService:
         workspace_id: str,
         project_name: str,
         languages: List[str],
-        frameworks: List[str] = None,
+        frameworks: Optional[List[str]] = None,
         **kwargs
     ) -> BuildManifest:
         """Create a new build manifest"""
@@ -272,9 +272,18 @@ class BuildRulesService:
             "checked_at": datetime.utcnow().isoformat()
         }
     
-    def auto_detect_manifest(self, project_path: Path) -> Dict[str, Any]:
+    class _ManifestSuggestions(TypedDict):
+        languages: List[str]
+        frameworks: List[str]
+        dependencies: Dict[str, str]
+        directory_structure: Dict[str, Any]
+        required_files: List[str]
+        build_commands: List[str]
+        test_commands: List[str]
+
+    def auto_detect_manifest(self, project_path: Path) -> _ManifestSuggestions:
         """Auto-detect project structure and generate manifest suggestions"""
-        suggestions = {
+        suggestions: BuildRulesService._ManifestSuggestions = {
             "languages": [],
             "frameworks": [],
             "dependencies": {},

@@ -1,0 +1,42 @@
+# Production override values for cert-manager (adds resource requests/limits)
+# Chart: jetstack/cert-manager v1.13.2
+
+installCRDs: true
+
+# Controller (main cert-manager) resources are configured via the top-level `resources` key in this chart
+resources:
+  requests:
+    cpu: 100m
+    memory: 128Mi
+  limits:
+    cpu: 500m
+    memory: 512Mi
+
+cainjector:
+  resources:
+    requests:
+      cpu: 50m
+      memory: 64Mi
+    limits:
+      cpu: 250m
+      memory: 256Mi
+
+webhook:
+  resources:
+    requests:
+      cpu: 50m
+      memory: 64Mi
+    limits:
+      cpu: 250m
+      memory: 256Mi
+
+startupapicheck:
+  resources:
+    requests:
+      cpu: 10m
+      memory: 32Mi
+    limits:
+      cpu: 100m
+      memory: 128Mi
+
+# Optionally tune liveness/readiness probe timeouts if needed

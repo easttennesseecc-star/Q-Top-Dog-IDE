@@ -208,7 +208,7 @@ async def get_q_assistant_config():
             "llm": None,
             "message": "Q Assistant needs an LLM. Configure one via the LLM Setup panel.",
             "setup_url": "/llm_config/setup/openai",
-            "instructions": "1. Go to LLM Setup → Providers\n2. Choose a cloud provider (OpenAI, Gemini, etc.) or install local LLM (Ollama)\n3. Add API key or set up local model\n4. Assign to 'Coding' role\n5. Restart Q Assistant"
+            "instructions": "1. Go to LLM Setup -> Providers\n2. Choose a cloud provider (OpenAI, Gemini, etc.) or install local LLM (Ollama)\n3. Add API key or set up local model\n4. Assign to 'Coding' role\n5. Restart Q Assistant"
         }
     
     # LLM is configured

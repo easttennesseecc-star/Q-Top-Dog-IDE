@@ -16,6 +16,18 @@ import os
 
 _STORE_PATH = Path(os.getenv("PENDING_ACTIONS_STORE", "./.pending_actions.json")).resolve()
 
+def _use_sqlite() -> bool:
+    """Default to SQLite in non-test environments with env override."""
+    try:
+        override = os.getenv("PENDING_ACTIONS_BACKEND")
+        if override:
+            return override.strip().lower() == "sqlite"
+        if os.getenv("PYTEST_CURRENT_TEST") or (os.getenv("ENVIRONMENT", "").strip().lower() in {"test", "testing"}):
+            return False
+        return True
+    except Exception:
+        return True
+
 
 def _load() -> Dict[str, Any]:
     try:
@@ -34,6 +46,9 @@ def _save(data: Dict[str, Any]) -> None:
 
 
 def add_pending(kind: str, token: str, user_id: Optional[str], meta: Optional[Dict[str, Any]] = None) -> None:
+    if _use_sqlite():
+        from backend.services.pending_action_store_sqlite import add_pending as _add
+        return _add(kind, token, user_id, meta)
     data = _load()
     items = data.get("items", [])
     now = int(time.time())
@@ -54,6 +69,9 @@ def add_pending(kind: str, token: str, user_id: Optional[str], meta: Optional[Di
 
 
 def mark_resolved_by_token(token: str) -> None:
+    if _use_sqlite():
+        from backend.services.pending_action_store_sqlite import mark_resolved_by_token as _mark
+        return _mark(token)
     data = _load()
     items = data.get("items", [])
     changed = False
@@ -67,6 +85,9 @@ def mark_resolved_by_token(token: str) -> None:
 
 
 def mark_reminder_sent(token: str) -> None:
+    if _use_sqlite():
+        from backend.services.pending_action_store_sqlite import mark_reminder_sent as _mark
+        return _mark(token)
     data = _load()
     items = data.get("items", [])
     changed = False
@@ -80,5 +101,8 @@ def mark_reminder_sent(token: str) -> None:
 
 
 def list_pending() -> List[Dict[str, Any]]:
+    if _use_sqlite():
+        from backend.services.pending_action_store_sqlite import list_pending as _list
+        return _list()
     data = _load()
     return data.get("items", [])

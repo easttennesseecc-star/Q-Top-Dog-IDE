@@ -10,7 +10,7 @@ Manages:
 
 import json
 import os
-from typing import Dict, List, Optional
+from typing import Dict, List, Optional, Any, Mapping, cast
 from datetime import datetime
 from pathlib import Path
 
@@ -281,28 +281,40 @@ def get_model_for_role(role: str) -> Optional[str]:
     return assignments.get(role)
 
 
-def list_available_providers() -> Dict[str, Dict]:
+def list_available_providers() -> Dict[str, Dict[str, Any]]:
     """List all available LLM providers with status."""
-    providers = {}
+    providers: Dict[str, Dict[str, Any]] = {}
     keys = load_api_keys()
     
     # Cloud LLMs
-    for provider_id, config in CLOUD_LLMS.items():
-        has_key = provider_id in keys and keys[provider_id]
-        providers[provider_id] = {
-            **config,
-            "type": "cloud",
-            "has_key": has_key,
-            "configured": has_key or config.get("requires_vscode", False)
-        }
+    for provider_id, cloud_cfg in CLOUD_LLMS.items():
+        has_key = bool(provider_id in keys and keys[provider_id])
+        entry_cloud: Dict[str, Any] = {}
+        entry_cloud["name"] = cloud_cfg.get("name", "")
+        entry_cloud["provider"] = cloud_cfg.get("provider", "")
+        entry_cloud["api_endpoint"] = cloud_cfg.get("api_endpoint", "")
+        entry_cloud["auth_type"] = cloud_cfg.get("auth_type", "api_key")
+        entry_cloud["requires_key"] = bool(cloud_cfg.get("requires_key", False))
+        entry_cloud["requires_vscode"] = bool(cloud_cfg.get("requires_vscode", False))
+        entry_cloud["free_tier"] = bool(cloud_cfg.get("free_tier", False))
+        entry_cloud["enabled"] = bool(cloud_cfg.get("enabled", True))
+        entry_cloud["notes"] = cloud_cfg.get("notes", "")
+        entry_cloud["type"] = "cloud"
+        entry_cloud["has_key"] = has_key
+        entry_cloud["configured"] = has_key or bool(cloud_cfg.get("requires_vscode", False))
+        providers[provider_id] = entry_cloud
     
     # Local models
-    for model_id, config in LOCAL_MODELS.items():
-        providers[model_id] = {
-            **config,
-            "type": "local",
-            "configured": False  # Would need to check if installed
-        }
+    for model_id, local_cfg in LOCAL_MODELS.items():
+        entry_local: Dict[str, Any] = {}
+        entry_local["name"] = local_cfg.get("name", "")
+        entry_local["type"] = "local"
+        entry_local["download_url"] = local_cfg.get("download_url", "")
+        entry_local["setup_cmd"] = local_cfg.get("setup_cmd", "")
+        entry_local["available_models"] = cast(List[str], local_cfg.get("available_models", []))
+        entry_local["notes"] = local_cfg.get("notes", "")
+        entry_local["configured"] = False  # Would need to check if installed
+        providers[model_id] = entry_local
     
     return providers
 
@@ -311,7 +323,11 @@ def get_role_recommendations(role: str) -> List[str]:
     """Get recommended models for a role."""
     if role not in LLM_ROLES:
         return []
-    return LLM_ROLES[role].get("recommended_models", [])
+    rec = LLM_ROLES[role].get("recommended_models", [])
+    # Ensure we always return a concrete list[str] for type safety
+    if isinstance(rec, list) and all(isinstance(x, str) for x in rec):
+        return rec
+    return []
 
 
 def validate_api_key(provider: str, key: str) -> bool:
@@ -443,27 +459,28 @@ def get_q_assistant_llm() -> Optional[Dict]:
     
     # Check if it's a cloud provider
     if assigned_model in CLOUD_LLMS:
-        config = CLOUD_LLMS[assigned_model]
+        cloud_cfg = CLOUD_LLMS[assigned_model]
+        provider_name = str(cloud_cfg.get("provider", ""))
         return {
             "id": assigned_model,
-            "name": config["name"],
+            "name": cloud_cfg["name"],
             "type": "cloud",
-            "source": config["provider"],
+            "source": provider_name,
             "assigned_role": "q_assistant",
-            "has_credentials": bool(get_api_key(config["provider"])),
-            "endpoint": config["api_endpoint"]
+            "has_credentials": bool(get_api_key(provider_name)),
+            "endpoint": cloud_cfg["api_endpoint"]
         }
     
     # Check if it's a local model
     if assigned_model in LOCAL_MODELS:
-        config = LOCAL_MODELS[assigned_model]
+        local_cfg = LOCAL_MODELS[assigned_model]
         return {
             "id": assigned_model,
-            "name": config["name"],
+            "name": local_cfg["name"],
             "type": "local",
-            "source": config["type"],
+            "source": local_cfg["type"],
             "assigned_role": "q_assistant",
-            "download_url": config["download_url"]
+            "download_url": local_cfg["download_url"]
         }
     
     return None
@@ -478,7 +495,7 @@ def format_provider_status() -> str:
     lines.append("CLOUD SERVICES:")
     for prov_id, config in providers.items():
         if config.get("type") == "cloud":
-            status = "✓ Configured" if config.get("configured") else "✗ Needs setup"
+            status = "Configured" if config.get("configured") else "Needs setup"
             lines.append(f"  {config['name']}: {status}")
     
     lines.append("\nLOCAL MODELS:")

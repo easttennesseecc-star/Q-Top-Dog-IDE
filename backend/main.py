@@ -10,7 +10,7 @@ import urllib.parse
 import logging
 from pathlib import Path
 from datetime import datetime
-from fastapi import FastAPI, Request, BackgroundTasks, HTTPException
+from fastapi import FastAPI, Request, BackgroundTasks, HTTPException, APIRouter
 from fastapi.responses import RedirectResponse, FileResponse, PlainTextResponse, JSONResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.middleware.cors import CORSMiddleware
@@ -23,8 +23,12 @@ from backend.llm_auth_routes import router as llm_auth_router
 from backend.llm_chat_routes import router as llm_chat_router
 from backend.build_orchestration_routes import router as build_orchestration_router
 from backend.llm_oauth_routes import router as llm_oauth_router
+from typing import Optional as _Optional
+
+# Optional routers that may fail to import in certain profiles
+billing_router: _Optional[APIRouter]
 try:
-    from backend.routes.billing import router as billing_router
+    from backend.routes.billing import router as billing_router  # type: ignore[assignment]
 except Exception:
     billing_router = None
 from backend.routes.orchestration_workflow import router as orchestration_workflow_router
@@ -35,28 +39,38 @@ from backend.routes.science.rwe import router as science_rwe_router
 from backend.routes.science.multimodal import router as science_multimodal_router
 from backend.routes.snapshot_routes import router as snapshot_router
 from backend.media_routes import router as media_router
+assistant_router: _Optional[APIRouter]
 try:
-    from backend.assistant_routes import router as assistant_router
+    from backend.assistant_routes import router as assistant_router  # type: ignore[assignment]
 except Exception:
     assistant_router = None
-# from routes.ai_workflow_routes import router as ai_workflow_router  # Temporarily commented - has import issues
+from backend.routes.ai_workflow_routes import router as ai_workflow_router
 from backend.routes.rules_api import router as rules_api_router
 from backend.routes.phone_pairing_api import router as phone_pairing_router
 from backend.routes.away_api import router as away_router
 from backend.routes.sms_log_api import router as sms_log_router
 from backend.routes.email_inbound_api import router as email_inbound_router
+EMAIL_ROUTER_ENABLED = True
 from backend.routes.push_api import router as push_router
-from backend.routes.assistant_inbox_api import router as assistant_inbox_router
-from backend.routes.assistant_inbox_triage_api import router as assistant_inbox_triage_router
+spool_ingest_router: _Optional[APIRouter]
+try:
+    from backend.routes.spool_ingest_api import router as spool_ingest_router  # type: ignore[assignment]
+except Exception:
+    spool_ingest_router = None
+from backend.routes.pricing_routes import router as pricing_routes
+from backend.routes.assistant_readiness import router as assistant_readiness_router
 from backend.routes.tasks_api import router as tasks_router
 from backend.routes.user_notes_routes import router as user_notes_router
 from backend.routes.build_rules_routes import router as build_rules_router
 from backend.routes.build_plan_approval_routes import router as build_plan_approval_router
+from backend.routes.test_solver_routes import router as test_solver_router
+from backend.routes.domain_config_routes import router as domain_config_router
+from backend.routes.marketplace_fastapi import marketplace_router, agent_router, marketplace_auth_router
 from backend.middleware.compliance_enforcer import ComplianceEnforcer, require_compliance
 from backend.services.workflow_db_manager import init_workflow_database, WorkflowDatabaseManager
 from backend.services.orchestration_service import OrchestrationService
 from backend.middleware.rules_enforcement import RulesEnforcementMiddleware
-# from services.ai_orchestration import initialize_ai_orchestration  # Temporarily commented - has import issues
+from backend.services.ai_orchestration import initialize_ai_orchestration
 from backend.logger_utils import configure_logger, get_logger
 from contextlib import asynccontextmanager
 import asyncio
@@ -81,6 +95,24 @@ logger.info("Q-IDE Backend starting up...")
 async def lifespan(app: FastAPI):
     """Lifespan handler to replace deprecated startup events."""
     logger.info("Running startup tasks (lifespan)...")
+    # Load persisted domain configuration and apply env overrides early
+    try:
+        from backend.services.domain_config import load_and_apply
+        load_and_apply(app)
+        logger.info("Domain configuration loaded and applied")
+    except Exception as e:
+        logger.warning(f"Domain configuration not loaded: {e}")
+    # Detect test environment to avoid starting background loops that can hang pytest
+    def _is_testing_env() -> bool:
+        try:
+            if os.getenv("PYTEST_CURRENT_TEST"):
+                return True
+            env = (os.getenv("ENVIRONMENT") or "").lower().strip()
+            if env in ("test", "testing"):  # conventional flags
+                return True
+        except Exception:
+            pass
+        return False
 
     # Initialize workflow orchestration database
     try:
@@ -90,107 +122,144 @@ async def lifespan(app: FastAPI):
         )
         logger.info(f"Initializing workflow database: {database_url.split('/')[-1]}")
 
-        if init_workflow_database(database_url):
-            logger.info("✅ Workflow orchestration database initialized and ready")
-            app.workflow_db_manager = WorkflowDatabaseManager(database_url)  # type: ignore[attr-defined]
+        db_manager = WorkflowDatabaseManager(database_url)
+        app.workflow_db_manager = db_manager  # type: ignore[attr-defined]
+
+        if init_workflow_database(db_manager):
+            logger.info("Workflow orchestration database initialized and ready")
         else:
-            logger.warning("⚠️ Workflow database initialization failed - orchestration may not work")
+            logger.error("Workflow database initialization FAILED - orchestration will not work")
+            # In a real scenario, we might want to prevent the app from starting.
+            # For now, we log an error and continue, but tests will fail.
     except Exception as e:
-        logger.error(f"❌ Error initializing workflow database: {str(e)}")
+        logger.error(f"Error initializing workflow database: {str(e)}")
 
     # Initialize AI Orchestration Manager
     try:
         logger.info("Initializing AI orchestration system...")
         orchestration_service = OrchestrationService(
-            db=getattr(app, 'workflow_db_manager', None)
+            db_manager=getattr(app, 'workflow_db_manager', None)
         )
-        # ai_manager = initialize_ai_orchestration(orchestration_service)
-        # app.ai_orchestration_manager = ai_manager
+        ai_manager = initialize_ai_orchestration(orchestration_service)
+        app.state.ai_orchestration_manager = ai_manager
         # Expose orchestration service for downstream selection/failover policies
         try:
             app.state.orchestration_service = orchestration_service  # type: ignore[attr-defined]
         except Exception:
             setattr(app, 'orchestration_service', orchestration_service)  # legacy fallback
-        logger.info("✅ AI orchestration service available (feature flags control behavior)")
+        logger.info("AI orchestration service available (feature flags control behavior)")
     except Exception as e:
-        logger.error(f"❌ Error initializing AI orchestration: {str(e)}")
+        logger.error(f"Error initializing AI orchestration: {str(e)}")
 
-    # Auto-setup Q Assistant if needed
-    try:
-        result = auto_setup_q_assistant()
-        if result:
-            logger.info(f"✓ Q Assistant auto-configured with: {result.get('name')}")
-        else:
-            logger.warning("⚠ Q Assistant not auto-configured. Please configure via LLM Setup.")
-    except Exception as e:
-        logger.error(f"Error in startup auto-setup: {str(e)}")
+    if not _is_testing_env():
+        # Auto-setup Q Assistant if needed
+        try:
+            result = auto_setup_q_assistant()
+            if result:
+                logger.info(f"Q Assistant auto-configured with: {result.get('name')}")
+            else:
+                logger.warning("Q Assistant not auto-configured. Please configure via LLM Setup.")
+        except Exception as e:
+            logger.error(f"Error in startup auto-setup: {str(e)}")
 
-    # Check LLM authentication status
-    try:
-        auth_status = check_all_llm_authentication()
-        prompt = get_startup_auth_prompt()
+        # Check LLM authentication status
+        try:
+            auth_status = check_all_llm_authentication()
+            prompt = get_startup_auth_prompt()
 
-        if auth_status.all_ready:
-            logger.info(f"✓ All {len(auth_status.authenticated_llms)} LLMs authenticated and ready")
-        else:
-            logger.warning(f"⚠ {len(auth_status.missing_credentials)} LLM(s) need credentials:")
-            for missing in auth_status.needs_setup:
-                llm_name = missing.get('name', missing.get('llm_id', 'Unknown'))
-                assigned_role = missing.get('assigned_role', 'role')
-                logger.warning(f"  - {llm_name} (assigned to {assigned_role})")
-            logger.info("  → Frontend will prompt user with options")
+            if auth_status.all_ready:
+                logger.info(f"All {len(auth_status.authenticated_llms)} LLMs authenticated and ready")
+            else:
+                logger.warning(f"{len(auth_status.missing_credentials)} LLM(s) need credentials:")
+                for missing in auth_status.needs_setup:
+                    llm_name = missing.get('name', missing.get('llm_id', 'Unknown'))
+                    assigned_role = missing.get('assigned_role', 'role')
+                    logger.warning(f"  - {llm_name} (assigned to {assigned_role})")
+                logger.info("  -> Frontend will prompt user with options")
 
-        # Store auth prompt for frontend to display
-        app.llm_auth_prompt = prompt  # type: ignore[attr-defined]
+            # Store auth prompt for frontend to display
+            app.llm_auth_prompt = prompt  # type: ignore[attr-defined]
 
-    except Exception as e:
-        logger.error(f"Error checking LLM authentication: {str(e)}")
+        except Exception as e:
+            logger.error(f"Error checking LLM authentication: {str(e)}")
 
-    # Start push reminder loop
+    # Start push reminder loop (disabled during tests unless explicitly enabled)
     reminder_task = None
+    stop_event = asyncio.Event()
+    spool_task = None
     try:
-        from backend.services.push_reminder import reminder_loop
-        stop_event = asyncio.Event()
-        reminder_task = asyncio.create_task(reminder_loop(stop_event))
-        app.state._reminder_stop = stop_event  # type: ignore[attr-defined]
-        app.state._reminder_task = reminder_task  # type: ignore[attr-defined]
-    except Exception as e:
-        logger.warning(f"Push reminder loop not started: {e}")
+        enable_reminders = os.getenv("REMINDER_LOOP_ENABLED", "true").lower() in ("1", "true", "yes")
+        if _is_testing_env():
+            # Default off in tests unless forced via REMINDER_LOOP_ENABLED=true
+            enable_reminders = os.getenv("REMINDER_LOOP_ENABLED", "false").lower() in ("1", "true", "yes")
+        
+        if enable_reminders:
+            from backend.services.push_reminder import reminder_loop
+            # Create the task so it can be properly managed and shut down
+            reminder_task = asyncio.create_task(reminder_loop(stop_event))
+            app.state._reminder_stop = stop_event
+            logger.info("Push reminder loop started.")
+        else:
+            logger.info("Push reminder loop disabled by environment (REMINDER_LOOP_ENABLED=false or testing)")
 
-    # Start assistant autopilot loop (optional via env)
-    autopilot_task = None
-    try:
-        from backend.services.assistant_inbox_triage import autopilot_loop
-        auto_stop = asyncio.Event()
-        autopilot_task = asyncio.create_task(autopilot_loop(auto_stop))
-        app.state._autopilot_stop = auto_stop  # type: ignore[attr-defined]
-        app.state._autopilot_task = autopilot_task  # type: ignore[attr-defined]
+        # Spool background pump (optional lightweight inbound automation)
+        try:
+            from backend.services import spool_pump
+            if spool_pump.is_enabled_in_env():
+                logger.info("Starting spool pump loop (ASSISTANT_SPOOL_PUMP enabled)")
+                spool_stop = asyncio.Event()
+                spool_task = asyncio.create_task(spool_pump.pump_loop(app, spool_stop))
+                app.state._spool_stop = spool_stop
+            else:
+                logger.info("Spool pump disabled (ASSISTANT_SPOOL_PUMP not true)")
+        except Exception as e:
+            logger.warning(f"Spool pump not started: {e}")
     except Exception as e:
-        logger.warning(f"Assistant autopilot not started: {e}")
+        logger.warning(f"Push reminder loop not configured: {e}")
+
+    # Autopilot loop retired — do not start
+    autopilot_task = None
+    logger.info("Assistant autopilot has been retired and will not be started")
 
     # Yield to run the application
     yield
 
     # On shutdown, stop reminder loop
     try:
-        if getattr(app.state, "_reminder_stop", None):  # type: ignore[attr-defined]
-            app.state._reminder_stop.set()  # type: ignore[attr-defined]
-        if reminder_task:
+        if reminder_task and not reminder_task.done():
+            logger.info("Attempting to stop reminder loop...")
+            stop_event.set()
             reminder_task.cancel()
-            try:
-                await reminder_task
-            except Exception:
-                pass
-        if getattr(app.state, "_autopilot_stop", None):  # type: ignore[attr-defined]
-            app.state._autopilot_stop.set()  # type: ignore[attr-defined]
-        if 'autopilot_task' in locals() and autopilot_task:
-            autopilot_task.cancel()
-            try:
-                await autopilot_task
-            except Exception:
-                pass
-    except Exception:
+            await reminder_task
+            logger.info("Reminder loop stopped.")
+    except asyncio.CancelledError:
+        logger.info("Reminder loop cancelled successfully.")
+    except Exception as e:
+        logger.error(f"Error during reminder loop shutdown: {e}")
         pass
+        # Autopilot retired; nothing to stop
+
+    # Stop spool pump loop
+    try:
+        if spool_task and not spool_task.done():
+            logger.info("Stopping spool pump loop...")
+            app.state._spool_stop.set()  # type: ignore[attr-defined]
+            spool_task.cancel()
+            await spool_task
+            logger.info("Spool pump loop stopped.")
+    except asyncio.CancelledError:
+        logger.info("Spool pump cancelled successfully.")
+    except Exception as e:
+        logger.error(f"Error stopping spool pump: {e}")
+
+    # On shutdown, gracefully shut down the background task manager
+    try:
+        from backend.services.background_task_manager import get_background_task_manager
+        task_manager = get_background_task_manager()
+        if task_manager:
+            await task_manager.shutdown()
+    except Exception as e:
+        logger.error(f"Error during background task manager shutdown: {e}")
 
 
 app = FastAPI(
@@ -200,15 +269,113 @@ app = FastAPI(
     lifespan=lifespan,
 )
 
+class HealthCheckResponse(BaseModel):
+    status: str
+    version: str
+
+
 # Define health endpoint early so it is not shadowed by the frontend catch-all route
-@app.get("/health")
-def health_check():
+@app.get("/health", response_model=HealthCheckResponse)
+def health_check(request: Request):
     """Simple health check endpoint - returns JSON status"""
     try:
-        return {"status": "ok"}
+        return {"status": "ok", "version": app.version}
     except Exception as e:
         logger.error(f"Health check error: {e}", exc_info=True)
-        return {"status": "error", "message": str(e)}
+        # This part of the code will likely not be reached due to response_model validation,
+        # but it's good practice for handling unexpected errors.
+        raise HTTPException(status_code=500, detail=str(e))
+
+# Request ID correlation (first-in-chain)
+class RequestIDMiddleware(BaseHTTPMiddleware):
+    """Ensures every request has a stable request ID for correlation.
+
+    - Accepts incoming X-Request-ID or X-Correlation-ID
+    - Generates UUIDv4 if missing
+    - Exposes on request.state.request_id and response header X-Request-ID
+    """
+    async def dispatch(self, request: Request, call_next):
+        import uuid as _uuid
+        incoming = (
+            request.headers.get("X-Request-ID")
+            or request.headers.get("X-Correlation-ID")
+        )
+        rid = incoming or str(_uuid.uuid4())
+        try:
+            request.state.request_id = rid
+        except Exception:
+            pass
+        response = await call_next(request)
+        try:
+            response.headers["X-Request-ID"] = rid
+        except Exception:
+            pass
+        return response
+
+# Logging middleware - place early to capture total time and correlate with request id
+class LoggingMiddleware(BaseHTTPMiddleware):
+    async def dispatch(self, request: Request, call_next):
+        import time
+        start_time = time.time()
+        # Metrics import is local to avoid hard dependency issues
+        try:
+            from backend.metrics import HTTP_REQUESTS as _HTTP_REQUESTS  # type: ignore[assignment]
+        except Exception:
+            _HTTP_REQUESTS = None  # type: ignore[assignment]
+
+        # Prefer request.state.request_id populated by RequestIDMiddleware
+        try:
+            req_id = getattr(request.state, "request_id", None) or request.headers.get("X-Request-ID", "unknown")
+        except Exception:
+            req_id = request.headers.get("X-Request-ID", "unknown")
+
+        with logger.context(
+            request_id=req_id,
+            method=request.method,
+            path=request.url.path,
+            client=request.client.host if request.client else "unknown"
+        ):
+            try:
+                response = await call_next(request)
+                elapsed = time.time() - start_time
+                if response.status_code >= 400:
+                    logger.warning(
+                        f"Request completed with error",
+                        status_code=response.status_code,
+                        elapsed_seconds=elapsed
+                    )
+                # Record HTTP requests metric
+                try:
+                    if _HTTP_REQUESTS is not None:
+                        endpoint = request.url.path
+                        _HTTP_REQUESTS.labels(endpoint=endpoint, status=str(response.status_code)).inc()
+                except Exception:
+                    pass
+                else:
+                    logger.debug(
+                        f"Request completed",
+                        status_code=response.status_code,
+                        elapsed_seconds=elapsed
+                    )
+                return response
+            except Exception as e:
+                elapsed = time.time() - start_time
+                logger.error(
+                    f"Request failed",
+                    error=e,
+                    elapsed_seconds=elapsed
+                )
+                try:
+                    if _HTTP_REQUESTS is not None:
+                        endpoint = request.url.path
+                        _HTTP_REQUESTS.labels(endpoint=endpoint, status="500").inc()
+                except Exception:
+                    pass
+                raise
+
+# Register correlation and logging FIRST
+app.add_middleware(RequestIDMiddleware)
+app.add_middleware(LoggingMiddleware)
 
 # Custom middleware to allow health checks from any host (required for K8s probes)
 class SelectiveHostMiddleware(BaseHTTPMiddleware):
@@ -217,11 +384,11 @@ class SelectiveHostMiddleware(BaseHTTPMiddleware):
         # Allow /health endpoint from any host (K8s probes need this)
         if request.url.path == "/health":
             return await call_next(request)
-        
+
         # Allow other monitoring endpoints from any host
         if request.url.path.startswith("/health/") or request.url.path.startswith("/metrics"):
             return await call_next(request)
-        
+
         # For other endpoints, validate host header (optional - can be disabled in production)
         # Currently allowing all hosts to simplify Kubernetes deployment
         return await call_next(request)
@@ -248,63 +415,6 @@ class ComplianceMiddleware(BaseHTTPMiddleware):
             return JSONResponse(status_code=500, content={"detail": "Internal Server Error"})
 
 app.add_middleware(ComplianceMiddleware)
-
-# Logging middleware - must be added before other middleware
-class LoggingMiddleware(BaseHTTPMiddleware):
-    async def dispatch(self, request: Request, call_next):
-        import time
-        start_time = time.time()
-        # Metrics import is local to avoid hard dependency issues
-        try:
-            from backend.metrics import HTTP_REQUESTS
-        except Exception:
-            HTTP_REQUESTS = None
-        
-        with logger.context(
-            request_id=request.headers.get("X-Request-ID", "unknown"),
-            method=request.method,
-            path=request.url.path,
-            client=request.client.host if request.client else "unknown"
-        ):
-            try:
-                response = await call_next(request)
-                elapsed = time.time() - start_time
-                if response.status_code >= 400:
-                    logger.warning(
-                        f"Request completed with error",
-                        status_code=response.status_code,
-                        elapsed_seconds=elapsed
-                    )
-                # Record HTTP requests metric
-                try:
-                    if HTTP_REQUESTS is not None:
-                        endpoint = request.url.path
-                        HTTP_REQUESTS.labels(endpoint=endpoint, status=str(response.status_code)).inc()
-                except Exception:
-                    pass
-                else:
-                    logger.debug(
-                        f"Request completed",
-                        status_code=response.status_code,
-                        elapsed_seconds=elapsed
-                    )
-                return response
-            except Exception as e:
-                elapsed = time.time() - start_time
-                logger.error(
-                    f"Request failed",
-                    error=e,
-                    elapsed_seconds=elapsed
-                )
-                try:
-                    if HTTP_REQUESTS is not None:
-                        endpoint = request.url.path
-                        HTTP_REQUESTS.labels(endpoint=endpoint, status="500").inc()
-                except Exception:
-                    pass
-                raise
-
-app.add_middleware(LoggingMiddleware)
 
 # Admin surface protection — prevent accidental public exposure of /admin
 @app.middleware("http")
@@ -403,7 +513,7 @@ def set_edition(req: EditionRequest, request: Request):
         return JSONResponse(status_code=400, content={"error": "edition must be 'dev' or 'regulated'"})
     resp = JSONResponse({"edition": ed})
     # Cookie scoped to backend domain; HttpOnly=false so frontend can read if desired; set Secure in TLS environments
-    resp.set_cookie(key="td_edition", value=ed, httponly=False, samesite="Lax")
+    resp.set_cookie(key="td_edition", value=ed, httponly=False, samesite="lax")
     return resp
 
 
@@ -486,32 +596,148 @@ app.mount("/artifacts", StaticFiles(directory=str(artifacts_dir)), name="artifac
 # frontend catch-all BEFORE mounting the frontend catch-all.
 # Snapshot APIs were previously returning HTML due to catch-all precedence.
 app.include_router(snapshot_router)
-# Also include media and assistant routers early to avoid catch-all shadowing
+# Also include media, assistant, and test-solver routers early to avoid catch-all shadowing
 app.include_router(media_router, prefix="/api")  # Media generation/config/status
 if assistant_router is not None:
     app.include_router(assistant_router, prefix="/api")  # Assistant orchestration (plan + UI draft)
+app.include_router(test_solver_router)  # Test Solver API (must be before frontend catch-all)
+app.include_router(domain_config_router)  # Domain configuration API
+app.include_router(assistant_readiness_router)  # Assistant readiness/capabilities (ensure before catch-all)
+# Spool ingestion API should be before frontend catch-all to avoid shadowing
+if 'spool_ingest_router' in globals() and spool_ingest_router is not None:
+    app.include_router(spool_ingest_router)
 
-# Mount frontend React app (placed AFTER API routers so it does not shadow them)
-frontend_dist = Path(__file__).resolve().parent.parent / "frontend" / "dist"
-if frontend_dist.exists() and (frontend_dist / "index.html").exists():
-    app.mount("/assets", StaticFiles(directory=str(frontend_dist / "assets")), name="assets")
+# LLM Pool endpoint
+@app.get("/api/llm_pool")
+def get_llm_pool():
+    """Return a report of available local LLMs and any excluded critical models.
+
+    The response includes two keys: 'available' (list) and 'excluded' (list).
+    """
+    with logger.context(endpoint="/llm_pool"):
+        try:
+            logger.info("Fetching LLM pool report...")
+            report = build_llm_report()
+            available_count = len(report.get("available", []))
+            excluded_count = len(report.get("excluded", []))
+            logger.info(
+                "LLM pool fetched successfully",
+                available=available_count,
+                excluded=excluded_count
+            )
+            return report
+        except Exception as e:
+            logger.error("Failed to fetch LLM pool", error=e)
+            raise
+
+# Backward compatibility alias (old frontend called /llm_pool without /api prefix)
+@app.get("/llm_pool")
+def get_llm_pool_alias():
+    """Alias for /api/llm_pool to avoid 404/HTML catch-all issues in legacy UI."""
+    return get_llm_pool()
+
+# OAuth panel normalization: provide provider listing & login initiation endpoints
+@app.get("/llm_auth/providers")
+def oauth_list_providers():
+    """Return simplified OAuth provider metadata for frontend panel."""
+    providers = [
+        {"id": "google", "name": "Google", "description": "Google Gemini & AI Studio", "configured": bool(os.getenv("GOOGLE_CLIENT_ID")), "oauth_enabled": True},
+        {"id": "github", "name": "GitHub", "description": "GitHub account for Copilot", "configured": bool(os.getenv("GITHUB_CLIENT_ID")), "oauth_enabled": True},
+        {"id": "openai", "name": "OpenAI", "description": "OpenAI OAuth (future) / use API key", "configured": False, "oauth_enabled": False},
+        {"id": "anthropic", "name": "Anthropic", "description": "Claude via API key", "configured": False, "oauth_enabled": False},
+    ]
+    return {"providers": providers}
+
+@app.get("/llm_auth/login/{provider}")
+def oauth_login(provider: str):
+    """Initiate login by returning auth URL (when supported)."""
+    provider = provider.lower().strip()
+    if provider == "google":
+        if not GOOGLE_CLIENT_ID:
+            return {"success": False, "client_required": True}
+        scope = "openid profile email"
+        redirect_uri = f"{BACKEND_URL}/auth/google/callback"
+        auth_url = (
+            "https://accounts.google.com/o/oauth2/v2/auth?" + urllib.parse.urlencode({
+                "client_id": GOOGLE_CLIENT_ID,
+                "redirect_uri": redirect_uri,
+                "response_type": "code",
+                "scope": scope,
+            })
+        )
+        return {"success": True, "oauth_url": auth_url}
+    if provider == "github":
+        if not GITHUB_CLIENT_ID:
+            return {"success": False, "client_required": True}
+        scope = "user:email repo"
+        redirect_uri = f"{BACKEND_URL}/auth/github/callback"
+        auth_url = (
+            "https://github.com/login/oauth/authorize?" + urllib.parse.urlencode({
+                "client_id": GITHUB_CLIENT_ID,
+                "redirect_uri": redirect_uri,
+                "scope": scope,
+            })
+        )
+        return {"success": True, "oauth_url": auth_url}
+    # Unsupported provider -> instruct API key flow
+    return {"success": False, "client_required": True, "message": "Use API key flow for this provider"}
+
+# Persist selected LLM server-side (maps to coding or q_assistant role)
+from fastapi import Body as _Body
+class LLMSelectionPayload(BaseModel):
+    llm_id: str
+    role: Optional[str] = None  # default to coding
+
+@app.post("/llm_selection")
+def persist_llm_selection(payload: LLMSelectionPayload = _Body(...)):
+    """Persist chosen LLM into role assignments for cross-device continuity."""
+    role = (payload.role or "coding").strip()
+    from backend.llm_config import save_role_assignment, list_available_providers
+    providers = list_available_providers()
+    if payload.llm_id not in providers:
+        return JSONResponse(status_code=400, content={"detail": "Unknown LLM"})
+    if not save_role_assignment(role, payload.llm_id):
+        return JSONResponse(status_code=500, content={"detail": "Failed to persist selection"})
+    return {"status": "ok", "assigned_role": role, "llm_id": payload.llm_id}
+
+
+@app.get("/llm_pool/best")
+def get_best_llms(count: int = 3):
+    """Return the top N auto-selected best LLMs for operations.
     
-    @app.get("/{full_path:path}")
-    async def serve_frontend_catchall(full_path: str):
-        """Catch-all route to serve React app for client-side routing"""
-        from fastapi import HTTPException
-        # Don't intercept API routes
-        if full_path.startswith((
-            "api/", "auth/", "llm/", "metrics", "health", "admin/", "snapshots", "build", "consistency", "pfs", "verification", "assets/"
-        )):
-            raise HTTPException(status_code=404, detail="Not found")
-        
-        file_path = frontend_dist / full_path
-        if file_path.is_file():
-            return FileResponse(str(file_path))
-        else:
-            # Return index.html for client-side routing
-            return FileResponse(str(frontend_dist / "index.html"))
+    This endpoint returns LLMs ranked by quality/priority:
+    1. Cloud services (Copilot, Gemini, ChatGPT, Grok) - highest priority
+    2. Local CLIs (Ollama, Llama, etc) - medium priority  
+    3. Running processes - lower priority
+    4. Local model files - lowest priority
+    
+    Use this to auto-populate operation slots with the best available options.
+    Includes priority_score for each LLM showing why it was selected.
+    """
+    with logger.context(endpoint="/llm_pool/best", count=count):
+        try:
+            # Clamp count to reasonable range
+            count = min(max(1, count), 5)
+            logger.info(f"Fetching best {count} LLMs for operations...")
+            best = get_best_llms_for_operations(count)
+            logger.info(
+                "Best LLMs fetched successfully",
+                returned=len(best),
+                requested=count
+            )
+            return {
+                "best": best,
+                "count": len(best),
+                "requested": count,
+                "note": "LLMs are ranked by priority score (higher = better). Cloud services like Copilot have highest priority."
+            }
+        except Exception as e:
+            logger.error("Failed to fetch best LLMs", error=e)
+            return {"best": [], "count": 0, "error": str(e)}
+
+
+# Mount frontend React app (placed AFTER API routers and SEO endpoints so it does not shadow them)
+# Moved BELOW all API router registrations to avoid shadowing (catch-all must be last)
 
 # CORS configuration (env-driven)
 cors_origins = _parse_list_env("CORS_ORIGINS")
@@ -570,7 +796,8 @@ async def canonical_redirect_middleware(request: Request, call_next):
 from fastapi import HTTPException, Body, UploadFile, File, Form
 import json
 
-app.add_middleware(LoggingMiddleware)
+# Logging middleware already added earlier; avoid duplicate registration which can double-log requests
+# (Original duplicate call removed)
 
 # Monitoring routes (expose health and metrics dashboards)
 try:
@@ -578,6 +805,22 @@ try:
     app.include_router(monitoring_router)
 except Exception as e:
     logger.warning(f"Monitoring routes not loaded: {e}")
+
+# Optional dev-only middleware introspection
+@app.get("/__debug/middlewares")
+def debug_middlewares(request: Request):
+    if os.getenv("ENABLE_DEBUG_ENDPOINTS", "false").lower() not in ("1", "true", "yes"):
+        return JSONResponse(status_code=404, content={"detail": "Not Found"})
+    try:
+        reg_order = [m.cls.__name__ for m in app.user_middleware]
+        exec_order = list(reversed(reg_order))  # Outer→inner approximation
+        return {
+            "status": "ok",
+            "registered_order": reg_order,
+            "approx_execution_order": exec_order,
+        }
+    except Exception as e:
+        return JSONResponse(status_code=500, content={"detail": str(e)})
 
 # Include LLM configuration routers
 app.include_router(llm_config_router)
@@ -587,13 +830,14 @@ app.include_router(build_orchestration_router)
 app.include_router(llm_oauth_router)
 if billing_router is not None:
     app.include_router(billing_router)
+app.include_router(pricing_routes)
 app.include_router(orchestration_workflow_router)
 app.include_router(med_interop_router)
 app.include_router(med_diagnostic_router)
 app.include_router(med_trials_router)
 app.include_router(science_rwe_router)
 app.include_router(science_multimodal_router)
-# app.include_router(ai_workflow_router)  # Temporarily commented - has import issues
+app.include_router(ai_workflow_router)
 app.include_router(rules_api_router)  # Rules management API
 app.include_router(phone_pairing_router)  # Phone pairing & remote control API
 app.include_router(away_router)  # Away mode management (pair/unpair/status)
@@ -601,12 +845,47 @@ app.include_router(sms_log_router)  # SMS conversation logs
 app.include_router(user_notes_router)  # User notes & explanations API
 app.include_router(build_rules_router)  # Build rules & manifest API (QR code concept)
 app.include_router(build_plan_approval_router)  # Build plan generation & approval
-app.include_router(email_inbound_router)  # Email inbound webhook for ACCEPT/DECLINE/MODIFY
+app.include_router(marketplace_router)  # AI model marketplace (FastAPI port)
+app.include_router(agent_router)  # Agent chat endpoints (marketplace integration)
+app.include_router(marketplace_auth_router)  # Marketplace auth endpoints
+if EMAIL_ROUTER_ENABLED and email_inbound_router:
+    app.include_router(email_inbound_router)  # Email inbound webhook for ACCEPT/DECLINE/MODIFY
 app.include_router(push_router)  # Push registration and notify API
-app.include_router(assistant_inbox_router)  # Assistant inbox API
-app.include_router(assistant_inbox_triage_router)  # Assistant inbox triage & autopilot API
+# Legacy assistant inbox removed (spool ingestion supersedes it)
+# Include readiness early to avoid catch-all shadowing (was previously after mount section)
 app.include_router(tasks_router)  # Tasks (persistent todos)
+# test_solver_router included earlier to avoid catch-all shadowing
 # media and assistant routers are already included above (pre-catch-all)
+
+# Mount frontend React app (placed AFTER API routers and SEO endpoints so it does not shadow them)
+frontend_dist = Path(__file__).resolve().parent.parent / "frontend" / "dist"
+if frontend_dist.exists() and (frontend_dist / "index.html").exists():
+    app.mount("/assets", StaticFiles(directory=str(frontend_dist / "assets")), name="assets")
+    
+    @app.get("/{full_path:path}")
+    async def serve_frontend_catchall(full_path: str):
+        """Catch-all route to serve React app for client-side routing"""
+        from fastapi import HTTPException
+        from fastapi.responses import PlainTextResponse
+        # If SEO endpoints are requested, serve them directly
+        if full_path == "robots.txt":
+            return PlainTextResponse(robots_txt())
+        if full_path == "sitemap.xml":
+            # sitemap_xml() already returns a Response with media_type="application/xml"
+            # Return it directly instead of wrapping in PlainTextResponse
+            return sitemap_xml()
+        # Don't intercept API routes or explicit SEO endpoints
+        if full_path.startswith((
+            "api/", "auth/", "llm/", "metrics", "health", "admin/", "snapshots", "build", "consistency", "pfs", "verification", "assets/", "assistant/"
+        )) or full_path in ("robots.txt", "sitemap.xml"):
+            raise HTTPException(status_code=404, detail="Not found")
+        
+        file_path = frontend_dist / full_path
+        if file_path.is_file():
+            return FileResponse(str(file_path))
+        else:
+            # Return index.html for client-side routing
+            return FileResponse(str(frontend_dist / "index.html"))
 
 # Compliance status endpoint for medical/scientific workspaces
 @app.get("/api/compliance/status")
@@ -702,11 +981,11 @@ def validate_token(req: TokenRequest = Body(...)):
         # Use stdlib to avoid extra dependencies
         import urllib.request
         import json as _json
-        req = urllib.request.Request('https://api.github.com/user')
-        req.add_header('Authorization', f'token {token}')
-        req.add_header('Accept', 'application/vnd.github.v3+json')
+        request_obj = urllib.request.Request('https://api.github.com/user')
+        request_obj.add_header('Authorization', f'token {token}')
+        request_obj.add_header('Accept', 'application/vnd.github.v3+json')
         try:
-            with urllib.request.urlopen(req, timeout=5) as resp:
+            with urllib.request.urlopen(request_obj, timeout=5) as resp:
                 body = resp.read().decode('utf-8')
                 j = _json.loads(body)
                 return {'status': 'ok', 'provider': 'github', 'username': j.get('login')}
@@ -720,10 +999,10 @@ def validate_token(req: TokenRequest = Body(...)):
             return {'status': 'error', 'error': str(e)}
     elif provider == 'openai':
         import urllib.request
-        req = urllib.request.Request('https://api.openai.com/v1/models')
-        req.add_header('Authorization', f'Bearer {token}')
+        request_obj = urllib.request.Request('https://api.openai.com/v1/models')
+        request_obj.add_header('Authorization', f'Bearer {token}')
         try:
-            with urllib.request.urlopen(req, timeout=5) as resp:
+            with urllib.request.urlopen(request_obj, timeout=5) as resp:
                 return {'status': 'ok', 'provider': 'openai'}
         except urllib.error.HTTPError as he:
             try:
@@ -736,9 +1015,7 @@ def validate_token(req: TokenRequest = Body(...)):
     else:
         raise HTTPException(status_code=400, detail='unknown provider')
 
-class HealthCheckResponse(BaseModel):
-    status: str
-    version: str
+    # Duplicate HealthCheckResponse definition removed (defined earlier around initial health endpoint).
 
 
 # OAuth configuration (read from env)
@@ -783,6 +1060,10 @@ def robots_txt():
     for h in others:
         if h and h != primary:
             lines.append(f"Sitemap: https://{h}/sitemap.xml")
+    # Disallow internal or ephemeral paths if configured
+    disallow_paths = _parse_list_env("ROBOTS_DISALLOW", [])
+    for p in disallow_paths:
+        lines.append(f"Disallow: {p}")
     return "\n".join(lines) + "\n"
 
 
@@ -794,7 +1075,30 @@ def sitemap_xml():
         if h and h not in base_urls:
             base_urls.append(h)
     # Minimal URL set; extend as needed
-    paths = ["/", "/health", "/top-dog-ide", "/q-ide"]
+    # Public marketing & product pages for sitemap (expand as needed)
+    paths = [
+        "/",
+        "/health",
+        "/features",
+        "/pricing",
+        "/how-it-works",
+        "/security",
+        "/blog",
+        "/docs",
+        "/support",
+        "/contact",
+        "/features/ai-pair-programming",
+        "/features/code-refactoring",
+        "/features/security-scanning",
+        "/features/debugging",
+        "/features/test-generation",
+        "/pricing/free",
+        "/pricing/pro",
+        "/pricing/teams",
+        "/pricing/enterprise",
+        "/top-dog-ide",
+        "/q-ide"  # legacy brand landing retained intentionally
+    ]
     entries = []
     now = datetime.utcnow().strftime("%Y-%m-%d")
     for host in base_urls:
@@ -807,19 +1111,37 @@ def sitemap_xml():
         *entries,
         "</urlset>",
     ])
-    return xml
+    from fastapi import Response
+    return Response(content=xml, media_type="application/xml")
 
 
 # SEO landing pages for brand queries
 @app.get("/top-dog-ide", response_class=PlainTextResponse)
 def top_dog_landing():
     canonical = os.getenv("CANONICAL_HOST", "topdog-ide.com")
+    org_jsonld = {
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        "name": "Top Dog IDE (Q‑IDE)",
+        "url": f"https://{canonical}/",
+        "logo": f"https://{canonical}/assets/logo.png"
+    }
+    app_jsonld = {
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        "name": "Top Dog IDE",
+        "applicationCategory": "DeveloperApplication",
+        "operatingSystem": "Windows, macOS, Linux",
+        "offers": {"@type": "Offer", "price": "0"}
+    }
     html = (
         "<!doctype html><html lang=\"en\"><head>"
         "<meta charset=\"utf-8\">"
         "<title>Top Dog IDE (Q‑IDE) — AI Development Environment</title>"
         f"<link rel=\"canonical\" href=\"https://{canonical}/\">"
         "<meta name=\"description\" content=\"Top Dog IDE — also known as Q‑IDE — AI IDE with 53+ LLMs for coding, refactoring, debugging.\">"
+        f"<script type=\"application/ld+json\">{json.dumps(org_jsonld)}</script>"
+        f"<script type=\"application/ld+json\">{json.dumps(app_jsonld)}</script>"
         "</head><body>"
         "<h1>Top Dog IDE (Q‑IDE)</h1>"
         "<p>Top Dog IDE — also known as Q‑IDE — is an AI IDE for developers. Build faster with Aura Development.</p>"
@@ -832,12 +1154,19 @@ def top_dog_landing():
 @app.get("/q-ide", response_class=PlainTextResponse)
 def q_ide_landing():
     canonical = os.getenv("CANONICAL_HOST", "topdog-ide.com")
+    website_jsonld = {
+        "@context": "https://schema.org",
+        "@type": "Website",
+        "name": "Top Dog IDE (Q‑IDE)",
+        "url": f"https://{canonical}/"
+    }
     html = (
         "<!doctype html><html lang=\"en\"><head>"
         "<meta charset=\"utf-8\">"
         "<title>Q‑IDE (Top Dog IDE) — AI IDE</title>"
         f"<link rel=\"canonical\" href=\"https://{canonical}/\">"
         "<meta name=\"description\" content=\"Q‑IDE (Top Dog IDE): AI development environment with 53+ LLMs.\">"
+        f"<script type=\"application/ld+json\">{json.dumps(website_jsonld)}</script>"
         "</head><body>"
         "<h1>Q‑IDE (Top Dog IDE)</h1>"
         "<p>Q‑IDE (Top Dog IDE) is an AI IDE with refactoring, debugging, and 53+ large language models.</p>"
@@ -848,7 +1177,7 @@ def q_ide_landing():
 
 
 @app.get("/auth/status")
-def get_auth_status(session_id: str = None):
+def get_auth_status(session_id: Optional[str] = None):
     """Get current user profile and linked accounts."""
     if not session_id:
         return {"status": "unauthenticated"}
@@ -878,7 +1207,7 @@ def google_oauth_start():
 
 
 @app.get("/auth/google/callback")
-def google_oauth_callback(code: str = None, error: str = None):
+def google_oauth_callback(code: Optional[str] = None, error: Optional[str] = None):
     """Handle Google OAuth callback."""
     if error:
         callback_url = f"/static/oauth-callback.html?status=error&message={urllib.parse.quote(error)}&provider=google"
@@ -915,7 +1244,7 @@ def google_oauth_callback(code: str = None, error: str = None):
 
 
 @app.get("/auth/github/start")
-def github_oauth_start(session_id: str = None):
+def github_oauth_start(session_id: Optional[str] = None):
     """Redirect to GitHub OAuth consent screen."""
     if not GITHUB_CLIENT_ID:
         return {"status": "error", "message": "GITHUB_CLIENT_ID not set"}
@@ -926,7 +1255,7 @@ def github_oauth_start(session_id: str = None):
 
 
 @app.get("/auth/github/callback")
-def github_oauth_callback(code: str = None, error: str = None, state: str = None):
+def github_oauth_callback(code: Optional[str] = None, error: Optional[str] = None, state: Optional[str] = None):
     """Handle GitHub OAuth callback; state contains session_id for account linking."""
     if error:
         callback_url = f"/static/oauth-callback.html?status=error&message={urllib.parse.quote(error)}&provider=github"
@@ -968,63 +1297,7 @@ def github_oauth_callback(code: str = None, error: str = None, state: str = None
 
 
 
-# LLM Pool endpoint
-@app.get("/llm_pool")
-def get_llm_pool():
-    """Return a report of available local LLMs and any excluded critical models.
-
-    The response includes two keys: 'available' (list) and 'excluded' (list).
-    """
-    with logger.context(endpoint="/llm_pool"):
-        try:
-            logger.info("Fetching LLM pool report...")
-            report = build_llm_report()
-            available_count = len(report.get("available", []))
-            excluded_count = len(report.get("excluded", []))
-            logger.info(
-                "LLM pool fetched successfully",
-                available=available_count,
-                excluded=excluded_count
-            )
-            return report
-        except Exception as e:
-            logger.error("Failed to fetch LLM pool", error=e)
-            raise
-
-
-@app.get("/llm_pool/best")
-def get_best_llms(count: int = 3):
-    """Return the top N auto-selected best LLMs for operations.
-    
-    This endpoint returns LLMs ranked by quality/priority:
-    1. Cloud services (Copilot, Gemini, ChatGPT, Grok) - highest priority
-    2. Local CLIs (Ollama, Llama, etc) - medium priority  
-    3. Running processes - lower priority
-    4. Local model files - lowest priority
-    
-    Use this to auto-populate operation slots with the best available options.
-    Includes priority_score for each LLM showing why it was selected.
-    """
-    with logger.context(endpoint="/llm_pool/best", count=count):
-        try:
-            # Clamp count to reasonable range
-            count = min(max(1, count), 5)
-            logger.info(f"Fetching best {count} LLMs for operations...")
-            best = get_best_llms_for_operations(count)
-            logger.info(
-                "Best LLMs fetched successfully",
-                returned=len(best),
-                requested=count
-            )
-            return {
-                "best": best,
-                "count": len(best),
-                "requested": count,
-                "note": "LLMs are ranked by priority score (higher = better). Cloud services like Copilot have highest priority."
-            }
-        except Exception as e:
-            logger.error("Failed to fetch best LLMs", error=e)
-            return {"best": [], "count": 0, "error": str(e)}
+# LLM Pool endpoint - MOVED TO BEFORE FRONTEND CATCH-ALL
 
 
 # Agent orchestration endpoint
@@ -1041,6 +1314,33 @@ class AgentTaskResponse(BaseModel):
     message: str
     used_model: Optional[str] = None
     result: Optional[dict] = None
+
+class LLMSelectionRequest(BaseModel):
+    llm_id: str
+    role: Optional[str] = None  # default to 'coding' if not provided
+
+@app.post("/llm/select")
+def select_llm(req: LLMSelectionRequest):
+    """Persist a user-selected LLM by assigning it to a role (default 'coding').
+
+    This promotes localStorage selection to server-side config so multi-device sessions
+    and Q Assistant auto-selection honor the choice.
+    """
+    try:
+        role = (req.role or "coding").strip()
+        from backend.llm_config import save_role_assignment, list_available_providers
+        providers = list_available_providers()
+        if req.llm_id not in providers:
+            return JSONResponse(status_code=404, content={"error": f"Unknown LLM: {req.llm_id}"})
+        if role not in ["coding", "q_assistant", "analysis", "testing", "local"]:
+            # Allow minimal controlled set; could expand later
+            return JSONResponse(status_code=400, content={"error": f"Unsupported role: {role}"})
+        ok = save_role_assignment(role, req.llm_id)
+        if not ok:
+            return JSONResponse(status_code=500, content={"error": "Failed to persist assignment"})
+        return {"status": "ok", "role": role, "llm_id": req.llm_id}
+    except Exception as e:
+        return JSONResponse(status_code=500, content={"error": str(e)})
 
 @app.post("/agent/orchestrate")
 def orchestrate_agent_task(req_body: AgentTaskRequest, req: Request):
@@ -1066,7 +1366,7 @@ def orchestrate_agent_task(req_body: AgentTaskRequest, req: Request):
             if not decision.get("safe", True):
                 try:
                     from backend.metrics import record_llm_request
-                    if record_llm_request:
+                    if record_llm_request is not None:
                         record_llm_request(outcome="blocked", failure_cost_usd=1.0)
                 except Exception:
                     pass
@@ -1180,7 +1480,7 @@ def orchestrate_agent_task(req_body: AgentTaskRequest, req: Request):
         fc = req_body.input_data.get("failure_cost_usd") if isinstance(req_body.input_data, dict) else None
         if isinstance(fc, (int, float)):
             failure_cost = float(fc)
-        if record_llm_request:
+        if record_llm_request is not None:
             record_llm_request(outcome="ok", failure_cost_usd=failure_cost)
     except Exception:
         pass
@@ -1205,7 +1505,8 @@ def orchestrate_agent_task(req_body: AgentTaskRequest, req: Request):
                         return llm_infer(p, max_tokens=64)
                     except Exception:
                         return f"{p.strip().lower()} -> {selected.get('name','llm')}"
-                res = agent.evaluate(req_body.input_data.get("prompt"), _llm, n=n)
+                prompt_str = str(req_body.input_data.get("prompt", "")) if isinstance(req_body.input_data, dict) else ""
+                res = agent.evaluate(prompt_str, _llm, n=n)
                 if CONSISTENCY_SCORE is not None:
                     CONSISTENCY_SCORE.labels(
                         component="orchestrator",
@@ -1670,8 +1971,9 @@ def run_local_build(build_id: str):
             return
         # Execute the script and stream output
         proc = subprocess.Popen([sys.executable, str(script)], stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True)
-        for line in proc.stdout:
-            BUILD_STORE[build_id]["log"] += line
+        if proc.stdout is not None:
+            for line in proc.stdout:
+                BUILD_STORE[build_id]["log"] += line
         proc.wait()
         BUILD_STORE[build_id]["status"] = "success" if proc.returncode == 0 else "failed"
     except Exception as e:
@@ -1698,7 +2000,7 @@ def api_get_build(build_id: str):
 
 
 @app.get("/llm/learning/builds")
-def get_builds_for_learning(limit: int = 20, skip: int = 0, session_id: str = None):
+def get_builds_for_learning(limit: int = 20, skip: int = 0, session_id: Optional[str] = None):
     """Get build history for LLM learning.
     
     Returns recent builds with their metadata, status, and output.
@@ -1708,7 +2010,7 @@ def get_builds_for_learning(limit: int = 20, skip: int = 0, session_id: str = No
         return {"status": "error", "message": "unauthorized"}
     
     builds = list(BUILD_STORE.values())
-    builds_sorted = sorted(builds, key=lambda b: b.get("id"), reverse=True)
+    builds_sorted = sorted(builds, key=lambda b: str(b.get("id", "")), reverse=True)
     paginated = builds_sorted[skip:skip+limit]
     
     return {
@@ -1721,7 +2023,7 @@ def get_builds_for_learning(limit: int = 20, skip: int = 0, session_id: str = No
 
 
 @app.get("/llm/learning/build/{build_id}")
-def get_build_learning_data(build_id: str, session_id: str = None):
+def get_build_learning_data(build_id: str, session_id: Optional[str] = None):
     """Get detailed build data for LLM learning including logs, metadata, and runtime info.
     
     Response includes:
@@ -1760,7 +2062,7 @@ def get_build_learning_data(build_id: str, session_id: str = None):
 
 
 @app.get("/llm/learning/codebase")
-def get_codebase_for_learning(session_id: str = None):
+def get_codebase_for_learning(session_id: Optional[str] = None):
     """Get codebase structure and key files for LLM learning.
     
     Returns:
@@ -1860,7 +2162,7 @@ def get_codebase_for_learning(session_id: str = None):
 
 
 @app.post("/llm/learning/report")
-def submit_llm_learning_report(request_body: dict, session_id: str = None):
+def submit_llm_learning_report(request_body: dict, session_id: Optional[str] = None):
     """LLM submits analysis/learning report about a build or codebase.
     
     Example body:
@@ -1878,7 +2180,10 @@ def submit_llm_learning_report(request_body: dict, session_id: str = None):
         return {"status": "error", "message": "unauthorized"}
     
     try:
-        build_id = request_body.get("build_id")
+        build_id_val = request_body.get("build_id")
+        if not isinstance(build_id_val, str):
+            return {"status": "error", "message": "build_id must be a string"}
+        build_id = build_id_val
         report_type = request_body.get("type")
         analysis = request_body.get("analysis")
         recommendations = request_body.get("recommendations", [])

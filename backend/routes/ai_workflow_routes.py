@@ -14,7 +14,7 @@ import logging
 from backend.orchestration.workflow_state_machine import WorkflowState, LLMRole
 from backend.services.ai_orchestration import (
     get_ai_orchestration_manager,
-    AIOrchestrationContext,
+    AIOrchestrationManager,
 )
 from backend.services.orchestration_service import OrchestrationService
 
@@ -75,11 +75,22 @@ class WorkflowStatusResponse(BaseModel):
 # Dependency Injection
 # ============================================
 
-def get_db(request: Request):
-    """Get database session from request"""
-    if not hasattr(request.app, 'workflow_db_manager'):
+def get_db_session(request: Request):
+    """FastAPI dependency to get a database session."""
+    if not hasattr(request.app.state, 'workflow_db_manager'):
         raise HTTPException(status_code=500, detail="Database not initialized")
-    return request.app.workflow_db_manager.get_session()
+    
+    db_session = None
+    try:
+        db_session = request.app.state.workflow_db_manager.get_session()
+        yield db_session
+    finally:
+        if db_session:
+            db_session.close()
+
+def get_orchestration_service(db=Depends(get_db_session)) -> OrchestrationService:
+    """FastAPI dependency to get an OrchestrationService instance."""
+    return OrchestrationService(db=db)
 
 
 # ============================================
@@ -89,7 +100,7 @@ def get_db(request: Request):
 @router.post("/initialize", response_model=WorkflowInitResponse)
 async def initialize_workflow(
     req: WorkflowInitRequest,
-    request: Request = None,
+    ai_manager: AIOrchestrationManager = Depends(get_ai_orchestration_manager),
 ) -> WorkflowInitResponse:
     """
     Initialize a new AI-driven workflow.
@@ -98,17 +109,12 @@ async def initialize_workflow(
     
     Args:
         req: Initialization request with project/user info
-        request: FastAPI request (for DB session)
+        ai_manager: The AI orchestration manager.
         
     Returns:
         Workflow ID, initial state, and Q Assistant's system prompt
     """
     try:
-        # Get managers
-        ai_manager = get_ai_orchestration_manager()
-        db = get_db(request) if request else None
-        orchestration_service = OrchestrationService(db=db)
-        
         # Generate IDs
         workflow_id = str(uuid4())
         build_id = req.build_id or str(uuid4())
@@ -126,8 +132,8 @@ async def initialize_workflow(
         
         return WorkflowInitResponse(
             workflow_id=workflow_id,
-            initial_state=WorkflowState.DISCOVERY.value,
-            system_prompt=context.system_prompt,
+            initial_state=context["initial_state"],
+            system_prompt=context["system_prompt"],
             next_action="Gather user requirements for the build. Ask clarifying questions and document all specifications.",
         )
     
@@ -139,29 +145,19 @@ async def initialize_workflow(
 @router.post("/complete-phase", response_model=AIPhaseResponse)
 async def complete_ai_phase(
     req: AIPhaseRequest,
-    request: Request = None,
+    ai_manager: AIOrchestrationManager = Depends(get_ai_orchestration_manager),
 ) -> AIPhaseResponse:
     """
     Submit AI completion for a phase and advance workflow.
     
     Args:
         req: Phase completion with AI response and result
-        request: FastAPI request (for DB session)
+        ai_manager: The AI orchestration manager.
         
     Returns:
         Next workflow state and instructions
     """
     try:
-        # Get managers
-        ai_manager = get_ai_orchestration_manager()
-        db = get_db(request) if request else None
-        orchestration_service = OrchestrationService(db=db)
-        
-        # Get context
-        context = ai_manager.contexts.get(req.workflow_id)
-        if not context:
-            raise ValueError(f"Workflow {req.workflow_id} not found")
-        
         # Advance workflow
         result = await ai_manager.advance_with_ai_result(
             workflow_id=req.workflow_id,
@@ -170,8 +166,9 @@ async def complete_ai_phase(
         )
         
         # Get next action based on new state
+        new_state_enum = WorkflowState[result['new_state'].upper().replace('-', '_')]
         next_action = _get_next_action(
-            WorkflowState[result['new_state'].upper().replace('-', '_')],
+            new_state_enum,
             result.get('next_role'),
         )
         
@@ -194,23 +191,19 @@ async def complete_ai_phase(
 @router.get("/status/{workflow_id}", response_model=WorkflowStatusResponse)
 async def get_workflow_status(
     workflow_id: str,
-    request: Request = None,
+    orchestration_service: OrchestrationService = Depends(get_orchestration_service),
 ) -> WorkflowStatusResponse:
     """
     Get current status of a workflow.
     
     Args:
         workflow_id: ID of the workflow
-        request: FastAPI request (for DB session)
+        orchestration_service: The orchestration service.
         
     Returns:
         Workflow status including current state and progress
     """
     try:
-        # Get managers
-        db = get_db(request) if request else None
-        orchestration_service = OrchestrationService(db=db)
-        
         # Get status from orchestration service
         status = await orchestration_service.get_workflow_status(workflow_id)
         
@@ -231,38 +224,30 @@ async def get_workflow_status(
 @router.post("/get-ai-prompt/{workflow_id}")
 async def get_ai_prompt(
     workflow_id: str,
-    request: Request = None,
+    ai_manager: AIOrchestrationManager = Depends(get_ai_orchestration_manager),
+    orchestration_service: OrchestrationService = Depends(get_orchestration_service),
 ) -> Dict[str, Any]:
     """
     Get the current AI prompt for a workflow.
     
     Args:
         workflow_id: ID of the workflow
-        request: FastAPI request (for DB session)
+        ai_manager: The AI orchestration manager.
+        orchestration_service: The orchestration service.
         
     Returns:
         Complete AI API request with system and conversation messages
     """
     try:
-        # Get managers
-        ai_manager = get_ai_orchestration_manager()
-        db = get_db(request) if request else None
-        orchestration_service = OrchestrationService(db=db)
-        
-        # Get workflow status to find current state
+        # Get current state from orchestration service
         status = await orchestration_service.get_workflow_status(workflow_id)
-        
-        # Parse state
-        state_str = status['current_state']
-        try:
-            current_state = WorkflowState[state_str.upper().replace('-', '_')]
-        except KeyError:
-            raise ValueError(f"Invalid state: {state_str}")
-        
+        current_state_str = status['current_state']
+        current_state = WorkflowState(current_state_str)
+
         # Get AI prompt
         prompt = await ai_manager.get_ai_prompt_for_phase(workflow_id, current_state)
         
-        logger.info(f"Generated AI prompt for workflow {workflow_id} state {state_str}")
+        logger.info(f"Generated AI prompt for workflow {workflow_id} state {current_state_str}")
         
         return prompt
     

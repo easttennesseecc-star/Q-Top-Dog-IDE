@@ -1,0 +1,35 @@
+# Sample Traefik config snippet for auth redirection
+# This config assumes you have a middleware to check a session cookie
+# Because Traefik cannot read localStorage, prefer migrating to httpOnly session cookies
+
+http:
+  routers:
+    qide-spa:
+      rule: "Host(`topdog-ide.com`) || Host(`www.topdog-ide.com`)"
+      entryPoints:
+        - web
+      service: qide-frontend
+      middlewares:
+        - qide-auth-redirect
+
+  services:
+    qide-frontend:
+      loadBalancer:
+        servers:
+          - url: "http://frontend:5173"  # replace with production static server
+
+  middlewares:
+    qide-auth-redirect:
+      redirectRegex:
+        regex: "^/app.*"
+        replacement: "/login"
+        permanent: false
+      # NOTE: This naive redirect always sends /app to /login. For conditional behavior
+      # based on cookies, you'd need a more advanced plugin or handle at backend.
+
+# For conditional redirects, deploy a small edge auth service or use Traefik ForwardAuth:
+# forwardAuth:
+#   address: "http://auth-proxy:8080/check"
+#   trustForwardHeader: true
+#   authResponseHeaders:
+#     - X-User-ID

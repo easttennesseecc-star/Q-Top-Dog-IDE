@@ -8,8 +8,7 @@ import secrets
 from typing import Dict, List, Optional, Any
 from datetime import datetime, timedelta
 import hashlib
-import base64
-from dataclasses import dataclass, asdict
+from dataclasses import dataclass, asdict, field
 
 
 @dataclass
@@ -48,23 +47,11 @@ class UserProfile:
     name: str
     avatar_url: Optional[str] = None
     github_username: Optional[str] = None
-    github_repos: List[str] = None
-    connected_services: Dict[str, bool] = None  # {service: has_token}
-    credentials: Dict[str, str] = None  # {service: encrypted_token}
-    created_at: datetime = None
-    last_login: datetime = None
-    
-    def __post_init__(self):
-        if self.github_repos is None:
-            self.github_repos = []
-        if self.connected_services is None:
-            self.connected_services = {}
-        if self.credentials is None:
-            self.credentials = {}
-        if self.created_at is None:
-            self.created_at = datetime.now()
-        if self.last_login is None:
-            self.last_login = datetime.now()
+    github_repos: List[str] = field(default_factory=list)
+    connected_services: Dict[str, bool] = field(default_factory=dict)  # {service: has_token}
+    credentials: Dict[str, str] = field(default_factory=dict)  # {service: encrypted_token}
+    created_at: datetime = field(default_factory=datetime.now)
+    last_login: datetime = field(default_factory=datetime.now)
     
     def to_dict(self):
         return {
@@ -86,7 +73,7 @@ class LLMCredential:
     service: str  # 'github_copilot', 'openai', 'anthropic', 'gemini', 'ollama'
     api_key: Optional[str] = None
     is_active: bool = False
-    added_date: datetime = None
+    added_date: Optional[datetime] = None
     last_used: Optional[datetime] = None
     cost_tier: Optional[str] = None  # 'free', 'paid', 'subscription'
     

@@ -17,7 +17,15 @@ from backend.services.build_plan_approval_service import (
     get_plan_approval_service,
     PlanStep,
 )
-from backend.services.email_token_service import register_token, consume_token
+try:
+    if str(os.getenv("DISABLE_EMAIL", "0")).lower() in ("1","true","yes","on"):
+        raise ImportError("Email disabled")
+    from backend.services.email_token_service import register_token, consume_token
+    EMAIL_FEATURES = True
+except Exception:
+    register_token = None  # type: ignore
+    consume_token = None  # type: ignore
+    EMAIL_FEATURES = False
 from backend.services.sms_sender import get_sms_sender
 from backend.services.pending_action_store import add_pending, mark_resolved_by_token
 from pathlib import Path
@@ -89,18 +97,23 @@ async def create_ui_draft(req: UIDraftRequest) -> UIDraftResponse:
 
         # Prepare one-click links upfront so we can include in SMS first
         backend_url = os.getenv("BACKEND_URL", "http://127.0.0.1:8000")
-        approve_token = register_token({
+        if not EMAIL_FEATURES:
+            # Skip email-token flows entirely when disabled
+            approve_token = "email-disabled"
+            modify_token = "email-disabled"
+        else:
+            approve_token = register_token({
             "kind": "ui_draft_approval",
             "project_id": req.project_id,
             "description": req.description,
-        }, expires_seconds=7*24*3600)
-        approve_link = f"{backend_url.rstrip('/')}/api/assistant/approve-email?token={approve_token}"
-        modify_token = register_token({
+            }, expires_seconds=7*24*3600)
+            approve_link = f"{backend_url.rstrip('/')}/api/assistant/approve-email?token={approve_token}"
+            modify_token = register_token({
             "kind": "ui_draft_modify",
             "project_id": req.project_id,
             "description": req.description,
-        }, expires_seconds=7*24*3600)
-        modify_link = f"{backend_url.rstrip('/')}/api/assistant/modify-email?token={modify_token}"
+            }, expires_seconds=7*24*3600)
+            modify_link = f"{backend_url.rstrip('/')}/api/assistant/modify-email?token={modify_token}"
         # Track pending approval for reminder handling
         try:
             add_pending("ui_draft_approval", approve_token, req.project_id, {"description": req.description})
@@ -186,6 +199,8 @@ async def create_ui_draft(req: UIDraftRequest) -> UIDraftResponse:
         try:
             import base64
             from urllib.parse import urlparse
+            if not EMAIL_FEATURES:
+                raise RuntimeError("Email disabled")
             from backend.services.email_service import get_email_service
             to_addr = req.email_to or os.getenv("EMAIL_APPROVAL_TO")
             # Prefer sending email with attachment whenever an address is available
@@ -245,7 +260,8 @@ async def create_ui_draft(req: UIDraftRequest) -> UIDraftResponse:
                 attachments = []
                 if img_bytes:
                     attachments.append((filename, img_bytes, ctype))
-                get_email_service().send(subject, [to_addr], html=html, text=text, attachments=attachments)
+                if EMAIL_FEATURES:
+                    get_email_service().send(subject, [to_addr], html=html, text=text, attachments=attachments)
         except Exception as ee:
             logger.warning(f"Email send skipped/failed: {ee}")
         return UIDraftResponse(
@@ -293,7 +309,7 @@ async def create_plan(req: PlanInitRequest) -> Dict[str, Any]:
                 estimated_duration="1-2h",
                 files_affected=[],
                 dependencies=[],
-                risk_level=f.risk,
+                risk_level=f.risk or "low",
                 verification_criteria=f"Unit tests pass for feature {f.id}"
             ))
             order += 1
@@ -353,8 +369,11 @@ async def approve_plan(req: PlanApproveRequest) -> Dict[str, Any]:
         plan = svc.approve_plan(req.plan_id, req.approved_by)
         if not plan:
             raise HTTPException(status_code=404, detail="Plan not found")
+        assert plan is not None
         if req.start_execution:
-            plan = svc.start_execution(req.plan_id) or plan
+            started = svc.start_execution(req.plan_id)
+            if started:
+                plan = started
         return {"message": "Plan approved", "plan": plan.to_dict()}
     except HTTPException:
         raise
@@ -371,7 +390,12 @@ from fastapi import Query, Form
 @router.get("/approve-email", response_class=HTMLResponse)
 async def approve_via_email(token: str = Query(..., description="Approval token from email")):
     try:
-        payload = consume_token(token)
+        # Re-import token consumer defensively in case module-level import was gated by env
+        try:
+            from backend.services.email_token_service import consume_token as _consume_token  # type: ignore
+        except Exception:
+            _consume_token = None  # type: ignore
+        payload = _consume_token(token) if (_consume_token is not None) else None
         if not payload:
             return HTMLResponse(status_code=400, content="<h3>Invalid or expired link.</h3>")
         kind = payload.get("kind")
@@ -429,8 +453,8 @@ async def approve_via_email(token: str = Query(..., description="Approval token 
             plan_id = payload.get("plan_id")
             if not plan_id:
                 return HTMLResponse(status_code=400, content="<h3>Missing plan id.</h3>")
-            plan = svc.approve_plan(plan_id, approved_by="email")
-            if not plan:
+            approved_plan = svc.approve_plan(plan_id, approved_by="email")
+            if not approved_plan:
                 return HTMLResponse(status_code=404, content="<h3>Plan not found.</h3>")
             # Start execution if requested
             if payload.get("start_execution", True):
@@ -456,10 +480,19 @@ async def approve_via_email(token: str = Query(..., description="Approval token 
 @router.get("/modify-email", response_class=HTMLResponse)
 async def request_changes_form(token: str = Query(..., description="Modify token from email")):
     try:
-        payload = consume_token(token)
+        # Always allow modify-email flow even when EMAIL_FEATURES is disabled so tests can exercise token logic.
+        # Re-import token utilities unconditionally (initial module-level import may have been gated by DISABLE_EMAIL).
+        try:
+            from backend.services.email_token_service import consume_token, register_token  # type: ignore
+        except Exception:
+            consume_token = None  # type: ignore
+            register_token = None  # type: ignore
+        payload = consume_token(token) if (consume_token is not None) else None
         if not payload or payload.get("kind") != "ui_draft_modify":
             return HTMLResponse(status_code=400, content="<h3>Invalid or expired link.</h3>")
         # Re-issue a short-lived token to be submitted with the form
+        if register_token is None:
+            return HTMLResponse(status_code=500, content="<h3>Token service unavailable.</h3>")
         short_token = register_token(payload, expires_seconds=3600)
         html = f"""
         <html>
@@ -485,7 +518,13 @@ async def request_changes_form(token: str = Query(..., description="Modify token
 @router.post("/modify-email", response_class=HTMLResponse)
 async def submit_changes(token: str = Form(...), changes: str = Form("")):
     try:
-        payload = consume_token(token)
+        # Always allow modify-email submission even when EMAIL_FEATURES is disabled; re-import token utilities.
+        try:
+            from backend.services.email_token_service import consume_token, register_token  # type: ignore
+        except Exception:
+            consume_token = None  # type: ignore
+            register_token = None  # type: ignore
+        payload = consume_token(token) if (consume_token is not None) else None
         if not payload or payload.get("kind") != "ui_draft_modify":
             return HTMLResponse(status_code=400, content="<h3>Invalid or expired submission.</h3>")
         desc = payload.get("description") or "UI draft"
@@ -529,7 +568,8 @@ async def submit_changes(token: str = Form(...), changes: str = Form("")):
             estimated_total_duration=None,
         )
         # Issue approval link for this revised plan
-        from backend.services.email_token_service import register_token
+        if register_token is None:
+            return HTMLResponse(status_code=500, content="<h3>Token service unavailable.</h3>")
         backend_url = os.getenv("BACKEND_URL", "http://127.0.0.1:8000")
         approve_token = register_token({
             "kind": "plan_approval",

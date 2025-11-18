@@ -1,0 +1,66 @@
+[
+  {
+    "id": "user-xyz_1762639589.624556",
+    "workspace_id": "user-xyz",
+    "note_type": "clarification",
+    "title": "The client prefers blue accents.",
+    "content": "The client prefers blue accents.",
+    "tags": [
+      "email",
+      "inbound"
+    ],
+    "created_at": "2025-11-08T17:06:29.624556",
+    "updated_at": "2025-11-08T17:06:29.624556",
+    "metadata": {
+      "from": "bob@example.com"
+    }
+  },
+  {
+    "id": "user-xyz_1762639924.473574",
+    "workspace_id": "user-xyz",
+    "note_type": "clarification",
+    "title": "The client prefers blue accents.",
+    "content": "The client prefers blue accents.",
+    "tags": [
+      "email",
+      "inbound"
+    ],
+    "created_at": "2025-11-08T17:12:04.473574",
+    "updated_at": "2025-11-08T17:12:04.473574",
+    "metadata": {
+      "from": "bob@example.com"
+    }
+  },
+  {
+    "id": "user-xyz_1762640139.490151",
+    "workspace_id": "user-xyz",
+    "note_type": "clarification",
+    "title": "The client prefers blue accents.",
+    "content": "The client prefers blue accents.",
+    "tags": [
+      "email",
+      "inbound"
+    ],
+    "created_at": "2025-11-08T17:15:39.490151",
+    "updated_at": "2025-11-08T17:15:39.490151",
+    "metadata": {
+      "from": "bob@example.com"
+    }
+  },
+  {
+    "id": "user-xyz_1762640401.42801",
+    "workspace_id": "user-xyz",
+    "note_type": "clarification",
+    "title": "The client prefers blue accents.",
+    "content": "The client prefers blue accents.",
+    "tags": [
+      "email",
+      "inbound"
+    ],
+    "created_at": "2025-11-08T17:20:01.428010",
+    "updated_at": "2025-11-08T17:20:01.428010",
+    "metadata": {
+      "from": "bob@example.com"
+    }
+  }
+]

@@ -28,7 +28,7 @@ def get_available_llm_source() -> Optional[str]:
     
     # Check for Ollama (local)
     try:
-        import requests
+        import requests  # type: ignore[import-untyped]
         response = requests.get("http://127.0.0.1:11434/api/tags", timeout=2)
         if response.status_code == 200:
             return "ollama"
@@ -38,7 +38,8 @@ def get_available_llm_source() -> Optional[str]:
     return None
 
 
-def get_simple_response(user_message: str, conversation_history: list = None) -> str:
+from typing import List as _List
+def get_simple_response(user_message: str, conversation_history: Optional[_List[Dict[str, Any]]] = None) -> str:
     """
     Get a response from Q Assistant
     Falls back to intelligent mock responses if no LLM is available

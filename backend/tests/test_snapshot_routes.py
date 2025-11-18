@@ -6,19 +6,9 @@ import pytest
 from fastapi.testclient import TestClient
 
 
-@pytest.fixture(scope="module")
-def test_client():
-    # Enable snapshot API and disable auth for tests
-    os.environ["ENABLE_SNAPSHOT_API"] = "true"
-    os.environ["REQUIRE_SNAPSHOT_AUTH"] = "false"
-
-    # Import after env is set so startup uses correct flags
-    from backend.main import app
-    client = TestClient(app)
-    yield client
-
-
-def test_snapshot_labels_catalog(test_client: TestClient):
+def test_snapshot_labels_catalog(test_client: TestClient, monkeypatch):
+    monkeypatch.setenv("ENABLE_SNAPSHOT_API", "true")
+    monkeypatch.setenv("REQUIRE_SNAPSHOT_AUTH", "false")
     r = test_client.get("/snapshots/labels")
     assert r.status_code == 200
     data = r.json()
@@ -26,7 +16,9 @@ def test_snapshot_labels_catalog(test_client: TestClient):
     assert set(["init", "pre-advance", "post-advance"]).issubset(set(data["labels"]))
 
 
-def test_checkpoint_create_list_and_rollback_flow(test_client: TestClient, tmp_path: Path):
+def test_checkpoint_create_list_and_rollback_flow(test_client: TestClient, tmp_path: Path, monkeypatch):
+    monkeypatch.setenv("ENABLE_SNAPSHOT_API", "true")
+    monkeypatch.setenv("REQUIRE_SNAPSHOT_AUTH", "false")
     workflow_id = "wf-test-123"
 
     # Ensure the snapshots dir is clean for this workflow

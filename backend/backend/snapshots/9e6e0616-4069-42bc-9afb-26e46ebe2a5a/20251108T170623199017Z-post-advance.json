@@ -1,0 +1,24 @@
+{
+  "workflow_id": "9e6e0616-4069-42bc-9afb-26e46ebe2a5a",
+  "timestamp": "2025-11-08T17:06:23.199017",
+  "contexts": [],
+  "extra": {
+    "result": {
+      "workflow_id": "9e6e0616-4069-42bc-9afb-26e46ebe2a5a",
+      "previous_state": "discovery",
+      "new_state": "planning",
+      "next_role": "q_assistant",
+      "handoff_data": {
+        "workflow_id": "9e6e0616-4069-42bc-9afb-26e46ebe2a5a",
+        "current_phase": "planning",
+        "handoff_timestamp": "2025-11-08T17:06:23.199017",
+        "previous_phase_output": {
+          "reqs": []
+        },
+        "instructions": "Q Assistant is creating implementation plan"
+      },
+      "is_complete": false,
+      "state_description": "Q Assistant is creating implementation plan"
+    }
+  }
+}

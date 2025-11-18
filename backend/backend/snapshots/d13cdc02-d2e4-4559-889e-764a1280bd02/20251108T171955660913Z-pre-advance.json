@@ -1,0 +1,17 @@
+{
+  "workflow_id": "d13cdc02-d2e4-4559-889e-764a1280bd02",
+  "timestamp": "2025-11-08T17:19:55.660913",
+  "contexts": [],
+  "extra": {
+    "ai_response": "Requirements document",
+    "phase_result": {
+      "discovered_requirements": [
+        "Req 1",
+        "Req 2"
+      ],
+      "user_feedback": "Looks good",
+      "status": "discovered"
+    },
+    "completed_state": "discovery"
+  }
+}

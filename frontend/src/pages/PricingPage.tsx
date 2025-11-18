@@ -16,6 +16,7 @@ interface Tier {
   daily_api_calls: number;
   support_level: string;
   popular: boolean;
+  vertical?: string; // DEVELOPMENT | MEDICAL | SCIENTIFIC
 }
 
 interface PricingPageProps {
@@ -76,13 +77,10 @@ const PricingPage: React.FC<PricingPageProps> = ({ userId = 'guest', currentTier
     );
   }
 
-  // Organize tiers into categories for display
-  const tiersByCategory = {
-    starter: tiers.filter(t => ['FREE', 'MAKER', 'BASIC'].includes(t.id)),
-    professional: tiers.filter(t => ['PRO', 'PRO_PLUS'].includes(t.id)),
-    team: tiers.filter(t => ['PRO_TEAM', 'ENTERPRISE'].includes(t.id)),
-    enterprise: tiers.filter(t => ['ENTERPRISE_PLUS', 'ENTERPRISE_ULTIMATE'].includes(t.id)),
-  };
+  // Aura vertical organization (Development / Medical / Scientific)
+  const devTiers = tiers.filter(t => t.vertical === 'DEVELOPMENT');
+  const medTiers = tiers.filter(t => t.vertical === 'MEDICAL');
+  const sciTiers = tiers.filter(t => t.vertical === 'SCIENTIFIC');
 
   // All unique features for comparison table
   const allFeatures = Array.from(
@@ -117,12 +115,13 @@ const PricingPage: React.FC<PricingPageProps> = ({ userId = 'guest', currentTier
 
       {!showComparisonTable ? (
         <>
-          {/* Starter Plans */}
-          {tiersByCategory.starter.length > 0 && (
+          {/* Development Vertical */}
+          {devTiers.length > 0 && (
             <section className="pricing-page__section">
-              <h2 className="pricing-page__section-title">Getting Started</h2>
+              <h2 className="pricing-page__section-title">Development Suites</h2>
+              <p className="pricing-page__section-subtitle">Local-first building, multi-engine game + media synthesis.</p>
               <div className="pricing-page__grid pricing-page__grid--3col">
-                {tiersByCategory.starter.map(tier => (
+                {devTiers.map(tier => (
                   <TierCard
                     key={tier.id}
                     tier={tier}
@@ -135,12 +134,13 @@ const PricingPage: React.FC<PricingPageProps> = ({ userId = 'guest', currentTier
             </section>
           )}
 
-          {/* Professional Plans */}
-          {tiersByCategory.professional.length > 0 && (
+          {/* Medical Vertical */}
+          {medTiers.length > 0 && (
             <section className="pricing-page__section">
-              <h2 className="pricing-page__section-title">Professional</h2>
-              <div className="pricing-page__grid pricing-page__grid--2col">
-                {tiersByCategory.professional.map(tier => (
+              <h2 className="pricing-page__section-title">Medical Suites</h2>
+              <p className="pricing-page__section-subtitle">PHI scrubbing, provenance, compliance readiness.</p>
+              <div className="pricing-page__grid pricing-page__grid--3col">
+                {medTiers.map(tier => (
                   <TierCard
                     key={tier.id}
                     tier={tier}
@@ -153,30 +153,13 @@ const PricingPage: React.FC<PricingPageProps> = ({ userId = 'guest', currentTier
             </section>
           )}
 
-          {/* Team Plans */}
-          {tiersByCategory.team.length > 0 && (
+          {/* Scientific Vertical */}
+          {sciTiers.length > 0 && (
             <section className="pricing-page__section">
-              <h2 className="pricing-page__section-title">Team & Enterprise</h2>
-              <div className="pricing-page__grid pricing-page__grid--2col">
-                {tiersByCategory.team.map(tier => (
-                  <TierCard
-                    key={tier.id}
-                    tier={tier}
-                    isCurrent={tier.id === currentTier}
-                    isSelected={tier.id === selectedTier}
-                    onSelect={setSelectedTier}
-                  />
-                ))}
-              </div>
-            </section>
-          )}
-
-          {/* Enterprise Plans */}
-          {tiersByCategory.enterprise.length > 0 && (
-            <section className="pricing-page__section">
-              <h2 className="pricing-page__section-title">Enterprise Solutions</h2>
-              <div className="pricing-page__grid pricing-page__grid--2col">
-                {tiersByCategory.enterprise.map(tier => (
+              <h2 className="pricing-page__section-title">Scientific Suites</h2>
+              <p className="pricing-page__section-subtitle">Citation guardrails, provenance, hallucination suppression.</p>
+              <div className="pricing-page__grid pricing-page__grid--3col">
+                {sciTiers.map(tier => (
                   <TierCard
                     key={tier.id}
                     tier={tier}
@@ -280,11 +263,11 @@ const PricingPage: React.FC<PricingPageProps> = ({ userId = 'guest', currentTier
 
       {/* CTA Section */}
       <div className="pricing-page__cta">
-        <h2 className="pricing-page__cta-title">Ready to get started?</h2>
+        <h2 className="pricing-page__cta-title">Start Local. Scale Up When Ready.</h2>
         <p className="pricing-page__cta-subtitle">
-          Start with FREE or choose a plan that fits your team
+          Begin with Dev-Free (local + demo models). Move into specialized Aura suites as your compliance or scientific needs grow.
         </p>
-        <button className="pricing-page__cta-btn">Start Free Trial</button>
+        <button className="pricing-page__cta-btn">Launch Dev-Free</button>
       </div>
 
       {/* FAQ Section */}

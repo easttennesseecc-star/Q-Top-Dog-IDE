@@ -10,7 +10,7 @@ import subprocess
 import platform
 import socket
 import json
-from typing import List, Dict, Optional
+from typing import List, Dict, Optional, Any
 
 
 def get_critical_system_models() -> List[str]:
@@ -128,7 +128,6 @@ def list_processes(limit: int = 500) -> List[Dict]:
 
 def scan_common_install_paths() -> List[Dict]:
     """Scan common installation paths for LLM applications."""
-    places = []
     home = os.path.expanduser("~")
     if platform.system() == "Windows":
         program_files = os.environ.get("ProgramFiles", r"C:\Program Files")
@@ -158,7 +157,7 @@ def scan_common_install_paths() -> List[Dict]:
     return found
 
 
-def discover_local_llms(model_dirs: List[str] = None) -> List[Dict]:
+def discover_local_llms(model_dirs: Optional[List[str]] = None) -> List[Dict]:
     """Search for local model files (gguf, bin, pt, onnx) under common model directories."""
     critical = set(get_critical_system_models())
     found = []
@@ -453,8 +452,8 @@ def get_llm_priority_score(item: Dict) -> int:
 def build_llm_report() -> Dict:
     """Return a comprehensive report of available LLMs and services."""
     critical = set(get_critical_system_models())
-    available = []
-    excluded = []
+    available: List[Dict[str, Any]] = []
+    excluded: List[Dict[str, Any]] = []
 
     # Check CLIs
     for name, binname in KNOWN_CLI_CANDIDATES:
@@ -473,16 +472,16 @@ def build_llm_report() -> Dict:
     for item in discover_local_llms():
         nm = item.get("name", "").lower()
         if nm in critical or any(c in nm for c in critical):
-            excluded.append({"name": item.get("name"), "path": item.get("path"), "reason": "critical"})
+            excluded.append({"name": str(item.get("name") or ""), "path": str(item.get("path") or ""), "reason": "critical"})
         else:
             available.append(item)
 
     # Running processes
-    for p in list_processes():
-        nm = (p.get("image") or "").lower()
-        entry = {"name": nm, "pid": p.get("pid"), "source": "process", "status": "running"}
+    for proc in list_processes():
+        nm = (proc.get("image") or "").lower()
+        entry = {"name": nm, "pid": proc.get("pid"), "source": "process", "status": "running"}
         if any(c in nm for c in critical):
-            excluded.append({"name": nm, "pid": p.get("pid"), "reason": "critical_process"})
+            excluded.append({"name": nm, "pid": proc.get("pid"), "reason": "critical_process"})
         elif any(k in nm for k in LLM_PROCESS_KEYWORDS):
             available.append(entry)
 
@@ -513,8 +512,35 @@ def build_llm_report() -> Dict:
     available.sort(key=lambda x: x.get("priority_score", 0), reverse=True)
 
     if available:
+        # Provider signup hints (augment each item with quick signup/help info)
+        for item in available:
+            name_low = (item.get("name") or "").lower()
+            if "copilot" in name_low:
+                item.setdefault("signup_hint", "Enable GitHub Copilot in VS Code (GitHub account required)")
+                item.setdefault("quick_link", "https://github.com/features/copilot")
+            elif "gemini" in name_low:
+                item.setdefault("signup_hint", "Get an API key at Google AI Studio")
+                item.setdefault("quick_link", "https://makersuite.google.com/app/apikey")
+            elif "chatgpt" in name_low or "openai" in name_low or "gpt" in name_low:
+                item.setdefault("signup_hint", "Create OpenAI key in dashboard (Billing may be required)")
+                item.setdefault("quick_link", "https://platform.openai.com/account/api-keys")
+            elif "grok" in name_low:
+                item.setdefault("signup_hint", "Apply for xAI API access; requires X account")
+                item.setdefault("quick_link", "https://x.ai")
+            elif "claude" in name_low or "anthropic" in name_low:
+                item.setdefault("signup_hint", "Generate an Anthropic key in console")
+                item.setdefault("quick_link", "https://console.anthropic.com")
+            elif item.get("source") == "cli" and "ollama" in name_low:
+                item.setdefault("signup_hint", "Install Ollama locally; no API key needed")
+                item.setdefault("quick_link", "https://ollama.ai")
         return {"available": available, "excluded": excluded}
-    return {"available": get_opensource_llms(), "excluded": excluded}
+    # Fallback suggestions
+    suggestions = get_opensource_llms()
+    for s in suggestions:
+        if "huggingface" in s.get("source","") or s.get("url"):
+            s.setdefault("signup_hint", "Create free Hugging Face account to download model")
+            s.setdefault("quick_link", s.get("url"))
+    return {"available": suggestions, "excluded": excluded}
 
 
 def get_best_llms_for_operations(count: int = 3) -> List[Dict]:
