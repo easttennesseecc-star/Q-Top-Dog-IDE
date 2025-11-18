@@ -129,6 +129,7 @@ jobs:
           kubectl apply -f deploy/k8s/staging/frontend-service.yaml
           kubectl apply -f deploy/k8s/staging/backend-deployment.yaml
           kubectl apply -f deploy/k8s/staging/frontend-deployment.yaml
+          kubectl apply -f deploy/k8s/staging/api-redirect-ingress.yaml
 
       - name: Update images to this commit
         env:

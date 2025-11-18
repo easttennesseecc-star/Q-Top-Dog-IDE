@@ -1,0 +1,27 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: qide-api-redirect
+  namespace: topdog-ide
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+    nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+    nginx.ingress.kubernetes.io/permanent-redirect: https://topdog-ide.com$request_uri
+    nginx.ingress.kubernetes.io/permanent-redirect-code: "308"
+spec:
+  tls:
+    - hosts:
+        - api.topdog-ide.com
+      secretName: qide-backend-tls
+  rules:
+    - host: api.topdog-ide.com
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: qide-backend-svc
+                port:
+                  number: 8000

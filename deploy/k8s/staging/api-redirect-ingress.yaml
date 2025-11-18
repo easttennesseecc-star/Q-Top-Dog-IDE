@@ -1,0 +1,27 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: qide-staging-api-redirect
+  namespace: topdog-staging
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    cert-manager.io/cluster-issuer: letsencrypt-staging
+    nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+    nginx.ingress.kubernetes.io/permanent-redirect: https://staging-app.topdog-ide.com$request_uri
+    nginx.ingress.kubernetes.io/permanent-redirect-code: "308"
+spec:
+  tls:
+    - hosts:
+        - staging-api.topdog-ide.com
+      secretName: qide-staging-backend-tls
+  rules:
+    - host: staging-api.topdog-ide.com
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: qide-backend-svc
+                port:
+                  number: 8000
