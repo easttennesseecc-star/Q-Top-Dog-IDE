@@ -10,13 +10,13 @@ metadata:
 spec:
   tls:
     - hosts:
-        - app.example.com
+        - topdog-ide.com
       secretName: qide-frontend-tls
     - hosts:
-        - api.example.com
+        - api.topdog-ide.com
       secretName: qide-backend-tls
   rules:
-    - host: app.example.com
+    - host: topdog-ide.com
       http:
         paths:
           - path: /
@@ -26,7 +26,7 @@ spec:
                 name: qide-frontend-svc
                 port:
                   number: 80
-    - host: api.example.com
+    - host: api.topdog-ide.com
       http:
         paths:
           - path: /
