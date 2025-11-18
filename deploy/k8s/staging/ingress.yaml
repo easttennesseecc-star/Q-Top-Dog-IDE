@@ -7,18 +7,128 @@ metadata:
     kubernetes.io/ingress.class: nginx
     cert-manager.io/cluster-issuer: letsencrypt-staging
     nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+    nginx.ingress.kubernetes.io/use-regex: "false"
 spec:
   tls:
     - hosts:
         - staging-app.topdog-ide.com
       secretName: qide-staging-frontend-tls
-    - hosts:
-        - staging-api.topdog-ide.com
-      secretName: qide-staging-backend-tls
   rules:
     - host: staging-app.topdog-ide.com
       http:
         paths:
+          - path: /api
+            pathType: Prefix
+            backend:
+              service:
+                name: qide-backend-svc
+                port:
+                  number: 8000
+          - path: /health
+            pathType: Exact
+            backend:
+              service:
+                name: qide-backend-svc
+                port:
+                  number: 8000
+          - path: /metrics
+            pathType: Exact
+            backend:
+              service:
+                name: qide-backend-svc
+                port:
+                  number: 8000
+          - path: /robots.txt
+            pathType: Exact
+            backend:
+              service:
+                name: qide-backend-svc
+                port:
+                  number: 8000
+          - path: /sitemap.xml
+            pathType: Exact
+            backend:
+              service:
+                name: qide-backend-svc
+                port:
+                  number: 8000
+          - path: /llm
+            pathType: Prefix
+            backend:
+              service:
+                name: qide-backend-svc
+                port:
+                  number: 8000
+          - path: /llm_auth
+            pathType: Prefix
+            backend:
+              service:
+                name: qide-backend-svc
+                port:
+                  number: 8000
+          - path: /consistency
+            pathType: Prefix
+            backend:
+              service:
+                name: qide-backend-svc
+                port:
+                  number: 8000
+          - path: /pfs
+            pathType: Prefix
+            backend:
+              service:
+                name: qide-backend-svc
+                port:
+                  number: 8000
+          - path: /verification
+            pathType: Prefix
+            backend:
+              service:
+                name: qide-backend-svc
+                port:
+                  number: 8000
+          - path: /assets
+            pathType: Prefix
+            backend:
+              service:
+                name: qide-backend-svc
+                port:
+                  number: 8000
+          - path: /build
+            pathType: Prefix
+            backend:
+              service:
+                name: qide-backend-svc
+                port:
+                  number: 8000
+          - path: /snapshots
+            pathType: Prefix
+            backend:
+              service:
+                name: qide-backend-svc
+                port:
+                  number: 8000
+          - path: /auth
+            pathType: Prefix
+            backend:
+              service:
+                name: qide-backend-svc
+                port:
+                  number: 8000
+          - path: /top-dog-ide
+            pathType: Exact
+            backend:
+              service:
+                name: qide-backend-svc
+                port:
+                  number: 8000
+          - path: /q-ide
+            pathType: Exact
+            backend:
+              service:
+                name: qide-backend-svc
+                port:
+                  number: 8000
           - path: /
             pathType: Prefix
             backend:
@@ -26,13 +136,3 @@ spec:
                 name: qide-frontend-svc
                 port:
                   number: 80
-    - host: staging-api.topdog-ide.com
-      http:
-        paths:
-          - path: /
-            pathType: Prefix
-            backend:
-              service:
-                name: qide-backend-svc
-                port:
-                  number: 8000

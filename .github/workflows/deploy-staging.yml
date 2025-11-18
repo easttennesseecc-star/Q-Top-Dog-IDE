@@ -27,7 +27,8 @@ env:
   IMAGE_BE: ghcr.io/${{ github.repository }}/qide-backend
   NAMESPACE: topdog-staging
   STAGING_FRONTEND_HOST: staging-app.topdog-ide.com
-  STAGING_API_HOST: staging-api.topdog-ide.com
+  # Single-host staging: API is routed by path on the same host
+  STAGING_API_HOST: staging-app.topdog-ide.com
 
 jobs:
   build-and-push:
@@ -159,7 +160,7 @@ jobs:
           kubectl -n $NAMESPACE rollout status deployment/qide-backend --timeout=120s
           kubectl -n $NAMESPACE rollout status deployment/qide-frontend --timeout=120s
 
-      - name: Smoke test API health
+      - name: Smoke test API health (single host)
         run: |
-          curl -fsS https://$STAGING_API_HOST/health | tee /tmp/health.json
+          curl -fsS https://$STAGING_FRONTEND_HOST/health | tee /tmp/health.json
           cat /tmp/health.json | jq . >/dev/null 2>&1 || true

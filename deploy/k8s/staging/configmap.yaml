@@ -7,5 +7,5 @@ metadata:
     environment: staging
 data:
   FRONTEND_URL: "https://staging-app.topdog-ide.com"
-  BACKEND_URL: "https://staging-api.topdog-ide.com"
+  BACKEND_URL: "https://staging-app.topdog-ide.com"
   WORKSPACE_PROFILE: "staging"
