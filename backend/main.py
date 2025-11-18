@@ -1150,6 +1150,16 @@ def bing_site_auth():
     return Response(content=xml, media_type="application/xml")
 
 
+# Google verification explicit endpoint (independent of frontend mount)
+@app.get("/google{token}.html", response_class=PlainTextResponse)
+def google_site_verification(token: str):
+    expected = os.getenv("GOOGLE_SITE_VERIFICATION_TOKEN")
+    if not expected or token != expected:
+        from fastapi import HTTPException
+        raise HTTPException(status_code=404, detail="Not found")
+    return f"google-site-verification: {token}"
+
+
 # SEO landing pages for brand queries
 @app.get("/top-dog-ide", response_class=PlainTextResponse)
 def top_dog_landing():
