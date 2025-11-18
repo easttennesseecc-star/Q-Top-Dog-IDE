@@ -247,6 +247,18 @@ jobs:
             -f "${{ steps.select_values.outputs.canary_values }}" \
             --namespace "$NS" --create-namespace
 
+      - name: Apply api.* 308 redirect ingress (env-aware)
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [[ "${ENV_INPUT}" == "staging" ]]; then
+            echo "Applying staging api redirect ingress"
+            kubectl -n "$NS" apply -f deploy/k8s/staging/api-redirect-ingress.yaml
+          else
+            echo "Applying production api redirect ingress"
+            kubectl -n "$NS" apply -f deploy/k8s/api-redirect-ingress.yaml
+          fi
+
       - name: "Slack thread start (optional)"
         shell: bash
         env:
