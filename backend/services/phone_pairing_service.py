@@ -25,7 +25,6 @@ from pathlib import Path
 
 try:
     import qrcode
-    from qrcode.image.pure import PyPNGImage
     QRCODE_AVAILABLE = True
 except ImportError:
     QRCODE_AVAILABLE = False

@@ -1,4 +1,3 @@
-from __future__ import annotations
 """
 Lightweight Voice Profiling Engine
 
@@ -10,6 +9,7 @@ numpy arrays (no external audio libs). It provides:
 - Minimal profile management with JSON persistence
 - Recognition based on cosine similarity of MFCCs with pitch/energy cues
 """
+from __future__ import annotations
 
 import json
 import logging

@@ -439,7 +439,7 @@ class CloudMessageBroker:
             try:
                 self.client.loop_stop()
                 self.client.disconnect()
-            except:
+            except Exception:
                 pass
 
 

@@ -250,12 +250,12 @@ class PythonServer:
                         "detail": f"class {node.name}",
                         "documentation": ast.get_docstring(node) or ""
                     })
-        except:
+        except Exception:
             pass
         
         # Extract variables and imports
-        for l in lines:
-            l_stripped = l.strip()
+        for line_text in lines:
+            l_stripped = line_text.strip()
             
             # Imports
             if l_stripped.startswith("import "):
@@ -317,10 +317,10 @@ class PythonServer:
         lines = code.split('\n')
         
         # Search for assignment
-        for l in lines:
-            if f"{symbol} =" in l:
+        for line_text in lines:
+            if f"{symbol} =" in line_text:
                 # Simple type inference
-                value_part = l.split("=", 1)[1].strip()
+                value_part = line_text.split("=", 1)[1].strip()
                 
                 if value_part.startswith("["):
                     return "list"

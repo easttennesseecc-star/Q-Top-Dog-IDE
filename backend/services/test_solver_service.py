@@ -3,7 +3,7 @@ Service for orchestrating a team of LLMs to diagnose and solve failing tests.
 """
 from enum import Enum
 from pydantic import BaseModel, Field
-from typing import List, Dict, Any, Optional
+from typing import List, Dict, Any, Optional, cast
 import uuid
 from datetime import datetime
 from backend.services.ai_orchestration import AIOrchestrationManager, get_ai_orchestration_manager
@@ -26,7 +26,6 @@ class SolvingStatus(str, Enum):
     TIMED_OUT = "TIMED_OUT"
 
 # Prevent pytest from attempting to collect the Enum as a test class (type-ignore for mypy)
-from typing import cast
 cast(Any, SolvingStatus).__test__ = False
 
 class LLMTeamRole(str, Enum):

@@ -96,7 +96,7 @@ if __name__ == "__main__":
             requests.get(f"{BASE_URL}/api/health", timeout=1)
             print("Server is ready!")
             break
-        except:
+        except Exception:
             print(f"Waiting... ({i+1}/30)")
             time.sleep(1)
     else:

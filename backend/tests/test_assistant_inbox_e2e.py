@@ -1,7 +1,6 @@
+from fastapi.testclient import TestClient
 import pytest
 pytestmark = pytest.mark.skip(reason="Assistant inbox deprecated in favor of spool ingestion.")
-import pytest
-from fastapi.testclient import TestClient
 
 # Note: Triage endpoints have been removed. These tests validate inbox add/list only.
 

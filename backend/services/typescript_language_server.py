@@ -247,12 +247,12 @@ class TypeScriptServer:
         lines = code.split('\n')
         
         # Get all imports and global symbols
-        for i, l in enumerate(lines):
-            l = l.strip()
+        for i, line_text in enumerate(lines):
+            stripped = line_text.strip()
             
             # Imports
-            if l.startswith("import "):
-                parts = l.split(" ")
+            if stripped.startswith("import "):
+                parts = stripped.split(" ")
                 if len(parts) >= 4:
                     name = parts[1]
                     symbols.append({
@@ -263,8 +263,8 @@ class TypeScriptServer:
                     })
             
             # Functions
-            elif l.startswith("function "):
-                name = l.split("(")[0].replace("function ", "")
+            elif stripped.startswith("function "):
+                name = stripped.split("(")[0].replace("function ", "")
                 symbols.append({
                     "name": name,
                     "kind": "Function",
@@ -273,8 +273,8 @@ class TypeScriptServer:
                 })
             
             # Classes
-            elif l.startswith("class "):
-                name = l.split("{")[0].replace("class ", "").split(" ")[0]
+            elif stripped.startswith("class "):
+                name = stripped.split("{")[0].replace("class ", "").split(" ")[0]
                 symbols.append({
                     "name": name,
                     "kind": "Class",
@@ -283,8 +283,8 @@ class TypeScriptServer:
                 })
             
             # Variables
-            elif "const " in l or "let " in l or "var " in l:
-                lhs = l.split("=")[0]
+            elif "const " in stripped or "let " in stripped or "var " in stripped:
+                lhs = stripped.split("=")[0]
                 for keyword in ["const ", "let ", "var "]:
                     if keyword in lhs:
                         name = lhs.replace(keyword, "").strip()
@@ -316,17 +316,17 @@ class TypeScriptServer:
         lines = code.split('\n')
         
         # Search for symbol declaration
-        for l in lines:
-            if f"const {symbol}" in l:
-                if "[]" in l:
+        for line_text in lines:
+            if f"const {symbol}" in line_text:
+                if "[]" in line_text:
                     return "Array"
-                elif "{" in l:
+                elif "{" in line_text:
                     return "Object"
-                elif "true" in l or "false" in l:
+                elif "true" in line_text or "false" in line_text:
                     return "boolean"
-                elif '"' in l or "'" in l:
+                elif '"' in line_text or "'" in line_text:
                     return "string"
-                elif "function" in l or "=>" in l:
+                elif "function" in line_text or "=>" in line_text:
                     return "Function"
                 else:
                     return "any"

@@ -6,10 +6,12 @@ Assistant orchestration endpoints that guide the user from idea → UI draft →
 - POST /api/assistant/approve: approve a plan and start execution optionally
 """
 
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, HTTPException, Query, Form
+from fastapi.responses import HTMLResponse
 from pydantic import BaseModel, Field
 from typing import Optional, List, Dict, Any
 import logging
+import os
 
 from backend.media_service import get_media_service, MediaType, MediaTier
 from backend.services.media_requirements_resolver import resolve_requirements
@@ -29,7 +31,6 @@ except Exception:
 from backend.services.sms_sender import get_sms_sender
 from backend.services.pending_action_store import add_pending, mark_resolved_by_token
 from pathlib import Path
-import os
 
 logger = logging.getLogger(__name__)
 router = APIRouter(prefix="/assistant", tags=["assistant"])
@@ -383,8 +384,6 @@ async def approve_plan(req: PlanApproveRequest) -> Dict[str, Any]:
 
 
 # --- One-click email approval endpoint ---
-from fastapi.responses import HTMLResponse
-from fastapi import Query, Form
 
 
 @router.get("/approve-email", response_class=HTMLResponse)

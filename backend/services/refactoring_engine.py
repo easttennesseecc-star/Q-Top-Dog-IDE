@@ -188,7 +188,7 @@ class ASTRefactoringEngine:
             # Analyze extracted code to find return values
             try:
                 ast.parse(code_block)
-            except:
+            except Exception:
                 pass
 
             # Build new function

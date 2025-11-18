@@ -3,6 +3,10 @@ Stripe Payment Processing Service
 Handles customer creation, subscriptions, billing portal, and webhook events
 """
 from typing import Optional, Tuple, Any
+import os
+import logging
+from datetime import datetime
+from enum import Enum
 from .stripe_types import (
     SubscriptionInfo,
     CustomerInfo,
@@ -18,10 +22,6 @@ try:
 except Exception:
     stripe = None
     _StripeError = Exception
-import os
-import logging
-from datetime import datetime
-from enum import Enum
 
 logger = logging.getLogger("q-ide-topdog")
 

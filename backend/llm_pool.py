@@ -117,8 +117,8 @@ def list_processes(limit: int = 500) -> List[Dict]:
                 timeout=5
             )
             lines = out.strip().splitlines()[1:limit+1]
-            for l in lines:
-                m = l.strip().split(None, 1)
+            for line in lines:
+                m = line.strip().split(None, 1)
                 if len(m) == 2:
                     procs.append({"pid": m[0], "image": m[1]})
     except Exception:

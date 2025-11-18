@@ -1,6 +1,6 @@
+from fastapi.testclient import TestClient
 import pytest
 pytestmark = pytest.mark.skip(reason="Auto task creation via inbox deprecated; feature will migrate to spool if needed.")
-from fastapi.testclient import TestClient
 
 
 def test_auto_task_creation_from_inbox(test_client: TestClient):

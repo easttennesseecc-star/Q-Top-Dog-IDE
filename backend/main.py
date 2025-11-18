@@ -10,27 +10,28 @@ import urllib.parse
 import logging
 from pathlib import Path
 from datetime import datetime
-from fastapi import FastAPI, Request, BackgroundTasks, HTTPException, APIRouter
-from fastapi.responses import RedirectResponse, FileResponse, PlainTextResponse, JSONResponse
+from fastapi import FastAPI, Request, BackgroundTasks, HTTPException
+from fastapi.responses import RedirectResponse, FileResponse, PlainTextResponse, JSONResponse, StreamingResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.middleware.cors import CORSMiddleware
 from starlette.middleware.base import BaseHTTPMiddleware
 from pydantic import BaseModel
 from typing import List, Dict, Optional
+import json
+import subprocess
+import uuid
+from fastapi import Body, UploadFile, File, Form
+from contextlib import asynccontextmanager
+import asyncio
+
 from backend.llm_pool import build_llm_report, get_best_llms_for_operations
 from backend.llm_config_routes import router as llm_config_router
 from backend.llm_auth_routes import router as llm_auth_router
 from backend.llm_chat_routes import router as llm_chat_router
 from backend.build_orchestration_routes import router as build_orchestration_router
 from backend.llm_oauth_routes import router as llm_oauth_router
-from typing import Optional as _Optional
+ 
 
-# Optional routers that may fail to import in certain profiles
-billing_router: _Optional[APIRouter]
-try:
-    from backend.routes.billing import router as billing_router  # type: ignore[assignment]
-except Exception:
-    billing_router = None
 from backend.routes.orchestration_workflow import router as orchestration_workflow_router
 from backend.routes.med.interop import router as med_interop_router
 from backend.routes.med.diagnostic import router as med_diagnostic_router
@@ -39,24 +40,13 @@ from backend.routes.science.rwe import router as science_rwe_router
 from backend.routes.science.multimodal import router as science_multimodal_router
 from backend.routes.snapshot_routes import router as snapshot_router
 from backend.media_routes import router as media_router
-assistant_router: _Optional[APIRouter]
-try:
-    from backend.assistant_routes import router as assistant_router  # type: ignore[assignment]
-except Exception:
-    assistant_router = None
 from backend.routes.ai_workflow_routes import router as ai_workflow_router
 from backend.routes.rules_api import router as rules_api_router
 from backend.routes.phone_pairing_api import router as phone_pairing_router
 from backend.routes.away_api import router as away_router
 from backend.routes.sms_log_api import router as sms_log_router
 from backend.routes.email_inbound_api import router as email_inbound_router
-EMAIL_ROUTER_ENABLED = True
 from backend.routes.push_api import router as push_router
-spool_ingest_router: _Optional[APIRouter]
-try:
-    from backend.routes.spool_ingest_api import router as spool_ingest_router  # type: ignore[assignment]
-except Exception:
-    spool_ingest_router = None
 from backend.routes.pricing_routes import router as pricing_routes
 from backend.routes.assistant_readiness import router as assistant_readiness_router
 from backend.routes.tasks_api import router as tasks_router
@@ -66,21 +56,41 @@ from backend.routes.build_plan_approval_routes import router as build_plan_appro
 from backend.routes.test_solver_routes import router as test_solver_router
 from backend.routes.domain_config_routes import router as domain_config_router
 from backend.routes.marketplace_fastapi import marketplace_router, agent_router, marketplace_auth_router
+
 from backend.middleware.compliance_enforcer import ComplianceEnforcer
 from backend.services.workflow_db_manager import init_workflow_database, WorkflowDatabaseManager
 from backend.services.orchestration_service import OrchestrationService
 from backend.middleware.rules_enforcement import RulesEnforcementMiddleware
 from backend.services.ai_orchestration import initialize_ai_orchestration
 from backend.logger_utils import configure_logger
-from contextlib import asynccontextmanager
-import asyncio
 from backend.auto_setup_q_assistant import auto_setup_q_assistant
 from backend.llm_auto_auth import check_all_llm_authentication, get_startup_auth_prompt
+from backend.setup_wizard import router as setup_wizard_router
+from backend.llm_auto_assignment import register_auto_assignment_routes
 from backend.auth import (
     create_session, get_session_user, get_user, create_or_get_user,
     exchange_code_for_token, get_google_user_info, get_github_user_info,
     link_account, get_linked_accounts
 )
+
+# Optional routers that may fail to import in certain profiles
+try:
+    from backend.routes.billing import router as billing_router  # type: ignore[assignment]
+except Exception:
+    billing_router = None
+try:
+    from backend.assistant_routes import router as assistant_router  # type: ignore[assignment]
+except Exception:
+    assistant_router = None
+try:
+    from backend.routes.spool_ingest_api import router as spool_ingest_router  # type: ignore[assignment]
+except Exception:
+    spool_ingest_router = None
+
+EMAIL_ROUTER_ENABLED = True
+
+# Define alias after all module-level imports are declared to satisfy E402
+_Body = Body
 
 # Initialize logger early
 logger = configure_logger(
@@ -682,7 +692,6 @@ def oauth_login(provider: str):
     return {"success": False, "client_required": True, "message": "Use API key flow for this provider"}
 
 # Persist selected LLM server-side (maps to coding or q_assistant role)
-from fastapi import Body as _Body
 class LLMSelectionPayload(BaseModel):
     llm_id: str
     role: Optional[str] = None  # default to coding
@@ -792,8 +801,7 @@ async def canonical_redirect_middleware(request: Request, call_next):
             return RedirectResponse(url=str(url), status_code=308)
     return await call_next(request)
 
-from fastapi import Body, UploadFile, File, Form
-import json
+ 
 
 # Logging middleware already added earlier; avoid duplicate registration which can double-log requests
 # (Original duplicate call removed)
@@ -905,10 +913,6 @@ async def get_compliance_status(
     
     user_tier = ComplianceEnforcer.get_user_tier(request)
     return ComplianceEnforcer.get_compliance_status(workspace_profile, user_tier)
-
-# Include setup wizard and auto-assignment routers
-from backend.setup_wizard import router as setup_wizard_router
-from backend.llm_auto_assignment import register_auto_assignment_routes
 
 app.include_router(setup_wizard_router)
 register_auto_assignment_routes(app)
@@ -1300,8 +1304,7 @@ def github_oauth_callback(code: Optional[str] = None, error: Optional[str] = Non
 
 
 # Agent orchestration endpoint
-from fastapi import Body
-from typing import Optional
+ 
 
 class AgentTaskRequest(BaseModel):
     task_type: str
@@ -1950,10 +1953,6 @@ async def request_change_snapshot(snapshot_id: int):
 
 
 # --- Simple local build runner (dev spike) ---
-from fastapi import BackgroundTasks
-import uuid
-import subprocess
-from pathlib import Path
 
 # In-memory build queue store
 BUILD_STORE: Dict[str, Dict] = {}
@@ -2125,7 +2124,7 @@ def get_codebase_for_learning(session_id: Optional[str] = None):
             try:
                 with open(config_path, 'r', encoding='utf-8') as f:
                     key_files[config_file] = f.read()[:2000]  # First 2000 chars
-            except:
+            except Exception:
                 pass
     
     # Get backend Python files
@@ -2143,7 +2142,7 @@ def get_codebase_for_learning(session_id: Optional[str] = None):
                             "lines": len(content.split('\n')),
                             "preview": content[:500]  # First 500 chars
                         })
-                except:
+                except Exception:
                     pass
     
     return {
@@ -2220,8 +2219,7 @@ def submit_llm_learning_report(request_body: dict, session_id: Optional[str] = N
 
 
 # --- LLM Streaming Endpoint ---
-from fastapi import Request
-from fastapi.responses import StreamingResponse
+ 
 
 async def fake_llm_stream(prompt: str):
     # Simulate streaming LLM output in chunks
@@ -2256,6 +2254,10 @@ except Exception as e:
 # Removed deprecated startup_event; logic moved to lifespan handler above
 
 
-if __name__ == "__main__":
+def _run_dev_server() -> None:
     import uvicorn
     uvicorn.run(app, host="127.0.0.1", port=8000)
+
+
+if __name__ == "__main__":
+    _run_dev_server()

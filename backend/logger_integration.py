@@ -10,6 +10,9 @@ This module shows how to integrate the logger_utils into existing components:
 """
 
 from logger_utils import configure_logger, log_function_call
+import logging
+from contextlib import contextmanager
+import time
 from typing import Dict, Any
 
 
@@ -231,8 +234,7 @@ def handle_api_errors(func):
 # EXAMPLE 5: Performance Monitoring Context Manager
 # ============================================================================
 
-from contextlib import contextmanager
-import time
+ 
 
 
 @contextmanager

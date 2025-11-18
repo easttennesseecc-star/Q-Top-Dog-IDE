@@ -15,6 +15,7 @@ Endpoints:
 """
 
 from fastapi import APIRouter, HTTPException, Query
+from fastapi.responses import HTMLResponse
 from pydantic import BaseModel
 from typing import Optional
 
@@ -347,5 +348,4 @@ async def get_user_profile(provider: str):
     return {"success": True, "user": user_info}
 
 
-# Import HTMLResponse here to avoid circular import
-from fastapi.responses import HTMLResponse
+ 

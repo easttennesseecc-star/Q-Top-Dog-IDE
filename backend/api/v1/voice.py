@@ -257,7 +257,7 @@ async def recognize():
         # Clean up
         try:
             os.remove(filepath)
-        except:
+        except Exception:
             pass
         
         return jsonify(result), 200

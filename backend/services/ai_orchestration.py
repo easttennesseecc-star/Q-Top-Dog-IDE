@@ -9,6 +9,7 @@ from typing import Dict, Optional, List, Any, Awaitable, Union
 from enum import Enum
 import logging
 from datetime import datetime
+from fastapi import Request
 
 from backend.orchestration.workflow_state_machine import WorkflowState, LLMRole
 from backend.orchestration.orchestration_prompts import get_orchestration_prompt, get_workflow_context
@@ -354,8 +355,6 @@ def initialize_ai_orchestration(orchestration_service: OrchestrationService) -> 
     logger.info("AI Orchestration Manager initialized")
     return _orchestration_manager
 
-
-from fastapi import Request
 
 # ... existing code ...
 def get_ai_orchestration_manager(request: Request) -> "AIOrchestrationManager":

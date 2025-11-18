@@ -6,6 +6,7 @@ Provides intelligent responses and guides user through setup if needed
 import os
 import logging
 from typing import Optional, Dict, Any
+from typing import List as _List
 
 logger = logging.getLogger("q-ide-topdog")
 
@@ -31,13 +32,12 @@ def get_available_llm_source() -> Optional[str]:
         response = requests.get("http://127.0.0.1:11434/api/tags", timeout=2)
         if response.status_code == 200:
             return "ollama"
-    except:
+    except Exception:
         pass
     
     return None
 
 
-from typing import List as _List
 def get_simple_response(user_message: str, conversation_history: Optional[_List[Dict[str, Any]]] = None) -> str:
     """
     Get a response from Q Assistant

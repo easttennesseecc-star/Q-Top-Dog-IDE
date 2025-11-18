@@ -1,6 +1,6 @@
+from fastapi.testclient import TestClient
 import pytest
 pytestmark = pytest.mark.skip(reason="Assistant inbox admin ops deprecated; spool ingestion active.")
-from fastapi.testclient import TestClient
 
 
 def _add(client: TestClient, user: str, text: str, source: str = "api") -> str:

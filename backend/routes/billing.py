@@ -6,21 +6,10 @@ Handles subscriptions, checkout, portal, and webhooks
 from fastapi import APIRouter, Depends, HTTPException, Request, Body
 import os
 from typing import Any
-# Stripe may be unavailable in some environments (tests/dev)
-stripe: Any
-_StripeError: type[Exception]
-try:
-    import stripe as _stripe_mod
-    _StripeError = _stripe_mod.error.StripeError  # type: ignore[attr-defined]
-    stripe = _stripe_mod
-except Exception:  # stripe not installed in some envs (tests)
-    stripe = None
-    _StripeError = Exception
 from pydantic import BaseModel
 from typing import Optional, Dict, cast
 from datetime import datetime
 import logging
-
 from backend.services.stripe_service import StripeService, SubscriptionTier
 from backend.services.stripe_types import (
     WebhookSubscriptionCreated,
@@ -32,6 +21,19 @@ from backend.services.stripe_types import (
 from backend.models.subscription import Subscription, Invoice, BillingAlert, SubscriptionStatus
 from backend.database.database_service import get_db
 from backend.auth import get_current_user
+
+# Stripe may be unavailable in some environments (tests/dev)
+stripe: Any
+_StripeError: type[Exception]
+try:
+    import stripe as _stripe_mod
+    _StripeError = _stripe_mod.error.StripeError  # type: ignore[attr-defined]
+    stripe = _stripe_mod
+except Exception:  # stripe not installed in some envs (tests)
+    stripe = None
+    _StripeError = Exception
+
+ 
 
 logger = logging.getLogger("q-ide-topdog")
 router = APIRouter(prefix="/api/billing", tags=["billing"])

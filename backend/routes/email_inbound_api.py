@@ -184,21 +184,21 @@ async def email_inbound(req: Request):
 
         # Preserve NOTE/NOTES prefix even if it's not at the very start (subject may precede body)
         # Scan lines for a line beginning with NOTE: or NOTES:
-        lines = [l.strip() for l in content.splitlines() if l is not None]
+        lines = [line.strip() for line in content.splitlines() if line is not None]
         note_line = None
-        for l in lines:
-            ll = l.lower().lstrip()
-            if ll.startswith("note:") or ll.startswith("notes:"):
-                note_line = l
+        for line in lines:
+            line_lower = line.lower().lstrip()
+            if line_lower.startswith("note:") or line_lower.startswith("notes:"):
+                note_line = line
                 break
 
         if note_line is not None:
             try:
-                ll = note_line.lstrip()
-                if ll.lower().startswith("notes:"):
-                    body = ll[6:].strip()
+                line_lower = note_line.lstrip()
+                if line_lower.lower().startswith("notes:"):
+                    body = line_lower[6:].strip()
                 else:
-                    body = ll[5:].strip()
+                    body = line_lower[5:].strip()
                 title = (body[:80].strip() or "Note")
                 get_notes_service().create_note(
                     workspace_id=user_id,

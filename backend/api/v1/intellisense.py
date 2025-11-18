@@ -8,13 +8,13 @@ import logging
 from typing import Dict, List, Optional, Any
 from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel, Field
+from backend.services.semantic_analysis import get_analyzer
+from backend.services.typescript_language_server import get_ts_completions, get_ts_hover, get_ts_definition, get_ts_diagnostics
+from backend.services.python_language_server import get_py_completions, get_py_hover, get_py_definition, get_py_diagnostics
 
 logger = logging.getLogger(__name__)
 
 # Import semantic services
-from backend.services.semantic_analysis import get_analyzer
-from backend.services.typescript_language_server import get_ts_completions, get_ts_hover, get_ts_definition, get_ts_diagnostics
-from backend.services.python_language_server import get_py_completions, get_py_hover, get_py_definition, get_py_diagnostics
 
 # Create router
 router = APIRouter(prefix="/api/v1/intellisense", tags=["intellisense"])

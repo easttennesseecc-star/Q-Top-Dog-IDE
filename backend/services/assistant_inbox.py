@@ -20,10 +20,10 @@ from typing import Dict, Any, List, Optional
 import time
 import uuid
 import os
+from backend.utils.file_lock import file_lock
 
 _STORE_PATH = Path(os.getenv("ASSISTANT_INBOX_STORE", "./.assistant_inbox.json")).resolve()
 _LOCK_PATH = _STORE_PATH.with_suffix(_STORE_PATH.suffix + ".lock")
-from backend.utils.file_lock import file_lock
 
 def _use_sqlite() -> bool:
     """Default to SQLite in non-test environments.

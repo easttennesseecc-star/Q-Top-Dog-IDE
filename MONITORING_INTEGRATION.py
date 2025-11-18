@@ -15,6 +15,8 @@ Follow these steps to integrate monitoring into your FastAPI application.
 
 from fastapi import FastAPI
 from monitoring_routes import router as monitoring_router
+from monitoring import monitor_performance, monitoring, EventCategory, AlertLevel, MetricType
+from datetime import datetime
 
 app = FastAPI(title="AI Marketplace API")
 
@@ -25,8 +27,6 @@ app.include_router(monitoring_router)
 
 
 # STEP 3: Example integration in API endpoints
-
-from monitoring import monitor_performance, monitoring, EventCategory, AlertLevel, MetricType
 
 # Example 1: Add performance monitoring to an endpoint
 @app.get("/api/search-models")
