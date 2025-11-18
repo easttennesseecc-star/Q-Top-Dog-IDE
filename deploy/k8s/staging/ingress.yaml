@@ -52,6 +52,20 @@ spec:
                 name: qide-backend-svc
                 port:
                   number: 8000
+          - path: /BingSiteAuth.xml
+            pathType: Exact
+            backend:
+              service:
+                name: qide-backend-svc
+                port:
+                  number: 8000
+          - path: /google
+            pathType: Prefix
+            backend:
+              service:
+                name: qide-backend-svc
+                port:
+                  number: 8000
           - path: /llm
             pathType: Prefix
             backend:

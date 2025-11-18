@@ -10,3 +10,6 @@ data:
   ENABLE_HOST_REDIRECT: "true"
   CANONICAL_HOST: "topdog-ide.com"
   ALTERNATE_HOSTS: "www.topdog-ide.com"
+  # SEO verification tokens (set real values via sealed secrets or env overrides)
+  GOOGLE_SITE_VERIFICATION_TOKEN: ""
+  BING_SITE_VERIFICATION_TOKEN: ""

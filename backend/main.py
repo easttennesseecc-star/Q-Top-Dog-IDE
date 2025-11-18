@@ -10,7 +10,7 @@ import urllib.parse
 import logging
 from pathlib import Path
 from datetime import datetime
-from fastapi import FastAPI, Request, BackgroundTasks, HTTPException
+from fastapi import FastAPI, Request, BackgroundTasks, HTTPException, APIRouter
 from fastapi.responses import RedirectResponse, FileResponse, PlainTextResponse, JSONResponse, StreamingResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.middleware.cors import CORSMiddleware
@@ -74,6 +74,9 @@ from backend.auth import (
 )
 
 # Optional routers that may fail to import in certain profiles
+billing_router: Optional[APIRouter]
+assistant_router: Optional[APIRouter]
+spool_ingest_router: Optional[APIRouter]
 try:
     from backend.routes.billing import router as billing_router  # type: ignore[assignment]
 except Exception:
@@ -881,6 +884,20 @@ if frontend_dist.exists() and (frontend_dist / "index.html").exists():
             # sitemap_xml() already returns a Response with media_type="application/xml"
             # Return it directly instead of wrapping in PlainTextResponse
             return sitemap_xml()
+        # Google Search Console file verification support
+        google_token = os.getenv("GOOGLE_SITE_VERIFICATION_TOKEN")
+        if google_token and full_path == f"google{google_token}.html":
+            return PlainTextResponse(f"google-site-verification: {google_token}")
+        # Bing Webmaster Tools file verification support
+        if full_path == "BingSiteAuth.xml":
+            bing_token = os.getenv("BING_SITE_VERIFICATION_TOKEN")
+            if bing_token:
+                from fastapi import Response
+                xml = (
+                    "<?xml version=\"1.0\"?>\n"
+                    f"<users><user>{bing_token}</user></users>\n"
+                )
+                return Response(content=xml, media_type="application/xml")
         # Don't intercept API routes or explicit SEO endpoints
         if full_path.startswith((
             "api/", "auth/", "llm/", "metrics", "health", "admin/", "snapshots", "build", "consistency", "pfs", "verification", "assets/", "assistant/"
@@ -1115,6 +1132,21 @@ def sitemap_xml():
         "</urlset>",
     ])
     from fastapi import Response
+    return Response(content=xml, media_type="application/xml")
+
+
+# Bing verification explicit endpoint (works even without frontend assets)
+@app.get("/BingSiteAuth.xml", response_class=PlainTextResponse)
+def bing_site_auth():
+    token = os.getenv("BING_SITE_VERIFICATION_TOKEN")
+    if not token:
+        from fastapi import HTTPException
+        raise HTTPException(status_code=404, detail="Not found")
+    from fastapi import Response
+    xml = (
+        "<?xml version=\"1.0\"?>\n"
+        f"<users><user>{token}</user></users>\n"
+    )
     return Response(content=xml, media_type="application/xml")
 
 

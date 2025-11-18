@@ -47,3 +47,9 @@ Operational Steps
    - kubectl apply -f deploy/k8s/api-redirect-ingress.yaml
    - kubectl apply -f deploy/k8s/ingress.yaml
 3) Repeat for staging using files in deploy/k8s/staging/.
+
+Search Console and Bing Verification
+- Google: In Search Console, choose Domain or URL-prefix for https://topdog-ide.com. If using file verification, set env `GOOGLE_SITE_VERIFICATION_TOKEN` to the token Google provides (without prefix/suffix). The app serves `https://topdog-ide.com/google<TOKEN>.html` with the required content. Alternatively, use DNS TXT which is preferred.
+- Bing: Set env `BING_SITE_VERIFICATION_TOKEN` to the token from Bing Webmaster Tools. The app serves `https://topdog-ide.com/BingSiteAuth.xml` with the correct XML. DNS TXT also works and is preferred at the edge.
+- Staging: You can pre-verify on `staging-app.topdog-ide.com` by setting the same tokens in the staging configmap.
+- Sitemap: Submit `https://topdog-ide.com/sitemap.xml` (and staging one if desired). Keep api.* 308 redirects in place for 30–60 days.
