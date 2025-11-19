@@ -9,12 +9,12 @@ FROM node:20-alpine AS builder
 WORKDIR /app
 
 # Install dependencies
-COPY frontend/package.json ./package.json
+COPY package.json ./package.json
 # If you later adopt npm lockfile, also COPY package-lock.json and use `npm ci`
 RUN npm install --no-fund --no-audit --legacy-peer-deps
 
 # Copy source and build
-COPY frontend/ .
+COPY . .
 RUN npm run build
 
 # ============================================================================
@@ -31,7 +31,7 @@ RUN npm install -g serve
 COPY --from=builder /app/dist ./dist
 
 # Copy entrypoint that injects runtime env into env.js
-COPY frontend/docker-entrypoint.sh /app/entrypoint.sh
+COPY docker-entrypoint.sh /app/entrypoint.sh
 RUN chmod +x /app/entrypoint.sh
 
 # Create non-root user for security
