@@ -19,14 +19,8 @@ from backend.services.stripe_types import (
     WebhookPaymentFailed,
 )
 from backend.models.subscription import Subscription, Invoice, BillingAlert, SubscriptionStatus
-"""Billing routes module
-
-Fix: Use SQLAlchemy session dependency from `backend.database` instead of the
-`DatabaseService` wrapper. The previous import caused runtime failures because
-`DatabaseService` does not provide a `.query` interface compatible with the
-ORM models, leading to 500 errors ("Failed to retrieve subscription").
-"""
-
+# Fix note: switched to SQLAlchemy `get_db` dependency (backend.database) to avoid
+# runtime failures when calling `.query` on the previous DatabaseService wrapper.
 from backend.database import get_db
 from backend.auth import get_current_user
 
