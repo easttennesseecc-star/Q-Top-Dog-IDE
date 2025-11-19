@@ -148,7 +148,6 @@ const PaymentForm: React.FC<CheckoutContextType> = ({
               },
             },
           }}
-          disabled={isProcessing}
         />
       </div>
 
