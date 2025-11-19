@@ -152,6 +152,8 @@ jobs:
       ENV_INPUT: ${{ github.event.inputs.environment || 'staging' }}
       CANARY_WEIGHT: ${{ github.event.inputs.canary_weight || '10' }}
       PROD_CONFIRM: ${{ github.event.inputs.prod_confirm }}
+      IMAGE_REPO: registry.digitalocean.com/topdog-registry/topdog
+      IMAGE_TAG: sha-${{ github.sha }}
     steps:
       - uses: actions/checkout@v4
 
@@ -193,6 +195,24 @@ jobs:
             exit 1
           fi
           chmod 600 "$HOME/.kube/config"
+
+      - name: Docker login (DOCR)
+        shell: bash
+        env:
+          DOCR_USERNAME: ${{ secrets.DOCR_USERNAME }}
+          DOCR_PASSWORD: ${{ secrets.DOCR_PASSWORD }}
+        run: |
+          set -euo pipefail
+          echo "$DOCR_PASSWORD" | docker login registry.digitalocean.com -u "$DOCR_USERNAME" --password-stdin
+
+      - name: Build and push image
+        shell: bash
+        run: |
+          set -euo pipefail
+          IMG="$IMAGE_REPO:$IMAGE_TAG"
+          echo "Building $IMG"
+          docker build -t "$IMG" -f backend/Dockerfile .
+          docker push "$IMG"
 
       - name: Ensure image pull secret exists (DOCR)
         shell: bash
@@ -283,6 +303,7 @@ jobs:
           helm upgrade --install topdog-canary deploy/helm/topdog \
             -f "${{ steps.select_values.outputs.values_file }}" \
             -f "${{ steps.select_values.outputs.canary_values }}" \
+            --set image.tag="$IMAGE_TAG" \
             --namespace "$NS" \
             --create-namespace \
             --dry-run --debug | sed -n '1,200p'
@@ -299,6 +320,7 @@ jobs:
           helm upgrade --install "$RELEASE" deploy/helm/topdog \
             -f "${{ steps.select_values.outputs.values_file }}" \
             -f "${{ steps.select_values.outputs.canary_values }}" \
+            --set image.tag="$IMAGE_TAG" \
             --namespace "$NS" --create-namespace
 
       - name: Apply api.* 308 redirect ingress (env-aware)
@@ -438,6 +460,7 @@ jobs:
           # Upgrade stable release with the environment values (not canary scale tuning)
           helm upgrade --install topdog deploy/helm/topdog \
             -f "${{ steps.select_values.outputs.values_file }}" \
+            --set image.tag="$IMAGE_TAG" \
             --namespace "$NS"
           # Optionally scale down old release
           kubectl -n "$NS" scale deployment "${SRC_RELEASE}-topdog" --replicas=0 || true
