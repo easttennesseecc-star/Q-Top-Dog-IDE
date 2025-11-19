@@ -32,7 +32,9 @@ WORKDIR /app
 # Install deps and build Vite app
 COPY frontend/package.json ./package.json
 # If lockfile exists in future, prefer: COPY frontend/package-lock.json ./package-lock.json and `npm ci`
-RUN npm install --no-fund --no-audit
+# Temporary workaround: React 19 peer dependency mismatch for @stripe/react-stripe-js
+# Use --legacy-peer-deps to bypass until upstream releases React 19 compatible version
+RUN npm install --no-fund --no-audit --legacy-peer-deps
 COPY frontend/ .
 RUN npm run build
 

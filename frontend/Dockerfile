@@ -11,7 +11,7 @@ WORKDIR /app
 # Install dependencies
 COPY frontend/package.json ./package.json
 # If you later adopt npm lockfile, also COPY package-lock.json and use `npm ci`
-RUN npm install --no-fund --no-audit
+RUN npm install --no-fund --no-audit --legacy-peer-deps
 
 # Copy source and build
 COPY frontend/ .
