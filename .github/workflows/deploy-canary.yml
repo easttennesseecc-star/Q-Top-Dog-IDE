@@ -92,8 +92,9 @@ jobs:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
         run: |
           set -euo pipefail
-          ruff check . --output-format=json > ruff-enforced.json || true
-          ruff check . --select B,UP,SIM,C4,RUF --output-format=json > ruff-expanded.json || true
+          # Explicitly point Ruff to pyproject.toml to ensure config (line-length, excludes) is honored in CI.
+          ruff check . --config pyproject.toml --output-format=json > ruff-enforced.json || true
+          ruff check . --config pyproject.toml --select B,UP,SIM,C4,RUF --output-format=json > ruff-expanded.json || true
           python create_ruff_summary.py || true
 
       - name: Upload Ruff artifacts
@@ -114,7 +115,7 @@ jobs:
           START=$(date +%s)
           set +e
           # Restrict fail-fast to core error/flake/import/pycodestyle families to allow modernization warnings in extended set
-          ruff check . --select E,F,W,I --output-format=github
+          ruff check . --config pyproject.toml --select E,F,W,I --output-format=github
           STATUS=$?
           set -e
           END=$(date +%s)
@@ -126,7 +127,7 @@ jobs:
         continue-on-error: true
         run: |
           set -euo pipefail
-          ruff check . --select B,UP,SIM,C4,RUF --output-format=github
+          ruff check . --config pyproject.toml --select B,UP,SIM,C4,RUF --output-format=github
 
       - name: Mypy typecheck (fail-fast)
         shell: bash
