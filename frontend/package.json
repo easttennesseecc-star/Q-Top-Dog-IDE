@@ -41,7 +41,8 @@
     "jsdom": "^27.0.1",
     "playwright": "^1.56.1",
     "postcss": "^8.5.6",
-    "tailwindcss": "^4.1.15",
+    "tailwindcss": "^4.1.17",
+    "@tailwindcss/postcss": "^4.1.17",
     "ts-jest": "^29.4.5",
     "typescript": "~5.8.3",
     "vite": "^7.0.4"
