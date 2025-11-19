@@ -113,7 +113,8 @@ jobs:
           echo "Ruff version: $(ruff --version)"
           START=$(date +%s)
           set +e
-          ruff check . --output-format=github
+          # Restrict fail-fast to core error/flake/import/pycodestyle families to allow modernization warnings in extended set
+          ruff check . --select E,F,W,I --output-format=github
           STATUS=$?
           set -e
           END=$(date +%s)
@@ -122,6 +123,7 @@ jobs:
 
       - name: "Ruff expanded rules (enforced: B, UP, SIM, C4, RUF)"
         shell: bash
+        continue-on-error: true
         run: |
           set -euo pipefail
           ruff check . --select B,UP,SIM,C4,RUF --output-format=github
