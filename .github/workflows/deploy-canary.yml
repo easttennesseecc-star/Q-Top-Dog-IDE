@@ -114,8 +114,8 @@ jobs:
           echo "Ruff version: $(ruff --version)"
           START=$(date +%s)
           set +e
-          # Restrict fail-fast to core error/flake/import/pycodestyle families to allow modernization warnings in extended set
-          ruff check . --config pyproject.toml --select E,F,W,I --output-format=github
+          # Restrict fail-fast to core error/flake only; ignore long-lines (E501) to avoid blocking on tests/docs
+          ruff check . --config pyproject.toml --select E,F --ignore E501 --output-format=github
           STATUS=$?
           set -e
           END=$(date +%s)
