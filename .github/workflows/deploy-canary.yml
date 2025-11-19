@@ -194,6 +194,57 @@ jobs:
           fi
           chmod 600 "$HOME/.kube/config"
 
+      - name: Ensure image pull secret exists (DOCR)
+        shell: bash
+        env:
+          DOCKER_CONFIG_JSON_B64: ${{ secrets.DOCKER_CONFIG_JSON_B64 }}
+          DOCKER_CONFIG_JSON: ${{ secrets.DOCKER_CONFIG_JSON }}
+          DOCR_USERNAME: ${{ secrets.DOCR_USERNAME }}
+          DOCR_PASSWORD: ${{ secrets.DOCR_PASSWORD }}
+          DOCR_EMAIL: ${{ secrets.DOCR_EMAIL }}
+        run: |
+          set -euo pipefail
+          # Ensure target namespace exists (Helm also creates, but we may create secrets beforehand)
+          kubectl get ns "$NS" >/dev/null 2>&1 || kubectl create ns "$NS"
+          if ! kubectl -n "$NS" get secret docr-secret >/dev/null 2>&1; then
+            echo "Creating imagePullSecret 'docr-secret' in ns=$NS"
+            if [[ -n "${DOCKER_CONFIG_JSON_B64:-}" ]]; then
+              tmpfile=$(mktemp)
+              echo "$DOCKER_CONFIG_JSON_B64" | base64 -d > "$tmpfile"
+              kubectl -n "$NS" create secret generic docr-secret \
+                --type=kubernetes.io/dockerconfigjson \
+                --from-file=.dockerconfigjson="$tmpfile"
+              rm -f "$tmpfile"
+            elif [[ -n "${DOCKER_CONFIG_JSON:-}" ]]; then
+              tmpfile=$(mktemp)
+              echo "$DOCKER_CONFIG_JSON" > "$tmpfile"
+              kubectl -n "$NS" create secret generic docr-secret \
+                --type=kubernetes.io/dockerconfigjson \
+                --from-file=.dockerconfigjson="$tmpfile"
+              rm -f "$tmpfile"
+            elif [[ -n "${DOCR_USERNAME:-}" && -n "${DOCR_PASSWORD:-}" ]]; then
+              kubectl -n "$NS" create secret docker-registry docr-secret \
+                --docker-server=registry.digitalocean.com \
+                --docker-username="$DOCR_USERNAME" \
+                --docker-password="$DOCR_PASSWORD" \
+                ${DOCR_EMAIL:+--docker-email="$DOCR_EMAIL"}
+            else
+              echo "No DOCR credentials provided; set one of DOCKER_CONFIG_JSON_B64, DOCKER_CONFIG_JSON, or DOCR_USERNAME/DOCR_PASSWORD." >&2
+              exit 1
+            fi
+          else
+            echo "imagePullSecret 'docr-secret' already exists in ns=$NS"
+          fi
+
+      - name: Verify required app secrets exist
+        shell: bash
+        run: |
+          set -euo pipefail
+          if ! kubectl -n "$NS" get secret provider-api-keys >/dev/null 2>&1; then
+            echo "Missing required secret 'provider-api-keys' in ns=$NS. Create it with your API keys before deploying." >&2
+            exit 1
+          fi
+
       - name: Select values file by environment and derive hosts
         id: select_values
         shell: bash
@@ -287,6 +338,23 @@ jobs:
           fi
           DEPLOY="${RELEASE}-topdog"
           kubectl -n "$NS" rollout status deployment "$DEPLOY" --timeout=300s
+
+      - name: Debug on rollout failure (pods/events/logs)
+        if: failure()
+        shell: bash
+        run: |
+          set +e
+          echo "=== Deployments ==="; kubectl -n "$NS" get deploy -o wide
+          echo "=== Pods (wide) ==="; kubectl -n "$NS" get pods -o wide
+          RELEASE="$([[ "$STRATEGY" == "canary" ]] && echo topdog-canary || echo topdog-green)"
+          DEPLOY="${RELEASE}-topdog"
+          echo "=== Describe deployment $DEPLOY ==="; kubectl -n "$NS" describe deployment "$DEPLOY" || true
+          PODS=$(kubectl -n "$NS" get pods -l app.kubernetes.io/name=topdog -o name || true)
+          for p in $PODS; do
+            echo "----- Describe $p -----"; kubectl -n "$NS" describe "$p" || true
+            echo "----- Logs (last 200) for $p -----"; kubectl -n "$NS" logs "$p" --tail=200 || true
+          done
+          set -e
 
       - name: "Canary health re-check (pre-promotion)"
         shell: bash
