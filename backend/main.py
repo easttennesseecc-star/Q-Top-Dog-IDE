@@ -610,13 +610,33 @@ admin_static = Path(__file__).resolve().parent / "admin_static"
 if admin_static.exists():
     app.mount("/admin", StaticFiles(directory=str(admin_static), html=True), name="admin")
 
-# Serve artifacts (images/files) for MMS/media sharing
-artifacts_dir = Path(__file__).resolve().parent.parent / "artifacts"
+# Serve artifacts (images/files) for MMS/media sharing) using a writable path
+# Priority:
+# 1) ARTIFACTS_DIR env
+# 2) QIDE_CONFIG_DIR/artifacts
+# 3) /tmp/artifacts
+_artifacts_env = os.getenv("ARTIFACTS_DIR")
+if _artifacts_env:
+    artifacts_dir = Path(_artifacts_env)
+else:
+    qide_cfg_dir = os.getenv("QIDE_CONFIG_DIR")
+    if qide_cfg_dir:
+        artifacts_dir = Path(qide_cfg_dir) / "artifacts"
+    else:
+        artifacts_dir = Path("/tmp/artifacts")
+
 try:
-    artifacts_dir.mkdir(exist_ok=True)
+    artifacts_dir.mkdir(parents=True, exist_ok=True)
 except Exception:
-    pass
-app.mount("/artifacts", StaticFiles(directory=str(artifacts_dir)), name="artifacts")
+    # If for some reason creation fails, fall back to /tmp/artifacts
+    artifacts_dir = Path("/tmp/artifacts")
+    try:
+        artifacts_dir.mkdir(parents=True, exist_ok=True)
+    except Exception:
+        pass
+
+if artifacts_dir.exists():
+    app.mount("/artifacts", StaticFiles(directory=str(artifacts_dir)), name="artifacts")
 
 # IMPORTANT: Register critical API routers that shouldn't be shadowed by the
 # frontend catch-all BEFORE mounting the frontend catch-all.
