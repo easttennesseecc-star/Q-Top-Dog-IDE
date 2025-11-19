@@ -196,14 +196,27 @@ jobs:
           fi
           chmod 600 "$HOME/.kube/config"
 
-      - name: Docker login (DOCR)
+      - name: Authenticate to DOCR for push
         shell: bash
         env:
           DOCR_USERNAME: ${{ secrets.DOCR_USERNAME }}
           DOCR_PASSWORD: ${{ secrets.DOCR_PASSWORD }}
         run: |
           set -euo pipefail
-          echo "$DOCR_PASSWORD" | docker login registry.digitalocean.com -u "$DOCR_USERNAME" --password-stdin
+          mkdir -p "$HOME/.docker"
+          if [[ -n "${DOCR_USERNAME:-}" && -n "${DOCR_PASSWORD:-}" ]]; then
+            echo "Logging in to DOCR using provided credentials"
+            echo "$DOCR_PASSWORD" | docker login registry.digitalocean.com -u "$DOCR_USERNAME" --password-stdin
+          else
+            echo "No DOCR_USERNAME/DOCR_PASSWORD provided; attempting to hydrate docker config from cluster secret 'docr-secret' in ns=$NS"
+            if kubectl -n "$NS" get secret docr-secret >/dev/null 2>&1; then
+              kubectl -n "$NS" get secret docr-secret -o jsonpath='{.data.\.dockerconfigjson}' | base64 -d > "$HOME/.docker/config.json"
+              echo "Wrote Docker auth config from K8s secret"
+            else
+              echo "ERROR: Cannot authenticate to DOCR. Provide DOCR_USERNAME/DOCR_PASSWORD secrets or ensure secret docr-secret exists in namespace $NS" >&2
+              exit 1
+            fi
+          fi
 
       - name: Build and push image
         shell: bash
