@@ -19,6 +19,7 @@ from backend.services.stripe_types import (
     WebhookPaymentFailed,
 )
 from backend.models.subscription import Subscription, Invoice, BillingAlert, SubscriptionStatus
+from backend.models.user import User
 # Fix note: switched to SQLAlchemy `get_db` dependency (backend.database) to avoid
 # runtime failures when calling `.query` on the previous DatabaseService wrapper.
 from backend.database import get_db
@@ -84,6 +85,12 @@ async def get_subscription(
         ).first()
         
         if not subscription:
+            # Ensure user stub exists for FK constraint
+            user = db.query(User).filter(User.id == current_user).first()
+            if not user:
+                user = User(id=current_user)
+                db.add(user)
+                db.commit()
             # Create free tier subscription for new user
             subscription = Subscription(
                 user_id=current_user,

@@ -34,6 +34,7 @@ class Subscription(Base):
     __tablename__ = "subscriptions"
     
     id = Column(String, primary_key=True, default=lambda: str(uuid.uuid4()))
+    # User linkage (tests provide a minimal User model; production may ignore it)
     user_id = Column(String, ForeignKey("users.id"), unique=True, nullable=False)
     
     # Stripe IDs
@@ -65,7 +66,7 @@ class Subscription(Base):
     updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow, nullable=False)
     
     # Relationships
-    user = relationship("User", back_populates="subscription")
+    user = relationship("User", back_populates="subscription", uselist=False)
     invoices = relationship("Invoice", back_populates="subscription", cascade="all, delete-orphan")
     usage_events = relationship("UsageEvent", back_populates="subscription", cascade="all, delete-orphan")
 
@@ -126,9 +127,8 @@ class UsageEvent(Base):
     # Timestamp
     created_at = Column(DateTime, default=datetime.utcnow, nullable=False)
     
-    # Relationships
+    # Relationships (user disabled; subscription retained)
     subscription = relationship("Subscription", back_populates="usage_events")
-    user = relationship("User")
 
 
 class BillingAlert(Base):

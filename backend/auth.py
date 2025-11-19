@@ -7,6 +7,10 @@ Local dev storage uses a JSON file; for production, use a database + secrets man
 
 import json
 import uuid
+import os
+import hashlib
+import base64
+from secrets import token_bytes
 from pathlib import Path
 from typing import Optional, Dict, Any
 from datetime import datetime, timedelta
@@ -165,10 +169,6 @@ def get_current_user(x_user_id: Optional[str] = Header(None)) -> str:
 # Stored inside same auth data file under key password_users.
 # Uses PBKDF2-HMAC SHA256 with per-user random salt.
 # -----------------------------
-import os
-import hashlib
-import base64
-from secrets import token_bytes
 
 PBKDF2_ITERATIONS = 200_000
 
@@ -235,6 +235,29 @@ def change_password_user(email: str, old_password: str, new_password: str) -> bo
     data['password_users'][email]['hash'] = hash_b64
     data['password_users'][email]['iterations'] = iters
     data['password_users'][email]['updated_at'] = datetime.utcnow().isoformat()
+    save_auth_data(data)
+    return True
+
+def admin_reset_password_user(email: str, new_password: str, admin_token: Optional[str]) -> bool:
+    """Force reset (or create) a password user entry with admin token validation."""
+    env_token = os.getenv('ADMIN_TOKEN', '').strip()
+    if not env_token or not admin_token or admin_token != env_token:
+        return False
+    data = load_auth_data()
+    salt_b64, hash_b64, iters = _hash_password(new_password)
+    data.setdefault('password_users', {})[email] = {
+        'salt': salt_b64,
+        'hash': hash_b64,
+        'iterations': iters,
+        'updated_at': datetime.utcnow().isoformat(),
+    }
+    # Ensure basic profile exists
+    data.setdefault('users', {}).setdefault(email, {
+        'email': email,
+        'name': email.split('@')[0],
+        'picture': '',
+        'created_at': datetime.utcnow().isoformat(),
+    })
     save_auth_data(data)
     return True
 

@@ -1,0 +1,19 @@
+{
+  "users": {
+    "paul@quellum": {
+      "email": "paul@quellum",
+      "name": "paul",
+      "picture": "",
+      "created_at": "2025-11-19T20:38:32.217009"
+    }
+  },
+  "sessions": {},
+  "password_users": {
+    "paul@quellum": {
+      "salt": "ezcT9dDXzzrim/xY/LkTLw==",
+      "hash": "+DP1TgP885WXWS9DN/M7MT2ZEXcUwSfsBM4CckZlyK4=",
+      "iterations": 200000,
+      "updated_at": "2025-11-19T21:04:29.447644"
+    }
+  }
+}
