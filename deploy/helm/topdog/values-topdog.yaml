@@ -21,6 +21,8 @@ extraEnv:
   # Canonical/redirect + CORS/sitemap for TopDog
   - name: ENABLE_HOST_REDIRECT
     value: "true"
+  - name: LOG_TO_STDOUT_ONLY
+    value: "true"
   - name: DATABASE_URL
     value: "sqlite:////tmp/topdog_ide.db"
   - name: CANONICAL_HOST

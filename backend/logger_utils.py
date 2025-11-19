@@ -26,6 +26,7 @@ import time
 import platform
 import psutil
 from contextlib import contextmanager
+import os
 
 # Try to import asyncio for async support (optional) with mypy-friendly typing
 if TYPE_CHECKING:
@@ -50,7 +51,16 @@ class ContextualLogger:
         """
         self.name = name
         self.log_dir = Path(log_dir or "./logs")
-        self.log_dir.mkdir(parents=True, exist_ok=True)
+        try:
+            self.log_dir.mkdir(parents=True, exist_ok=True)
+        except Exception:
+            # Fall back to /tmp when filesystem is read-only
+            try:
+                self.log_dir = Path("/tmp/logs")
+                self.log_dir.mkdir(parents=True, exist_ok=True)
+            except Exception:
+                # As a last resort, proceed without ensuring log dir (stdout-only mode may be enabled)
+                pass
         
         # Main logger
         self.logger = logging.getLogger(name)
@@ -70,6 +80,7 @@ class ContextualLogger:
     
     def _setup_handlers(self, level: int):
         """Setup file and console handlers with rotation."""
+        log_to_stdout_only = str(os.getenv("LOG_TO_STDOUT_ONLY", "false")).lower() in ("1", "true", "yes")
         # Console handler - brief format
         console_handler = logging.StreamHandler(sys.stdout)
         console_handler.setLevel(level)
@@ -79,6 +90,9 @@ class ContextualLogger:
         )
         console_handler.setFormatter(console_formatter)
         self.logger.addHandler(console_handler)
+        if log_to_stdout_only:
+            # Skip file/JSON handlers when stdout-only mode is enabled
+            return
         
         # File handler - detailed format with rotation
         log_file = self.log_dir / f"{self.name}.log"
