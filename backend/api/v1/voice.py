@@ -22,11 +22,22 @@ logger = logging.getLogger(__name__)
 
 voice_bp = Blueprint('voice', __name__, url_prefix='/api/v1/voice')
 
-# Configuration
-UPLOAD_FOLDER = 'uploads/voice_samples'
+# Configuration: prefer writable locations in containers
+_cfg_dir = os.getenv("QIDE_CONFIG_DIR") or \
+           os.getenv("XDG_RUNTIME_DIR") or "/tmp/.q-ide"
+_base_uploads = os.getenv("UPLOADS_DIR") or os.path.join(_cfg_dir, "uploads")
+UPLOAD_FOLDER = os.getenv("VOICE_UPLOAD_DIR") or os.path.join(_base_uploads, "voice_samples")
 ALLOWED_EXTENSIONS = {'wav', 'mp3', 'ogg', 'm4a', 'flac'}
 
-os.makedirs(UPLOAD_FOLDER, exist_ok=True)
+try:
+    os.makedirs(UPLOAD_FOLDER, exist_ok=True)
+except Exception:
+    # Fallback to /tmp if the chosen path isn't writable
+    UPLOAD_FOLDER = os.path.join("/tmp", "uploads", "voice_samples")
+    try:
+        os.makedirs(UPLOAD_FOLDER, exist_ok=True)
+    except Exception:
+        pass
 
 
 def async_route(rule, **options):

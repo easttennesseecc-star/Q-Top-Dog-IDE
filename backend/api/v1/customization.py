@@ -17,12 +17,23 @@ logger = logging.getLogger(__name__)
 
 customization_bp = Blueprint('customization', __name__, url_prefix='/api/v1/customization')
 
-# Configuration
-UPLOAD_FOLDER = 'uploads/themes'
+# Configuration: prefer writable locations in containers
+_cfg_dir = os.getenv("QIDE_CONFIG_DIR") or \
+           os.getenv("XDG_RUNTIME_DIR") or "/tmp/.q-ide"
+_base_uploads = os.getenv("UPLOADS_DIR") or os.path.join(_cfg_dir, "uploads")
+UPLOAD_FOLDER = os.getenv("THEME_UPLOAD_DIR") or os.path.join(_base_uploads, "themes")
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'svg', 'gif'}
 MAX_FILE_SIZE = 10 * 1024 * 1024  # 10MB
 
-os.makedirs(UPLOAD_FOLDER, exist_ok=True)
+try:
+    os.makedirs(UPLOAD_FOLDER, exist_ok=True)
+except Exception:
+    # Fallback to /tmp if the chosen path isn't writable
+    UPLOAD_FOLDER = os.path.join("/tmp", "uploads", "themes")
+    try:
+        os.makedirs(UPLOAD_FOLDER, exist_ok=True)
+    except Exception:
+        pass
 
 
 def async_route(rule, **options):

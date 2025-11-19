@@ -9,6 +9,7 @@ from datetime import datetime
 from enum import Enum
 import json
 from pathlib import Path
+import os
 from backend.llm_roles_descriptor import LLMRole, get_role_by_name
 
 
@@ -135,10 +136,23 @@ class BuildOrchestrator:
     Manages project lifecycle from requirements through release.
     """
     
-    def __init__(self, storage_dir: str = "./builds"):
-        """Initialize the orchestrator with a storage directory"""
+    def __init__(self, storage_dir: Optional[str] = None):
+        """Initialize the orchestrator with a storage directory.
+        Defaults to a writable path derived from QIDE_CONFIG_DIR or /tmp.
+        """
+        if storage_dir is None:
+            cfg = os.getenv("QIDE_CONFIG_DIR") or os.getenv("XDG_RUNTIME_DIR") or "/tmp/.q-ide"
+            storage_dir = os.path.join(cfg, "builds")
         self.storage_dir = Path(storage_dir)
-        self.storage_dir.mkdir(exist_ok=True)
+        try:
+            self.storage_dir.mkdir(parents=True, exist_ok=True)
+        except Exception:
+            # Last-resort fallback
+            self.storage_dir = Path("/tmp/builds")
+            try:
+                self.storage_dir.mkdir(parents=True, exist_ok=True)
+            except Exception:
+                pass
         self.projects: Dict[str, BuildProject] = {}
         self._load_projects()
     

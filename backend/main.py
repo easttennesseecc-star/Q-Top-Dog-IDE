@@ -638,6 +638,20 @@ except Exception:
 if artifacts_dir.exists():
     app.mount("/artifacts", StaticFiles(directory=str(artifacts_dir)), name="artifacts")
 
+# Serve uploads (used by customization/voice endpoints)
+_uploads_base = os.getenv("UPLOADS_DIR")
+if not _uploads_base:
+    qide_cfg_dir = os.getenv("QIDE_CONFIG_DIR")
+    if qide_cfg_dir:
+        _uploads_base = str(Path(qide_cfg_dir) / "uploads")
+    else:
+        _uploads_base = "/tmp/uploads"
+try:
+    Path(_uploads_base).mkdir(parents=True, exist_ok=True)
+    app.mount("/uploads", StaticFiles(directory=_uploads_base), name="uploads")
+except Exception:
+    pass
+
 # IMPORTANT: Register critical API routers that shouldn't be shadowed by the
 # frontend catch-all BEFORE mounting the frontend catch-all.
 # Snapshot APIs were previously returning HTML due to catch-all precedence.
@@ -1845,9 +1859,24 @@ ASYNC_ASSETS: Dict[str, Dict] = {}
 
 
 def _ensure_artifacts_dir() -> Path:
-    root = Path(__file__).resolve().parent.parent
-    d = root / "artifacts"
-    d.mkdir(exist_ok=True)
+    """Return a writable artifacts directory, creating it if needed."""
+    env_dir = os.getenv("ARTIFACTS_DIR")
+    if env_dir:
+        d = Path(env_dir)
+    else:
+        qide_cfg = os.getenv("QIDE_CONFIG_DIR")
+        if qide_cfg:
+            d = Path(qide_cfg) / "artifacts"
+        else:
+            d = Path("/tmp/artifacts")
+    try:
+        d.mkdir(parents=True, exist_ok=True)
+    except Exception:
+        d = Path("/tmp/artifacts")
+        try:
+            d.mkdir(parents=True, exist_ok=True)
+        except Exception:
+            pass
     return d
 
 
