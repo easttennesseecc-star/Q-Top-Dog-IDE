@@ -12,11 +12,10 @@ Follow these steps to integrate monitoring into your FastAPI application.
 # - python-dotenv (already installed)
 
 # STEP 2: Import monitoring in your main FastAPI application
-
-from fastapi import FastAPI
-from monitoring_routes import router as monitoring_router
-from monitoring import monitor_performance, monitoring, EventCategory, AlertLevel, MetricType
 from datetime import datetime
+from fastapi import FastAPI
+from monitoring import AlertLevel, EventCategory, MetricType, monitor_performance, monitoring
+from monitoring_routes import router as monitoring_router
 
 app = FastAPI(title="AI Marketplace API")
 
@@ -36,7 +35,7 @@ async def search_models_api(query: str, limit: int = 10):
     try:
         # Your search logic here
         results = []  # placeholder
-        
+
         # Track business event
         monitoring.track_event(
             category=EventCategory.BUSINESS,
@@ -48,7 +47,7 @@ async def search_models_api(query: str, limit: int = 10):
                 "timestamp": datetime.now().isoformat()
             }
         )
-        
+
         # Track metric
         monitoring.track_metric(
             metric_name="searches_total",
@@ -56,9 +55,9 @@ async def search_models_api(query: str, limit: int = 10):
             metric_type=MetricType.COUNTER,
             tags={"endpoint": "search_models", "query_length": str(len(query))}
         )
-        
+
         return {"query": query, "results": results, "count": len(results)}
-    
+
     except Exception as e:
         # Errors are automatically tracked by the decorator
         # But you can add context
@@ -79,11 +78,11 @@ async def register_user(email: str, password: str):
     """User registration with explicit monitoring"""
     import time
     start_time = time.time()
-    
+
     try:
         # Your registration logic here
         user = {}  # placeholder
-        
+
         # Track success
         duration_ms = (time.time() - start_time) * 1000
         monitoring.track_performance(
@@ -92,16 +91,16 @@ async def register_user(email: str, password: str):
             success=True,
             metadata={"email": email}
         )
-        
+
         # Track event
         monitoring.track_event(
             category=EventCategory.USER_ACTION,
             event_name="user_registered",
             data={"email": email}
         )
-        
+
         return {"status": "success", "user": user}
-    
+
     except Exception as e:
         duration_ms = (time.time() - start_time) * 1000
         monitoring.track_performance(
@@ -110,7 +109,7 @@ async def register_user(email: str, password: str):
             success=False,
             metadata={"email": email}
         )
-        
+
         monitoring.track_error(
             error=e,
             context={"operation": "register_user", "email": email},
@@ -126,7 +125,7 @@ async def use_model(model_id: str, tokens: int):
     try:
         # Your model usage logic
         cost = tokens * 0.0001  # Example cost calculation
-        
+
         # Track multiple metrics
         monitoring.track_metric(
             metric_name="model_usage_count",
@@ -134,21 +133,21 @@ async def use_model(model_id: str, tokens: int):
             metric_type=MetricType.COUNTER,
             tags={"model_id": model_id}
         )
-        
+
         monitoring.track_metric(
             metric_name="tokens_consumed",
             value=tokens,
             metric_type=MetricType.COUNTER,
             tags={"model_id": model_id}
         )
-        
+
         monitoring.track_metric(
             metric_name="revenue_generated",
             value=cost,
             metric_type=MetricType.COUNTER,
             tags={"model_id": model_id}
         )
-        
+
         # Track as business event
         monitoring.track_event(
             category=EventCategory.BUSINESS,
@@ -159,9 +158,9 @@ async def use_model(model_id: str, tokens: int):
                 "cost": cost
             }
         )
-        
+
         return {"status": "success", "tokens_used": tokens, "cost": cost}
-    
+
     except Exception as e:
         monitoring.track_error(e, context={"operation": "use_model", "model_id": model_id})
         raise
@@ -197,7 +196,7 @@ async def track_all_requests(request: Request, call_next):
             success=response.status_code < 400,
             metadata={"status_code": response.status_code}
         )
-        
+
         # Track business events for important endpoints
         if "/api/users" in request.url.path:
             monitoring.track_event(
@@ -205,9 +204,9 @@ async def track_all_requests(request: Request, call_next):
                 event_name=f"user_{request.method.lower()}",
                 data={"endpoint": request.url.path}
             )
-        
+
         return response
-    
+
     except Exception as e:
         duration_ms = (time.time() - start_time) * 1000
         monitoring.track_performance(
@@ -215,7 +214,7 @@ async def track_all_requests(request: Request, call_next):
             duration_ms=duration_ms,
             success=False
         )
-        
+
         monitoring.track_error(
             error=e,
             context={"method": request.method, "path": request.url.path},
@@ -273,7 +272,7 @@ curl http://localhost:8000/api/monitoring/metrics/performance
 if __name__ == "__main__":
     print("""
     Monitoring Integration Guide Ready
-    
+
     Steps to integrate:
     1. Add 'from monitoring_routes import router as monitoring_router' to main.py
     2. Add 'app.include_router(monitoring_router)' after app creation
@@ -281,7 +280,7 @@ if __name__ == "__main__":
     4. Use monitoring.track_event() for business events
     5. Use monitoring.track_error() for exception handling
     6. Test endpoints at http://localhost:8000/api/monitoring/
-    
+
     Available endpoints:
     - GET  /api/monitoring/health           - Full health check
     - GET  /api/monitoring/health/live      - Liveness probe
@@ -292,7 +291,7 @@ if __name__ == "__main__":
     - GET  /api/monitoring/alerts/recent    - Recent alerts
     - GET  /api/monitoring/dashboard/json   - Full dashboard
     - POST /api/monitoring/admin/clear-history - Clear data
-    
+
     Documentation:
     - See MONITORING_SETUP_GUIDE.md for complete guide
     - See monitoring.py for API documentation
