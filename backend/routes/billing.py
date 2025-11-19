@@ -3,13 +3,13 @@ Billing API endpoints - Stripe integration routes
 Handles subscriptions, checkout, portal, and webhooks
 """
 
-from fastapi import APIRouter, Depends, HTTPException, Request, Body
-import os
-from typing import Any
-from pydantic import BaseModel
-from typing import Optional, Dict, cast
-from datetime import datetime
 import logging
+import os
+from datetime import datetime
+from typing import Any, Dict, Optional, cast
+
+from fastapi import APIRouter, Body, Depends, HTTPException, Request
+from pydantic import BaseModel
 from backend.services.stripe_service import StripeService, SubscriptionTier
 from backend.services.stripe_types import (
     WebhookSubscriptionCreated,
@@ -70,6 +70,7 @@ class GetSubscriptionResponse(BaseModel):
 # ============================================================================
 # Subscription Management Endpoints
 # ============================================================================
+
 
 @router.get("/subscription", response_model=GetSubscriptionResponse)
 async def get_subscription(

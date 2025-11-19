@@ -8,7 +8,7 @@ Endpoints for:
 - Validating provider access
 """
 
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, HTTPException, Request
 from pydantic import BaseModel
 from typing import Dict, List, Optional, Any
 from backend.llm_auth import (
@@ -17,6 +17,9 @@ from backend.llm_auth import (
     get_oauth_config
 )
 from backend.logger_utils import get_logger
+from backend.services.rate_limiter import RateLimiter
+import sqlite3
+import hashlib
 
 logger = get_logger(__name__)
 
@@ -45,10 +48,91 @@ class OAuthTokenStorage(BaseModel):
 
 class ProviderRevokeRequest(BaseModel):
     provider: str
+
+
+def _resolve_user_id(request: Request, payload_user: Optional[str]) -> Optional[str]:
+    """Resolve user id from header or payload for BYOK enforcement.
+
+    Order: X-Session-ID header -> query param session_id -> payload user field.
+    Returns None if not available.
+    """
+    try:
+        sid = request.headers.get("X-Session-ID") or request.query_params.get("session_id")
+        if sid:
+            try:
+                from backend.auth import get_session_user  # lazy import to avoid cycles
+                uid = get_session_user(sid)
+                if uid:
+                    return uid
+            except Exception:
+                pass
+    except Exception:
+        pass
+    return payload_user
+
+
+def _enforce_byok_capacity_and_record(user_id: Optional[str], provider: str, key_ref: str) -> None:
+    """Enforce BYOK capacity using RateLimiter.get_byok_pool_status.
+
+    - For org tiers: block when used >= capacity and record new credential row when allowed.
+    - For solo tiers: no DB recording here; allow (UI can guide limits).
+    """
+    if not user_id:
+        # Cannot enforce without user context; allow but log
+        logger.warning("BYOK enforcement skipped: missing user context")
+        return
+    rl = RateLimiter()
+    status = rl.get_byok_pool_status(user_id)
+    if not status:
+        return
+    if status.get("scope") == "org":
+        capacity = int(status.get("capacity") or 0)
+        used = int(status.get("used") or 0)
+        org_id = status.get("org_id")
+        if used >= capacity:
+            raise HTTPException(status_code=403, detail="Organization BYOK pool is at capacity. Deactivate a key or upgrade.")
+        # Record usage idempotently in organization_byok_credentials
+        try:
+            try:
+                from backend.database.tier_schema import MembershipTierSchema  # local import
+                db_path = MembershipTierSchema.get_db_path()
+            except Exception:
+                db_path = "topdog_ide.db"
+            conn = sqlite3.connect(db_path)
+            cur = conn.cursor()
+            cur.execute(
+                """
+                SELECT COUNT(1) FROM organization_byok_credentials
+                WHERE org_id = ? AND provider = ? AND key_ref = ? AND active = 1
+                """,
+                (org_id, provider, key_ref)
+            )
+            exists = int(cur.fetchone()[0] or 0) > 0
+            if not exists:
+                cur.execute(
+                    """
+                    INSERT INTO organization_byok_credentials (org_id, provider, key_ref, active)
+                    VALUES (?, ?, ?, 1)
+                    """,
+                    (org_id, provider, key_ref)
+                )
+                conn.commit()
+        except Exception as e:
+            logger.warning(f"Failed to record org BYOK credential: {e}")
+        finally:
+            try:
+                conn.close()
+            except Exception:
+                pass
 @router.get("/providers")
 async def list_oauth_providers():
     """Return known LLM OAuth-capable providers and whether OAuth is configured.
-
+    elif status.get("scope") == "user":
+        capacity = int(status.get("capacity") or 0)
+        used = int(status.get("used") or 0)
+        if used >= capacity and capacity > 0:
+            raise HTTPException(status_code=403, detail="Personal BYOK slots exhausted for your tier. Remove a credential or upgrade.")
+        # No persistence for personal keys beyond existing file; enforcement only.
     This is a convenience endpoint for the OAuth panel. Some providers (OpenAI/Anthropic)
     typically use API keys; we still surface them with oauth_enabled=false.
     """
@@ -183,7 +267,7 @@ async def get_oauth_configuration(provider: str):
 
 
 @router.post("/oauth/exchange")
-async def exchange_oauth_code_endpoint(request: OAuthCodeExchange):
+async def exchange_oauth_code_endpoint(request: OAuthCodeExchange, http_request: Request):
     """
     Exchange OAuth authorization code for access token.
     
@@ -207,7 +291,7 @@ async def exchange_oauth_code_endpoint(request: OAuthCodeExchange):
         else:
             user_id = user_id_raw
         
-        # Store the token
+        # Enforce BYOK capacity prior to storing token
         access_token = token_response.get('access_token') if isinstance(token_response.get('access_token'), str) else None
         expires_in = token_response.get('expires_in') if isinstance(token_response.get('expires_in'), int) else None
         refresh_token = token_response.get('refresh_token') if isinstance(token_response.get('refresh_token'), str) else None
@@ -215,10 +299,16 @@ async def exchange_oauth_code_endpoint(request: OAuthCodeExchange):
         scopes: List[str] = scope_raw.split() if scope_raw else []
         if access_token is None:
             raise HTTPException(status_code=400, detail="Missing access_token in OAuth response")
+        # Use a stable reference to avoid storing secrets in DB
+        token_ref = hashlib.sha256(access_token.encode("utf-8")).hexdigest()
+        # Prefer resolved session user if available; else fall back to provider user_id
+        resolved_uid = _resolve_user_id(http_request, user_id)
+        _enforce_byok_capacity_and_record(resolved_uid, request.provider, token_ref)
+        # Store the token
         store_oauth_token(
             request.provider,
             access_token,
-            user_id,
+            resolved_uid or user_id,
             expires_in,
             refresh_token,
             scopes
@@ -237,7 +327,7 @@ async def exchange_oauth_code_endpoint(request: OAuthCodeExchange):
 
 
 @router.post("/api_key/store")
-async def store_api_key_endpoint(credential: APIKeyCredential):
+async def store_api_key_endpoint(credential: APIKeyCredential, request: Request):
     """
     Store API key for a provider.
     
@@ -250,7 +340,12 @@ async def store_api_key_endpoint(credential: APIKeyCredential):
         if not credential.key.strip():
             raise HTTPException(status_code=400, detail="API key cannot be empty")
         
-        store_api_key(credential.provider, credential.key, credential.user)
+        # Enforce BYOK capacity (org tiers) using a hashed key reference
+        key_ref = hashlib.sha256(credential.key.encode("utf-8")).hexdigest()
+        user_id = _resolve_user_id(request, credential.user)
+        _enforce_byok_capacity_and_record(user_id, credential.provider, key_ref)
+        # Persist after enforcement
+        store_api_key(credential.provider, credential.key, user_id)
         logger.info(f"API key stored for {credential.provider}")
         
         return {

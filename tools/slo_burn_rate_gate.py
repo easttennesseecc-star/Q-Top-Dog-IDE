@@ -58,14 +58,24 @@ def main() -> int:
     ns = parse_args()
     # 1) Error burn rate
     slo_query = os.getenv("SLO_QUERY", "sum(rate(http_requests_total{status=~'5..'}[5m])) / sum(rate(http_requests_total[5m]))")
+    has_prom = bool(os.getenv("PROM_URL"))
     burn_rate = _prom_get(slo_query)
-    if burn_rate is None:
-        # Fall back to env-provided burn rate for simulation
-        try:
-            burn_rate = float(os.getenv("SLO_BURN_RATE", "0.0"))
-        except ValueError:
-            print("Invalid SLO_BURN_RATE value", file=sys.stderr)
+    if has_prom:
+        if burn_rate is None:
+            print("ERROR: Prometheus query failed or returned no data; refusing fallback while PROM_URL is set", file=sys.stderr)
             return 2
+    else:
+        if burn_rate is None:
+            # Fall back to env-provided burn rate for simulation; treat empty as 0.0
+            raw = os.getenv("SLO_BURN_RATE", "").strip()
+            if not raw:
+                burn_rate = 0.0
+            else:
+                try:
+                    burn_rate = float(raw)
+                except ValueError:
+                    print("Invalid SLO_BURN_RATE value", file=sys.stderr)
+                    return 2
     print(f"SLO burn rate: {burn_rate} (threshold {ns.threshold})")
     if burn_rate > ns.threshold:
         print("FAIL: Burn rate exceeds threshold")

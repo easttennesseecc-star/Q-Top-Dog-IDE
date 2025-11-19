@@ -23,7 +23,21 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 WORKDIR /app
 
 # ============================================================================
-# Stage 2: Dependencies - Build Python dependencies
+# Stage 2: Frontend - Build SPA assets with Node
+# ============================================================================
+FROM node:20-alpine AS frontend
+
+WORKDIR /app
+
+# Install deps and build Vite app
+COPY frontend/package.json ./package.json
+# If lockfile exists in future, prefer: COPY frontend/package-lock.json ./package-lock.json and `npm ci`
+RUN npm install --no-fund --no-audit
+COPY frontend/ .
+RUN npm run build
+
+# ============================================================================
+# Stage 3: Dependencies - Build Python dependencies
 # ============================================================================
 FROM base AS dependencies
 
@@ -34,7 +48,7 @@ COPY backend/requirements.txt ./requirements.txt
 RUN pip install --no-warn-script-location -r requirements.txt
 
 # ============================================================================
-# Stage 3: Runtime - Final production image
+# Stage 4: Runtime - Final production image
 # ============================================================================
 FROM base AS runtime
 
@@ -47,8 +61,11 @@ RUN useradd -m -u 1001 appuser && \
 COPY --from=dependencies /usr/local/lib/python3.11/site-packages /usr/local/lib/python3.11/site-packages
 COPY --from=dependencies /usr/local/bin /usr/local/bin
 
-# Copy application code
+# Copy application code (backend and ancillary files)
 COPY --chown=appuser:appuser . .
+
+# Copy built frontend assets into expected location for backend static serving
+COPY --from=frontend --chown=appuser:appuser /app/dist /app/frontend/dist
 
 # Switch to non-root user
 USER appuser

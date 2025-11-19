@@ -34,6 +34,7 @@ class SubscriptionTier(str, Enum):
     """Available subscription tiers"""
     FREE = "free"
     PRO = "pro"
+    PRO_PLUS = "pro_plus"
     TEAMS = "teams"
     ENTERPRISE = "enterprise"
 
@@ -43,8 +44,16 @@ class StripeService:
 
     # Pricing tier IDs (from Stripe Product Dashboard)
     PRICE_IDS = {
+        # Dev monthly
         "pro": os.getenv("STRIPE_PRICE_ID_PRO", "price_pro_placeholder"),
+        "pro_plus": os.getenv("STRIPE_PRICE_ID_PRO_PLUS", "price_pro_plus_placeholder"),
         "teams": os.getenv("STRIPE_PRICE_ID_TEAMS", "price_teams_placeholder"),
+        "enterprise": os.getenv("STRIPE_PRICE_ID_ENTERPRISE", "price_enterprise_placeholder"),
+        # Dev annual (10% off, billed annually)
+        "pro_annual": os.getenv("STRIPE_PRICE_ID_PRO_ANNUAL", "price_pro_annual_placeholder"),
+        "pro_plus_annual": os.getenv("STRIPE_PRICE_ID_PRO_PLUS_ANNUAL", "price_pro_plus_annual_placeholder"),
+        "teams_annual": os.getenv("STRIPE_PRICE_ID_TEAMS_ANNUAL", "price_teams_annual_placeholder"),
+        "enterprise_annual": os.getenv("STRIPE_PRICE_ID_ENTERPRISE_ANNUAL", "price_enterprise_annual_placeholder"),
     }
 
     @staticmethod
@@ -480,7 +489,19 @@ class StripeService:
 # Helper function to get tier from price ID
 def get_tier_from_price_id(price_id: str) -> Optional[SubscriptionTier]:
     """Map Stripe price ID to subscription tier"""
-    for tier, pid in StripeService.PRICE_IDS.items():
+    for key, pid in StripeService.PRICE_IDS.items():
         if price_id == pid:
-            return SubscriptionTier(tier)
+            # Normalize annual keys back to their base tier
+            base = key.replace("_annual", "")
+            # Map to enum names
+            if base == "pro_plus":
+                return SubscriptionTier.PRO_PLUS
+            if base == "pro":
+                return SubscriptionTier.PRO
+            if base == "teams":
+                return SubscriptionTier.TEAMS
+            if base == "enterprise":
+                return SubscriptionTier.ENTERPRISE
+            if base == "free":
+                return SubscriptionTier.FREE
     return None

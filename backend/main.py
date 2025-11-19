@@ -25,6 +25,11 @@ from contextlib import asynccontextmanager
 import asyncio
 
 from backend.llm_pool import build_llm_report, get_best_llms_for_operations
+try:
+    # Optional import for graceful fallback suggestions if pool scan fails
+    from backend.llm_pool import get_opensource_llms  # type: ignore
+except Exception:
+    get_opensource_llms = None  # type: ignore
 from backend.llm_config_routes import router as llm_config_router
 from backend.llm_auth_routes import router as llm_auth_router
 from backend.llm_chat_routes import router as llm_chat_router
@@ -687,8 +692,15 @@ def get_llm_pool():
             )
             return report
         except Exception as e:
+            # Never 500 for BYOK discovery: return safe fallback with suggestions
             logger.error("Failed to fetch LLM pool", error=e)
-            raise
+            fallback = {"available": [], "excluded": [], "error": str(e)}
+            try:
+                if get_opensource_llms is not None:
+                    fallback["available"] = get_opensource_llms()  # type: ignore[index]
+            except Exception:
+                pass
+            return fallback
 
 # Backward compatibility alias (old frontend called /llm_pool without /api prefix)
 @app.get("/llm_pool")
@@ -1096,7 +1108,14 @@ BACKEND_URL = os.getenv('BACKEND_URL', 'http://127.0.0.1:8000')
 
 @app.get("/")
 def root():
-    """Landing page with API information"""
+    """Serve frontend index when built; fallback to API info."""
+    try:
+        if 'frontend_dist' in globals():
+            fd = globals().get('frontend_dist')
+            if fd and (fd / "index.html").exists():
+                return FileResponse(str(fd / "index.html"))
+    except Exception:
+        pass
     return {
         "app": "Top Dog (Aura) IDE",
         "version": "1.0.0",

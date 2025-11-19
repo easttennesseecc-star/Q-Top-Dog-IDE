@@ -15,6 +15,7 @@ class SubscriptionTier(str, enum.Enum):
     """Subscription tier levels"""
     FREE = "free"
     PRO = "pro"
+    PRO_PLUS = "pro_plus"
     TEAMS = "teams"
     ENTERPRISE = "enterprise"
 

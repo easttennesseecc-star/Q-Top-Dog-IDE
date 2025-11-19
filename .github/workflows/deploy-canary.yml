@@ -278,6 +278,17 @@ jobs:
             exit 1
           fi
 
+      - name: Check Stripe K8s secret presence (non-blocking)
+        shell: bash
+        continue-on-error: true
+        run: |
+          set -euo pipefail
+          if ! kubectl -n "$NS" get secret stripe-keys >/dev/null 2>&1; then
+            echo "⚠️ Warning: Missing Kubernetes secret 'stripe-keys' in ns=$NS. Create it with Stripe keys and Price IDs before deploying billing-enabled builds." >&2
+          else
+            echo "✅ Kubernetes secret 'stripe-keys' found in ns=$NS"
+          fi
+
       - name: Select values file by environment and derive hosts
         id: select_values
         shell: bash
@@ -308,6 +319,25 @@ jobs:
             echo "hosts_csv=topdog-ide.com,www.topdog-ide.com" >> "$GITHUB_OUTPUT"
           fi
           echo "canary_values=deploy/helm/topdog/values-canary.yaml" >> "$GITHUB_OUTPUT"
+
+      - name: Derive SLO thresholds by environment
+        shell: bash
+        run: |
+          set -euo pipefail
+          ENV_INPUT="${ENV_INPUT:-staging}"
+          # Defaults: stricter in prod
+          if [[ "$ENV_INPUT" == "prod" ]]; then
+            DEFAULT_THRESHOLD=0.5
+          else
+            DEFAULT_THRESHOLD=1.0
+          fi
+          # Allow manual override via workflow inputs when present
+          OVERRIDE_ARG="${{ github.event.inputs.slo_burn_rate_threshold }}"
+          if [[ -n "${OVERRIDE_ARG}" ]]; then
+            echo "SLO_BURN_RATE_THRESHOLD=${OVERRIDE_ARG}" >> "$GITHUB_ENV"
+          else
+            echo "SLO_BURN_RATE_THRESHOLD=${DEFAULT_THRESHOLD}" >> "$GITHUB_ENV"
+          fi
 
       - name: Helm dry-run render
         shell: bash
@@ -347,6 +377,9 @@ jobs:
             echo "Applying production api redirect ingress"
             kubectl -n "$NS" apply -f deploy/k8s/api-redirect-ingress.yaml
           fi
+
+      # q-ide.* legacy redirect intentionally removed per brand policy
+      # (No references to q-ide.com or q-ide.net in production ingress)
 
       - name: "Slack thread start (optional)"
         shell: bash
@@ -402,12 +435,13 @@ jobs:
           if [[ -n "${PROM_URL_SECRET}" ]]; then echo "PROM_URL=${PROM_URL_SECRET}" >> "$GITHUB_ENV"; fi
           if [[ -n "${PROM_TOKEN_SECRET}" ]]; then echo "PROM_TOKEN=${PROM_TOKEN_SECRET}" >> "$GITHUB_ENV"; fi
           # Fallback SLO burn rate for simulation when PROM_URL is not provided
-          if [[ -z "${PROM_URL_SECRET}" ]]; then echo "SLO_BURN_RATE=${{ github.event.inputs.slo_burn_rate_sim }}" >> "$GITHUB_ENV"; fi
+          if [[ -z "${PROM_URL_SECRET}" ]]; then echo "SLO_BURN_RATE=${{ github.event.inputs.slo_burn_rate_sim || '0.0' }}" >> "$GITHUB_ENV"; fi
+          # Define SLO query based on NGINX ingress metrics filtered by hosts
+          HOSTS_REGEX=$(echo "${{ steps.select_values.outputs.hosts_csv }}" | sed 's/,/|/g')
+          echo "SLO_QUERY=sum(rate(nginx_ingress_controller_requests{status=~\"5..\",host=~\"${HOSTS_REGEX}\"}[5m])) / sum(rate(nginx_ingress_controller_requests{host=~\"${HOSTS_REGEX}\"}[5m]))" >> "$GITHUB_ENV"
 
       - name: "Canary health re-check (pre-promotion)"
         shell: bash
-        env:
-          SLO_BURN_RATE_THRESHOLD: ${{ github.event.inputs.slo_burn_rate_threshold || '2.0' }}
         run: |
           set -euo pipefail
           echo "Re-checking canary health up to 3x..."
@@ -445,8 +479,6 @@ jobs:
 
 
       - name: SLO Burn Rate Gate
-        env:
-          SLO_BURN_RATE_THRESHOLD: ${{ github.event.inputs.slo_burn_rate_threshold || '2.0' }}
         run: |
           python -m pip install --upgrade pip
           python -c "import sys; print(sys.version)"

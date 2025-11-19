@@ -171,6 +171,8 @@ async def seed_dev_tiers(
     authorization: str | None = Header(default=None, alias="Authorization"),
     x_dev_seed_key: str | None = Header(default=None, alias="X-Dev-Seed-Key"),
     desired_tier: str | None = None,
+    org_name: str | None = None,
+    org_seats: int | None = None,
 ):
     """DEV ONLY: Seed membership tables and assign a tier to the current user.
 
@@ -198,12 +200,13 @@ async def seed_dev_tiers(
     cur = db.cursor()
     cols = [
         "tier_id","name","price","daily_call_limit","daily_llm_requests",
-        "concurrent_sessions","storage_gb","code_execution","data_persistence",
-        "webhooks","api_keys_limit","debug_logs_retention_days","custom_llms",
-        "team_members","role_based_access","shared_workspaces","audit_logs",
-        "resource_quotas","hipaa_ready","soc2_certified","sso_saml","data_residency",
-        "custom_integrations","on_premise_deploy","account_manager","support_tier",
-        "support_response_hours"
+        "concurrent_sessions","storage_gb","agent_roles_limit","models_unrestricted",
+        "code_execution","data_persistence","webhooks","api_keys_limit",
+        "byok_slots_per_seat","org_byok_base","org_byok_per_seat","org_pooled_api_calls_per_seat",
+        "debug_logs_retention_days","custom_llms","team_members","role_based_access",
+        "shared_workspaces","audit_logs","resource_quotas","hipaa_ready","soc2_certified",
+        "sso_saml","data_residency","custom_integrations","on_premise_deploy","account_manager",
+        "support_tier","support_response_hours"
     ]
     placeholders = ",".join(["?"] * len(cols))
     update_set = ",".join([f"{c}=excluded.{c}" for c in cols if c != "tier_id"])
@@ -226,6 +229,40 @@ async def seed_dev_tiers(
         """,
         (user_id, selected_tier),
     )
+    # Optionally create a lightweight org for team tiers (dev only)
+    if selected_tier in ("teams", "enterprise"):
+        # Ensure org exists
+        import time
+        gen_org_id = f"org_{user_id[:8]}_{int(time.time())}"
+        name = org_name or ("Dev Org " + user_id[:6])
+        cur.execute(
+            """
+            INSERT INTO organizations (org_id, name, tier_id)
+            VALUES (?, ?, ?)
+            ON CONFLICT(org_id) DO NOTHING
+            """,
+            (gen_org_id, name, selected_tier),
+        )
+        # Ensure current user is a member
+        cur.execute(
+            """
+            INSERT INTO organization_members (org_id, user_id, is_active)
+            VALUES (?, ?, 1)
+            ON CONFLICT(org_id, user_id) DO UPDATE SET is_active=1
+            """,
+            (gen_org_id, user_id),
+        )
+        # Optionally create dummy seats by adding placeholder members
+        seats = max(1, int(org_seats or 0))
+        for i in range(1, seats):  # one seat already used by current user
+            placeholder_user = f"dev-seat-{i}-{user_id[:6]}"
+            cur.execute(
+                """
+                INSERT OR IGNORE INTO organization_members (org_id, user_id, is_active)
+                VALUES (?, ?, 1)
+                """,
+                (gen_org_id, placeholder_user),
+            )
     db.commit()
     db.close()
 

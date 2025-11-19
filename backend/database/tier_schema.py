@@ -21,10 +21,16 @@ class MembershipTierSchema:
         daily_llm_requests INTEGER NOT NULL,
         concurrent_sessions INTEGER,
         storage_gb INTEGER,
+        agent_roles_limit INTEGER DEFAULT 0,
+        models_unrestricted BOOLEAN DEFAULT 1,
         code_execution BOOLEAN DEFAULT 0,
         data_persistence BOOLEAN DEFAULT 1,
         webhooks BOOLEAN DEFAULT 0,
         api_keys_limit INTEGER DEFAULT 1,
+        byok_slots_per_seat INTEGER DEFAULT 0,
+        org_byok_base INTEGER DEFAULT 0,
+        org_byok_per_seat INTEGER DEFAULT 0,
+        org_pooled_api_calls_per_seat INTEGER DEFAULT 0,
         debug_logs_retention_days INTEGER DEFAULT 0,
         custom_llms BOOLEAN DEFAULT 0,
         team_members INTEGER DEFAULT 1,
@@ -84,12 +90,63 @@ class MembershipTierSchema:
         changed_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
     );
     """
+
+    # Lightweight organization model (for pooled quotas & BYOK pools)
+    CREATE_ORGANIZATIONS_TABLE = """
+    CREATE TABLE IF NOT EXISTS organizations (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        org_id TEXT UNIQUE NOT NULL,
+        name TEXT NOT NULL,
+        tier_id TEXT NOT NULL REFERENCES membership_tiers(tier_id),
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    );
+    """
+
+    CREATE_ORG_MEMBERS_TABLE = """
+    CREATE TABLE IF NOT EXISTS organization_members (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        org_id TEXT NOT NULL,
+        user_id TEXT NOT NULL,
+        is_active BOOLEAN DEFAULT 1,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        UNIQUE(org_id, user_id)
+    );
+    """
+
+    CREATE_ORG_DAILY_USAGE_TABLE = """
+    CREATE TABLE IF NOT EXISTS org_daily_usage (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        org_id TEXT NOT NULL,
+        usage_date DATE NOT NULL,
+        api_calls_used INTEGER DEFAULT 0,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        UNIQUE(org_id, usage_date)
+    );
+    """
+
+    CREATE_ORG_BYOK_TABLE = """
+    CREATE TABLE IF NOT EXISTS organization_byok_credentials (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        org_id TEXT NOT NULL,
+        provider TEXT NOT NULL,
+        key_ref TEXT NOT NULL,
+        active BOOLEAN DEFAULT 1,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    );
+    """
     
     CREATE_INDEXES = """
     CREATE INDEX IF NOT EXISTS idx_user_subscriptions_user_id ON user_subscriptions(user_id);
     CREATE INDEX IF NOT EXISTS idx_daily_usage_user_id ON daily_usage_tracking(user_id);
     CREATE INDEX IF NOT EXISTS idx_daily_usage_date ON daily_usage_tracking(usage_date);
     CREATE INDEX IF NOT EXISTS idx_tier_audit_user_id ON tier_audit_log(user_id);
+    CREATE INDEX IF NOT EXISTS idx_org_members_user ON organization_members(user_id);
+    CREATE INDEX IF NOT EXISTS idx_org_members_org ON organization_members(org_id);
+    CREATE INDEX IF NOT EXISTS idx_org_usage_org ON org_daily_usage(org_id);
+    CREATE INDEX IF NOT EXISTS idx_org_usage_date ON org_daily_usage(usage_date);
     """
     
     @staticmethod
@@ -120,6 +177,19 @@ class MembershipTierSchema:
             
             cursor.execute(MembershipTierSchema.CREATE_TIER_AUDIT_LOG)
             print("✅ Created tier_audit_log table")
+
+            # Lightweight org model tables
+            cursor.execute(MembershipTierSchema.CREATE_ORGANIZATIONS_TABLE)
+            print("✅ Created organizations table")
+
+            cursor.execute(MembershipTierSchema.CREATE_ORG_MEMBERS_TABLE)
+            print("✅ Created organization_members table")
+
+            cursor.execute(MembershipTierSchema.CREATE_ORG_DAILY_USAGE_TABLE)
+            print("✅ Created org_daily_usage table")
+
+            cursor.execute(MembershipTierSchema.CREATE_ORG_BYOK_TABLE)
+            print("✅ Created organization_byok_credentials table")
             
             # Create indexes
             for index_sql in MembershipTierSchema.CREATE_INDEXES.split(';'):
@@ -127,6 +197,25 @@ class MembershipTierSchema:
                     cursor.execute(index_sql)
             print("✅ Created indexes")
             
+            conn.commit()
+
+            # Ensure new columns exist on membership_tiers (idempotent migrations)
+            cursor.execute("PRAGMA table_info(membership_tiers)")
+            existing_cols = {row[1] for row in cursor.fetchall()}
+            migrations = {
+                'agent_roles_limit': "ALTER TABLE membership_tiers ADD COLUMN agent_roles_limit INTEGER DEFAULT 0",
+                'models_unrestricted': "ALTER TABLE membership_tiers ADD COLUMN models_unrestricted BOOLEAN DEFAULT 1",
+                'byok_slots_per_seat': "ALTER TABLE membership_tiers ADD COLUMN byok_slots_per_seat INTEGER DEFAULT 0",
+                'org_byok_base': "ALTER TABLE membership_tiers ADD COLUMN org_byok_base INTEGER DEFAULT 0",
+                'org_byok_per_seat': "ALTER TABLE membership_tiers ADD COLUMN org_byok_per_seat INTEGER DEFAULT 0",
+                'org_pooled_api_calls_per_seat': "ALTER TABLE membership_tiers ADD COLUMN org_pooled_api_calls_per_seat INTEGER DEFAULT 0",
+            }
+            for col, stmt in migrations.items():
+                if col not in existing_cols:
+                    try:
+                        cursor.execute(stmt)
+                    except Exception:
+                        pass
             conn.commit()
             conn.close()
             
@@ -138,20 +227,26 @@ class MembershipTierSchema:
             raise
 
 
-# Tier configurations - Progressive Value Ladder
+# Tier configurations — Dev lineup aligned with proposal
 TIER_CONFIGS = [
     {
         'tier_id': 'free',
-        'name': 'FREE',
+        'name': 'DEV_FREE',
         'price': 0,
-        'daily_call_limit': 20,
-        'daily_llm_requests': 2,
+        'daily_call_limit': 75,
+        'daily_llm_requests': 40,
         'concurrent_sessions': 1,
         'storage_gb': 0.5,
-        'code_execution': False,  # ❌ UNLOCK IN PRO
+        'agent_roles_limit': 2,
+        'models_unrestricted': True,
+        'code_execution': False,
         'data_persistence': True,
         'webhooks': False,
         'api_keys_limit': 1,
+        'byok_slots_per_seat': 2,
+        'org_byok_base': 0,
+        'org_byok_per_seat': 0,
+        'org_pooled_api_calls_per_seat': 0,
         'debug_logs_retention_days': 7,
         'custom_llms': False,
         'team_members': 1,
@@ -171,18 +266,24 @@ TIER_CONFIGS = [
     },
     {
         'tier_id': 'pro',
-        'name': 'PRO',
-        'price': 20,
-        'daily_call_limit': 10000,
-        'daily_llm_requests': 1000,
-        'concurrent_sessions': 5,
-        'storage_gb': 100,
-        'code_execution': True,  # ✅ FIRST MAJOR UNLOCK
+        'name': 'DEV_PRO',
+        'price': 29,
+        'daily_call_limit': 800,
+        'daily_llm_requests': 300,
+        'concurrent_sessions': 2,
+        'storage_gb': 5,
+        'agent_roles_limit': 3,
+        'models_unrestricted': True,
+        'code_execution': True,
         'data_persistence': True,
-        'webhooks': True,  # ✅ PRO UNLOCK: Webhooks
-        'api_keys_limit': 5,  # ✅ PRO UNLOCK: Multiple keys
+        'webhooks': True,
+        'api_keys_limit': 3,
+        'byok_slots_per_seat': 3,
+        'org_byok_base': 0,
+        'org_byok_per_seat': 0,
+        'org_pooled_api_calls_per_seat': 0,
         'debug_logs_retention_days': 30,
-        'custom_llms': False,  # ❌ UNLOCK IN PRO-PLUS
+        'custom_llms': False,
         'team_members': 1,
         'role_based_access': False,
         'shared_workspaces': False,
@@ -196,22 +297,28 @@ TIER_CONFIGS = [
         'on_premise_deploy': False,
         'account_manager': False,
         'support_tier': 'Email',
-        'support_response_hours': 24
+        'support_response_hours': 48
     },
     {
         'tier_id': 'pro_plus',
-        'name': 'PRO-PLUS',
-        'price': 45,
-        'daily_call_limit': 50000,
-        'daily_llm_requests': 5000,
-        'concurrent_sessions': 8,
-        'storage_gb': 250,
+        'name': 'DEV_PRO_PLUS',
+        'price': 49,
+        'daily_call_limit': 1200,
+        'daily_llm_requests': 450,
+        'concurrent_sessions': 3,
+        'storage_gb': 15,
+        'agent_roles_limit': 5,
+        'models_unrestricted': True,
         'code_execution': True,
         'data_persistence': True,
         'webhooks': True,
-        'api_keys_limit': 10,
+        'api_keys_limit': 5,
+        'byok_slots_per_seat': 5,
+        'org_byok_base': 0,
+        'org_byok_per_seat': 0,
+        'org_pooled_api_calls_per_seat': 0,
         'debug_logs_retention_days': 60,
-        'custom_llms': True,  # ✅ PRO-PLUS UNLOCK: Custom LLMs
+        'custom_llms': True,
         'team_members': 1,
         'role_based_access': False,
         'shared_workspaces': False,
@@ -221,60 +328,37 @@ TIER_CONFIGS = [
         'soc2_certified': False,
         'sso_saml': False,
         'data_residency': False,
-        'custom_integrations': True,  # ✅ PRO-PLUS UNLOCK: Custom integrations
+        'custom_integrations': True,
         'on_premise_deploy': False,
         'account_manager': False,
-        'support_tier': 'Priority Email',
-        'support_response_hours': 12
+        'support_tier': 'Priority-lite',
+        'support_response_hours': 36
     },
     {
-        'tier_id': 'pro_team',
-        'name': 'PRO-TEAM',
-        'price': 75,
-        'daily_call_limit': 50000,
-        'daily_llm_requests': 5000,
-        'concurrent_sessions': 8,
-        'storage_gb': 250,
+        'tier_id': 'teams',
+        'name': 'DEV_TEAMS',
+        'price': 39,
+        'daily_call_limit': 1600,
+        'daily_llm_requests': 600,
+        'concurrent_sessions': 3,
+        'storage_gb': 10,
+        'agent_roles_limit': 5,
+        'models_unrestricted': True,
         'code_execution': True,
         'data_persistence': True,
         'webhooks': True,
-        'api_keys_limit': 10,
-        'debug_logs_retention_days': 30,
-        'custom_llms': True,  # ✅ PRO-TEAM HAS: Custom LLMs (like PRO-PLUS)
-        'team_members': 3,  # ✅ PRO-TEAM UNLOCK: Small team support (3 people)
-        'role_based_access': True,  # ✅ PRO-TEAM UNLOCK: Basic RBAC (Admin/Viewer)
-        'shared_workspaces': True,  # ✅ PRO-TEAM UNLOCK: Shared workspaces
-        'audit_logs': True,  # ✅ PRO-TEAM UNLOCK: Audit logs (7-day retention)
-        'resource_quotas': False,
-        'hipaa_ready': False,
-        'soc2_certified': False,
-        'sso_saml': False,  # ❌ Enterprise only
-        'data_residency': False,  # ❌ Enterprise only
-        'custom_integrations': True,
-        'on_premise_deploy': False,  # ❌ Enterprise only
-        'account_manager': False,  # ❌ Enterprise only
-        'support_tier': 'Email + Community',
-        'support_response_hours': 24
-    },
-    {
-        'tier_id': 'teams_small',
-        'name': 'TEAMS-SMALL',
-        'price': 100,
-        'daily_call_limit': 100000,
-        'daily_llm_requests': 10000,
-        'concurrent_sessions': 10,
-        'storage_gb': 1000,
-        'code_execution': True,
-        'data_persistence': True,
-        'webhooks': True,
-        'api_keys_limit': 20,
+        'api_keys_limit': 0,
+        'byok_slots_per_seat': 0,
+        'org_byok_base': 12,
+        'org_byok_per_seat': 2,
+        'org_pooled_api_calls_per_seat': 400,
         'debug_logs_retention_days': 90,
         'custom_llms': True,
-        'team_members': 5,  # ✅ TEAMS UNLOCK: Collaboration (5 members)
-        'role_based_access': True,  # ✅ TEAMS UNLOCK: RBAC
-        'shared_workspaces': True,  # ✅ TEAMS UNLOCK: Shared spaces
-        'audit_logs': True,  # ✅ TEAMS UNLOCK: Audit trail
-        'resource_quotas': True,  # ✅ TEAMS UNLOCK: Resource limits
+        'team_members': 3,
+        'role_based_access': True,
+        'shared_workspaces': True,
+        'audit_logs': True,
+        'resource_quotas': True,
         'hipaa_ready': False,
         'soc2_certified': False,
         'sso_saml': False,
@@ -282,152 +366,42 @@ TIER_CONFIGS = [
         'custom_integrations': True,
         'on_premise_deploy': False,
         'account_manager': False,
-        'support_tier': 'Email SLA',
+        'support_tier': 'Priority',
         'support_response_hours': 24
     },
     {
-        'tier_id': 'teams_medium',
-        'name': 'TEAMS-MEDIUM',
-        'price': 300,
-        'daily_call_limit': 500000,
-        'daily_llm_requests': 50000,
-        'concurrent_sessions': 20,
-        'storage_gb': 2000,
+        'tier_id': 'enterprise',
+        'name': 'DEV_ENTERPRISE',
+        'price': 79,
+        'daily_call_limit': 3500,
+        'daily_llm_requests': 1400,
+        'concurrent_sessions': 6,
+        'storage_gb': 50,
+        'agent_roles_limit': 5,
+        'models_unrestricted': True,
         'code_execution': True,
         'data_persistence': True,
         'webhooks': True,
-        'api_keys_limit': -1,  # Unlimited
-        'debug_logs_retention_days': 180,
-        'custom_llms': True,
-        'team_members': 30,  # ✅ Scaled team size
-        'role_based_access': True,
-        'shared_workspaces': True,
-        'audit_logs': True,
-        'resource_quotas': True,
-        'hipaa_ready': False,
-        'soc2_certified': False,
-        'sso_saml': False,
-        'data_residency': False,
-        'custom_integrations': True,
-        'on_premise_deploy': False,
-        'account_manager': False,
-        'support_tier': 'Priority Email',
-        'support_response_hours': 12
-    },
-    {
-        'tier_id': 'teams_large',
-        'name': 'TEAMS-LARGE',
-        'price': 800,
-        'daily_call_limit': 9999999,
-        'daily_llm_requests': 9999999,
-        'concurrent_sessions': 50,
-        'storage_gb': 5000,
-        'code_execution': True,
-        'data_persistence': True,
-        'webhooks': True,
-        'api_keys_limit': -1,
+        'api_keys_limit': 0,
+        'byok_slots_per_seat': 0,
+        'org_byok_base': 24,
+        'org_byok_per_seat': 3,
+        'org_pooled_api_calls_per_seat': 1750,
         'debug_logs_retention_days': 365,
         'custom_llms': True,
-        'team_members': 100,  # ✅ Large teams
+        'team_members': 10,
         'role_based_access': True,
         'shared_workspaces': True,
         'audit_logs': True,
         'resource_quotas': True,
         'hipaa_ready': False,
         'soc2_certified': False,
-        'sso_saml': False,
-        'data_residency': False,
-        'custom_integrations': True,
-        'on_premise_deploy': False,
-        'account_manager': False,
-        'support_tier': 'Priority Phone',
-        'support_response_hours': 4
-    },
-    {
-        'tier_id': 'enterprise_standard',
-        'name': 'ENTERPRISE-STANDARD',
-        'price': 5000,
-        'daily_call_limit': 9999999,
-        'daily_llm_requests': 9999999,
-        'concurrent_sessions': 100,
-        'storage_gb': 10000,
-        'code_execution': True,
-        'data_persistence': True,
-        'webhooks': True,
-        'api_keys_limit': -1,
-        'debug_logs_retention_days': -1,  # Forever
-        'custom_llms': True,
-        'team_members': 500,
-        'role_based_access': True,
-        'shared_workspaces': True,
-        'audit_logs': True,
-        'resource_quotas': True,
-        'hipaa_ready': True,  # ✅ ENTERPRISE UNLOCK: Compliance
-        'soc2_certified': True,  # ✅ ENTERPRISE UNLOCK: Security
-        'sso_saml': False,  # ❌ Premium only
-        'data_residency': False,
-        'custom_integrations': True,
-        'on_premise_deploy': False,
-        'account_manager': False,
-        'support_tier': 'Dedicated 24/7',
-        'support_response_hours': 1
-    },
-    {
-        'tier_id': 'enterprise_premium',
-        'name': 'ENTERPRISE-PREMIUM',
-        'price': 15000,
-        'daily_call_limit': 9999999,
-        'daily_llm_requests': 9999999,
-        'concurrent_sessions': 100,
-        'storage_gb': 50000,
-        'code_execution': True,
-        'data_persistence': True,
-        'webhooks': True,
-        'api_keys_limit': -1,
-        'debug_logs_retention_days': -1,
-        'custom_llms': True,
-        'team_members': 2000,
-        'role_based_access': True,
-        'shared_workspaces': True,
-        'audit_logs': True,
-        'resource_quotas': True,
-        'hipaa_ready': True,
-        'soc2_certified': True,
-        'sso_saml': True,  # ✅ PREMIUM UNLOCK: SSO/SAML
-        'data_residency': False,
-        'custom_integrations': True,
-        'on_premise_deploy': False,
-        'account_manager': True,  # ✅ PREMIUM UNLOCK: Account Manager
-        'support_tier': 'Dedicated 24/7 + Account Manager',
-        'support_response_hours': 1
-    },
-    {
-        'tier_id': 'enterprise_ultimate',
-        'name': 'ENTERPRISE-ULTIMATE',
-        'price': 50000,
-        'daily_call_limit': 9999999,
-        'daily_llm_requests': 9999999,
-        'concurrent_sessions': 999,
-        'storage_gb': 999999,
-        'code_execution': True,
-        'data_persistence': True,
-        'webhooks': True,
-        'api_keys_limit': -1,
-        'debug_logs_retention_days': -1,
-        'custom_llms': True,
-        'team_members': 99999,
-        'role_based_access': True,
-        'shared_workspaces': True,
-        'audit_logs': True,
-        'resource_quotas': True,
-        'hipaa_ready': True,
-        'soc2_certified': True,
         'sso_saml': True,
-        'data_residency': True,  # ✅ ULTIMATE UNLOCK: Data residency
+        'data_residency': True,
         'custom_integrations': True,
-        'on_premise_deploy': True,  # ✅ ULTIMATE UNLOCK: On-premise
+        'on_premise_deploy': False,
         'account_manager': True,
-        'support_tier': 'Dedicated 24/7 + Executive Access',
-        'support_response_hours': 0.5  # 30 minutes
+        'support_tier': 'Priority+',
+        'support_response_hours': 8
     }
 ]

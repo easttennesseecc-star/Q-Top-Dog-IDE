@@ -48,7 +48,9 @@ class RateLimiter:
             
             # Get user's subscription
             query = """
-                SELECT us.tier_id, us.trial_expiry, us.is_active, mt.daily_call_limit, mt.name
+                SELECT us.tier_id, us.trial_expiry, us.is_active,
+                       mt.daily_call_limit, mt.name,
+                       mt.org_pooled_api_calls_per_seat
                 FROM user_subscriptions us
                 JOIN membership_tiers mt ON us.tier_id = mt.tier_id
                 WHERE us.user_id = ?
@@ -65,7 +67,7 @@ class RateLimiter:
                     'tier': None
                 }
             
-            tier_id, trial_expiry, is_active, daily_limit, tier_name = result
+            tier_id, trial_expiry, is_active, daily_limit, tier_name, org_pooled_per_seat = result
             
             # Check if subscription is active
             if not is_active:
@@ -111,8 +113,60 @@ class RateLimiter:
             else:
                 current_usage = usage_result[0]
             
-            # Check if limit exceeded
+            # Check if limit exceeded; attempt org pooled fallback for team tiers
             if current_usage >= daily_limit:
+                # Only Team/Enterprise tiers have org pooled buckets
+                if tier_id in ('teams', 'enterprise') and org_pooled_per_seat and int(org_pooled_per_seat) > 0:
+                    today = date.today().isoformat()
+                    # Find user's organization (first active membership)
+                    cursor.execute(
+                        "SELECT org_id FROM organization_members WHERE user_id = ? AND is_active = 1 LIMIT 1",
+                        (user_id,)
+                    )
+                    org_row = cursor.fetchone()
+                    if org_row:
+                        org_id = org_row[0]
+                        # Seat count = active members in org
+                        cursor.execute(
+                            "SELECT COUNT(1) FROM organization_members WHERE org_id = ? AND is_active = 1",
+                            (org_id,)
+                        )
+                        seat_count = int(cursor.fetchone()[0] or 0)
+                        total_pool = int(org_pooled_per_seat) * max(seat_count, 0)
+                        # Create usage row if missing
+                        cursor.execute(
+                            "SELECT api_calls_used FROM org_daily_usage WHERE org_id = ? AND usage_date = ?",
+                            (org_id, today)
+                        )
+                        row = cursor.fetchone()
+                        if not row:
+                            cursor.execute(
+                                "INSERT INTO org_daily_usage (org_id, usage_date, api_calls_used) VALUES (?, ?, 0)",
+                                (org_id, today)
+                            )
+                            conn.commit()
+                            org_used = 0
+                        else:
+                            org_used = int(row[0] or 0)
+                        if org_used < total_pool:
+                            # Consume from org pool
+                            cursor.execute(
+                                "UPDATE org_daily_usage SET api_calls_used = api_calls_used + 1, updated_at = CURRENT_TIMESTAMP WHERE org_id = ? AND usage_date = ?",
+                                (org_id, today)
+                            )
+                            conn.commit()
+                            remaining_org = max(0, total_pool - (org_used + 1))
+                            conn.close()
+                            return {
+                                'allowed': True,
+                                'remaining': remaining_org,
+                                'limit': total_pool,
+                                'used': org_used + 1,
+                                'tier': tier_name,
+                                'source': 'org_pool',
+                                'error': None
+                            }
+                # No org fallback or exhausted
                 conn.close()
                 return {
                     'allowed': False,
@@ -141,6 +195,7 @@ class RateLimiter:
                 'limit': daily_limit,
                 'used': current_usage + 1,
                 'tier': tier_name,
+                'source': 'personal',
                 'error': None
             }
             
@@ -212,4 +267,77 @@ class RateLimiter:
             
         except Exception as e:
             print(f"Error getting daily usage: {e}")
+            return None
+
+    def get_byok_pool_status(self, user_id: str) -> Optional[Dict[str, Any]]:
+        """
+        Return BYOK pool capacity and usage for the user's org when applicable.
+        For Teams/Enterprise: capacity = org_byok_base + org_byok_per_seat * active_seats.
+        For solo tiers: capacity = byok_slots_per_seat; used = count of stored credentials for that user.
+        """
+        try:
+            conn = sqlite3.connect(self.db_path)
+            conn.row_factory = sqlite3.Row
+            cur = conn.cursor()
+            cur.execute(
+                """
+                SELECT us.tier_id, mt.byok_slots_per_seat, mt.org_byok_base, mt.org_byok_per_seat
+                FROM user_subscriptions us
+                JOIN membership_tiers mt ON us.tier_id = mt.tier_id
+                WHERE us.user_id = ?
+                """,
+                (user_id,)
+            )
+            row = cur.fetchone()
+            if not row:
+                conn.close()
+                return None
+            tier_id = row["tier_id"]
+            if tier_id in ("teams", "enterprise"):
+                # Find org and seat count
+                cur.execute(
+                    "SELECT org_id FROM organization_members WHERE user_id = ? AND is_active = 1 LIMIT 1",
+                    (user_id,)
+                )
+                org_row = cur.fetchone()
+                if not org_row:
+                    conn.close()
+                    return {"capacity": 0, "used": 0, "scope": "org"}
+                org_id = org_row[0]
+                cur.execute(
+                    "SELECT COUNT(1) FROM organization_members WHERE org_id = ? AND is_active = 1",
+                    (org_id,)
+                )
+                seats = int(cur.fetchone()[0] or 0)
+                base = int(row["org_byok_base"] or 0)
+                per_seat = int(row["org_byok_per_seat"] or 0)
+                capacity = base + per_seat * seats
+                # Count active credentials
+                cur.execute(
+                    "SELECT COUNT(1) FROM organization_byok_credentials WHERE org_id = ? AND active = 1",
+                    (org_id,)
+                )
+                used = int(cur.fetchone()[0] or 0)
+                conn.close()
+                return {"capacity": capacity, "used": used, "scope": "org", "org_id": org_id}
+            else:
+                capacity = int(row["byok_slots_per_seat"] or 0)
+                # Personal usage: count credentials in llm_credentials.json for this user
+                used = 0
+                try:
+                    from backend.llm_auth import load_credentials  # local import to avoid circular at module level
+                    creds = load_credentials()
+                    providers = creds.get("providers", {})
+                    for p_data in providers.values():
+                        try:
+                            if p_data.get("user") == user_id:
+                                used += 1
+                        except Exception:
+                            pass
+                except Exception:
+                    used = 0
+                conn.close()
+                return {"capacity": capacity, "used": used, "scope": "user"}
+        except Exception as e:
+            print(f"Error getting BYOK pool status: {e}")
             return None

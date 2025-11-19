@@ -241,6 +241,43 @@ const PricingPage: React.FC<PricingPageProps> = ({ userId = 'guest', currentTier
                 ))}
               </tr>
 
+              {/* BYOK Capacity Row */}
+              <tr className="pricing-page__table-row">
+                <td className="pricing-page__table-label">BYOK Capacity</td>
+                {tiers.map(tier => {
+                  const byokFeature = tier.features.find(f => /byok/i.test(f));
+                  let display = '—';
+                  if (byokFeature) {
+                    if (/Org BYOK pool:/i.test(byokFeature)) {
+                      display = byokFeature.replace(/Org BYOK pool:/i, 'Org:').trim();
+                    } else if (/BYOK:/i.test(byokFeature)) {
+                      display = byokFeature.replace(/BYOK:/i, '').trim();
+                    } else if (/BYOK only/i.test(byokFeature)) {
+                      display = 'BYOK only';
+                    }
+                  }
+                  return (
+                    <td key={tier.id} className="pricing-page__table-cell">
+                      <span className="pricing-page__table-value">{display}</span>
+                    </td>
+                  );
+                })}
+              </tr>
+
+              {/* Org API Bucket Per Seat Row */}
+              <tr className="pricing-page__table-row">
+                <td className="pricing-page__table-label">Org API Bucket (Per Seat)</td>
+                {tiers.map(tier => {
+                  const bucketFeature = tier.features.find(f => /Org API bucket:/i.test(f));
+                  const display = bucketFeature ? bucketFeature.replace(/Org API bucket:/i, '').trim() : '—';
+                  return (
+                    <td key={tier.id} className="pricing-page__table-cell">
+                      <span className="pricing-page__table-value">{display}</span>
+                    </td>
+                  );
+                })}
+              </tr>
+
               {/* Features */}
               {allFeatures.map(feature => (
                 <tr key={feature} className="pricing-page__table-row">
@@ -265,7 +302,7 @@ const PricingPage: React.FC<PricingPageProps> = ({ userId = 'guest', currentTier
       <div className="pricing-page__cta">
         <h2 className="pricing-page__cta-title">Start Local. Scale Up When Ready.</h2>
         <p className="pricing-page__cta-subtitle">
-          Begin with Dev-Free (local + demo models). Move into specialized Aura suites as your compliance or scientific needs grow.
+          Begin with Dev Free (local + demo models). Move into specialized Aura suites as your compliance or scientific needs grow.
         </p>
         <button className="pricing-page__cta-btn">Launch Dev-Free</button>
       </div>
@@ -280,7 +317,7 @@ const PricingPage: React.FC<PricingPageProps> = ({ userId = 'guest', currentTier
           />
           <FAQItem
             question="Do you offer discounts for annual billing?"
-            answer="Yes! Save 20% when you pay annually. Contact our sales team for custom enterprise pricing."
+            answer="Dev tiers save 10% when billed annually (paid upfront). Regulated Medical/Scientific tiers do not offer annual discounts."
           />
           <FAQItem
             question="What's included in the free tier?"
@@ -307,6 +344,10 @@ interface TierCardProps {
 }
 
 const TierCard: React.FC<TierCardProps> = ({ tier, isCurrent, isSelected, onSelect }) => {
+  const isDev = tier.vertical === 'DEVELOPMENT';
+  // Extract quick notes for roles and BYOK from feature strings if present
+  const rolesNote = tier.features.find(f => f.toLowerCase().includes('roles'));
+  const byokNote = tier.features.find(f => f.toLowerCase().includes('byok'));
   return (
     <div
       className={`pricing-tier-card ${tier.popular ? 'popular' : ''} ${
@@ -326,6 +367,17 @@ const TierCard: React.FC<TierCardProps> = ({ tier, isCurrent, isSelected, onSele
         <div className="pricing-tier-card__price">${tier.price}</div>
         <div className="pricing-tier-card__period">/month</div>
       </div>
+
+      {isDev && (rolesNote || byokNote) && (
+        <div className="pricing-tier-card__notes">
+          {rolesNote && (
+            <div className="pricing-tier-card__note">{rolesNote}</div>
+          )}
+          {byokNote && (
+            <div className="pricing-tier-card__note">{byokNote}</div>
+          )}
+        </div>
+      )}
 
       <div className="pricing-tier-card__specs">
         <div className="pricing-tier-card__spec">
