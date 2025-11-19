@@ -23,8 +23,9 @@ permissions:
 
 env:
   REGISTRY: ghcr.io
-  IMAGE_FE: ghcr.io/${{ github.repository }}/qide-frontend
-  IMAGE_BE: ghcr.io/${{ github.repository }}/qide-backend
+  # GHCR requires lowercase repository paths; explicit lowercase path used
+  IMAGE_FE: ghcr.io/easttennesseecc-star/q-top-dog-ide/qide-frontend
+  IMAGE_BE: ghcr.io/easttennesseecc-star/q-top-dog-ide/qide-backend
   NAMESPACE: topdog-staging
   STAGING_FRONTEND_HOST: staging-app.topdog-ide.com
   # Single-host staging: API is routed by path on the same host
