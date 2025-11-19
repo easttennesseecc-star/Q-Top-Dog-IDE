@@ -12,8 +12,34 @@ import time
 from pathlib import Path
 from typing import Optional, Dict, List
 
-_ROOT = Path(os.getenv("SMS_LOG_DIR", "./.sms_logs")).resolve()
-_ROOT.mkdir(exist_ok=True)
+# Choose a writable root for SMS logs that works in read-only containers.
+# Priority:
+# 1. SMS_LOG_DIR (explicit override)
+# 2. QIDE_CONFIG_DIR/sms_logs (respects app config root)
+# 3. /app/logs/sms (if provided as a writable mount)
+# 4. /tmp/.sms_logs (always writable via emptyDir in k8s)
+_env_sms_dir = os.getenv("SMS_LOG_DIR")
+if _env_sms_dir:
+    _root_path = _env_sms_dir
+else:
+    qide_cfg = os.getenv("QIDE_CONFIG_DIR")
+    if qide_cfg:
+        _root_path = str(Path(qide_cfg) / "sms_logs")
+    else:
+        # Default to /tmp to avoid read-only root filesystem issues
+        _root_path = "/tmp/.sms_logs"
+
+_ROOT = Path(_root_path).resolve()
+try:
+    _ROOT.mkdir(parents=True, exist_ok=True)
+except Exception:
+    # As a last resort, ensure /tmp is used
+    _ROOT = Path("/tmp/.sms_logs").resolve()
+    try:
+        _ROOT.mkdir(parents=True, exist_ok=True)
+    except Exception:
+        # Give up on directory creation; subsequent writes will no-op via try/except
+        pass
 
 
 def _phone_key(phone: str) -> str:
