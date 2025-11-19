@@ -25,6 +25,8 @@ extraEnv:
     value: "true"
   - name: DATABASE_URL
     value: "sqlite:////tmp/topdog_ide.db"
+  - name: QIDE_CONFIG_DIR
+    value: "/tmp/.q-ide"
   - name: CANONICAL_HOST
     value: "topdog-ide.com"
   - name: ALTERNATE_HOSTS

@@ -13,9 +13,30 @@ import os
 from typing import Dict, List, Optional, Any, cast
 from pathlib import Path
 
+def _resolve_config_dir() -> Path:
+    override = os.getenv("QIDE_CONFIG_DIR")
+    if override:
+        p = Path(override)
+        try:
+            p.mkdir(parents=True, exist_ok=True)
+        except Exception:
+            pass
+        return p
+    default = Path.home() / ".q-ide"
+    try:
+        default.mkdir(parents=True, exist_ok=True)
+        return default
+    except Exception:
+        # Fallback to /tmp when home is not writable (e.g., read-only FS in containers)
+        tmp = Path(os.getenv("XDG_RUNTIME_DIR", "/tmp")) / ".q-ide"
+        try:
+            tmp.mkdir(parents=True, exist_ok=True)
+        except Exception:
+            pass
+        return tmp
+
 # Configuration file paths
-CONFIG_DIR = Path.home() / ".q-ide"
-CONFIG_DIR.mkdir(exist_ok=True)
+CONFIG_DIR = _resolve_config_dir()
 
 KEYS_FILE = CONFIG_DIR / "llm_keys.json"
 ROLES_FILE = CONFIG_DIR / "llm_roles.json"
