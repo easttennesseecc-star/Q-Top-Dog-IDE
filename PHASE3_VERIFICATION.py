@@ -340,7 +340,7 @@ def main():
     print_section("VERIFICATION SUMMARY")
     
     passed = sum(1 for k, v in results.items() if k != "total_tiers" and v)
-    total = len([k for k in results.keys() if k != "total_tiers"])
+    total = len([k for k in results if k != "total_tiers"])
     
     print_info(f"Tests passed: {passed}/{total}")
     print_info(f"Total tiers in database: {results['total_tiers']}")

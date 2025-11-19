@@ -5,7 +5,6 @@ Marketplace routes for browsing models + Agent routes for chat
 
 from flask import Blueprint, request, jsonify
 from flask_cors import cross_origin
-from typing import Dict
 import os
 import logging
 
@@ -220,7 +219,7 @@ class AgentRoutes:
         self.router = router
         self.registry = registry
         self.blueprint = Blueprint('agent', __name__, url_prefix='/api/v1/agent')
-        self.active_sessions: Dict[str, Dict] = {}
+        self.active_sessions: dict[str, dict] = {}
         self._register_routes()
     
     def _register_routes(self):
@@ -519,7 +518,7 @@ class AuthRoutes:
                     return jsonify({'success': False, 'error': 'User not found'}), 404
                 # Derive connected providers from existing API keys (OAuth and others)
                 try:
-                    connected = sorted(list({k.provider.value for k in user.api_keys.values() if k.status.value == 'active'}))
+                    connected = sorted({k.provider.value for k in user.api_keys.values() if k.status.value == 'active'})
                 except Exception:
                     connected = []
                 data = user.to_dict_safe()
@@ -538,7 +537,7 @@ class AuthRoutes:
                 is_valid, user_id = self.auth_service.verify_token(token)
                 if not is_valid:
                     return jsonify({'success': False, 'error': 'Unauthorized'}), 401
-                ok, keys = self.auth_service.get_api_keys(user_id)
+                _ok, keys = self.auth_service.get_api_keys(user_id)
                 return jsonify({'success': True, 'data': keys}), 200
             except Exception as e:
                 logger.error(f"Error /auth/api-keys: {e}")

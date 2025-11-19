@@ -4,6 +4,7 @@ Endpoints for theme generation, image upload, and customization features
 """
 
 import os
+import contextlib
 import logging
 from functools import wraps
 from flask import Blueprint, request, jsonify
@@ -30,10 +31,8 @@ try:
 except Exception:
     # Fallback to /tmp if the chosen path isn't writable
     UPLOAD_FOLDER = os.path.join("/tmp", "uploads", "themes")
-    try:
+    with contextlib.suppress(Exception):
         os.makedirs(UPLOAD_FOLDER, exist_ok=True)
-    except Exception:
-        pass
 
 
 def async_route(rule, **options):

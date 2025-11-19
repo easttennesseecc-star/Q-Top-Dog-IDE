@@ -101,7 +101,7 @@ for pf in protected_files:
         print(f"  ❌ FAILED: {pf} not found")
         exit(1)
     
-    with open(path, 'r', encoding='utf-8', errors='ignore') as f:
+    with open(path, encoding='utf-8', errors='ignore') as f:
         content = f.read()
         if 'require_tier_access' not in content:
             print(f"  ❌ FAILED: {pf} doesn't have tier protection")
