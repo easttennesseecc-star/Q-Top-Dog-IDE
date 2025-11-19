@@ -13,6 +13,7 @@ from pathlib import Path
 import json
 import hashlib
 from enum import Enum
+import os
 
 
 class RuleScope(Enum):
@@ -145,10 +146,23 @@ class UniversalRulesEngine:
             rules_dir: Directory to store rules. Defaults to ~/.q-ide/rules
         """
         if rules_dir is None:
-            rules_dir = Path.home() / ".q-ide" / "rules"
+            # Prefer explicit config dir, otherwise use a writable tmp-based fallback
+            base = Path(
+                (os.getenv("QIDE_CONFIG_DIR")
+                 or os.getenv("XDG_RUNTIME_DIR")
+                 or "/tmp/.q-ide")
+            )
+            rules_dir = base / "rules"
         
         self.rules_dir = Path(rules_dir)
-        self.rules_dir.mkdir(parents=True, exist_ok=True)
+        try:
+            self.rules_dir.mkdir(parents=True, exist_ok=True)
+        except Exception:
+            self.rules_dir = Path("/tmp/.q-ide/rules")
+            try:
+                self.rules_dir.mkdir(parents=True, exist_ok=True)
+            except Exception:
+                pass
         
         self.rules: Dict[str, Rule] = {}
         self.project_rules: Dict[str, List[str]] = {}  # project_id -> rule_ids
