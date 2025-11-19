@@ -31,7 +31,8 @@ jobs:
           version: 8
       
       - name: Install dependencies
-        run: pnpm install --frozen-lockfile
+        run: pnpm install
+        working-directory: frontend
       
       - name: Run linter (frontend)
         run: cd frontend && pnpm run build
@@ -108,7 +109,8 @@ jobs:
           targets: ${{ matrix.target }}
       
       - name: Install dependencies
-        run: pnpm install --frozen-lockfile
+        run: pnpm install
+        working-directory: frontend
       
       - name: Build frontend
         run: cd frontend && pnpm run build
@@ -163,7 +165,8 @@ jobs:
           version: 8
       
       - name: Install dependencies
-        run: pnpm install --frozen-lockfile
+        run: pnpm install
+        working-directory: frontend
       
       - name: Build frontend
         run: cd frontend && pnpm run build
