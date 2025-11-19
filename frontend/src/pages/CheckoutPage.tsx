@@ -134,7 +134,6 @@ const PaymentForm: React.FC<CheckoutContextType> = ({
       <div className="form-group">
         <label htmlFor="card">Card Details</label>
         <CardElement
-          id="card"
           options={{
             style: {
               base: {
