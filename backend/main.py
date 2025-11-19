@@ -164,8 +164,15 @@ async def lifespan(app: FastAPI):
     except Exception as e:
         logger.error(f"Error initializing AI orchestration: {str(e)}")
 
-    if not _is_testing_env():
-        # Auto-setup Q Assistant if needed
+    async def _run_heavy_startup_tasks() -> None:
+        """Run non-critical, potentially slow startup work in background.
+
+        This prevents blocking the server from becoming ready, allowing
+        Kubernetes startup/readiness probes to pass quickly.
+        """
+        if _is_testing_env():
+            return
+        # Auto-setup Q Assistant if needed (best-effort, non-blocking for readiness)
         try:
             result = auto_setup_q_assistant()
             if result:
@@ -174,12 +181,10 @@ async def lifespan(app: FastAPI):
                 logger.warning("Q Assistant not auto-configured. Please configure via LLM Setup.")
         except Exception as e:
             logger.error(f"Error in startup auto-setup: {str(e)}")
-
-        # Check LLM authentication status
+        # Check LLM authentication status (network-dependent; do not block readiness)
         try:
             auth_status = check_all_llm_authentication()
             prompt = get_startup_auth_prompt()
-
             if auth_status.all_ready:
                 logger.info(f"All {len(auth_status.authenticated_llms)} LLMs authenticated and ready")
             else:
@@ -189,12 +194,21 @@ async def lifespan(app: FastAPI):
                     assigned_role = missing.get('assigned_role', 'role')
                     logger.warning(f"  - {llm_name} (assigned to {assigned_role})")
                 logger.info("  -> Frontend will prompt user with options")
-
             # Store auth prompt for frontend to display
             app.llm_auth_prompt = prompt  # type: ignore[attr-defined]
-
         except Exception as e:
             logger.error(f"Error checking LLM authentication: {str(e)}")
+
+    # Schedule heavy/optional startup tasks without blocking readiness
+    try:
+        asyncio.get_running_loop().create_task(_run_heavy_startup_tasks())
+    except RuntimeError:
+        # Fallback if loop not running yet
+        try:
+            loop = asyncio.new_event_loop()
+            loop.create_task(_run_heavy_startup_tasks())
+        except Exception:
+            pass
 
     # Start push reminder loop (disabled during tests unless explicitly enabled)
     reminder_task = None
