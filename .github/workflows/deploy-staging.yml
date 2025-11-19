@@ -85,6 +85,13 @@ jobs:
     needs: build-and-push
     runs-on: ubuntu-latest
     steps:
+      - name: Fail early if kubeconfig secret missing
+        run: |
+          if [ -z "${{ secrets.STAGING_KUBECONFIG_B64 }}" ]; then
+            echo "::error title=Missing kubeconfig::Set STAGING_KUBECONFIG_B64 GitHub secret (base64 of kubeconfig)";
+            exit 1;
+          fi
+
       - name: Checkout
         uses: actions/checkout@v4
 

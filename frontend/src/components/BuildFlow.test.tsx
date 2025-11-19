@@ -1,5 +1,4 @@
-import { render } from '@testing-library/react'
-import { screen, fireEvent, waitFor } from '@testing-library/dom'
+import { render, screen, fireEvent, waitFor } from '@testing-library/react'
 import App from '../App'
 
 // Ensure App uses relative fetch; tests will mock global.fetch

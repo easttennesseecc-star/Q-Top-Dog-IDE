@@ -462,10 +462,17 @@ async def admin_protect_middleware(request: Request, call_next):
         client_ip = request.client.host if request.client else ""
         def _is_private(ip: str) -> bool:
             try:
-                return (
-                    ip in ("127.0.0.1", "::1", "localhost") or
-                    ip.startswith("10.") or ip.startswith("192.168.") or ip.startswith("172.16.") or ip.startswith("172.17.") or ip.startswith("172.18.") or ip.startswith("172.19.") or ip.startswith("172.2")
-                )
+                if ip in ("127.0.0.1", "::1", "localhost"):
+                    return True
+                if ip.startswith("10.") or ip.startswith("192.168."):
+                    return True
+                if ip.startswith("172."):
+                    parts = ip.split(".")
+                    if len(parts) >= 2 and parts[1].isdigit():
+                        second = int(parts[1])
+                        if 16 <= second <= 31:
+                            return True
+                return False
             except Exception:
                 return False
         if token_env:
@@ -1125,7 +1132,7 @@ def root():
             "api_docs": "/docs",
             "redoc": "/redoc",
             "openapi": "/openapi.json",
-            "llm_pool": "/llm-pool",
+            "llm_pool": "/llm_pool",
             "llm_report": "/llm-report",
         },
         "message": "Welcome to Top Dog (Aura) IDE API"

@@ -1,6 +1,5 @@
 import React from 'react'
-import { render, act } from '@testing-library/react'
-import { screen, waitFor } from '@testing-library/dom'
+import { render, screen, act, waitFor } from '@testing-library/react'
 import { useState } from 'react'
 import { useBuildPoll } from './useBuildPoll'
 
