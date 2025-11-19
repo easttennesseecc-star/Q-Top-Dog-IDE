@@ -85,7 +85,7 @@ ENDPOINTS_TO_PROTECT = {
             "POST /deploy/on-premise",
             "GET /data-residency"
         ],
-        "feature": "hipaa" or "on_premise",
+        "feature": "hipaa",
         "minimum_tier": "enterprise_standard",
         "reason": "Enterprise-only features"
     }

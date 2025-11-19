@@ -344,17 +344,30 @@ jobs:
         shell: bash
         run: |
           set +e
-          echo "=== Deployments ==="; kubectl -n "$NS" get deploy -o wide
-          echo "=== Pods (wide) ==="; kubectl -n "$NS" get pods -o wide
           RELEASE="$([[ "$STRATEGY" == "canary" ]] && echo topdog-canary || echo topdog-green)"
           DEPLOY="${RELEASE}-topdog"
+          echo "=== Deployments (all) ==="; kubectl -n "$NS" get deploy -o wide || true
+          echo "=== Pods for release=$RELEASE ==="; kubectl -n "$NS" get pods -l app.kubernetes.io/instance="$RELEASE" -o wide || true
+          echo "=== ReplicaSets for release=$RELEASE ==="; kubectl -n "$NS" get rs -l app.kubernetes.io/instance="$RELEASE" -o wide || true
           echo "=== Describe deployment $DEPLOY ==="; kubectl -n "$NS" describe deployment "$DEPLOY" || true
-          PODS=$(kubectl -n "$NS" get pods -l app.kubernetes.io/name=topdog -o name || true)
+          PODS=$(kubectl -n "$NS" get pods -l app.kubernetes.io/instance="$RELEASE" -o name || true)
           for p in $PODS; do
             echo "----- Describe $p -----"; kubectl -n "$NS" describe "$p" || true
             echo "----- Logs (last 200) for $p -----"; kubectl -n "$NS" logs "$p" --tail=200 || true
           done
+          echo "=== Recent namespace events ==="; kubectl -n "$NS" get events --sort-by=.lastTimestamp | tail -n 200 || true
           set -e
+
+      - name: Export Prometheus credentials (if provided)
+        env:
+          PROM_URL_SECRET: ${{ secrets.PROMETHEUS_URL }}
+          PROM_TOKEN_SECRET: ${{ secrets.PROMETHEUS_TOKEN }}
+        shell: bash
+        run: |
+          if [[ -n "${PROM_URL_SECRET}" ]]; then echo "PROM_URL=${PROM_URL_SECRET}" >> "$GITHUB_ENV"; fi
+          if [[ -n "${PROM_TOKEN_SECRET}" ]]; then echo "PROM_TOKEN=${PROM_TOKEN_SECRET}" >> "$GITHUB_ENV"; fi
+          # Fallback SLO burn rate for simulation when PROM_URL is not provided
+          if [[ -z "${PROM_URL_SECRET}" ]]; then echo "SLO_BURN_RATE=${{ github.event.inputs.slo_burn_rate_sim }}" >> "$GITHUB_ENV"; fi
 
       - name: "Canary health re-check (pre-promotion)"
         shell: bash
@@ -395,16 +408,6 @@ jobs:
           RELEASE="${{ env.STRATEGY == 'canary' && 'topdog-canary' || 'topdog-green' }}"
           bash .github/scripts/create_canary_ingress.sh "$NS" "$RELEASE" "$HOSTS_CSV" "$WEIGHT"
 
-      - name: Export Prometheus credentials (if provided)
-        env:
-          PROM_URL_SECRET: ${{ secrets.PROMETHEUS_URL }}
-          PROM_TOKEN_SECRET: ${{ secrets.PROMETHEUS_TOKEN }}
-        shell: bash
-        run: |
-          if [[ -n "${PROM_URL_SECRET}" ]]; then echo "PROM_URL=${PROM_URL_SECRET}" >> "$GITHUB_ENV"; fi
-          if [[ -n "${PROM_TOKEN_SECRET}" ]]; then echo "PROM_TOKEN=${PROM_TOKEN_SECRET}" >> "$GITHUB_ENV"; fi
-          # Fallback SLO burn rate for simulation when PROM_URL is not provided
-          if [[ -z "${PROM_URL_SECRET}" ]]; then echo "SLO_BURN_RATE=${{ github.event.inputs.slo_burn_rate_sim }}" >> "$GITHUB_ENV"; fi
 
       - name: SLO Burn Rate Gate
         env:

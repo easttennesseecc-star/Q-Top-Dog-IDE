@@ -8,7 +8,7 @@ Tests backend API, frontend component readiness, and integration
 import requests
 import json
 import sys
-from typing import Dict, List, Any
+from typing import Any
 
 # Configuration
 BASE_URL = "http://0.0.0.0:8000"
@@ -65,7 +65,7 @@ def check_server_health() -> bool:
         print_error(f"Error: {e}")
         return False
 
-def verify_tiers_endpoint() -> Dict[str, Any]:
+def verify_tiers_endpoint() -> dict[str, Any]:
     """Verify /api/tiers endpoint"""
     print_section("Verify /api/tiers Endpoint")
     
@@ -122,7 +122,7 @@ def verify_tiers_endpoint() -> Dict[str, Any]:
         print_error(f"Error: {e}")
         return result
 
-def verify_tier_names(tiers: List[Dict]) -> bool:
+def verify_tier_names(tiers: list[dict]) -> bool:
     """Verify expected tier names exist"""
     print_section("Verify Tier Names")
     
@@ -149,7 +149,7 @@ def verify_tier_names(tiers: List[Dict]) -> bool:
             print_warning(f"Extra: {extra}")
         return False
 
-def verify_tier_pricing(tiers: List[Dict]) -> bool:
+def verify_tier_pricing(tiers: list[dict]) -> bool:
     """Verify tier pricing is reasonable"""
     print_section("Verify Tier Pricing")
     
@@ -188,7 +188,7 @@ def verify_tier_pricing(tiers: List[Dict]) -> bool:
     
     return all_valid
 
-def verify_tier_features(tiers: List[Dict]) -> bool:
+def verify_tier_features(tiers: list[dict]) -> bool:
     """Verify tiers have features"""
     print_section("Verify Tier Features")
     
@@ -206,7 +206,7 @@ def verify_tier_features(tiers: List[Dict]) -> bool:
     
     return all_valid
 
-def verify_api_calls_limit(tiers: List[Dict]) -> bool:
+def verify_api_calls_limit(tiers: list[dict]) -> bool:
     """Verify monthly API call limits"""
     print_section("Verify API Call Limits")
     
@@ -227,7 +227,7 @@ def verify_api_calls_limit(tiers: List[Dict]) -> bool:
     
     return all_valid
 
-def verify_support_levels(tiers: List[Dict]) -> bool:
+def verify_support_levels(tiers: list[dict]) -> bool:
     """Verify support levels are set"""
     print_section("Verify Support Levels")
     

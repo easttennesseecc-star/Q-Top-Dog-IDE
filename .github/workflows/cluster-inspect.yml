@@ -1,0 +1,64 @@
+name: Cluster Inspect
+
+on:
+  workflow_dispatch:
+    inputs:
+      namespace:
+        description: "Target Kubernetes namespace"
+        required: true
+        default: "topdog"
+      release:
+        description: "Helm release name to inspect"
+        required: true
+        default: "topdog-green"
+
+jobs:
+  inspect:
+    runs-on: ubuntu-latest
+    env:
+      NS: ${{ github.event.inputs.namespace || 'topdog' }}
+      RELEASE: ${{ github.event.inputs.release || 'topdog-green' }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up kubectl
+        uses: azure/setup-kubectl@v4
+
+      - name: Configure kubeconfig
+        shell: bash
+        env:
+          KUBE_CONFIG_B64: ${{ secrets.KUBE_CONFIG_B64 }}
+          KUBE_CONFIG: ${{ secrets.KUBE_CONFIG }}
+        run: |
+          set -euo pipefail
+          mkdir -p "$HOME/.kube"
+          if [[ -n "${KUBE_CONFIG_B64:-}" ]]; then
+            echo "$KUBE_CONFIG_B64" | base64 -d > "$HOME/.kube/config"
+          elif [[ -n "${KUBE_CONFIG:-}" ]]; then
+            echo "$KUBE_CONFIG" > "$HOME/.kube/config"
+          else
+            echo "KUBE_CONFIG[_B64] secret not provided" >&2
+            exit 1
+          fi
+          chmod 600 "$HOME/.kube/config"
+
+      - name: Inspect resources for release
+        shell: bash
+        run: |
+          set -euo pipefail
+          echo "=== Deployments (label instance=$RELEASE) ==="
+          kubectl -n "$NS" get deploy -l app.kubernetes.io/instance="$RELEASE" -o wide || true
+          echo "=== ReplicaSets (label instance=$RELEASE) ==="
+          kubectl -n "$NS" get rs -l app.kubernetes.io/instance="$RELEASE" -o wide || true
+          echo "=== Pods (label instance=$RELEASE) ==="
+          kubectl -n "$NS" get pods -l app.kubernetes.io/instance="$RELEASE" -o wide || true
+          DEPLOY_NAME="${RELEASE}-topdog"
+          echo "=== Describe deployment $DEPLOY_NAME ==="
+          kubectl -n "$NS" describe deploy "$DEPLOY_NAME" || true
+          echo "=== Recent namespace events (last 200) ==="
+          kubectl -n "$NS" get events --sort-by=.lastTimestamp | tail -n 200 || true
+          echo "=== Describe pods + last 200 logs ==="
+          for p in $(kubectl -n "$NS" get pods -l app.kubernetes.io/instance="$RELEASE" -o name || true); do
+            echo "----- Describe $p -----"; kubectl -n "$NS" describe "$p" || true
+            echo "----- Logs (last 200) for $p -----"; kubectl -n "$NS" logs "$p" --tail=200 || true
+          done

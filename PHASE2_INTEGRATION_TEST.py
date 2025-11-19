@@ -79,7 +79,7 @@ def test_endpoints():
             print("   CONNECTION ERROR - Is the server running on port 8000?")
             failed += 1
         except Exception as e:
-            print(f"   ERROR: {str(e)}")
+            print(f"   ERROR: {e!s}")
             failed += 1
     
     print("\n" + "="*60)
