@@ -19,7 +19,15 @@ from backend.services.stripe_types import (
     WebhookPaymentFailed,
 )
 from backend.models.subscription import Subscription, Invoice, BillingAlert, SubscriptionStatus
-from backend.database.database_service import get_db
+"""Billing routes module
+
+Fix: Use SQLAlchemy session dependency from `backend.database` instead of the
+`DatabaseService` wrapper. The previous import caused runtime failures because
+`DatabaseService` does not provide a `.query` interface compatible with the
+ORM models, leading to 500 errors ("Failed to retrieve subscription").
+"""
+
+from backend.database import get_db
 from backend.auth import get_current_user
 
 # Stripe may be unavailable in some environments (tests/dev)
@@ -465,6 +473,10 @@ async def get_revenue_stats(
             Subscription.tier == SubscriptionTier.PRO,
             Subscription.status.in_([SubscriptionStatus.ACTIVE, SubscriptionStatus.TRIALING])
         ).count()
+        pro_plus_subs = db.query(Subscription).filter(
+            Subscription.tier == SubscriptionTier.PRO_PLUS,
+            Subscription.status.in_([SubscriptionStatus.ACTIVE, SubscriptionStatus.TRIALING])
+        ).count()
         
         teams_subs = db.query(Subscription).filter(
             Subscription.tier == SubscriptionTier.TEAMS,
@@ -476,13 +488,19 @@ async def get_revenue_stats(
             Subscription.status.in_([SubscriptionStatus.ACTIVE, SubscriptionStatus.TRIALING])
         ).count()
         
-        # Calculate MRR
-        mrr = (pro_subs * 12) + (teams_subs * 25) + (enterprise_subs * 100)
+        # Calculate MRR using current monthly per-seat prices
+        mrr = (
+            pro_subs * 29
+            + pro_plus_subs * 49
+            + teams_subs * 39
+            + enterprise_subs * 79
+        )
         
         return {
             "status": "ok",
             "total_subscriptions": total_subs,
             "pro": pro_subs,
+            "pro_plus": pro_plus_subs,
             "teams": teams_subs,
             "enterprise": enterprise_subs,
             "mrr": mrr,
