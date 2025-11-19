@@ -14,7 +14,7 @@
     "@tauri-apps/api": "^2",
     "@tauri-apps/plugin-opener": "^2",
     "idb-keyval": "^6.2.0",
-    "lucide-react": "^0.395.0",
+    "lucide-react": "^0.400.0",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
     "react-router-dom": "^6.30.1"

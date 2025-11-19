@@ -54,7 +54,7 @@ jobs:
 
       - name: Upload pytest results artifact
         if: always()
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: pytest-results-${{ matrix.os }}
           path: backend/test-results/junit.xml
@@ -68,7 +68,7 @@ jobs:
 
       - name: Upload pytest summary artifact
         if: always()
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: pytest-summary-${{ matrix.os }}
           path: backend/test-results/summary.md
@@ -118,7 +118,7 @@ jobs:
         working-directory: ./frontend
       
       - name: Upload build artifacts
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: ${{ matrix.os }}-build
           path: ./frontend/src-tauri/target/release/bundle

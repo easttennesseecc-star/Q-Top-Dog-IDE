@@ -33,7 +33,7 @@ jobs:
           OVERWATCH_POLICY_BUNDLE: policies/overwatch/bundle.json
       - name: Upload Overwatch policy bundle
         if: always()
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: overwatch-policy-bundle
           path: policies/overwatch/bundle.json
