@@ -75,7 +75,8 @@ from backend.llm_auto_assignment import register_auto_assignment_routes
 from backend.auth import (
     create_session, get_session_user, get_user, create_or_get_user,
     exchange_code_for_token, get_google_user_info, get_github_user_info,
-    link_account, get_linked_accounts
+    link_account, get_linked_accounts,
+    register_password_user, verify_password_user, change_password_user
 )
 
 # Optional routers that may fail to import in certain profiles
@@ -1360,6 +1361,44 @@ def google_oauth_callback(code: Optional[str] = None, error: Optional[str] = Non
     # Redirect to callback page with session_id
     callback_url = f"/static/oauth-callback.html?status=success&session_id={session_id}&provider=google&email={urllib.parse.quote(email)}&name={urllib.parse.quote(name)}&picture={urllib.parse.quote(picture)}"
     return RedirectResponse(url=callback_url)
+
+# ---------------- Password Auth Endpoints (temporary / dev) ----------------
+class PasswordRegisterPayload(BaseModel):
+    email: str
+    password: str
+    admin_token: Optional[str] = None
+
+@app.post("/auth/password/register")
+def password_register(payload: PasswordRegisterPayload):
+    # Require admin token unless no ADMIN_TOKEN is set (dev convenience)
+    require_admin = bool(os.getenv("ADMIN_TOKEN"))
+    if register_password_user(payload.email, payload.password, require_admin=require_admin, admin_token=payload.admin_token):
+        return {"status": "ok", "email": payload.email}
+    return JSONResponse(status_code=400, content={"error": "registration failed or user exists"})
+
+class PasswordLoginPayload(BaseModel):
+    email: str
+    password: str
+
+@app.post("/auth/password/login")
+def password_login(payload: PasswordLoginPayload):
+    if not verify_password_user(payload.email, payload.password):
+        return JSONResponse(status_code=403, content={"error": "invalid credentials"})
+    # Ensure user profile exists
+    create_or_get_user(payload.email, payload.email, payload.email.split('@')[0], "")
+    sid = create_session(payload.email)
+    return {"status": "ok", "session_id": sid}
+
+class PasswordChangePayload(BaseModel):
+    email: str
+    old_password: str
+    new_password: str
+
+@app.post("/auth/password/change")
+def password_change(payload: PasswordChangePayload):
+    if change_password_user(payload.email, payload.old_password, payload.new_password):
+        return {"status": "ok"}
+    return JSONResponse(status_code=403, content={"error": "change failed"})
 
 
 @app.get("/auth/github/start")

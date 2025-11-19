@@ -160,3 +160,91 @@ def get_current_user(x_user_id: Optional[str] = Header(None)) -> str:
     # Default test user if not provided
     return "test-user"
 
+# -----------------------------
+# Password-based auth (dev/temporary use only)
+# Stored inside same auth data file under key password_users.
+# Uses PBKDF2-HMAC SHA256 with per-user random salt.
+# -----------------------------
+import os
+import hashlib
+import base64
+from secrets import token_bytes
+
+PBKDF2_ITERATIONS = 200_000
+
+def _hash_password(password: str, salt: Optional[bytes] = None) -> tuple[str, str, int]:
+    if salt is None:
+        salt = token_bytes(16)
+    dk = hashlib.pbkdf2_hmac('sha256', password.encode('utf-8'), salt, PBKDF2_ITERATIONS)
+    return base64.b64encode(salt).decode('utf-8'), base64.b64encode(dk).decode('utf-8'), PBKDF2_ITERATIONS
+
+def _verify_password(password: str, salt_b64: str, hash_b64: str, iterations: int) -> bool:
+    try:
+        salt = base64.b64decode(salt_b64.encode('utf-8'))
+        expected = base64.b64decode(hash_b64.encode('utf-8'))
+        dk = hashlib.pbkdf2_hmac('sha256', password.encode('utf-8'), salt, iterations)
+        return hashlib.sha256(dk).hexdigest() == hashlib.sha256(expected).hexdigest()
+    except Exception:
+        return False
+
+def register_password_user(email: str, password: str, require_admin: bool = True, admin_token: Optional[str] = None) -> bool:
+    """Register a password user. Returns True if created, False if exists or failed."""
+    data = load_auth_data()
+    existing = data.get('password_users', {}).get(email)
+    if existing:
+        return False
+    if require_admin:
+        env_token = os.getenv('ADMIN_TOKEN', '').strip()
+        if not env_token or not admin_token or admin_token != env_token:
+            return False
+    salt_b64, hash_b64, iters = _hash_password(password)
+    data.setdefault('password_users', {})[email] = {
+        'salt': salt_b64,
+        'hash': hash_b64,
+        'iterations': iters,
+        'created_at': datetime.utcnow().isoformat(),
+    }
+    save_auth_data(data)
+    # Also create basic user profile if not present
+    data = load_auth_data()
+    if email not in data.get('users', {}):
+        data.setdefault('users', {})[email] = {
+            'email': email,
+            'name': email.split('@')[0],
+            'picture': '',
+            'created_at': datetime.utcnow().isoformat(),
+        }
+        save_auth_data(data)
+    return True
+
+def verify_password_user(email: str, password: str) -> bool:
+    data = load_auth_data()
+    info = data.get('password_users', {}).get(email)
+    if not info:
+        return False
+    return _verify_password(password, info.get('salt',''), info.get('hash',''), int(info.get('iterations', PBKDF2_ITERATIONS)))
+
+def change_password_user(email: str, old_password: str, new_password: str) -> bool:
+    if not verify_password_user(email, old_password):
+        return False
+    data = load_auth_data()
+    if email not in data.get('password_users', {}):
+        return False
+    salt_b64, hash_b64, iters = _hash_password(new_password)
+    data['password_users'][email]['salt'] = salt_b64
+    data['password_users'][email]['hash'] = hash_b64
+    data['password_users'][email]['iterations'] = iters
+    data['password_users'][email]['updated_at'] = datetime.utcnow().isoformat()
+    save_auth_data(data)
+    return True
+
+# Optional automatic temp user provisioning via env vars (executed on import)
+try:
+    temp_email = os.getenv('TEMP_PASSWORD_EMAIL')
+    temp_pass = os.getenv('TEMP_PASSWORD_PLAIN')
+    auto_admin_token = os.getenv('ADMIN_TOKEN')
+    if temp_email and temp_pass:
+        register_password_user(temp_email, temp_pass, require_admin=False, admin_token=auto_admin_token)
+except Exception:
+    pass
+
