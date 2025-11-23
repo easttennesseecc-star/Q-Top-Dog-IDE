@@ -54,6 +54,12 @@ LOG_FILE=logs/marketplace.log
 ENABLE_AUDIT_LOG=true
 ENABLE_RATE_LIMITING=true
 MAX_REQUESTS_PER_HOUR=1000
+ENABLE_REDIS_IDEMPOTENCY=false           # When true, idempotent responses stored in Redis (fallback in-memory)
+IDEMPOTENCY_TTL_SECONDS=3600             # TTL for idempotent cache entries
+ENABLE_REDIS_METRICS=false               # When true, core studio counters persisted in Redis for multi-instance durability
+SAFETY_KEY_ROTATION_ENABLED=false        # Enables safety key rotation endpoints (/api/studio/safety-keys*)
+SAFETY_KEY=dev-safety-key                # Fallback single safety key when rotation disabled
+REDIS_URL=redis://localhost:6379/0       # Redis connection URL used for idempotency/metrics/rate limiting
 
 # Marketplace mode (Directory vs Broker)
 # Directory = BYOK only, no commissions, links to provider signup pages.
@@ -75,6 +81,23 @@ ENABLE_REGULATED_DOMAINS=true         # when true -> edition=regulated; else dev
 DEFAULT_PLAN=Pro                      # Starter | Pro | Enterprise (used when header missing)
 DEFAULT_DATA_SEGMENT=general          # general | medical | scientific (fallback)
 DEFAULT_REGULATED_SEGMENT=medical     # default segment when edition=regulated
+ENABLE_PROMETHEUS_METRICS=true        # Expose /api/studio/metrics/prometheus if client library available
+PROMETHEUS_SCRAPE_PATH=/api/studio/metrics/prometheus # Path used by Prometheus server scrape config
+
+# ====================
+# STUDIO ORCHESTRATOR OBSERVABILITY (Micro-bench histograms)
+# ====================
+# The following metrics are emitted when Prometheus instrumentation is enabled:
+# - studio_stage_execution_latency_seconds{stage_type,provider,outcome}
+# - studio_stage_planning_latency_seconds{stage_type}
+# - studio_credit_reservation_latency_seconds{provider,outcome}
+# - studio_stage_success_total{stage_type,provider}
+# - studio_stage_error_total{stage_type,provider}
+# - studio_stage_fallback_total
+# - studio_restricted_prompt_total
+# - studio_moderation_severity_total{severity}
+# Ensure Prometheus server scrape interval (e.g. 15s) is set appropriately for latency histograms.
+
 
 # ====================
 # LLM BOOTSTRAP (OPTIONAL)
@@ -177,6 +200,43 @@ Invoke-RestMethod -Method POST `
 ```
 
 Prometheus alert groups expect these labels and are defined under `observability/prometheus/alerts.yml` (e.g., `topdog-slo-gates-tiered`, `topdog-slo-gates-segments`).
+
+## Safety Key Rotation
+
+When `SAFETY_KEY_ROTATION_ENABLED=true` the studio routes expose endpoints:
+- `GET /api/studio/safety-keys` list hashed keys (prefix only)
+- `POST /api/studio/safety-keys` create new key (provide raw key_value; stored as sha256 hash)
+- `POST /api/studio/safety-keys/rotate` atomically deactivates previous active keys and provisions new active
+- `POST /api/studio/safety-keys/{id}/activate` toggle a key active
+- `POST /api/studio/safety-keys/{id}/deactivate` deactivate a key
+
+Validation precedence:
+1. If rotation enabled and active keys exist -> hashed match required.
+2. Else fallback to `SAFETY_KEY` environment value.
+
+Restricted executions also require a prior disclaimer acknowledgment (`/api/studio/user/ack`).
+
+## Idempotency & Metrics Durability
+
+Environment flags:
+- `ENABLE_REDIS_IDEMPOTENCY`: Store idempotent responses keyed by `X-Idempotency-Key`.
+- `IDEMPOTENCY_TTL_SECONDS`: Expiration for cached execution payloads.
+- `ENABLE_REDIS_METRICS`: Persist counters (e.g., stages_success, fallback_used_total) to Redis for multi-instance aggregation.
+
+Redis keys namespace examples:
+- `studio:idempotency:{key}` cached JSON response
+- `studio:metrics:stages_success` global success counter
+- `studio:metrics:moderation_severity_total:{severity}` severity buckets
+
+## Error Taxonomy
+
+Studio endpoints return `X-Error-Code` headers on failure (e.g., `STUDIO_PROMPT_TOO_SHORT`) to support client automation and structured retries.
+Existing tests expect `detail` to remain a simple string; future global exception handler may wrap JSON body while preserving header semantics.
+
+## Immutable Audit Chain
+
+Executed stages append moderation/audit entries (`StudioAuditEntry`) with SHA256 `payload_hash` and `prev_hash` linking (`GENESIS` for first). Chain index increments per kind `execution_moderation`.
+Tamper detection can be performed by verifying the linear hash linkage offline.
 
 ## Routing and Health Endpoints
 

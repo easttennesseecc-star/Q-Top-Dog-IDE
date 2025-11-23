@@ -1,0 +1,62 @@
+{
+  "title": "Studio Observability",
+  "uid": "studio-main",
+  "schemaVersion": 38,
+  "version": 1,
+  "panels": [
+    {
+      "type": "timeseries",
+      "title": "Stage Execution Latency (Success vs Error)",
+      "targets": [
+        {"expr": "histogram_quantile(0.95, sum(rate(studio_stage_execution_latency_seconds_bucket[5m])) by (le, outcome))", "legendFormat": "p95 {{outcome}}"},
+        {"expr": "histogram_quantile(0.50, sum(rate(studio_stage_execution_latency_seconds_bucket[5m])) by (le, outcome))", "legendFormat": "p50 {{outcome}}"}
+      ]
+    },
+    {
+      "type": "timeseries",
+      "title": "Planning Latency p95",
+      "targets": [
+        {"expr": "histogram_quantile(0.95, sum(rate(studio_stage_planning_latency_seconds_bucket[5m])) by (le))", "legendFormat": "planning p95"}
+      ]
+    },
+    {
+      "type": "timeseries",
+      "title": "Credit Reservation Latency (Outcome)",
+      "targets": [
+        {"expr": "histogram_quantile(0.95, sum(rate(studio_credit_reservation_latency_seconds_bucket[5m])) by (le, outcome))", "legendFormat": "p95 {{outcome}}"}
+      ]
+    },
+    {
+      "type": "stat",
+      "title": "Fallback Usage Total",
+      "targets": [
+        {"expr": "sum(studio_stage_fallback_total)"}
+      ]
+    },
+    {
+      "type": "stat",
+      "title": "Restricted Prompts Total",
+      "targets": [
+        {"expr": "sum(studio_restricted_prompt_total)"}
+      ]
+    },
+    {
+      "type": "piechart",
+      "title": "Moderation Severity Distribution",
+      "targets": [
+        {"expr": "sum(studio_moderation_severity_total) by (severity)"}
+      ]
+    },
+    {
+      "type": "bargauge",
+      "title": "Stage Success vs Error",
+      "targets": [
+        {"expr": "sum(studio_stage_success_total)", "legendFormat": "success"},
+        {"expr": "sum(studio_stage_error_total)", "legendFormat": "error"}
+      ]
+    }
+  ],
+  "editable": true,
+  "refresh": "30s",
+  "time": {"from": "now-6h", "to": "now"}
+}
